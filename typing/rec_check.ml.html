@@ -1,0 +1,3854 @@
+<html>
+  <head>
+    <title>Coverage report</title>
+    <link rel="stylesheet" href="../coverage.css" />
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <div id="header">
+      <h1>
+        <a href="../index.html">
+          <span class="dirname">typing/</span>rec_check.ml
+        </a>
+      </h1>
+      <h2>75.83%</h2>
+    </div>
+    <div id="navbar">
+      <span class="unvisited" style="top:12.38%"></span>
+      <span class="unvisited" style="top:12.62%"></span>
+      <span class="unvisited" style="top:14.63%"></span>
+      <span class="unvisited" style="top:14.71%"></span>
+      <span class="unvisited" style="top:15.03%"></span>
+      <span class="unvisited" style="top:15.19%"></span>
+      <span class="unvisited" style="top:15.59%"></span>
+      <span class="unvisited" style="top:15.68%"></span>
+      <span class="unvisited" style="top:16.32%"></span>
+      <span class="unvisited" style="top:16.40%"></span>
+      <span class="unvisited" style="top:16.48%"></span>
+      <span class="some-visited" style="top:20.26%"></span>
+      <span class="unvisited" style="top:27.01%"></span>
+      <span class="unvisited" style="top:27.25%"></span>
+      <span class="unvisited" style="top:39.39%"></span>
+      <span class="unvisited" style="top:39.55%"></span>
+      <span class="unvisited" style="top:45.42%"></span>
+      <span class="some-visited" style="top:50.64%"></span>
+      <span class="unvisited" style="top:50.72%"></span>
+      <span class="unvisited" style="top:58.12%"></span>
+      <span class="unvisited" style="top:61.25%"></span>
+      <span class="unvisited" style="top:62.14%"></span>
+      <span class="unvisited" style="top:62.22%"></span>
+      <span class="unvisited" style="top:64.23%"></span>
+      <span class="unvisited" style="top:64.71%"></span>
+      <span class="unvisited" style="top:64.79%"></span>
+      <span class="unvisited" style="top:64.87%"></span>
+      <span class="unvisited" style="top:65.68%"></span>
+      <span class="unvisited" style="top:66.24%"></span>
+      <span class="unvisited" style="top:66.80%"></span>
+      <span class="unvisited" style="top:67.28%"></span>
+      <span class="unvisited" style="top:67.44%"></span>
+      <span class="unvisited" style="top:67.60%"></span>
+      <span class="unvisited" style="top:68.01%"></span>
+      <span class="unvisited" style="top:68.89%"></span>
+      <span class="unvisited" style="top:69.05%"></span>
+      <span class="unvisited" style="top:69.86%"></span>
+      <span class="unvisited" style="top:70.26%"></span>
+      <span class="unvisited" style="top:70.58%"></span>
+      <span class="unvisited" style="top:70.82%"></span>
+      <span class="unvisited" style="top:72.99%"></span>
+      <span class="unvisited" style="top:74.92%"></span>
+      <span class="unvisited" style="top:75.64%"></span>
+      <span class="unvisited" style="top:75.72%"></span>
+      <span class="unvisited" style="top:76.13%"></span>
+      <span class="unvisited" style="top:76.21%"></span>
+      <span class="unvisited" style="top:76.29%"></span>
+      <span class="unvisited" style="top:76.37%"></span>
+      <span class="unvisited" style="top:76.53%"></span>
+      <span class="unvisited" style="top:77.01%"></span>
+      <span class="unvisited" style="top:77.09%"></span>
+      <span class="unvisited" style="top:77.17%"></span>
+      <span class="unvisited" style="top:77.41%"></span>
+      <span class="unvisited" style="top:77.73%"></span>
+      <span class="unvisited" style="top:77.81%"></span>
+      <span class="unvisited" style="top:77.89%"></span>
+      <span class="unvisited" style="top:78.05%"></span>
+      <span class="unvisited" style="top:78.22%"></span>
+      <span class="unvisited" style="top:78.38%"></span>
+      <span class="unvisited" style="top:78.46%"></span>
+      <span class="unvisited" style="top:78.54%"></span>
+      <span class="unvisited" style="top:78.62%"></span>
+      <span class="unvisited" style="top:78.70%"></span>
+      <span class="unvisited" style="top:78.94%"></span>
+      <span class="unvisited" style="top:79.02%"></span>
+      <span class="unvisited" style="top:79.10%"></span>
+      <span class="unvisited" style="top:80.95%"></span>
+      <span class="unvisited" style="top:81.03%"></span>
+      <span class="unvisited" style="top:81.11%"></span>
+      <span class="unvisited" style="top:81.19%"></span>
+      <span class="unvisited" style="top:81.35%"></span>
+      <span class="unvisited" style="top:81.59%"></span>
+      <span class="unvisited" style="top:81.67%"></span>
+      <span class="unvisited" style="top:81.83%"></span>
+      <span class="unvisited" style="top:81.99%"></span>
+      <span class="unvisited" style="top:82.07%"></span>
+      <span class="unvisited" style="top:82.15%"></span>
+      <span class="unvisited" style="top:82.23%"></span>
+      <span class="unvisited" style="top:82.32%"></span>
+      <span class="unvisited" style="top:82.40%"></span>
+      <span class="unvisited" style="top:82.72%"></span>
+      <span class="unvisited" style="top:82.88%"></span>
+      <span class="unvisited" style="top:83.04%"></span>
+      <span class="unvisited" style="top:83.36%"></span>
+      <span class="unvisited" style="top:83.44%"></span>
+      <span class="unvisited" style="top:83.60%"></span>
+      <span class="unvisited" style="top:95.26%"></span>
+      <span class="some-visited" style="top:95.42%"></span>
+      <span class="unvisited" style="top:95.50%"></span>
+    </div>
+    <div id="report">
+      <div id="lines-layer">
+        <pre>
+<a id="L1"></a><span > </span>
+<a id="L2"></a><span > </span>
+<a id="L3"></a><span > </span>
+<a id="L4"></a><span > </span>
+<a id="L5"></a><span > </span>
+<a id="L6"></a><span > </span>
+<a id="L7"></a><span > </span>
+<a id="L8"></a><span > </span>
+<a id="L9"></a><span > </span>
+<a id="L10"></a><span > </span>
+<a id="L11"></a><span > </span>
+<a id="L12"></a><span > </span>
+<a id="L13"></a><span > </span>
+<a id="L14"></a><span > </span>
+<a id="L15"></a><span > </span>
+<a id="L16"></a><span > </span>
+<a id="L17"></a><span > </span>
+<a id="L18"></a><span > </span>
+<a id="L19"></a><span > </span>
+<a id="L20"></a><span > </span>
+<a id="L21"></a><span > </span>
+<a id="L22"></a><span > </span>
+<a id="L23"></a><span > </span>
+<a id="L24"></a><span > </span>
+<a id="L25"></a><span > </span>
+<a id="L26"></a><span > </span>
+<a id="L27"></a><span > </span>
+<a id="L28"></a><span > </span>
+<a id="L29"></a><span > </span>
+<a id="L30"></a><span > </span>
+<a id="L31"></a><span > </span>
+<a id="L32"></a><span > </span>
+<a id="L33"></a><span > </span>
+<a id="L34"></a><span > </span>
+<a id="L35"></a><span > </span>
+<a id="L36"></a><span > </span>
+<a id="L37"></a><span > </span>
+<a id="L38"></a><span > </span>
+<a id="L39"></a><span > </span>
+<a id="L40"></a><span > </span>
+<a id="L41"></a><span > </span>
+<a id="L42"></a><span > </span>
+<a id="L43"></a><span > </span>
+<a id="L44"></a><span > </span>
+<a id="L45"></a><span > </span>
+<a id="L46"></a><span > </span>
+<a id="L47"></a><span > </span>
+<a id="L48"></a><span > </span>
+<a id="L49"></a><span > </span>
+<a id="L50"></a><span > </span>
+<a id="L51"></a><span > </span>
+<a id="L52"></a><span > </span>
+<a id="L53"></a><span > </span>
+<a id="L54"></a><span > </span>
+<a id="L55"></a><span > </span>
+<a id="L56"></a><span > </span>
+<a id="L57"></a><span > </span>
+<a id="L58"></a><span > </span>
+<a id="L59"></a><span > </span>
+<a id="L60"></a><span > </span>
+<a id="L61"></a><span > </span>
+<a id="L62"></a><span > </span>
+<a id="L63"></a><span > </span>
+<a id="L64"></a><span > </span>
+<a id="L65"></a><span > </span>
+<a id="L66"></a><span > </span>
+<a id="L67"></a><span > </span>
+<a id="L68"></a><span > </span>
+<a id="L69"></a><span > </span>
+<a id="L70"></a><span > </span>
+<a id="L71"></a><span > </span>
+<a id="L72"></a><span > </span>
+<a id="L73"></a><span > </span>
+<a id="L74"></a><span > </span>
+<a id="L75"></a><span > </span>
+<a id="L76"></a><span > </span>
+<a id="L77"></a><span > </span>
+<a id="L78"></a><span > </span>
+<a id="L79"></a><span > </span>
+<a id="L80"></a><span > </span>
+<a id="L81"></a><span > </span>
+<a id="L82"></a><span > </span>
+<a id="L83"></a><span > </span>
+<a id="L84"></a><span > </span>
+<a id="L85"></a><span > </span>
+<a id="L86"></a><span > </span>
+<a id="L87"></a><span > </span>
+<a id="L88"></a><span > </span>
+<a id="L89"></a><span > </span>
+<a id="L90"></a><span > </span>
+<a id="L91"></a><span > </span>
+<a id="L92"></a><span > </span>
+<a id="L93"></a><span > </span>
+<a id="L94"></a><span > </span>
+<a id="L95"></a><span > </span>
+<a id="L96"></a><span > </span>
+<a id="L97"></a><span > </span>
+<a id="L98"></a><span > </span>
+<a id="L99"></a><span > </span>
+<a id="L100"></a><span > </span>
+<a id="L101"></a><span > </span>
+<a id="L102"></a><span > </span>
+<a id="L103"></a><span > </span>
+<a id="L104"></a><span > </span>
+<a id="L105"></a><span > </span>
+<a id="L106"></a><span > </span>
+<a id="L107"></a><span > </span>
+<a id="L108"></a><span > </span>
+<a id="L109"></a><span > </span>
+<a id="L110"></a><span > </span>
+<a id="L111"></a><span > </span>
+<a id="L112"></a><span class="visited"> </span>
+<a id="L113"></a><span > </span>
+<a id="L114"></a><span > </span>
+<a id="L115"></a><span > </span>
+<a id="L116"></a><span class="visited"> </span>
+<a id="L117"></a><span > </span>
+<a id="L118"></a><span > </span>
+<a id="L119"></a><span > </span>
+<a id="L120"></a><span > </span>
+<a id="L121"></a><span class="visited"> </span>
+<a id="L122"></a><span class="visited"> </span>
+<a id="L123"></a><span > </span>
+<a id="L124"></a><span > </span>
+<a id="L125"></a><span > </span>
+<a id="L126"></a><span > </span>
+<a id="L127"></a><span > </span>
+<a id="L128"></a><span > </span>
+<a id="L129"></a><span > </span>
+<a id="L130"></a><span > </span>
+<a id="L131"></a><span > </span>
+<a id="L132"></a><span > </span>
+<a id="L133"></a><span > </span>
+<a id="L134"></a><span > </span>
+<a id="L135"></a><span > </span>
+<a id="L136"></a><span > </span>
+<a id="L137"></a><span > </span>
+<a id="L138"></a><span > </span>
+<a id="L139"></a><span > </span>
+<a id="L140"></a><span > </span>
+<a id="L141"></a><span > </span>
+<a id="L142"></a><span > </span>
+<a id="L143"></a><span > </span>
+<a id="L144"></a><span > </span>
+<a id="L145"></a><span class="visited"> </span>
+<a id="L146"></a><span > </span>
+<a id="L147"></a><span class="visited"> </span>
+<a id="L148"></a><span class="visited"> </span>
+<a id="L149"></a><span class="visited"> </span>
+<a id="L150"></a><span class="visited"> </span>
+<a id="L151"></a><span > </span>
+<a id="L152"></a><span > </span>
+<a id="L153"></a><span > </span>
+<a id="L154"></a><span class="unvisited"> </span>
+<a id="L155"></a><span class="visited"> </span>
+<a id="L156"></a><span class="visited"> </span>
+<a id="L157"></a><span class="unvisited"> </span>
+<a id="L158"></a><span > </span>
+<a id="L159"></a><span > </span>
+<a id="L160"></a><span class="visited"> </span>
+<a id="L161"></a><span > </span>
+<a id="L162"></a><span class="visited"> </span>
+<a id="L163"></a><span > </span>
+<a id="L164"></a><span > </span>
+<a id="L165"></a><span class="visited"> </span>
+<a id="L166"></a><span > </span>
+<a id="L167"></a><span > </span>
+<a id="L168"></a><span class="visited"> </span>
+<a id="L169"></a><span > </span>
+<a id="L170"></a><span > </span>
+<a id="L171"></a><span class="visited"> </span>
+<a id="L172"></a><span class="visited"> </span>
+<a id="L173"></a><span > </span>
+<a id="L174"></a><span class="visited"> </span>
+<a id="L175"></a><span class="visited"> </span>
+<a id="L176"></a><span > </span>
+<a id="L177"></a><span class="visited"> </span>
+<a id="L178"></a><span > </span>
+<a id="L179"></a><span > </span>
+<a id="L180"></a><span class="visited"> </span>
+<a id="L181"></a><span class="visited"> </span>
+<a id="L182"></a><span class="unvisited"> </span>
+<a id="L183"></a><span class="unvisited"> </span>
+<a id="L184"></a><span class="visited"> </span>
+<a id="L185"></a><span class="visited"> </span>
+<a id="L186"></a><span class="visited"> </span>
+<a id="L187"></a><span class="unvisited"> </span>
+<a id="L188"></a><span class="visited"> </span>
+<a id="L189"></a><span class="unvisited"> </span>
+<a id="L190"></a><span class="visited"> </span>
+<a id="L191"></a><span class="visited"> </span>
+<a id="L192"></a><span class="visited"> </span>
+<a id="L193"></a><span class="visited"> </span>
+<a id="L194"></a><span class="unvisited"> </span>
+<a id="L195"></a><span class="unvisited"> </span>
+<a id="L196"></a><span > </span>
+<a id="L197"></a><span > </span>
+<a id="L198"></a><span class="visited"> </span>
+<a id="L199"></a><span class="visited"> </span>
+<a id="L200"></a><span class="visited"> </span>
+<a id="L201"></a><span class="visited"> </span>
+<a id="L202"></a><span class="visited"> </span>
+<a id="L203"></a><span class="unvisited"> </span>
+<a id="L204"></a><span class="unvisited"> </span>
+<a id="L205"></a><span class="unvisited"> </span>
+<a id="L206"></a><span > </span>
+<a id="L207"></a><span > </span>
+<a id="L208"></a><span > </span>
+<a id="L209"></a><span > </span>
+<a id="L210"></a><span > </span>
+<a id="L211"></a><span > </span>
+<a id="L212"></a><span > </span>
+<a id="L213"></a><span > </span>
+<a id="L214"></a><span > </span>
+<a id="L215"></a><span > </span>
+<a id="L216"></a><span > </span>
+<a id="L217"></a><span > </span>
+<a id="L218"></a><span > </span>
+<a id="L219"></a><span class="visited"> </span>
+<a id="L220"></a><span class="visited"> </span>
+<a id="L221"></a><span class="visited"> </span>
+<a id="L222"></a><span class="visited"> </span>
+<a id="L223"></a><span class="visited"> </span>
+<a id="L224"></a><span class="visited"> </span>
+<a id="L225"></a><span class="visited"> </span>
+<a id="L226"></a><span class="visited"> </span>
+<a id="L227"></a><span > </span>
+<a id="L228"></a><span > </span>
+<a id="L229"></a><span > </span>
+<a id="L230"></a><span class="visited"> </span>
+<a id="L231"></a><span class="visited"> </span>
+<a id="L232"></a><span class="visited"> </span>
+<a id="L233"></a><span > </span>
+<a id="L234"></a><span > </span>
+<a id="L235"></a><span class="visited"> </span>
+<a id="L236"></a><span > </span>
+<a id="L237"></a><span > </span>
+<a id="L238"></a><span > </span>
+<a id="L239"></a><span > </span>
+<a id="L240"></a><span > </span>
+<a id="L241"></a><span > </span>
+<a id="L242"></a><span > </span>
+<a id="L243"></a><span > </span>
+<a id="L244"></a><span > </span>
+<a id="L245"></a><span > </span>
+<a id="L246"></a><span > </span>
+<a id="L247"></a><span > </span>
+<a id="L248"></a><span > </span>
+<a id="L249"></a><span > </span>
+<a id="L250"></a><span > </span>
+<a id="L251"></a><span > </span>
+<a id="L252"></a><span class="some-visited"> </span>
+<a id="L253"></a><span > </span>
+<a id="L254"></a><span > </span>
+<a id="L255"></a><span > </span>
+<a id="L256"></a><span > </span>
+<a id="L257"></a><span class="visited"> </span>
+<a id="L258"></a><span > </span>
+<a id="L259"></a><span > </span>
+<a id="L260"></a><span > </span>
+<a id="L261"></a><span > </span>
+<a id="L262"></a><span > </span>
+<a id="L263"></a><span > </span>
+<a id="L264"></a><span > </span>
+<a id="L265"></a><span > </span>
+<a id="L266"></a><span > </span>
+<a id="L267"></a><span > </span>
+<a id="L268"></a><span > </span>
+<a id="L269"></a><span > </span>
+<a id="L270"></a><span > </span>
+<a id="L271"></a><span > </span>
+<a id="L272"></a><span > </span>
+<a id="L273"></a><span > </span>
+<a id="L274"></a><span > </span>
+<a id="L275"></a><span > </span>
+<a id="L276"></a><span > </span>
+<a id="L277"></a><span > </span>
+<a id="L278"></a><span > </span>
+<a id="L279"></a><span > </span>
+<a id="L280"></a><span > </span>
+<a id="L281"></a><span > </span>
+<a id="L282"></a><span > </span>
+<a id="L283"></a><span > </span>
+<a id="L284"></a><span > </span>
+<a id="L285"></a><span > </span>
+<a id="L286"></a><span > </span>
+<a id="L287"></a><span > </span>
+<a id="L288"></a><span > </span>
+<a id="L289"></a><span > </span>
+<a id="L290"></a><span > </span>
+<a id="L291"></a><span > </span>
+<a id="L292"></a><span > </span>
+<a id="L293"></a><span > </span>
+<a id="L294"></a><span > </span>
+<a id="L295"></a><span > </span>
+<a id="L296"></a><span > </span>
+<a id="L297"></a><span > </span>
+<a id="L298"></a><span > </span>
+<a id="L299"></a><span > </span>
+<a id="L300"></a><span > </span>
+<a id="L301"></a><span > </span>
+<a id="L302"></a><span > </span>
+<a id="L303"></a><span > </span>
+<a id="L304"></a><span > </span>
+<a id="L305"></a><span > </span>
+<a id="L306"></a><span > </span>
+<a id="L307"></a><span > </span>
+<a id="L308"></a><span > </span>
+<a id="L309"></a><span > </span>
+<a id="L310"></a><span > </span>
+<a id="L311"></a><span > </span>
+<a id="L312"></a><span class="visited"> </span>
+<a id="L313"></a><span > </span>
+<a id="L314"></a><span > </span>
+<a id="L315"></a><span > </span>
+<a id="L316"></a><span > </span>
+<a id="L317"></a><span > </span>
+<a id="L318"></a><span > </span>
+<a id="L319"></a><span > </span>
+<a id="L320"></a><span > </span>
+<a id="L321"></a><span > </span>
+<a id="L322"></a><span > </span>
+<a id="L323"></a><span > </span>
+<a id="L324"></a><span > </span>
+<a id="L325"></a><span class="visited"> </span>
+<a id="L326"></a><span > </span>
+<a id="L327"></a><span > </span>
+<a id="L328"></a><span > </span>
+<a id="L329"></a><span > </span>
+<a id="L330"></a><span > </span>
+<a id="L331"></a><span > </span>
+<a id="L332"></a><span > </span>
+<a id="L333"></a><span > </span>
+<a id="L334"></a><span > </span>
+<a id="L335"></a><span class="visited"> </span>
+<a id="L336"></a><span class="unvisited"> </span>
+<a id="L337"></a><span class="visited"> </span>
+<a id="L338"></a><span class="visited"> </span>
+<a id="L339"></a><span class="unvisited"> </span>
+<a id="L340"></a><span class="visited"> </span>
+<a id="L341"></a><span class="visited"> </span>
+<a id="L342"></a><span class="visited"> </span>
+<a id="L343"></a><span > </span>
+<a id="L344"></a><span > </span>
+<a id="L345"></a><span > </span>
+<a id="L346"></a><span > </span>
+<a id="L347"></a><span > </span>
+<a id="L348"></a><span > </span>
+<a id="L349"></a><span > </span>
+<a id="L350"></a><span > </span>
+<a id="L351"></a><span > </span>
+<a id="L352"></a><span > </span>
+<a id="L353"></a><span > </span>
+<a id="L354"></a><span > </span>
+<a id="L355"></a><span > </span>
+<a id="L356"></a><span > </span>
+<a id="L357"></a><span > </span>
+<a id="L358"></a><span > </span>
+<a id="L359"></a><span > </span>
+<a id="L360"></a><span > </span>
+<a id="L361"></a><span > </span>
+<a id="L362"></a><span > </span>
+<a id="L363"></a><span > </span>
+<a id="L364"></a><span > </span>
+<a id="L365"></a><span > </span>
+<a id="L366"></a><span > </span>
+<a id="L367"></a><span > </span>
+<a id="L368"></a><span > </span>
+<a id="L369"></a><span > </span>
+<a id="L370"></a><span > </span>
+<a id="L371"></a><span > </span>
+<a id="L372"></a><span > </span>
+<a id="L373"></a><span > </span>
+<a id="L374"></a><span > </span>
+<a id="L375"></a><span > </span>
+<a id="L376"></a><span > </span>
+<a id="L377"></a><span > </span>
+<a id="L378"></a><span > </span>
+<a id="L379"></a><span > </span>
+<a id="L380"></a><span > </span>
+<a id="L381"></a><span > </span>
+<a id="L382"></a><span > </span>
+<a id="L383"></a><span > </span>
+<a id="L384"></a><span > </span>
+<a id="L385"></a><span > </span>
+<a id="L386"></a><span > </span>
+<a id="L387"></a><span > </span>
+<a id="L388"></a><span > </span>
+<a id="L389"></a><span > </span>
+<a id="L390"></a><span > </span>
+<a id="L391"></a><span > </span>
+<a id="L392"></a><span > </span>
+<a id="L393"></a><span > </span>
+<a id="L394"></a><span class="visited"> </span>
+<a id="L395"></a><span > </span>
+<a id="L396"></a><span > </span>
+<a id="L397"></a><span class="visited"> </span>
+<a id="L398"></a><span > </span>
+<a id="L399"></a><span class="visited"> </span>
+<a id="L400"></a><span > </span>
+<a id="L401"></a><span > </span>
+<a id="L402"></a><span class="visited"> </span>
+<a id="L403"></a><span > </span>
+<a id="L404"></a><span class="visited"> </span>
+<a id="L405"></a><span class="visited"> </span>
+<a id="L406"></a><span > </span>
+<a id="L407"></a><span > </span>
+<a id="L408"></a><span > </span>
+<a id="L409"></a><span > </span>
+<a id="L410"></a><span > </span>
+<a id="L411"></a><span class="visited"> </span>
+<a id="L412"></a><span > </span>
+<a id="L413"></a><span class="visited"> </span>
+<a id="L414"></a><span > </span>
+<a id="L415"></a><span > </span>
+<a id="L416"></a><span class="visited"> </span>
+<a id="L417"></a><span > </span>
+<a id="L418"></a><span > </span>
+<a id="L419"></a><span class="visited"> </span>
+<a id="L420"></a><span > </span>
+<a id="L421"></a><span class="visited"> </span>
+<a id="L422"></a><span > </span>
+<a id="L423"></a><span class="visited"> </span>
+<a id="L424"></a><span > </span>
+<a id="L425"></a><span > </span>
+<a id="L426"></a><span class="visited"> </span>
+<a id="L427"></a><span > </span>
+<a id="L428"></a><span > </span>
+<a id="L429"></a><span > </span>
+<a id="L430"></a><span class="visited"> </span>
+<a id="L431"></a><span > </span>
+<a id="L432"></a><span > </span>
+<a id="L433"></a><span class="visited"> </span>
+<a id="L434"></a><span > </span>
+<a id="L435"></a><span > </span>
+<a id="L436"></a><span > </span>
+<a id="L437"></a><span > </span>
+<a id="L438"></a><span > </span>
+<a id="L439"></a><span > </span>
+<a id="L440"></a><span > </span>
+<a id="L441"></a><span > </span>
+<a id="L442"></a><span > </span>
+<a id="L443"></a><span > </span>
+<a id="L444"></a><span > </span>
+<a id="L445"></a><span > </span>
+<a id="L446"></a><span > </span>
+<a id="L447"></a><span > </span>
+<a id="L448"></a><span > </span>
+<a id="L449"></a><span > </span>
+<a id="L450"></a><span > </span>
+<a id="L451"></a><span > </span>
+<a id="L452"></a><span > </span>
+<a id="L453"></a><span > </span>
+<a id="L454"></a><span > </span>
+<a id="L455"></a><span > </span>
+<a id="L456"></a><span > </span>
+<a id="L457"></a><span > </span>
+<a id="L458"></a><span > </span>
+<a id="L459"></a><span > </span>
+<a id="L460"></a><span > </span>
+<a id="L461"></a><span > </span>
+<a id="L462"></a><span > </span>
+<a id="L463"></a><span > </span>
+<a id="L464"></a><span > </span>
+<a id="L465"></a><span > </span>
+<a id="L466"></a><span > </span>
+<a id="L467"></a><span > </span>
+<a id="L468"></a><span > </span>
+<a id="L469"></a><span > </span>
+<a id="L470"></a><span > </span>
+<a id="L471"></a><span > </span>
+<a id="L472"></a><span > </span>
+<a id="L473"></a><span > </span>
+<a id="L474"></a><span > </span>
+<a id="L475"></a><span > </span>
+<a id="L476"></a><span > </span>
+<a id="L477"></a><span > </span>
+<a id="L478"></a><span class="visited"> </span>
+<a id="L479"></a><span class="visited"> </span>
+<a id="L480"></a><span class="visited"> </span>
+<a id="L481"></a><span > </span>
+<a id="L482"></a><span class="visited"> </span>
+<a id="L483"></a><span class="visited"> </span>
+<a id="L484"></a><span > </span>
+<a id="L485"></a><span class="visited"> </span>
+<a id="L486"></a><span class="visited"> </span>
+<a id="L487"></a><span > </span>
+<a id="L488"></a><span > </span>
+<a id="L489"></a><span > </span>
+<a id="L490"></a><span class="unvisited"> </span>
+<a id="L491"></a><span > </span>
+<a id="L492"></a><span class="unvisited"> </span>
+<a id="L493"></a><span > </span>
+<a id="L494"></a><span > </span>
+<a id="L495"></a><span class="visited"> </span>
+<a id="L496"></a><span > </span>
+<a id="L497"></a><span class="visited"> </span>
+<a id="L498"></a><span > </span>
+<a id="L499"></a><span > </span>
+<a id="L500"></a><span > </span>
+<a id="L501"></a><span > </span>
+<a id="L502"></a><span > </span>
+<a id="L503"></a><span class="visited"> </span>
+<a id="L504"></a><span > </span>
+<a id="L505"></a><span > </span>
+<a id="L506"></a><span > </span>
+<a id="L507"></a><span > </span>
+<a id="L508"></a><span > </span>
+<a id="L509"></a><span > </span>
+<a id="L510"></a><span class="visited"> </span>
+<a id="L511"></a><span > </span>
+<a id="L512"></a><span > </span>
+<a id="L513"></a><span > </span>
+<a id="L514"></a><span > </span>
+<a id="L515"></a><span > </span>
+<a id="L516"></a><span > </span>
+<a id="L517"></a><span > </span>
+<a id="L518"></a><span class="visited"> </span>
+<a id="L519"></a><span class="visited"> </span>
+<a id="L520"></a><span > </span>
+<a id="L521"></a><span class="visited"> </span>
+<a id="L522"></a><span > </span>
+<a id="L523"></a><span > </span>
+<a id="L524"></a><span > </span>
+<a id="L525"></a><span > </span>
+<a id="L526"></a><span > </span>
+<a id="L527"></a><span > </span>
+<a id="L528"></a><span > </span>
+<a id="L529"></a><span class="visited"> </span>
+<a id="L530"></a><span > </span>
+<a id="L531"></a><span class="visited"> </span>
+<a id="L532"></a><span > </span>
+<a id="L533"></a><span > </span>
+<a id="L534"></a><span > </span>
+<a id="L535"></a><span > </span>
+<a id="L536"></a><span > </span>
+<a id="L537"></a><span > </span>
+<a id="L538"></a><span > </span>
+<a id="L539"></a><span class="visited"> </span>
+<a id="L540"></a><span class="visited"> </span>
+<a id="L541"></a><span class="visited"> </span>
+<a id="L542"></a><span class="visited"> </span>
+<a id="L543"></a><span class="visited"> </span>
+<a id="L544"></a><span > </span>
+<a id="L545"></a><span > </span>
+<a id="L546"></a><span > </span>
+<a id="L547"></a><span > </span>
+<a id="L548"></a><span > </span>
+<a id="L549"></a><span > </span>
+<a id="L550"></a><span > </span>
+<a id="L551"></a><span > </span>
+<a id="L552"></a><span > </span>
+<a id="L553"></a><span > </span>
+<a id="L554"></a><span > </span>
+<a id="L555"></a><span > </span>
+<a id="L556"></a><span class="visited"> </span>
+<a id="L557"></a><span > </span>
+<a id="L558"></a><span class="visited"> </span>
+<a id="L559"></a><span > </span>
+<a id="L560"></a><span > </span>
+<a id="L561"></a><span > </span>
+<a id="L562"></a><span > </span>
+<a id="L563"></a><span > </span>
+<a id="L564"></a><span > </span>
+<a id="L565"></a><span class="unvisited"> </span>
+<a id="L566"></a><span > </span>
+<a id="L567"></a><span class="visited"> </span>
+<a id="L568"></a><span class="visited"> </span>
+<a id="L569"></a><span > </span>
+<a id="L570"></a><span > </span>
+<a id="L571"></a><span > </span>
+<a id="L572"></a><span > </span>
+<a id="L573"></a><span > </span>
+<a id="L574"></a><span > </span>
+<a id="L575"></a><span class="visited"> </span>
+<a id="L576"></a><span class="visited"> </span>
+<a id="L577"></a><span class="visited"> </span>
+<a id="L578"></a><span > </span>
+<a id="L579"></a><span > </span>
+<a id="L580"></a><span > </span>
+<a id="L581"></a><span class="visited"> </span>
+<a id="L582"></a><span class="visited"> </span>
+<a id="L583"></a><span > </span>
+<a id="L584"></a><span class="visited"> </span>
+<a id="L585"></a><span class="visited"> </span>
+<a id="L586"></a><span > </span>
+<a id="L587"></a><span class="visited"> </span>
+<a id="L588"></a><span class="visited"> </span>
+<a id="L589"></a><span class="visited"> </span>
+<a id="L590"></a><span > </span>
+<a id="L591"></a><span > </span>
+<a id="L592"></a><span class="visited"> </span>
+<a id="L593"></a><span > </span>
+<a id="L594"></a><span > </span>
+<a id="L595"></a><span > </span>
+<a id="L596"></a><span class="visited"> </span>
+<a id="L597"></a><span > </span>
+<a id="L598"></a><span > </span>
+<a id="L599"></a><span > </span>
+<a id="L600"></a><span class="visited"> </span>
+<a id="L601"></a><span class="visited"> </span>
+<a id="L602"></a><span > </span>
+<a id="L603"></a><span class="visited"> </span>
+<a id="L604"></a><span class="visited"> </span>
+<a id="L605"></a><span > </span>
+<a id="L606"></a><span class="visited"> </span>
+<a id="L607"></a><span > </span>
+<a id="L608"></a><span class="visited"> </span>
+<a id="L609"></a><span class="visited"> </span>
+<a id="L610"></a><span > </span>
+<a id="L611"></a><span class="visited"> </span>
+<a id="L612"></a><span > </span>
+<a id="L613"></a><span > </span>
+<a id="L614"></a><span class="visited"> </span>
+<a id="L615"></a><span > </span>
+<a id="L616"></a><span > </span>
+<a id="L617"></a><span > </span>
+<a id="L618"></a><span class="visited"> </span>
+<a id="L619"></a><span > </span>
+<a id="L620"></a><span > </span>
+<a id="L621"></a><span > </span>
+<a id="L622"></a><span > </span>
+<a id="L623"></a><span > </span>
+<a id="L624"></a><span > </span>
+<a id="L625"></a><span class="visited"> </span>
+<a id="L626"></a><span > </span>
+<a id="L627"></a><span class="visited"> </span>
+<a id="L628"></a><span class="visited"> </span>
+<a id="L629"></a><span class="visited"> </span>
+<a id="L630"></a><span class="some-visited"> </span>
+<a id="L631"></a><span class="unvisited"> </span>
+<a id="L632"></a><span > </span>
+<a id="L633"></a><span class="visited"> </span>
+<a id="L634"></a><span class="visited"> </span>
+<a id="L635"></a><span class="visited"> </span>
+<a id="L636"></a><span > </span>
+<a id="L637"></a><span class="visited"> </span>
+<a id="L638"></a><span > </span>
+<a id="L639"></a><span > </span>
+<a id="L640"></a><span > </span>
+<a id="L641"></a><span class="visited"> </span>
+<a id="L642"></a><span > </span>
+<a id="L643"></a><span > </span>
+<a id="L644"></a><span > </span>
+<a id="L645"></a><span > </span>
+<a id="L646"></a><span > </span>
+<a id="L647"></a><span > </span>
+<a id="L648"></a><span > </span>
+<a id="L649"></a><span > </span>
+<a id="L650"></a><span > </span>
+<a id="L651"></a><span > </span>
+<a id="L652"></a><span > </span>
+<a id="L653"></a><span > </span>
+<a id="L654"></a><span > </span>
+<a id="L655"></a><span > </span>
+<a id="L656"></a><span > </span>
+<a id="L657"></a><span class="visited"> </span>
+<a id="L658"></a><span > </span>
+<a id="L659"></a><span > </span>
+<a id="L660"></a><span > </span>
+<a id="L661"></a><span > </span>
+<a id="L662"></a><span > </span>
+<a id="L663"></a><span > </span>
+<a id="L664"></a><span > </span>
+<a id="L665"></a><span > </span>
+<a id="L666"></a><span > </span>
+<a id="L667"></a><span > </span>
+<a id="L668"></a><span > </span>
+<a id="L669"></a><span > </span>
+<a id="L670"></a><span > </span>
+<a id="L671"></a><span > </span>
+<a id="L672"></a><span class="visited"> </span>
+<a id="L673"></a><span > </span>
+<a id="L674"></a><span > </span>
+<a id="L675"></a><span > </span>
+<a id="L676"></a><span > </span>
+<a id="L677"></a><span > </span>
+<a id="L678"></a><span > </span>
+<a id="L679"></a><span > </span>
+<a id="L680"></a><span > </span>
+<a id="L681"></a><span > </span>
+<a id="L682"></a><span > </span>
+<a id="L683"></a><span > </span>
+<a id="L684"></a><span > </span>
+<a id="L685"></a><span class="visited"> </span>
+<a id="L686"></a><span > </span>
+<a id="L687"></a><span > </span>
+<a id="L688"></a><span > </span>
+<a id="L689"></a><span > </span>
+<a id="L690"></a><span > </span>
+<a id="L691"></a><span > </span>
+<a id="L692"></a><span > </span>
+<a id="L693"></a><span > </span>
+<a id="L694"></a><span > </span>
+<a id="L695"></a><span > </span>
+<a id="L696"></a><span class="visited"> </span>
+<a id="L697"></a><span > </span>
+<a id="L698"></a><span > </span>
+<a id="L699"></a><span > </span>
+<a id="L700"></a><span > </span>
+<a id="L701"></a><span > </span>
+<a id="L702"></a><span > </span>
+<a id="L703"></a><span > </span>
+<a id="L704"></a><span > </span>
+<a id="L705"></a><span > </span>
+<a id="L706"></a><span class="visited"> </span>
+<a id="L707"></a><span > </span>
+<a id="L708"></a><span > </span>
+<a id="L709"></a><span > </span>
+<a id="L710"></a><span > </span>
+<a id="L711"></a><span > </span>
+<a id="L712"></a><span > </span>
+<a id="L713"></a><span class="visited"> </span>
+<a id="L714"></a><span > </span>
+<a id="L715"></a><span > </span>
+<a id="L716"></a><span > </span>
+<a id="L717"></a><span > </span>
+<a id="L718"></a><span > </span>
+<a id="L719"></a><span > </span>
+<a id="L720"></a><span > </span>
+<a id="L721"></a><span > </span>
+<a id="L722"></a><span > </span>
+<a id="L723"></a><span class="unvisited"> </span>
+<a id="L724"></a><span > </span>
+<a id="L725"></a><span > </span>
+<a id="L726"></a><span > </span>
+<a id="L727"></a><span > </span>
+<a id="L728"></a><span > </span>
+<a id="L729"></a><span class="visited"> </span>
+<a id="L730"></a><span > </span>
+<a id="L731"></a><span > </span>
+<a id="L732"></a><span > </span>
+<a id="L733"></a><span > </span>
+<a id="L734"></a><span > </span>
+<a id="L735"></a><span > </span>
+<a id="L736"></a><span > </span>
+<a id="L737"></a><span > </span>
+<a id="L738"></a><span class="visited"> </span>
+<a id="L739"></a><span > </span>
+<a id="L740"></a><span > </span>
+<a id="L741"></a><span > </span>
+<a id="L742"></a><span > </span>
+<a id="L743"></a><span > </span>
+<a id="L744"></a><span > </span>
+<a id="L745"></a><span class="visited"> </span>
+<a id="L746"></a><span > </span>
+<a id="L747"></a><span class="visited"> </span>
+<a id="L748"></a><span > </span>
+<a id="L749"></a><span > </span>
+<a id="L750"></a><span > </span>
+<a id="L751"></a><span > </span>
+<a id="L752"></a><span > </span>
+<a id="L753"></a><span > </span>
+<a id="L754"></a><span > </span>
+<a id="L755"></a><span > </span>
+<a id="L756"></a><span > </span>
+<a id="L757"></a><span class="visited"> </span>
+<a id="L758"></a><span class="visited"> </span>
+<a id="L759"></a><span > </span>
+<a id="L760"></a><span > </span>
+<a id="L761"></a><span > </span>
+<a id="L762"></a><span class="unvisited"> </span>
+<a id="L763"></a><span > </span>
+<a id="L764"></a><span > </span>
+<a id="L765"></a><span > </span>
+<a id="L766"></a><span > </span>
+<a id="L767"></a><span > </span>
+<a id="L768"></a><span > </span>
+<a id="L769"></a><span > </span>
+<a id="L770"></a><span > </span>
+<a id="L771"></a><span > </span>
+<a id="L772"></a><span > </span>
+<a id="L773"></a><span class="unvisited"> </span>
+<a id="L774"></a><span class="unvisited"> </span>
+<a id="L775"></a><span > </span>
+<a id="L776"></a><span > </span>
+<a id="L777"></a><span > </span>
+<a id="L778"></a><span class="visited"> </span>
+<a id="L779"></a><span > </span>
+<a id="L780"></a><span > </span>
+<a id="L781"></a><span > </span>
+<a id="L782"></a><span > </span>
+<a id="L783"></a><span > </span>
+<a id="L784"></a><span > </span>
+<a id="L785"></a><span > </span>
+<a id="L786"></a><span > </span>
+<a id="L787"></a><span > </span>
+<a id="L788"></a><span class="visited"> </span>
+<a id="L789"></a><span class="visited"> </span>
+<a id="L790"></a><span class="visited"> </span>
+<a id="L791"></a><span > </span>
+<a id="L792"></a><span > </span>
+<a id="L793"></a><span > </span>
+<a id="L794"></a><span > </span>
+<a id="L795"></a><span > </span>
+<a id="L796"></a><span class="visited"> </span>
+<a id="L797"></a><span class="visited"> </span>
+<a id="L798"></a><span class="visited"> </span>
+<a id="L799"></a><span class="unvisited"> </span>
+<a id="L800"></a><span > </span>
+<a id="L801"></a><span class="visited"> </span>
+<a id="L802"></a><span > </span>
+<a id="L803"></a><span > </span>
+<a id="L804"></a><span class="visited"> </span>
+<a id="L805"></a><span class="unvisited"> </span>
+<a id="L806"></a><span class="unvisited"> </span>
+<a id="L807"></a><span class="unvisited"> </span>
+<a id="L808"></a><span > </span>
+<a id="L809"></a><span > </span>
+<a id="L810"></a><span > </span>
+<a id="L811"></a><span class="visited"> </span>
+<a id="L812"></a><span > </span>
+<a id="L813"></a><span > </span>
+<a id="L814"></a><span > </span>
+<a id="L815"></a><span > </span>
+<a id="L816"></a><span > </span>
+<a id="L817"></a><span class="unvisited"> </span>
+<a id="L818"></a><span > </span>
+<a id="L819"></a><span class="visited"> </span>
+<a id="L820"></a><span > </span>
+<a id="L821"></a><span > </span>
+<a id="L822"></a><span > </span>
+<a id="L823"></a><span > </span>
+<a id="L824"></a><span class="unvisited"> </span>
+<a id="L825"></a><span > </span>
+<a id="L826"></a><span > </span>
+<a id="L827"></a><span class="visited"> </span>
+<a id="L828"></a><span > </span>
+<a id="L829"></a><span > </span>
+<a id="L830"></a><span class="visited"> </span>
+<a id="L831"></a><span class="unvisited"> </span>
+<a id="L832"></a><span > </span>
+<a id="L833"></a><span class="visited"> </span>
+<a id="L834"></a><span > </span>
+<a id="L835"></a><span class="visited"> </span>
+<a id="L836"></a><span > </span>
+<a id="L837"></a><span class="unvisited"> </span>
+<a id="L838"></a><span > </span>
+<a id="L839"></a><span class="unvisited"> </span>
+<a id="L840"></a><span > </span>
+<a id="L841"></a><span class="unvisited"> </span>
+<a id="L842"></a><span > </span>
+<a id="L843"></a><span > </span>
+<a id="L844"></a><span > </span>
+<a id="L845"></a><span class="visited"> </span>
+<a id="L846"></a><span class="unvisited"> </span>
+<a id="L847"></a><span > </span>
+<a id="L848"></a><span class="visited"> </span>
+<a id="L849"></a><span > </span>
+<a id="L850"></a><span > </span>
+<a id="L851"></a><span > </span>
+<a id="L852"></a><span class="visited"> </span>
+<a id="L853"></a><span class="visited"> </span>
+<a id="L854"></a><span > </span>
+<a id="L855"></a><span class="visited"> </span>
+<a id="L856"></a><span > </span>
+<a id="L857"></a><span class="unvisited"> </span>
+<a id="L858"></a><span > </span>
+<a id="L859"></a><span class="unvisited"> </span>
+<a id="L860"></a><span > </span>
+<a id="L861"></a><span > </span>
+<a id="L862"></a><span > </span>
+<a id="L863"></a><span > </span>
+<a id="L864"></a><span class="visited"> </span>
+<a id="L865"></a><span class="visited"> </span>
+<a id="L866"></a><span class="visited"> </span>
+<a id="L867"></a><span > </span>
+<a id="L868"></a><span class="visited"> </span>
+<a id="L869"></a><span class="unvisited"> </span>
+<a id="L870"></a><span > </span>
+<a id="L871"></a><span > </span>
+<a id="L872"></a><span > </span>
+<a id="L873"></a><span > </span>
+<a id="L874"></a><span class="unvisited"> </span>
+<a id="L875"></a><span > </span>
+<a id="L876"></a><span > </span>
+<a id="L877"></a><span > </span>
+<a id="L878"></a><span class="unvisited"> </span>
+<a id="L879"></a><span > </span>
+<a id="L880"></a><span > </span>
+<a id="L881"></a><span class="unvisited"> </span>
+<a id="L882"></a><span > </span>
+<a id="L883"></a><span class="visited"> </span>
+<a id="L884"></a><span class="visited"> </span>
+<a id="L885"></a><span > </span>
+<a id="L886"></a><span > </span>
+<a id="L887"></a><span > </span>
+<a id="L888"></a><span > </span>
+<a id="L889"></a><span > </span>
+<a id="L890"></a><span > </span>
+<a id="L891"></a><span > </span>
+<a id="L892"></a><span > </span>
+<a id="L893"></a><span > </span>
+<a id="L894"></a><span > </span>
+<a id="L895"></a><span > </span>
+<a id="L896"></a><span > </span>
+<a id="L897"></a><span > </span>
+<a id="L898"></a><span > </span>
+<a id="L899"></a><span > </span>
+<a id="L900"></a><span > </span>
+<a id="L901"></a><span > </span>
+<a id="L902"></a><span > </span>
+<a id="L903"></a><span class="visited"> </span>
+<a id="L904"></a><span class="visited"> </span>
+<a id="L905"></a><span > </span>
+<a id="L906"></a><span class="visited"> </span>
+<a id="L907"></a><span > </span>
+<a id="L908"></a><span class="unvisited"> </span>
+<a id="L909"></a><span > </span>
+<a id="L910"></a><span > </span>
+<a id="L911"></a><span > </span>
+<a id="L912"></a><span > </span>
+<a id="L913"></a><span > </span>
+<a id="L914"></a><span > </span>
+<a id="L915"></a><span > </span>
+<a id="L916"></a><span > </span>
+<a id="L917"></a><span > </span>
+<a id="L918"></a><span > </span>
+<a id="L919"></a><span > </span>
+<a id="L920"></a><span > </span>
+<a id="L921"></a><span > </span>
+<a id="L922"></a><span > </span>
+<a id="L923"></a><span > </span>
+<a id="L924"></a><span > </span>
+<a id="L925"></a><span class="visited"> </span>
+<a id="L926"></a><span > </span>
+<a id="L927"></a><span > </span>
+<a id="L928"></a><span > </span>
+<a id="L929"></a><span > </span>
+<a id="L930"></a><span > </span>
+<a id="L931"></a><span class="visited"> </span>
+<a id="L932"></a><span class="unvisited"> </span>
+<a id="L933"></a><span > </span>
+<a id="L934"></a><span > </span>
+<a id="L935"></a><span > </span>
+<a id="L936"></a><span > </span>
+<a id="L937"></a><span > </span>
+<a id="L938"></a><span > </span>
+<a id="L939"></a><span > </span>
+<a id="L940"></a><span > </span>
+<a id="L941"></a><span class="unvisited"> </span>
+<a id="L942"></a><span class="unvisited"> </span>
+<a id="L943"></a><span class="visited"> </span>
+<a id="L944"></a><span > </span>
+<a id="L945"></a><span class="visited"> </span>
+<a id="L946"></a><span > </span>
+<a id="L947"></a><span class="unvisited"> </span>
+<a id="L948"></a><span class="unvisited"> </span>
+<a id="L949"></a><span class="unvisited"> </span>
+<a id="L950"></a><span class="unvisited"> </span>
+<a id="L951"></a><span > </span>
+<a id="L952"></a><span class="unvisited"> </span>
+<a id="L953"></a><span > </span>
+<a id="L954"></a><span > </span>
+<a id="L955"></a><span > </span>
+<a id="L956"></a><span > </span>
+<a id="L957"></a><span > </span>
+<a id="L958"></a><span class="unvisited"> </span>
+<a id="L959"></a><span class="unvisited"> </span>
+<a id="L960"></a><span class="unvisited"> </span>
+<a id="L961"></a><span > </span>
+<a id="L962"></a><span > </span>
+<a id="L963"></a><span class="unvisited"> </span>
+<a id="L964"></a><span > </span>
+<a id="L965"></a><span > </span>
+<a id="L966"></a><span > </span>
+<a id="L967"></a><span class="unvisited"> </span>
+<a id="L968"></a><span class="unvisited"> </span>
+<a id="L969"></a><span class="unvisited"> </span>
+<a id="L970"></a><span > </span>
+<a id="L971"></a><span class="unvisited"> </span>
+<a id="L972"></a><span > </span>
+<a id="L973"></a><span class="unvisited"> </span>
+<a id="L974"></a><span > </span>
+<a id="L975"></a><span class="unvisited"> </span>
+<a id="L976"></a><span class="unvisited"> </span>
+<a id="L977"></a><span class="unvisited"> </span>
+<a id="L978"></a><span class="unvisited"> </span>
+<a id="L979"></a><span class="unvisited"> </span>
+<a id="L980"></a><span > </span>
+<a id="L981"></a><span > </span>
+<a id="L982"></a><span class="unvisited"> </span>
+<a id="L983"></a><span class="unvisited"> </span>
+<a id="L984"></a><span class="unvisited"> </span>
+<a id="L985"></a><span > </span>
+<a id="L986"></a><span > </span>
+<a id="L987"></a><span > </span>
+<a id="L988"></a><span > </span>
+<a id="L989"></a><span > </span>
+<a id="L990"></a><span > </span>
+<a id="L991"></a><span > </span>
+<a id="L992"></a><span > </span>
+<a id="L993"></a><span > </span>
+<a id="L994"></a><span class="visited"> </span>
+<a id="L995"></a><span class="visited"> </span>
+<a id="L996"></a><span class="visited"> </span>
+<a id="L997"></a><span > </span>
+<a id="L998"></a><span > </span>
+<a id="L999"></a><span > </span>
+<a id="L1000"></a><span class="visited"> </span>
+<a id="L1001"></a><span class="visited"> </span>
+<a id="L1002"></a><span class="visited"> </span>
+<a id="L1003"></a><span > </span>
+<a id="L1004"></a><span > </span>
+<a id="L1005"></a><span > </span>
+<a id="L1006"></a><span > </span>
+<a id="L1007"></a><span class="unvisited"> </span>
+<a id="L1008"></a><span class="unvisited"> </span>
+<a id="L1009"></a><span class="unvisited"> </span>
+<a id="L1010"></a><span class="unvisited"> </span>
+<a id="L1011"></a><span > </span>
+<a id="L1012"></a><span class="unvisited"> </span>
+<a id="L1013"></a><span > </span>
+<a id="L1014"></a><span > </span>
+<a id="L1015"></a><span class="unvisited"> </span>
+<a id="L1016"></a><span class="unvisited"> </span>
+<a id="L1017"></a><span > </span>
+<a id="L1018"></a><span class="unvisited"> </span>
+<a id="L1019"></a><span > </span>
+<a id="L1020"></a><span class="unvisited"> </span>
+<a id="L1021"></a><span class="unvisited"> </span>
+<a id="L1022"></a><span class="unvisited"> </span>
+<a id="L1023"></a><span class="unvisited"> </span>
+<a id="L1024"></a><span class="unvisited"> </span>
+<a id="L1025"></a><span class="unvisited"> </span>
+<a id="L1026"></a><span > </span>
+<a id="L1027"></a><span > </span>
+<a id="L1028"></a><span > </span>
+<a id="L1029"></a><span class="unvisited"> </span>
+<a id="L1030"></a><span > </span>
+<a id="L1031"></a><span class="unvisited"> </span>
+<a id="L1032"></a><span > </span>
+<a id="L1033"></a><span class="unvisited"> </span>
+<a id="L1034"></a><span > </span>
+<a id="L1035"></a><span > </span>
+<a id="L1036"></a><span > </span>
+<a id="L1037"></a><span class="unvisited"> </span>
+<a id="L1038"></a><span class="unvisited"> </span>
+<a id="L1039"></a><span > </span>
+<a id="L1040"></a><span class="unvisited"> </span>
+<a id="L1041"></a><span > </span>
+<a id="L1042"></a><span > </span>
+<a id="L1043"></a><span > </span>
+<a id="L1044"></a><span > </span>
+<a id="L1045"></a><span > </span>
+<a id="L1046"></a><span class="visited"> </span>
+<a id="L1047"></a><span class="visited"> </span>
+<a id="L1048"></a><span class="visited"> </span>
+<a id="L1049"></a><span class="visited"> </span>
+<a id="L1050"></a><span class="visited"> </span>
+<a id="L1051"></a><span > </span>
+<a id="L1052"></a><span > </span>
+<a id="L1053"></a><span > </span>
+<a id="L1054"></a><span > </span>
+<a id="L1055"></a><span > </span>
+<a id="L1056"></a><span > </span>
+<a id="L1057"></a><span class="visited"> </span>
+<a id="L1058"></a><span class="visited"> </span>
+<a id="L1059"></a><span class="visited"> </span>
+<a id="L1060"></a><span class="visited"> </span>
+<a id="L1061"></a><span > </span>
+<a id="L1062"></a><span > </span>
+<a id="L1063"></a><span > </span>
+<a id="L1064"></a><span > </span>
+<a id="L1065"></a><span > </span>
+<a id="L1066"></a><span > </span>
+<a id="L1067"></a><span > </span>
+<a id="L1068"></a><span > </span>
+<a id="L1069"></a><span > </span>
+<a id="L1070"></a><span > </span>
+<a id="L1071"></a><span > </span>
+<a id="L1072"></a><span > </span>
+<a id="L1073"></a><span > </span>
+<a id="L1074"></a><span > </span>
+<a id="L1075"></a><span > </span>
+<a id="L1076"></a><span > </span>
+<a id="L1077"></a><span > </span>
+<a id="L1078"></a><span > </span>
+<a id="L1079"></a><span > </span>
+<a id="L1080"></a><span > </span>
+<a id="L1081"></a><span > </span>
+<a id="L1082"></a><span > </span>
+<a id="L1083"></a><span > </span>
+<a id="L1084"></a><span > </span>
+<a id="L1085"></a><span > </span>
+<a id="L1086"></a><span > </span>
+<a id="L1087"></a><span > </span>
+<a id="L1088"></a><span > </span>
+<a id="L1089"></a><span > </span>
+<a id="L1090"></a><span > </span>
+<a id="L1091"></a><span > </span>
+<a id="L1092"></a><span > </span>
+<a id="L1093"></a><span > </span>
+<a id="L1094"></a><span > </span>
+<a id="L1095"></a><span > </span>
+<a id="L1096"></a><span > </span>
+<a id="L1097"></a><span > </span>
+<a id="L1098"></a><span > </span>
+<a id="L1099"></a><span > </span>
+<a id="L1100"></a><span > </span>
+<a id="L1101"></a><span > </span>
+<a id="L1102"></a><span class="visited"> </span>
+<a id="L1103"></a><span > </span>
+<a id="L1104"></a><span class="visited"> </span>
+<a id="L1105"></a><span > </span>
+<a id="L1106"></a><span class="visited"> </span>
+<a id="L1107"></a><span class="visited"> </span>
+<a id="L1108"></a><span class="visited"> </span>
+<a id="L1109"></a><span > </span>
+<a id="L1110"></a><span class="visited"> </span>
+<a id="L1111"></a><span > </span>
+<a id="L1112"></a><span class="visited"> </span>
+<a id="L1113"></a><span class="visited"> </span>
+<a id="L1114"></a><span class="visited"> </span>
+<a id="L1115"></a><span class="visited"> </span>
+<a id="L1116"></a><span class="visited"> </span>
+<a id="L1117"></a><span > </span>
+<a id="L1118"></a><span class="visited"> </span>
+<a id="L1119"></a><span > </span>
+<a id="L1120"></a><span class="visited"> </span>
+<a id="L1121"></a><span class="visited"> </span>
+<a id="L1122"></a><span class="visited"> </span>
+<a id="L1123"></a><span class="visited"> </span>
+<a id="L1124"></a><span > </span>
+<a id="L1125"></a><span class="visited"> </span>
+<a id="L1126"></a><span class="visited"> </span>
+<a id="L1127"></a><span class="visited"> </span>
+<a id="L1128"></a><span > </span>
+<a id="L1129"></a><span > </span>
+<a id="L1130"></a><span > </span>
+<a id="L1131"></a><span > </span>
+<a id="L1132"></a><span > </span>
+<a id="L1133"></a><span > </span>
+<a id="L1134"></a><span > </span>
+<a id="L1135"></a><span > </span>
+<a id="L1136"></a><span > </span>
+<a id="L1137"></a><span > </span>
+<a id="L1138"></a><span > </span>
+<a id="L1139"></a><span > </span>
+<a id="L1140"></a><span > </span>
+<a id="L1141"></a><span > </span>
+<a id="L1142"></a><span > </span>
+<a id="L1143"></a><span class="visited"> </span>
+<a id="L1144"></a><span > </span>
+<a id="L1145"></a><span > </span>
+<a id="L1146"></a><span > </span>
+<a id="L1147"></a><span class="visited"> </span>
+<a id="L1148"></a><span class="visited"> </span>
+<a id="L1149"></a><span class="visited"> </span>
+<a id="L1150"></a><span > </span>
+<a id="L1151"></a><span > </span>
+<a id="L1152"></a><span > </span>
+<a id="L1153"></a><span > </span>
+<a id="L1154"></a><span > </span>
+<a id="L1155"></a><span > </span>
+<a id="L1156"></a><span > </span>
+<a id="L1157"></a><span > </span>
+<a id="L1158"></a><span > </span>
+<a id="L1159"></a><span > </span>
+<a id="L1160"></a><span > </span>
+<a id="L1161"></a><span > </span>
+<a id="L1162"></a><span > </span>
+<a id="L1163"></a><span > </span>
+<a id="L1164"></a><span class="visited"> </span>
+<a id="L1165"></a><span class="visited"> </span>
+<a id="L1166"></a><span class="visited"> </span>
+<a id="L1167"></a><span > </span>
+<a id="L1168"></a><span class="visited"> </span>
+<a id="L1169"></a><span class="visited"> </span>
+<a id="L1170"></a><span class="visited"> </span>
+<a id="L1171"></a><span class="visited"> </span>
+<a id="L1172"></a><span > </span>
+<a id="L1173"></a><span class="visited"> </span>
+<a id="L1174"></a><span > </span>
+<a id="L1175"></a><span > </span>
+<a id="L1176"></a><span class="visited"> </span>
+<a id="L1177"></a><span class="visited"> </span>
+<a id="L1178"></a><span class="visited"> </span>
+<a id="L1179"></a><span class="visited"> </span>
+<a id="L1180"></a><span class="visited"> </span>
+<a id="L1181"></a><span class="visited"> </span>
+<a id="L1182"></a><span class="visited"> </span>
+<a id="L1183"></a><span class="visited"> </span>
+<a id="L1184"></a><span class="visited"> </span>
+<a id="L1185"></a><span class="unvisited"> </span>
+<a id="L1186"></a><span class="visited"> </span>
+<a id="L1187"></a><span class="some-visited"> </span>
+<a id="L1188"></a><span class="unvisited"> </span>
+<a id="L1189"></a><span class="visited"> </span>
+<a id="L1190"></a><span > </span>
+<a id="L1191"></a><span > </span>
+<a id="L1192"></a><span class="visited"> </span>
+<a id="L1193"></a><span class="visited"> </span>
+<a id="L1194"></a><span > </span>
+<a id="L1195"></a><span class="visited"> </span>
+<a id="L1196"></a><span class="visited"> </span>
+<a id="L1197"></a><span > </span>
+<a id="L1198"></a><span > </span>
+<a id="L1199"></a><span class="visited"> </span>
+<a id="L1200"></a><span class="visited"> </span>
+<a id="L1201"></a><span > </span>
+<a id="L1202"></a><span > </span>
+<a id="L1203"></a><span > </span>
+<a id="L1204"></a><span > </span>
+<a id="L1205"></a><span > </span>
+<a id="L1206"></a><span > </span>
+<a id="L1207"></a><span > </span>
+<a id="L1208"></a><span > </span>
+<a id="L1209"></a><span > </span>
+<a id="L1210"></a><span > </span>
+<a id="L1211"></a><span > </span>
+<a id="L1212"></a><span > </span>
+<a id="L1213"></a><span > </span>
+<a id="L1214"></a><span > </span>
+<a id="L1215"></a><span class="visited"> </span>
+<a id="L1216"></a><span class="visited"> </span>
+<a id="L1217"></a><span class="visited"> </span>
+<a id="L1218"></a><span > </span>
+<a id="L1219"></a><span > </span>
+<a id="L1220"></a><span > </span>
+<a id="L1221"></a><span > </span>
+<a id="L1222"></a><span > </span>
+<a id="L1223"></a><span class="visited"> </span>
+<a id="L1224"></a><span > </span>
+<a id="L1225"></a><span > </span>
+<a id="L1226"></a><span > </span>
+<a id="L1227"></a><span > </span>
+<a id="L1228"></a><span > </span>
+<a id="L1229"></a><span class="visited"> </span>
+<a id="L1230"></a><span > </span>
+<a id="L1231"></a><span > </span>
+<a id="L1232"></a><span > </span>
+<a id="L1233"></a><span > </span>
+<a id="L1234"></a><span class="visited"> </span>
+<a id="L1235"></a><span class="visited"> </span>
+<a id="L1236"></a><span > </span>
+<a id="L1237"></a><span class="visited"> </span>
+<a id="L1238"></a><span > </span>
+<a id="L1239"></a><span class="visited"> </span>
+<a id="L1240"></a><span > </span>
+<a id="L1241"></a><span > </span>
+<a id="L1242"></a><span class="visited"> </span>
+<a id="L1243"></a><span class="visited"> </span>
+<a id="L1244"></a><span class="visited"> </span>
+</pre>
+      </div>
+      <div id="text-layer">
+        <pre id="line-numbers">
+<a href="#L1">   1</a>
+<a href="#L2">   2</a>
+<a href="#L3">   3</a>
+<a href="#L4">   4</a>
+<a href="#L5">   5</a>
+<a href="#L6">   6</a>
+<a href="#L7">   7</a>
+<a href="#L8">   8</a>
+<a href="#L9">   9</a>
+<a href="#L10">  10</a>
+<a href="#L11">  11</a>
+<a href="#L12">  12</a>
+<a href="#L13">  13</a>
+<a href="#L14">  14</a>
+<a href="#L15">  15</a>
+<a href="#L16">  16</a>
+<a href="#L17">  17</a>
+<a href="#L18">  18</a>
+<a href="#L19">  19</a>
+<a href="#L20">  20</a>
+<a href="#L21">  21</a>
+<a href="#L22">  22</a>
+<a href="#L23">  23</a>
+<a href="#L24">  24</a>
+<a href="#L25">  25</a>
+<a href="#L26">  26</a>
+<a href="#L27">  27</a>
+<a href="#L28">  28</a>
+<a href="#L29">  29</a>
+<a href="#L30">  30</a>
+<a href="#L31">  31</a>
+<a href="#L32">  32</a>
+<a href="#L33">  33</a>
+<a href="#L34">  34</a>
+<a href="#L35">  35</a>
+<a href="#L36">  36</a>
+<a href="#L37">  37</a>
+<a href="#L38">  38</a>
+<a href="#L39">  39</a>
+<a href="#L40">  40</a>
+<a href="#L41">  41</a>
+<a href="#L42">  42</a>
+<a href="#L43">  43</a>
+<a href="#L44">  44</a>
+<a href="#L45">  45</a>
+<a href="#L46">  46</a>
+<a href="#L47">  47</a>
+<a href="#L48">  48</a>
+<a href="#L49">  49</a>
+<a href="#L50">  50</a>
+<a href="#L51">  51</a>
+<a href="#L52">  52</a>
+<a href="#L53">  53</a>
+<a href="#L54">  54</a>
+<a href="#L55">  55</a>
+<a href="#L56">  56</a>
+<a href="#L57">  57</a>
+<a href="#L58">  58</a>
+<a href="#L59">  59</a>
+<a href="#L60">  60</a>
+<a href="#L61">  61</a>
+<a href="#L62">  62</a>
+<a href="#L63">  63</a>
+<a href="#L64">  64</a>
+<a href="#L65">  65</a>
+<a href="#L66">  66</a>
+<a href="#L67">  67</a>
+<a href="#L68">  68</a>
+<a href="#L69">  69</a>
+<a href="#L70">  70</a>
+<a href="#L71">  71</a>
+<a href="#L72">  72</a>
+<a href="#L73">  73</a>
+<a href="#L74">  74</a>
+<a href="#L75">  75</a>
+<a href="#L76">  76</a>
+<a href="#L77">  77</a>
+<a href="#L78">  78</a>
+<a href="#L79">  79</a>
+<a href="#L80">  80</a>
+<a href="#L81">  81</a>
+<a href="#L82">  82</a>
+<a href="#L83">  83</a>
+<a href="#L84">  84</a>
+<a href="#L85">  85</a>
+<a href="#L86">  86</a>
+<a href="#L87">  87</a>
+<a href="#L88">  88</a>
+<a href="#L89">  89</a>
+<a href="#L90">  90</a>
+<a href="#L91">  91</a>
+<a href="#L92">  92</a>
+<a href="#L93">  93</a>
+<a href="#L94">  94</a>
+<a href="#L95">  95</a>
+<a href="#L96">  96</a>
+<a href="#L97">  97</a>
+<a href="#L98">  98</a>
+<a href="#L99">  99</a>
+<a href="#L100"> 100</a>
+<a href="#L101"> 101</a>
+<a href="#L102"> 102</a>
+<a href="#L103"> 103</a>
+<a href="#L104"> 104</a>
+<a href="#L105"> 105</a>
+<a href="#L106"> 106</a>
+<a href="#L107"> 107</a>
+<a href="#L108"> 108</a>
+<a href="#L109"> 109</a>
+<a href="#L110"> 110</a>
+<a href="#L111"> 111</a>
+<a href="#L112"> 112</a>
+<a href="#L113"> 113</a>
+<a href="#L114"> 114</a>
+<a href="#L115"> 115</a>
+<a href="#L116"> 116</a>
+<a href="#L117"> 117</a>
+<a href="#L118"> 118</a>
+<a href="#L119"> 119</a>
+<a href="#L120"> 120</a>
+<a href="#L121"> 121</a>
+<a href="#L122"> 122</a>
+<a href="#L123"> 123</a>
+<a href="#L124"> 124</a>
+<a href="#L125"> 125</a>
+<a href="#L126"> 126</a>
+<a href="#L127"> 127</a>
+<a href="#L128"> 128</a>
+<a href="#L129"> 129</a>
+<a href="#L130"> 130</a>
+<a href="#L131"> 131</a>
+<a href="#L132"> 132</a>
+<a href="#L133"> 133</a>
+<a href="#L134"> 134</a>
+<a href="#L135"> 135</a>
+<a href="#L136"> 136</a>
+<a href="#L137"> 137</a>
+<a href="#L138"> 138</a>
+<a href="#L139"> 139</a>
+<a href="#L140"> 140</a>
+<a href="#L141"> 141</a>
+<a href="#L142"> 142</a>
+<a href="#L143"> 143</a>
+<a href="#L144"> 144</a>
+<a href="#L145"> 145</a>
+<a href="#L146"> 146</a>
+<a href="#L147"> 147</a>
+<a href="#L148"> 148</a>
+<a href="#L149"> 149</a>
+<a href="#L150"> 150</a>
+<a href="#L151"> 151</a>
+<a href="#L152"> 152</a>
+<a href="#L153"> 153</a>
+<a href="#L154"> 154</a>
+<a href="#L155"> 155</a>
+<a href="#L156"> 156</a>
+<a href="#L157"> 157</a>
+<a href="#L158"> 158</a>
+<a href="#L159"> 159</a>
+<a href="#L160"> 160</a>
+<a href="#L161"> 161</a>
+<a href="#L162"> 162</a>
+<a href="#L163"> 163</a>
+<a href="#L164"> 164</a>
+<a href="#L165"> 165</a>
+<a href="#L166"> 166</a>
+<a href="#L167"> 167</a>
+<a href="#L168"> 168</a>
+<a href="#L169"> 169</a>
+<a href="#L170"> 170</a>
+<a href="#L171"> 171</a>
+<a href="#L172"> 172</a>
+<a href="#L173"> 173</a>
+<a href="#L174"> 174</a>
+<a href="#L175"> 175</a>
+<a href="#L176"> 176</a>
+<a href="#L177"> 177</a>
+<a href="#L178"> 178</a>
+<a href="#L179"> 179</a>
+<a href="#L180"> 180</a>
+<a href="#L181"> 181</a>
+<a href="#L182"> 182</a>
+<a href="#L183"> 183</a>
+<a href="#L184"> 184</a>
+<a href="#L185"> 185</a>
+<a href="#L186"> 186</a>
+<a href="#L187"> 187</a>
+<a href="#L188"> 188</a>
+<a href="#L189"> 189</a>
+<a href="#L190"> 190</a>
+<a href="#L191"> 191</a>
+<a href="#L192"> 192</a>
+<a href="#L193"> 193</a>
+<a href="#L194"> 194</a>
+<a href="#L195"> 195</a>
+<a href="#L196"> 196</a>
+<a href="#L197"> 197</a>
+<a href="#L198"> 198</a>
+<a href="#L199"> 199</a>
+<a href="#L200"> 200</a>
+<a href="#L201"> 201</a>
+<a href="#L202"> 202</a>
+<a href="#L203"> 203</a>
+<a href="#L204"> 204</a>
+<a href="#L205"> 205</a>
+<a href="#L206"> 206</a>
+<a href="#L207"> 207</a>
+<a href="#L208"> 208</a>
+<a href="#L209"> 209</a>
+<a href="#L210"> 210</a>
+<a href="#L211"> 211</a>
+<a href="#L212"> 212</a>
+<a href="#L213"> 213</a>
+<a href="#L214"> 214</a>
+<a href="#L215"> 215</a>
+<a href="#L216"> 216</a>
+<a href="#L217"> 217</a>
+<a href="#L218"> 218</a>
+<a href="#L219"> 219</a>
+<a href="#L220"> 220</a>
+<a href="#L221"> 221</a>
+<a href="#L222"> 222</a>
+<a href="#L223"> 223</a>
+<a href="#L224"> 224</a>
+<a href="#L225"> 225</a>
+<a href="#L226"> 226</a>
+<a href="#L227"> 227</a>
+<a href="#L228"> 228</a>
+<a href="#L229"> 229</a>
+<a href="#L230"> 230</a>
+<a href="#L231"> 231</a>
+<a href="#L232"> 232</a>
+<a href="#L233"> 233</a>
+<a href="#L234"> 234</a>
+<a href="#L235"> 235</a>
+<a href="#L236"> 236</a>
+<a href="#L237"> 237</a>
+<a href="#L238"> 238</a>
+<a href="#L239"> 239</a>
+<a href="#L240"> 240</a>
+<a href="#L241"> 241</a>
+<a href="#L242"> 242</a>
+<a href="#L243"> 243</a>
+<a href="#L244"> 244</a>
+<a href="#L245"> 245</a>
+<a href="#L246"> 246</a>
+<a href="#L247"> 247</a>
+<a href="#L248"> 248</a>
+<a href="#L249"> 249</a>
+<a href="#L250"> 250</a>
+<a href="#L251"> 251</a>
+<a href="#L252"> 252</a>
+<a href="#L253"> 253</a>
+<a href="#L254"> 254</a>
+<a href="#L255"> 255</a>
+<a href="#L256"> 256</a>
+<a href="#L257"> 257</a>
+<a href="#L258"> 258</a>
+<a href="#L259"> 259</a>
+<a href="#L260"> 260</a>
+<a href="#L261"> 261</a>
+<a href="#L262"> 262</a>
+<a href="#L263"> 263</a>
+<a href="#L264"> 264</a>
+<a href="#L265"> 265</a>
+<a href="#L266"> 266</a>
+<a href="#L267"> 267</a>
+<a href="#L268"> 268</a>
+<a href="#L269"> 269</a>
+<a href="#L270"> 270</a>
+<a href="#L271"> 271</a>
+<a href="#L272"> 272</a>
+<a href="#L273"> 273</a>
+<a href="#L274"> 274</a>
+<a href="#L275"> 275</a>
+<a href="#L276"> 276</a>
+<a href="#L277"> 277</a>
+<a href="#L278"> 278</a>
+<a href="#L279"> 279</a>
+<a href="#L280"> 280</a>
+<a href="#L281"> 281</a>
+<a href="#L282"> 282</a>
+<a href="#L283"> 283</a>
+<a href="#L284"> 284</a>
+<a href="#L285"> 285</a>
+<a href="#L286"> 286</a>
+<a href="#L287"> 287</a>
+<a href="#L288"> 288</a>
+<a href="#L289"> 289</a>
+<a href="#L290"> 290</a>
+<a href="#L291"> 291</a>
+<a href="#L292"> 292</a>
+<a href="#L293"> 293</a>
+<a href="#L294"> 294</a>
+<a href="#L295"> 295</a>
+<a href="#L296"> 296</a>
+<a href="#L297"> 297</a>
+<a href="#L298"> 298</a>
+<a href="#L299"> 299</a>
+<a href="#L300"> 300</a>
+<a href="#L301"> 301</a>
+<a href="#L302"> 302</a>
+<a href="#L303"> 303</a>
+<a href="#L304"> 304</a>
+<a href="#L305"> 305</a>
+<a href="#L306"> 306</a>
+<a href="#L307"> 307</a>
+<a href="#L308"> 308</a>
+<a href="#L309"> 309</a>
+<a href="#L310"> 310</a>
+<a href="#L311"> 311</a>
+<a href="#L312"> 312</a>
+<a href="#L313"> 313</a>
+<a href="#L314"> 314</a>
+<a href="#L315"> 315</a>
+<a href="#L316"> 316</a>
+<a href="#L317"> 317</a>
+<a href="#L318"> 318</a>
+<a href="#L319"> 319</a>
+<a href="#L320"> 320</a>
+<a href="#L321"> 321</a>
+<a href="#L322"> 322</a>
+<a href="#L323"> 323</a>
+<a href="#L324"> 324</a>
+<a href="#L325"> 325</a>
+<a href="#L326"> 326</a>
+<a href="#L327"> 327</a>
+<a href="#L328"> 328</a>
+<a href="#L329"> 329</a>
+<a href="#L330"> 330</a>
+<a href="#L331"> 331</a>
+<a href="#L332"> 332</a>
+<a href="#L333"> 333</a>
+<a href="#L334"> 334</a>
+<a href="#L335"> 335</a>
+<a href="#L336"> 336</a>
+<a href="#L337"> 337</a>
+<a href="#L338"> 338</a>
+<a href="#L339"> 339</a>
+<a href="#L340"> 340</a>
+<a href="#L341"> 341</a>
+<a href="#L342"> 342</a>
+<a href="#L343"> 343</a>
+<a href="#L344"> 344</a>
+<a href="#L345"> 345</a>
+<a href="#L346"> 346</a>
+<a href="#L347"> 347</a>
+<a href="#L348"> 348</a>
+<a href="#L349"> 349</a>
+<a href="#L350"> 350</a>
+<a href="#L351"> 351</a>
+<a href="#L352"> 352</a>
+<a href="#L353"> 353</a>
+<a href="#L354"> 354</a>
+<a href="#L355"> 355</a>
+<a href="#L356"> 356</a>
+<a href="#L357"> 357</a>
+<a href="#L358"> 358</a>
+<a href="#L359"> 359</a>
+<a href="#L360"> 360</a>
+<a href="#L361"> 361</a>
+<a href="#L362"> 362</a>
+<a href="#L363"> 363</a>
+<a href="#L364"> 364</a>
+<a href="#L365"> 365</a>
+<a href="#L366"> 366</a>
+<a href="#L367"> 367</a>
+<a href="#L368"> 368</a>
+<a href="#L369"> 369</a>
+<a href="#L370"> 370</a>
+<a href="#L371"> 371</a>
+<a href="#L372"> 372</a>
+<a href="#L373"> 373</a>
+<a href="#L374"> 374</a>
+<a href="#L375"> 375</a>
+<a href="#L376"> 376</a>
+<a href="#L377"> 377</a>
+<a href="#L378"> 378</a>
+<a href="#L379"> 379</a>
+<a href="#L380"> 380</a>
+<a href="#L381"> 381</a>
+<a href="#L382"> 382</a>
+<a href="#L383"> 383</a>
+<a href="#L384"> 384</a>
+<a href="#L385"> 385</a>
+<a href="#L386"> 386</a>
+<a href="#L387"> 387</a>
+<a href="#L388"> 388</a>
+<a href="#L389"> 389</a>
+<a href="#L390"> 390</a>
+<a href="#L391"> 391</a>
+<a href="#L392"> 392</a>
+<a href="#L393"> 393</a>
+<a href="#L394"> 394</a>
+<a href="#L395"> 395</a>
+<a href="#L396"> 396</a>
+<a href="#L397"> 397</a>
+<a href="#L398"> 398</a>
+<a href="#L399"> 399</a>
+<a href="#L400"> 400</a>
+<a href="#L401"> 401</a>
+<a href="#L402"> 402</a>
+<a href="#L403"> 403</a>
+<a href="#L404"> 404</a>
+<a href="#L405"> 405</a>
+<a href="#L406"> 406</a>
+<a href="#L407"> 407</a>
+<a href="#L408"> 408</a>
+<a href="#L409"> 409</a>
+<a href="#L410"> 410</a>
+<a href="#L411"> 411</a>
+<a href="#L412"> 412</a>
+<a href="#L413"> 413</a>
+<a href="#L414"> 414</a>
+<a href="#L415"> 415</a>
+<a href="#L416"> 416</a>
+<a href="#L417"> 417</a>
+<a href="#L418"> 418</a>
+<a href="#L419"> 419</a>
+<a href="#L420"> 420</a>
+<a href="#L421"> 421</a>
+<a href="#L422"> 422</a>
+<a href="#L423"> 423</a>
+<a href="#L424"> 424</a>
+<a href="#L425"> 425</a>
+<a href="#L426"> 426</a>
+<a href="#L427"> 427</a>
+<a href="#L428"> 428</a>
+<a href="#L429"> 429</a>
+<a href="#L430"> 430</a>
+<a href="#L431"> 431</a>
+<a href="#L432"> 432</a>
+<a href="#L433"> 433</a>
+<a href="#L434"> 434</a>
+<a href="#L435"> 435</a>
+<a href="#L436"> 436</a>
+<a href="#L437"> 437</a>
+<a href="#L438"> 438</a>
+<a href="#L439"> 439</a>
+<a href="#L440"> 440</a>
+<a href="#L441"> 441</a>
+<a href="#L442"> 442</a>
+<a href="#L443"> 443</a>
+<a href="#L444"> 444</a>
+<a href="#L445"> 445</a>
+<a href="#L446"> 446</a>
+<a href="#L447"> 447</a>
+<a href="#L448"> 448</a>
+<a href="#L449"> 449</a>
+<a href="#L450"> 450</a>
+<a href="#L451"> 451</a>
+<a href="#L452"> 452</a>
+<a href="#L453"> 453</a>
+<a href="#L454"> 454</a>
+<a href="#L455"> 455</a>
+<a href="#L456"> 456</a>
+<a href="#L457"> 457</a>
+<a href="#L458"> 458</a>
+<a href="#L459"> 459</a>
+<a href="#L460"> 460</a>
+<a href="#L461"> 461</a>
+<a href="#L462"> 462</a>
+<a href="#L463"> 463</a>
+<a href="#L464"> 464</a>
+<a href="#L465"> 465</a>
+<a href="#L466"> 466</a>
+<a href="#L467"> 467</a>
+<a href="#L468"> 468</a>
+<a href="#L469"> 469</a>
+<a href="#L470"> 470</a>
+<a href="#L471"> 471</a>
+<a href="#L472"> 472</a>
+<a href="#L473"> 473</a>
+<a href="#L474"> 474</a>
+<a href="#L475"> 475</a>
+<a href="#L476"> 476</a>
+<a href="#L477"> 477</a>
+<a href="#L478"> 478</a>
+<a href="#L479"> 479</a>
+<a href="#L480"> 480</a>
+<a href="#L481"> 481</a>
+<a href="#L482"> 482</a>
+<a href="#L483"> 483</a>
+<a href="#L484"> 484</a>
+<a href="#L485"> 485</a>
+<a href="#L486"> 486</a>
+<a href="#L487"> 487</a>
+<a href="#L488"> 488</a>
+<a href="#L489"> 489</a>
+<a href="#L490"> 490</a>
+<a href="#L491"> 491</a>
+<a href="#L492"> 492</a>
+<a href="#L493"> 493</a>
+<a href="#L494"> 494</a>
+<a href="#L495"> 495</a>
+<a href="#L496"> 496</a>
+<a href="#L497"> 497</a>
+<a href="#L498"> 498</a>
+<a href="#L499"> 499</a>
+<a href="#L500"> 500</a>
+<a href="#L501"> 501</a>
+<a href="#L502"> 502</a>
+<a href="#L503"> 503</a>
+<a href="#L504"> 504</a>
+<a href="#L505"> 505</a>
+<a href="#L506"> 506</a>
+<a href="#L507"> 507</a>
+<a href="#L508"> 508</a>
+<a href="#L509"> 509</a>
+<a href="#L510"> 510</a>
+<a href="#L511"> 511</a>
+<a href="#L512"> 512</a>
+<a href="#L513"> 513</a>
+<a href="#L514"> 514</a>
+<a href="#L515"> 515</a>
+<a href="#L516"> 516</a>
+<a href="#L517"> 517</a>
+<a href="#L518"> 518</a>
+<a href="#L519"> 519</a>
+<a href="#L520"> 520</a>
+<a href="#L521"> 521</a>
+<a href="#L522"> 522</a>
+<a href="#L523"> 523</a>
+<a href="#L524"> 524</a>
+<a href="#L525"> 525</a>
+<a href="#L526"> 526</a>
+<a href="#L527"> 527</a>
+<a href="#L528"> 528</a>
+<a href="#L529"> 529</a>
+<a href="#L530"> 530</a>
+<a href="#L531"> 531</a>
+<a href="#L532"> 532</a>
+<a href="#L533"> 533</a>
+<a href="#L534"> 534</a>
+<a href="#L535"> 535</a>
+<a href="#L536"> 536</a>
+<a href="#L537"> 537</a>
+<a href="#L538"> 538</a>
+<a href="#L539"> 539</a>
+<a href="#L540"> 540</a>
+<a href="#L541"> 541</a>
+<a href="#L542"> 542</a>
+<a href="#L543"> 543</a>
+<a href="#L544"> 544</a>
+<a href="#L545"> 545</a>
+<a href="#L546"> 546</a>
+<a href="#L547"> 547</a>
+<a href="#L548"> 548</a>
+<a href="#L549"> 549</a>
+<a href="#L550"> 550</a>
+<a href="#L551"> 551</a>
+<a href="#L552"> 552</a>
+<a href="#L553"> 553</a>
+<a href="#L554"> 554</a>
+<a href="#L555"> 555</a>
+<a href="#L556"> 556</a>
+<a href="#L557"> 557</a>
+<a href="#L558"> 558</a>
+<a href="#L559"> 559</a>
+<a href="#L560"> 560</a>
+<a href="#L561"> 561</a>
+<a href="#L562"> 562</a>
+<a href="#L563"> 563</a>
+<a href="#L564"> 564</a>
+<a href="#L565"> 565</a>
+<a href="#L566"> 566</a>
+<a href="#L567"> 567</a>
+<a href="#L568"> 568</a>
+<a href="#L569"> 569</a>
+<a href="#L570"> 570</a>
+<a href="#L571"> 571</a>
+<a href="#L572"> 572</a>
+<a href="#L573"> 573</a>
+<a href="#L574"> 574</a>
+<a href="#L575"> 575</a>
+<a href="#L576"> 576</a>
+<a href="#L577"> 577</a>
+<a href="#L578"> 578</a>
+<a href="#L579"> 579</a>
+<a href="#L580"> 580</a>
+<a href="#L581"> 581</a>
+<a href="#L582"> 582</a>
+<a href="#L583"> 583</a>
+<a href="#L584"> 584</a>
+<a href="#L585"> 585</a>
+<a href="#L586"> 586</a>
+<a href="#L587"> 587</a>
+<a href="#L588"> 588</a>
+<a href="#L589"> 589</a>
+<a href="#L590"> 590</a>
+<a href="#L591"> 591</a>
+<a href="#L592"> 592</a>
+<a href="#L593"> 593</a>
+<a href="#L594"> 594</a>
+<a href="#L595"> 595</a>
+<a href="#L596"> 596</a>
+<a href="#L597"> 597</a>
+<a href="#L598"> 598</a>
+<a href="#L599"> 599</a>
+<a href="#L600"> 600</a>
+<a href="#L601"> 601</a>
+<a href="#L602"> 602</a>
+<a href="#L603"> 603</a>
+<a href="#L604"> 604</a>
+<a href="#L605"> 605</a>
+<a href="#L606"> 606</a>
+<a href="#L607"> 607</a>
+<a href="#L608"> 608</a>
+<a href="#L609"> 609</a>
+<a href="#L610"> 610</a>
+<a href="#L611"> 611</a>
+<a href="#L612"> 612</a>
+<a href="#L613"> 613</a>
+<a href="#L614"> 614</a>
+<a href="#L615"> 615</a>
+<a href="#L616"> 616</a>
+<a href="#L617"> 617</a>
+<a href="#L618"> 618</a>
+<a href="#L619"> 619</a>
+<a href="#L620"> 620</a>
+<a href="#L621"> 621</a>
+<a href="#L622"> 622</a>
+<a href="#L623"> 623</a>
+<a href="#L624"> 624</a>
+<a href="#L625"> 625</a>
+<a href="#L626"> 626</a>
+<a href="#L627"> 627</a>
+<a href="#L628"> 628</a>
+<a href="#L629"> 629</a>
+<a href="#L630"> 630</a>
+<a href="#L631"> 631</a>
+<a href="#L632"> 632</a>
+<a href="#L633"> 633</a>
+<a href="#L634"> 634</a>
+<a href="#L635"> 635</a>
+<a href="#L636"> 636</a>
+<a href="#L637"> 637</a>
+<a href="#L638"> 638</a>
+<a href="#L639"> 639</a>
+<a href="#L640"> 640</a>
+<a href="#L641"> 641</a>
+<a href="#L642"> 642</a>
+<a href="#L643"> 643</a>
+<a href="#L644"> 644</a>
+<a href="#L645"> 645</a>
+<a href="#L646"> 646</a>
+<a href="#L647"> 647</a>
+<a href="#L648"> 648</a>
+<a href="#L649"> 649</a>
+<a href="#L650"> 650</a>
+<a href="#L651"> 651</a>
+<a href="#L652"> 652</a>
+<a href="#L653"> 653</a>
+<a href="#L654"> 654</a>
+<a href="#L655"> 655</a>
+<a href="#L656"> 656</a>
+<a href="#L657"> 657</a>
+<a href="#L658"> 658</a>
+<a href="#L659"> 659</a>
+<a href="#L660"> 660</a>
+<a href="#L661"> 661</a>
+<a href="#L662"> 662</a>
+<a href="#L663"> 663</a>
+<a href="#L664"> 664</a>
+<a href="#L665"> 665</a>
+<a href="#L666"> 666</a>
+<a href="#L667"> 667</a>
+<a href="#L668"> 668</a>
+<a href="#L669"> 669</a>
+<a href="#L670"> 670</a>
+<a href="#L671"> 671</a>
+<a href="#L672"> 672</a>
+<a href="#L673"> 673</a>
+<a href="#L674"> 674</a>
+<a href="#L675"> 675</a>
+<a href="#L676"> 676</a>
+<a href="#L677"> 677</a>
+<a href="#L678"> 678</a>
+<a href="#L679"> 679</a>
+<a href="#L680"> 680</a>
+<a href="#L681"> 681</a>
+<a href="#L682"> 682</a>
+<a href="#L683"> 683</a>
+<a href="#L684"> 684</a>
+<a href="#L685"> 685</a>
+<a href="#L686"> 686</a>
+<a href="#L687"> 687</a>
+<a href="#L688"> 688</a>
+<a href="#L689"> 689</a>
+<a href="#L690"> 690</a>
+<a href="#L691"> 691</a>
+<a href="#L692"> 692</a>
+<a href="#L693"> 693</a>
+<a href="#L694"> 694</a>
+<a href="#L695"> 695</a>
+<a href="#L696"> 696</a>
+<a href="#L697"> 697</a>
+<a href="#L698"> 698</a>
+<a href="#L699"> 699</a>
+<a href="#L700"> 700</a>
+<a href="#L701"> 701</a>
+<a href="#L702"> 702</a>
+<a href="#L703"> 703</a>
+<a href="#L704"> 704</a>
+<a href="#L705"> 705</a>
+<a href="#L706"> 706</a>
+<a href="#L707"> 707</a>
+<a href="#L708"> 708</a>
+<a href="#L709"> 709</a>
+<a href="#L710"> 710</a>
+<a href="#L711"> 711</a>
+<a href="#L712"> 712</a>
+<a href="#L713"> 713</a>
+<a href="#L714"> 714</a>
+<a href="#L715"> 715</a>
+<a href="#L716"> 716</a>
+<a href="#L717"> 717</a>
+<a href="#L718"> 718</a>
+<a href="#L719"> 719</a>
+<a href="#L720"> 720</a>
+<a href="#L721"> 721</a>
+<a href="#L722"> 722</a>
+<a href="#L723"> 723</a>
+<a href="#L724"> 724</a>
+<a href="#L725"> 725</a>
+<a href="#L726"> 726</a>
+<a href="#L727"> 727</a>
+<a href="#L728"> 728</a>
+<a href="#L729"> 729</a>
+<a href="#L730"> 730</a>
+<a href="#L731"> 731</a>
+<a href="#L732"> 732</a>
+<a href="#L733"> 733</a>
+<a href="#L734"> 734</a>
+<a href="#L735"> 735</a>
+<a href="#L736"> 736</a>
+<a href="#L737"> 737</a>
+<a href="#L738"> 738</a>
+<a href="#L739"> 739</a>
+<a href="#L740"> 740</a>
+<a href="#L741"> 741</a>
+<a href="#L742"> 742</a>
+<a href="#L743"> 743</a>
+<a href="#L744"> 744</a>
+<a href="#L745"> 745</a>
+<a href="#L746"> 746</a>
+<a href="#L747"> 747</a>
+<a href="#L748"> 748</a>
+<a href="#L749"> 749</a>
+<a href="#L750"> 750</a>
+<a href="#L751"> 751</a>
+<a href="#L752"> 752</a>
+<a href="#L753"> 753</a>
+<a href="#L754"> 754</a>
+<a href="#L755"> 755</a>
+<a href="#L756"> 756</a>
+<a href="#L757"> 757</a>
+<a href="#L758"> 758</a>
+<a href="#L759"> 759</a>
+<a href="#L760"> 760</a>
+<a href="#L761"> 761</a>
+<a href="#L762"> 762</a>
+<a href="#L763"> 763</a>
+<a href="#L764"> 764</a>
+<a href="#L765"> 765</a>
+<a href="#L766"> 766</a>
+<a href="#L767"> 767</a>
+<a href="#L768"> 768</a>
+<a href="#L769"> 769</a>
+<a href="#L770"> 770</a>
+<a href="#L771"> 771</a>
+<a href="#L772"> 772</a>
+<a href="#L773"> 773</a>
+<a href="#L774"> 774</a>
+<a href="#L775"> 775</a>
+<a href="#L776"> 776</a>
+<a href="#L777"> 777</a>
+<a href="#L778"> 778</a>
+<a href="#L779"> 779</a>
+<a href="#L780"> 780</a>
+<a href="#L781"> 781</a>
+<a href="#L782"> 782</a>
+<a href="#L783"> 783</a>
+<a href="#L784"> 784</a>
+<a href="#L785"> 785</a>
+<a href="#L786"> 786</a>
+<a href="#L787"> 787</a>
+<a href="#L788"> 788</a>
+<a href="#L789"> 789</a>
+<a href="#L790"> 790</a>
+<a href="#L791"> 791</a>
+<a href="#L792"> 792</a>
+<a href="#L793"> 793</a>
+<a href="#L794"> 794</a>
+<a href="#L795"> 795</a>
+<a href="#L796"> 796</a>
+<a href="#L797"> 797</a>
+<a href="#L798"> 798</a>
+<a href="#L799"> 799</a>
+<a href="#L800"> 800</a>
+<a href="#L801"> 801</a>
+<a href="#L802"> 802</a>
+<a href="#L803"> 803</a>
+<a href="#L804"> 804</a>
+<a href="#L805"> 805</a>
+<a href="#L806"> 806</a>
+<a href="#L807"> 807</a>
+<a href="#L808"> 808</a>
+<a href="#L809"> 809</a>
+<a href="#L810"> 810</a>
+<a href="#L811"> 811</a>
+<a href="#L812"> 812</a>
+<a href="#L813"> 813</a>
+<a href="#L814"> 814</a>
+<a href="#L815"> 815</a>
+<a href="#L816"> 816</a>
+<a href="#L817"> 817</a>
+<a href="#L818"> 818</a>
+<a href="#L819"> 819</a>
+<a href="#L820"> 820</a>
+<a href="#L821"> 821</a>
+<a href="#L822"> 822</a>
+<a href="#L823"> 823</a>
+<a href="#L824"> 824</a>
+<a href="#L825"> 825</a>
+<a href="#L826"> 826</a>
+<a href="#L827"> 827</a>
+<a href="#L828"> 828</a>
+<a href="#L829"> 829</a>
+<a href="#L830"> 830</a>
+<a href="#L831"> 831</a>
+<a href="#L832"> 832</a>
+<a href="#L833"> 833</a>
+<a href="#L834"> 834</a>
+<a href="#L835"> 835</a>
+<a href="#L836"> 836</a>
+<a href="#L837"> 837</a>
+<a href="#L838"> 838</a>
+<a href="#L839"> 839</a>
+<a href="#L840"> 840</a>
+<a href="#L841"> 841</a>
+<a href="#L842"> 842</a>
+<a href="#L843"> 843</a>
+<a href="#L844"> 844</a>
+<a href="#L845"> 845</a>
+<a href="#L846"> 846</a>
+<a href="#L847"> 847</a>
+<a href="#L848"> 848</a>
+<a href="#L849"> 849</a>
+<a href="#L850"> 850</a>
+<a href="#L851"> 851</a>
+<a href="#L852"> 852</a>
+<a href="#L853"> 853</a>
+<a href="#L854"> 854</a>
+<a href="#L855"> 855</a>
+<a href="#L856"> 856</a>
+<a href="#L857"> 857</a>
+<a href="#L858"> 858</a>
+<a href="#L859"> 859</a>
+<a href="#L860"> 860</a>
+<a href="#L861"> 861</a>
+<a href="#L862"> 862</a>
+<a href="#L863"> 863</a>
+<a href="#L864"> 864</a>
+<a href="#L865"> 865</a>
+<a href="#L866"> 866</a>
+<a href="#L867"> 867</a>
+<a href="#L868"> 868</a>
+<a href="#L869"> 869</a>
+<a href="#L870"> 870</a>
+<a href="#L871"> 871</a>
+<a href="#L872"> 872</a>
+<a href="#L873"> 873</a>
+<a href="#L874"> 874</a>
+<a href="#L875"> 875</a>
+<a href="#L876"> 876</a>
+<a href="#L877"> 877</a>
+<a href="#L878"> 878</a>
+<a href="#L879"> 879</a>
+<a href="#L880"> 880</a>
+<a href="#L881"> 881</a>
+<a href="#L882"> 882</a>
+<a href="#L883"> 883</a>
+<a href="#L884"> 884</a>
+<a href="#L885"> 885</a>
+<a href="#L886"> 886</a>
+<a href="#L887"> 887</a>
+<a href="#L888"> 888</a>
+<a href="#L889"> 889</a>
+<a href="#L890"> 890</a>
+<a href="#L891"> 891</a>
+<a href="#L892"> 892</a>
+<a href="#L893"> 893</a>
+<a href="#L894"> 894</a>
+<a href="#L895"> 895</a>
+<a href="#L896"> 896</a>
+<a href="#L897"> 897</a>
+<a href="#L898"> 898</a>
+<a href="#L899"> 899</a>
+<a href="#L900"> 900</a>
+<a href="#L901"> 901</a>
+<a href="#L902"> 902</a>
+<a href="#L903"> 903</a>
+<a href="#L904"> 904</a>
+<a href="#L905"> 905</a>
+<a href="#L906"> 906</a>
+<a href="#L907"> 907</a>
+<a href="#L908"> 908</a>
+<a href="#L909"> 909</a>
+<a href="#L910"> 910</a>
+<a href="#L911"> 911</a>
+<a href="#L912"> 912</a>
+<a href="#L913"> 913</a>
+<a href="#L914"> 914</a>
+<a href="#L915"> 915</a>
+<a href="#L916"> 916</a>
+<a href="#L917"> 917</a>
+<a href="#L918"> 918</a>
+<a href="#L919"> 919</a>
+<a href="#L920"> 920</a>
+<a href="#L921"> 921</a>
+<a href="#L922"> 922</a>
+<a href="#L923"> 923</a>
+<a href="#L924"> 924</a>
+<a href="#L925"> 925</a>
+<a href="#L926"> 926</a>
+<a href="#L927"> 927</a>
+<a href="#L928"> 928</a>
+<a href="#L929"> 929</a>
+<a href="#L930"> 930</a>
+<a href="#L931"> 931</a>
+<a href="#L932"> 932</a>
+<a href="#L933"> 933</a>
+<a href="#L934"> 934</a>
+<a href="#L935"> 935</a>
+<a href="#L936"> 936</a>
+<a href="#L937"> 937</a>
+<a href="#L938"> 938</a>
+<a href="#L939"> 939</a>
+<a href="#L940"> 940</a>
+<a href="#L941"> 941</a>
+<a href="#L942"> 942</a>
+<a href="#L943"> 943</a>
+<a href="#L944"> 944</a>
+<a href="#L945"> 945</a>
+<a href="#L946"> 946</a>
+<a href="#L947"> 947</a>
+<a href="#L948"> 948</a>
+<a href="#L949"> 949</a>
+<a href="#L950"> 950</a>
+<a href="#L951"> 951</a>
+<a href="#L952"> 952</a>
+<a href="#L953"> 953</a>
+<a href="#L954"> 954</a>
+<a href="#L955"> 955</a>
+<a href="#L956"> 956</a>
+<a href="#L957"> 957</a>
+<a href="#L958"> 958</a>
+<a href="#L959"> 959</a>
+<a href="#L960"> 960</a>
+<a href="#L961"> 961</a>
+<a href="#L962"> 962</a>
+<a href="#L963"> 963</a>
+<a href="#L964"> 964</a>
+<a href="#L965"> 965</a>
+<a href="#L966"> 966</a>
+<a href="#L967"> 967</a>
+<a href="#L968"> 968</a>
+<a href="#L969"> 969</a>
+<a href="#L970"> 970</a>
+<a href="#L971"> 971</a>
+<a href="#L972"> 972</a>
+<a href="#L973"> 973</a>
+<a href="#L974"> 974</a>
+<a href="#L975"> 975</a>
+<a href="#L976"> 976</a>
+<a href="#L977"> 977</a>
+<a href="#L978"> 978</a>
+<a href="#L979"> 979</a>
+<a href="#L980"> 980</a>
+<a href="#L981"> 981</a>
+<a href="#L982"> 982</a>
+<a href="#L983"> 983</a>
+<a href="#L984"> 984</a>
+<a href="#L985"> 985</a>
+<a href="#L986"> 986</a>
+<a href="#L987"> 987</a>
+<a href="#L988"> 988</a>
+<a href="#L989"> 989</a>
+<a href="#L990"> 990</a>
+<a href="#L991"> 991</a>
+<a href="#L992"> 992</a>
+<a href="#L993"> 993</a>
+<a href="#L994"> 994</a>
+<a href="#L995"> 995</a>
+<a href="#L996"> 996</a>
+<a href="#L997"> 997</a>
+<a href="#L998"> 998</a>
+<a href="#L999"> 999</a>
+<a href="#L1000">1000</a>
+<a href="#L1001">1001</a>
+<a href="#L1002">1002</a>
+<a href="#L1003">1003</a>
+<a href="#L1004">1004</a>
+<a href="#L1005">1005</a>
+<a href="#L1006">1006</a>
+<a href="#L1007">1007</a>
+<a href="#L1008">1008</a>
+<a href="#L1009">1009</a>
+<a href="#L1010">1010</a>
+<a href="#L1011">1011</a>
+<a href="#L1012">1012</a>
+<a href="#L1013">1013</a>
+<a href="#L1014">1014</a>
+<a href="#L1015">1015</a>
+<a href="#L1016">1016</a>
+<a href="#L1017">1017</a>
+<a href="#L1018">1018</a>
+<a href="#L1019">1019</a>
+<a href="#L1020">1020</a>
+<a href="#L1021">1021</a>
+<a href="#L1022">1022</a>
+<a href="#L1023">1023</a>
+<a href="#L1024">1024</a>
+<a href="#L1025">1025</a>
+<a href="#L1026">1026</a>
+<a href="#L1027">1027</a>
+<a href="#L1028">1028</a>
+<a href="#L1029">1029</a>
+<a href="#L1030">1030</a>
+<a href="#L1031">1031</a>
+<a href="#L1032">1032</a>
+<a href="#L1033">1033</a>
+<a href="#L1034">1034</a>
+<a href="#L1035">1035</a>
+<a href="#L1036">1036</a>
+<a href="#L1037">1037</a>
+<a href="#L1038">1038</a>
+<a href="#L1039">1039</a>
+<a href="#L1040">1040</a>
+<a href="#L1041">1041</a>
+<a href="#L1042">1042</a>
+<a href="#L1043">1043</a>
+<a href="#L1044">1044</a>
+<a href="#L1045">1045</a>
+<a href="#L1046">1046</a>
+<a href="#L1047">1047</a>
+<a href="#L1048">1048</a>
+<a href="#L1049">1049</a>
+<a href="#L1050">1050</a>
+<a href="#L1051">1051</a>
+<a href="#L1052">1052</a>
+<a href="#L1053">1053</a>
+<a href="#L1054">1054</a>
+<a href="#L1055">1055</a>
+<a href="#L1056">1056</a>
+<a href="#L1057">1057</a>
+<a href="#L1058">1058</a>
+<a href="#L1059">1059</a>
+<a href="#L1060">1060</a>
+<a href="#L1061">1061</a>
+<a href="#L1062">1062</a>
+<a href="#L1063">1063</a>
+<a href="#L1064">1064</a>
+<a href="#L1065">1065</a>
+<a href="#L1066">1066</a>
+<a href="#L1067">1067</a>
+<a href="#L1068">1068</a>
+<a href="#L1069">1069</a>
+<a href="#L1070">1070</a>
+<a href="#L1071">1071</a>
+<a href="#L1072">1072</a>
+<a href="#L1073">1073</a>
+<a href="#L1074">1074</a>
+<a href="#L1075">1075</a>
+<a href="#L1076">1076</a>
+<a href="#L1077">1077</a>
+<a href="#L1078">1078</a>
+<a href="#L1079">1079</a>
+<a href="#L1080">1080</a>
+<a href="#L1081">1081</a>
+<a href="#L1082">1082</a>
+<a href="#L1083">1083</a>
+<a href="#L1084">1084</a>
+<a href="#L1085">1085</a>
+<a href="#L1086">1086</a>
+<a href="#L1087">1087</a>
+<a href="#L1088">1088</a>
+<a href="#L1089">1089</a>
+<a href="#L1090">1090</a>
+<a href="#L1091">1091</a>
+<a href="#L1092">1092</a>
+<a href="#L1093">1093</a>
+<a href="#L1094">1094</a>
+<a href="#L1095">1095</a>
+<a href="#L1096">1096</a>
+<a href="#L1097">1097</a>
+<a href="#L1098">1098</a>
+<a href="#L1099">1099</a>
+<a href="#L1100">1100</a>
+<a href="#L1101">1101</a>
+<a href="#L1102">1102</a>
+<a href="#L1103">1103</a>
+<a href="#L1104">1104</a>
+<a href="#L1105">1105</a>
+<a href="#L1106">1106</a>
+<a href="#L1107">1107</a>
+<a href="#L1108">1108</a>
+<a href="#L1109">1109</a>
+<a href="#L1110">1110</a>
+<a href="#L1111">1111</a>
+<a href="#L1112">1112</a>
+<a href="#L1113">1113</a>
+<a href="#L1114">1114</a>
+<a href="#L1115">1115</a>
+<a href="#L1116">1116</a>
+<a href="#L1117">1117</a>
+<a href="#L1118">1118</a>
+<a href="#L1119">1119</a>
+<a href="#L1120">1120</a>
+<a href="#L1121">1121</a>
+<a href="#L1122">1122</a>
+<a href="#L1123">1123</a>
+<a href="#L1124">1124</a>
+<a href="#L1125">1125</a>
+<a href="#L1126">1126</a>
+<a href="#L1127">1127</a>
+<a href="#L1128">1128</a>
+<a href="#L1129">1129</a>
+<a href="#L1130">1130</a>
+<a href="#L1131">1131</a>
+<a href="#L1132">1132</a>
+<a href="#L1133">1133</a>
+<a href="#L1134">1134</a>
+<a href="#L1135">1135</a>
+<a href="#L1136">1136</a>
+<a href="#L1137">1137</a>
+<a href="#L1138">1138</a>
+<a href="#L1139">1139</a>
+<a href="#L1140">1140</a>
+<a href="#L1141">1141</a>
+<a href="#L1142">1142</a>
+<a href="#L1143">1143</a>
+<a href="#L1144">1144</a>
+<a href="#L1145">1145</a>
+<a href="#L1146">1146</a>
+<a href="#L1147">1147</a>
+<a href="#L1148">1148</a>
+<a href="#L1149">1149</a>
+<a href="#L1150">1150</a>
+<a href="#L1151">1151</a>
+<a href="#L1152">1152</a>
+<a href="#L1153">1153</a>
+<a href="#L1154">1154</a>
+<a href="#L1155">1155</a>
+<a href="#L1156">1156</a>
+<a href="#L1157">1157</a>
+<a href="#L1158">1158</a>
+<a href="#L1159">1159</a>
+<a href="#L1160">1160</a>
+<a href="#L1161">1161</a>
+<a href="#L1162">1162</a>
+<a href="#L1163">1163</a>
+<a href="#L1164">1164</a>
+<a href="#L1165">1165</a>
+<a href="#L1166">1166</a>
+<a href="#L1167">1167</a>
+<a href="#L1168">1168</a>
+<a href="#L1169">1169</a>
+<a href="#L1170">1170</a>
+<a href="#L1171">1171</a>
+<a href="#L1172">1172</a>
+<a href="#L1173">1173</a>
+<a href="#L1174">1174</a>
+<a href="#L1175">1175</a>
+<a href="#L1176">1176</a>
+<a href="#L1177">1177</a>
+<a href="#L1178">1178</a>
+<a href="#L1179">1179</a>
+<a href="#L1180">1180</a>
+<a href="#L1181">1181</a>
+<a href="#L1182">1182</a>
+<a href="#L1183">1183</a>
+<a href="#L1184">1184</a>
+<a href="#L1185">1185</a>
+<a href="#L1186">1186</a>
+<a href="#L1187">1187</a>
+<a href="#L1188">1188</a>
+<a href="#L1189">1189</a>
+<a href="#L1190">1190</a>
+<a href="#L1191">1191</a>
+<a href="#L1192">1192</a>
+<a href="#L1193">1193</a>
+<a href="#L1194">1194</a>
+<a href="#L1195">1195</a>
+<a href="#L1196">1196</a>
+<a href="#L1197">1197</a>
+<a href="#L1198">1198</a>
+<a href="#L1199">1199</a>
+<a href="#L1200">1200</a>
+<a href="#L1201">1201</a>
+<a href="#L1202">1202</a>
+<a href="#L1203">1203</a>
+<a href="#L1204">1204</a>
+<a href="#L1205">1205</a>
+<a href="#L1206">1206</a>
+<a href="#L1207">1207</a>
+<a href="#L1208">1208</a>
+<a href="#L1209">1209</a>
+<a href="#L1210">1210</a>
+<a href="#L1211">1211</a>
+<a href="#L1212">1212</a>
+<a href="#L1213">1213</a>
+<a href="#L1214">1214</a>
+<a href="#L1215">1215</a>
+<a href="#L1216">1216</a>
+<a href="#L1217">1217</a>
+<a href="#L1218">1218</a>
+<a href="#L1219">1219</a>
+<a href="#L1220">1220</a>
+<a href="#L1221">1221</a>
+<a href="#L1222">1222</a>
+<a href="#L1223">1223</a>
+<a href="#L1224">1224</a>
+<a href="#L1225">1225</a>
+<a href="#L1226">1226</a>
+<a href="#L1227">1227</a>
+<a href="#L1228">1228</a>
+<a href="#L1229">1229</a>
+<a href="#L1230">1230</a>
+<a href="#L1231">1231</a>
+<a href="#L1232">1232</a>
+<a href="#L1233">1233</a>
+<a href="#L1234">1234</a>
+<a href="#L1235">1235</a>
+<a href="#L1236">1236</a>
+<a href="#L1237">1237</a>
+<a href="#L1238">1238</a>
+<a href="#L1239">1239</a>
+<a href="#L1240">1240</a>
+<a href="#L1241">1241</a>
+<a href="#L1242">1242</a>
+<a href="#L1243">1243</a>
+<a href="#L1244">1244</a>
+</pre>
+        <pre id="code">
+(**************************************************************************)
+(*                                                                        *)
+(*                                 OCaml                                  *)
+(*                                                                        *)
+(*               Jeremy Yallop, University of Cambridge                   *)
+(*               Gabriel Scherer, Project Parsifal, INRIA Saclay          *)
+(*               Alban Reynaud, ENS Lyon                                  *)
+(*                                                                        *)
+(*   Copyright 2017 Jeremy Yallop                                         *)
+(*   Copyright 2018 Alban Reynaud                                         *)
+(*   Copyright 2018 INRIA                                                 *)
+(*                                                                        *)
+(*   All rights reserved.  This file is distributed under the terms of    *)
+(*   the GNU Lesser General Public License version 2.1, with the          *)
+(*   special exception on linking described in the file LICENSE.          *)
+(*                                                                        *)
+(**************************************************************************)
+
+(** Static checking of recursive declarations
+
+Some recursive definitions are meaningful
+{[
+  let rec factorial = function 0 -&gt; 1 | n -&gt; n * factorial (n - 1)
+  let rec infinite_list = 0 :: infinite_list
+]}
+but some other are meaningless
+{[
+  let rec x = x
+  let rec x = x+1
+|}
+
+Intuitively, a recursive definition makes sense when the body of the
+definition can be evaluated without fully knowing what the recursive
+name is yet.
+
+In the [factorial] example, the name [factorial] refers to a function,
+evaluating the function definition [function ...] can be done
+immediately and will not force a recursive call to [factorial] -- this
+will only happen later, when [factorial] is called with an argument.
+
+In the [infinite_list] example, we can evaluate [0 :: infinite_list]
+without knowing the full content of [infinite_list], but with just its
+address. This is a case of productive/guarded recursion.
+
+On the contrary, [let rec x = x] is unguarded recursion (the meaning
+is undetermined), and [let rec x = x+1] would need the value of [x]
+while evaluating its definition [x+1].
+
+This file implements a static check to decide which definitions are
+known to be meaningful, and which may be meaningless. In the general
+case, we handle a set of mutually-recursive definitions
+{[
+let rec x1 = e1
+and x2 = e2
+...
+and xn = en
+]}
+
+
+Our check (see function [is_valid_recursive_expression] is defined
+using two criteria:
+
+Usage of recursive variables: how does each of the [e1 .. en] use the
+ recursive variables [x1 .. xn]?
+
+Static or dynamic size: for which of the [ei] can we compute the
+  in-memory size of the value without evaluating [ei] (so that we can
+  pre-allocate it, and thus know its final address before evaluation).
+
+The "static or dynamic size" is decided by the classify_* functions below.
+
+The "variable usage" question is decided by a static analysis looking
+very much like a type system. The idea is to assign "access modes" to
+variables, where an "access mode" [m] is defined as either
+
+    m ::= Ignore (* the value is not used at all *)
+        | Delay (* the value is not needed at definition time *)
+        | Guard (* the value is stored under a data constructor *)
+        | Return (* the value result is directly returned *)
+        | Dereference (* full access and inspection of the value *)
+
+The access modes of an expression [e] are represented by a "context"
+[G], which is simply a mapping from variables (the variables used in
+[e]) to access modes.
+
+The core notion of the static check is a type-system-like judgment of
+the form [G |- e : m], which can be interpreted as meaning either of:
+
+- If we are allowed to use the variables of [e] at the modes in [G]
+  (but not more), then it is safe to use [e] at the mode [m].
+
+- If we want to use [e] at the mode [m], then its variables are
+  used at the modes in [G].
+
+In practice, for a given expression [e], our implementation takes the
+desired mode of use [m] as *input*, and returns a context [G] as
+*output*, which is (uniquely determined as) the most permissive choice
+of modes [G] for the variables of [e] such that [G |- e : m] holds.
+*)
+
+open Asttypes
+open Typedtree
+open Types
+
+exception Illegal_expr
+
+(** {1 Static or dynamic size} *)
+
+type sd = Static | Dynamic
+
+let is_ref : Types.value_description -&gt; bool = function
+  | <span data-count="126">{</span> Types.val_kind =
+        Types.Val_prim { Primitive.prim_name = "%makemutable";
+                          prim_arity = 1 } } -&gt;
+        true
+  | <span data-count="1897">_</span> -&gt; false
+
+(* See the note on abstracted arguments in the documentation for
+    Typedtree.Texp_apply *)
+let is_abstracted_arg : arg_label * expression option -&gt; bool = function
+  | <span data-count="7">(</span>_, None) -&gt; true
+  | <span data-count="10805">(</span>_, Some _) -&gt; false
+
+let classify_expression : Typedtree.expression -&gt; sd =
+  (* We need to keep track of the size of expressions
+      bound by local declarations, to be able to predict
+      the size of variables. Compare:
+
+        let rec r =
+          let y = fun () -&gt; r ()
+          in y
+
+      and
+
+        let rec r =
+          let y = if Random.bool () then ignore else fun () -&gt; r ()
+          in y
+
+    In both cases the final address of `r` must be known before `y` is compiled,
+    and this is only possible if `r` has a statically-known size.
+
+    The first definition can be allowed (`y` has a statically-known
+    size) but the second one is unsound (`y` has no statically-known size).
+  *)
+  let rec classify_expression env e = <span data-count="1209">m</span>atch e.exp_desc with
+    (* binding and variable cases *)
+    | <span data-count="26">T</span>exp_let (rec_flag, vb, e) -&gt;
+        let env = <span data-count="26">c</span>lassify_value_bindings rec_flag env vb in
+        <span data-count="26">c</span>lassify_expression env e
+    | <span data-count="26">T</span>exp_ident (path, _, _) -&gt;
+        classify_path env path
+
+    (* non-binding cases *)
+    | <span data-count="0">T</span>exp_open (_, e)
+    | <span data-count="18">T</span>exp_letmodule (_, _, _, _, e)
+    | <span data-count="20">T</span>exp_sequence (_, e)
+    | <span data-count="0">T</span>exp_letexception (_, e) -&gt;
+        classify_expression env e
+
+    | <span data-count="8">T</span>exp_construct (_, {cstr_tag = Cstr_unboxed}, [e]) -&gt;
+        classify_expression env e
+    | <span data-count="57">T</span>exp_construct _ -&gt;
+        Static
+
+    | <span data-count="4">T</span>exp_record { representation = Record_unboxed _;
+                    fields = [| _, Overridden (_,e) |] } -&gt;
+        classify_expression env e
+    | <span data-count="21">T</span>exp_record _ -&gt;
+        Static
+
+    | <span data-count="22">T</span>exp_apply ({exp_desc = Texp_ident (_, _, vd)}, _)
+      when <span data-count="35">i</span>s_ref vd -&gt;
+        Static
+    | <span data-count="3">T</span>exp_apply (_,args)
+      when <span data-count="17">L</span>ist.exists is_abstracted_arg args -&gt;
+        Static
+    | <span data-count="14">T</span>exp_apply _ -&gt;
+        Dynamic
+
+    | <span data-count="6">T</span>exp_for _
+    | <span data-count="15">T</span>exp_constant _
+    | <span data-count="0">T</span>exp_new _
+    | <span data-count="0">T</span>exp_instvar _
+    | <span data-count="3">T</span>exp_tuple _
+    | <span data-count="17">T</span>exp_array _
+    | <span data-count="7">T</span>exp_variant _
+    | <span data-count="0">T</span>exp_setfield _
+    | <span data-count="6">T</span>exp_while _
+    | <span data-count="0">T</span>exp_setinstvar _
+    | <span data-count="2">T</span>exp_pack _
+    | <span data-count="6">T</span>exp_object _
+    | <span data-count="901">T</span>exp_function _
+    | <span data-count="11">T</span>exp_lazy _
+    | <span data-count="0">T</span>exp_unreachable
+    | <span data-count="0">T</span>exp_extension_constructor _ -&gt;
+        Static
+
+    | <span data-count="2">T</span>exp_match _
+    | <span data-count="8">T</span>exp_ifthenelse _
+    | <span data-count="2">T</span>exp_send _
+    | <span data-count="2">T</span>exp_field _
+    | <span data-count="2">T</span>exp_assert _
+    | <span data-count="0">T</span>exp_try _
+    | <span data-count="0">T</span>exp_override _
+    | <span data-count="0">T</span>exp_letop _ -&gt;
+        Dynamic
+  and classify_value_bindings rec_flag env bindings =
+    (* We use a non-recursive classification, classifying each
+        binding with respect to the old environment
+        (before all definitions), even if the bindings are recursive.
+
+        Note: computing a fixpoint in some way would be more
+        precise, as the following could be allowed:
+
+          let rec topdef =
+            let rec x = y and y = fun () -&gt; topdef ()
+            in x
+    *)
+    <span data-count="26">i</span>gnore rec_flag;
+    <span data-count="26">l</span>et old_env = <span data-count="26">e</span>nv in
+    <span data-count="26">l</span>et add_value_binding env vb =
+      <span data-count="31">m</span>atch vb.vb_pat.pat_desc with
+      | <span data-count="29">T</span>pat_var (id, _loc) -&gt;
+          let size = <span data-count="29">c</span>lassify_expression old_env vb.vb_expr in
+          <span data-count="29">I</span>dent.add id size env
+      | <span data-count="2">_</span> -&gt;
+          (* Note: we don't try to compute any size for complex patterns *)
+          env
+    in
+    <span data-count="26">L</span>ist.fold_left add_value_binding env bindings
+  and classify_path env = <span data-count="26">f</span>unction
+    | <span data-count="24">P</span>ath.Pident x -&gt;
+        begin
+          try Ident.find_same x env
+          with <span data-count="15">N</span>ot_found -&gt;
+            (* an identifier will be missing from the map if either:
+                - it is a non-local identifier
+                  (bound outside the letrec-binding we are analyzing)
+                - or it is bound by a complex (let p = e in ...) local binding
+                - or it is bound within a module (let module M = ... in ...)
+                  that we are not traversing for size computation
+
+                For non-local identifiers it might be reasonable (although
+                not completely clear) to consider them Static (they have
+                already been evaluated), but for the others we must
+                under-approximate with Dynamic.
+
+                This could be fixed by a more complete implementation.
+            *)
+            Dynamic
+        end
+    | <span data-count="2">P</span>ath.Pdot _ | <span data-count="0">P</span>ath.Papply _ -&gt;
+        (* local modules could have such paths to local definitions;
+            classify_expression could be extend to compute module
+            shapes more precisely *)
+        Dynamic
+  in <span data-count="1031">c</span>lassify_expression Ident.empty
+
+
+(** {1 Usage of recursive variables} *)
+
+module Mode = struct
+  (** For an expression in a program, its "usage mode" represents
+      static information about how the value produced by the expression
+      will be used by the context around it. *)
+  type t =
+    | Ignore
+    (** [Ignore] is for subexpressions that are not used at all during
+       the evaluation of the whole program. This is the mode of
+       a variable in an expression in which it does not occur. *)
+
+    | Delay
+    (** A [Delay] context can be fully evaluated without evaluating its argument
+        , which will only be needed at a later point of program execution. For
+        example, [fun x -&gt; ?] or [lazy ?] are [Delay] contexts. *)
+
+    | Guard
+    (** A [Guard] context returns the value as a member of a data structure,
+        for example a variant constructor or record. The value can safely be
+        defined mutually-recursively with their context, for example in
+        [let rec li = 1 :: li].
+        When these subexpressions participate in a cyclic definition,
+        this definition is productive/guarded.
+
+        The [Guard] mode is also used when a value is not dereferenced,
+        it is returned by a sub-expression, but the result of this
+        sub-expression is discarded instead of being returned.
+        For example, the subterm [?] is in a [Guard] context
+        in [let _ = ? in e] and in [?; e].
+        When these subexpressions participate in a cyclic definition,
+        they cannot create a self-loop.
+    *)
+
+    | Return
+    (** A [Return] context returns its value without further inspection.
+        This value cannot be defined mutually-recursively with its context,
+        as there is a risk of self-loop: in [let rec x = y and y = x], the
+        two definitions use a single variable in [Return] context. *)
+
+    | Dereference
+    (** A [Dereference] context consumes, inspects and uses the value
+        in arbitrary ways. Such a value must be fully defined at the point
+        of usage, it cannot be defined mutually-recursively with its context. *)
+
+  let equal = ((=) : t -&gt; t -&gt; bool)
+
+  (* Lower-ranked modes demand/use less of the variable/expression they qualify
+     -- so they allow more recursive definitions.
+
+     Ignore &lt; Delay &lt; Guard &lt; Return &lt; Dereference
+  *)
+  let rank = <span data-count="1031">f</span>unction
+    | Ignore -&gt; 0
+    | Delay -&gt; 1
+    | Guard -&gt; 2
+    | Return -&gt; 3
+    | Dereference -&gt; 4
+
+  (* Returns the more conservative (highest-ranking) mode of the two
+     arguments.
+
+     In judgments we write (m + m') for (join m m').
+  *)
+  let join m m' =
+    <span data-count="40606">i</span>f rank m &gt;= rank m' then <span data-count="37041">m</span> else <span data-count="3565">m</span>'
+
+  (* If x is used with the mode m in e[x], and e[x] is used with mode
+     m' in e'[e[x]], then x is used with mode m'[m] (our notation for
+     "compose m' m") in e'[e[x]].
+
+     Return is neutral for composition: m[Return] = m = Return[m].
+
+     Composition is associative and [Ignore] is a zero/annihilator for
+     it: (compose Ignore m) and (compose m Ignore) are both Ignore. *)
+  let compose m' m = <span data-count="23758">m</span>atch m', m with
+    | <span data-count="0">I</span>gnore, _ | <span data-count="0">_</span>, Ignore -&gt; Ignore
+    | <span data-count="200">D</span>ereference, _ -&gt; Dereference
+    | <span data-count="21966">D</span>elay, _ -&gt; Delay
+    | <span data-count="0">G</span>uard, Return -&gt; Guard
+    | <span data-count="338">G</span>uard, ((<span data-count="101">D</span>ereference | <span data-count="122">G</span>uard | <span data-count="115">D</span>elay) as m) -&gt; m
+    | <span data-count="27">R</span>eturn, Return -&gt; Return
+    | <span data-count="1227">R</span>eturn, ((<span data-count="111">D</span>ereference | <span data-count="203">G</span>uard | <span data-count="913">D</span>elay) as m) -&gt; m
+end
+
+type mode = Mode.t = Ignore | Delay | Guard | Return | Dereference
+
+module Env :
+sig
+  type t
+
+  val single : Ident.t -&gt; Mode.t -&gt; t
+  (** Create an environment with a single identifier used with a given mode.
+  *)
+
+  val empty : t
+  (** An environment with no used identifiers. *)
+
+  val find : Ident.t -&gt; t -&gt; Mode.t
+  (** Find the mode of an identifier in an environment.  The default mode is
+      Ignore. *)
+
+  val unguarded : t -&gt; Ident.t list -&gt; Ident.t list
+  (** unguarded e l: the list of all identifiers in l that are dereferenced or
+      returned in the environment e. *)
+
+  val dependent : t -&gt; Ident.t list -&gt; Ident.t list
+  (** dependent e l: the list of all identifiers in l that are used in e
+      (not ignored). *)
+
+  val join : t -&gt; t -&gt; t
+  val join_list : t list -&gt; t
+  (** Environments can be joined pointwise (variable per variable) *)
+
+  val compose : Mode.t -&gt; t -&gt; t
+  (** Environment composition m[G] extends mode composition m1[m2]
+      by composing each mode in G pointwise *)
+
+  val remove : Ident.t -&gt; t -&gt; t
+  (** Remove an identifier from an environment. *)
+
+  val take: Ident.t -&gt; t -&gt; Mode.t * t
+  (** Remove an identifier from an environment, and return its mode *)
+
+  val remove_list : Ident.t list -&gt; t -&gt; t
+  (** Remove all the identifiers of a list from an environment. *)
+
+  val equal : t -&gt; t -&gt; bool
+end = struct
+  module M = Map.Make(Ident)
+
+  (** A "t" maps each rec-bound variable to an access status *)
+  type t = Mode.t M.t
+
+  let equal = <span data-count="1031">M</span>.equal Mode.equal
+
+  let find (id: Ident.t) (tbl: t) =
+    <span data-count="184438">t</span>ry M.find id tbl with <span data-count="168991">N</span>ot_found -&gt; Ignore
+
+  let empty = <span data-count="1031">M</span>.empty
+
+  let join (x: t) (y: t) =
+    <span data-count="45439">M</span>.fold
+      (fun (id: Ident.t) (v: Mode.t) (tbl: t) -&gt;
+         <span data-count="31289">l</span>et v' = <span data-count="31289">f</span>ind id tbl in
+         <span data-count="31289">M</span>.add id (Mode.join v v') tbl)
+      x y
+
+  let join_list li = List.fold_left join empty li
+
+  let compose m env =
+    <span data-count="71">M</span>.map (Mode.compose m) env
+
+  let single id mode = <span data-count="15572">M</span>.add id mode empty
+
+  let unguarded env li =
+    <span data-count="1494">L</span>ist.filter (fun id -&gt; <span data-count="74710">M</span>ode.rank (find id env) &gt; Mode.rank Guard) li
+
+  let dependent env li =
+    <span data-count="1104">L</span>ist.filter (fun id -&gt; <span data-count="74252">M</span>ode.rank (find id env) &gt; Mode.rank Ignore) li
+
+  let remove = <span data-count="1031">M</span>.remove
+
+  let take id env = <span data-count="22">(</span>find id env, remove id env)
+
+  let remove_list l env =
+    <span data-count="4936">L</span>ist.fold_left (fun env id -&gt; <span data-count="5057">M</span>.remove id env) env l
+end
+
+let remove_pat pat env =
+  <span data-count="4933">E</span>nv.remove_list (pat_bound_idents pat) env
+
+let remove_patlist pats env =
+  <span data-count="800">L</span>ist.fold_right remove_pat pats env
+
+(* Usage mode judgments.
+
+   There are two main groups of judgment functions:
+
+   - Judgments of the form "G |- ... : m"
+     compute the environment G of a subterm ... from its mode m, so
+     the corresponding function has type [... -&gt; Mode.t -&gt; Env.t].
+
+     We write [... -&gt; term_judg] in this case.
+
+   - Judgments of the form "G |- ... : m -| G'"
+
+     correspond to binding constructs (for example "let x = e" in the
+     term "let x = e in body") that have both an exterior environment
+     G (the environment of the whole term "let x = e in body") and an
+     interior environment G' (the environment at the "in", after the
+     binding construct has introduced new names in scope).
+
+     For example, let-binding could be given the following rule:
+
+       G |- e : m + m'
+       -----------------------------------
+       G+G' |- (let x = e) : m -| x:m', G'
+
+     Checking the whole term composes this judgment
+     with the "G |- e : m" form for the let body:
+
+       G  |- (let x = e) : m -| G'
+       G' |- body : m
+       -------------------------------
+       G |- let x = e in body : m
+
+     To this judgment "G |- e : m -| G'" our implementation gives the
+     type [... -&gt; Mode.t -&gt; Env.t -&gt; Env.t]: it takes the mode and
+     interior environment as inputs, and returns the exterior
+     environment.
+
+     We write [... -&gt; bind_judg] in this case.
+*)
+type term_judg = Mode.t -&gt; Env.t
+type bind_judg = Mode.t -&gt; Env.t -&gt; Env.t
+
+let option : 'a. ('a -&gt; term_judg) -&gt; 'a option -&gt; term_judg =
+  <span data-count="1031">f</span>un f o m -&gt; <span data-count="14625">m</span>atch o with
+    | <span data-count="3190">N</span>one -&gt; Env.empty
+    | <span data-count="11435">S</span>ome v -&gt; f v m
+let list : 'a. ('a -&gt; term_judg) -&gt; 'a list -&gt; term_judg =
+  <span data-count="1031">f</span>un f li m -&gt;
+    <span data-count="10891">L</span>ist.fold_left (fun env item -&gt; <span data-count="16892">E</span>nv.join env (f item m)) Env.empty li
+let array : 'a. ('a -&gt; term_judg) -&gt; 'a array -&gt; term_judg =
+  <span data-count="1031">f</span>un f ar m -&gt;
+    <span data-count="34">A</span>rray.fold_left (fun env item -&gt; <span data-count="76">E</span>nv.join env (f item m)) Env.empty ar
+
+let single : Ident.t -&gt; term_judg = Env.single
+let remove_id : Ident.t -&gt; term_judg -&gt; term_judg =
+  fun id f m -&gt; <span data-count="0">E</span>nv.remove id (f m)
+let remove_ids : Ident.t list -&gt; term_judg -&gt; term_judg =
+  fun ids f m -&gt; <span data-count="0">E</span>nv.remove_list ids (f m)
+
+let join : term_judg list -&gt; term_judg =
+  fun li m -&gt; <span data-count="12703">E</span>nv.join_list (List.map (fun f -&gt; <span data-count="26074">f</span> m) li)
+
+let empty = <span data-count="1031">f</span>un _ -&gt; Env.empty
+
+(* A judgment [judg] takes a mode from the context as input, and
+   returns an environment. The judgment [judg &lt;&lt; m], given a mode [m']
+   from the context, evaluates [judg] in the composed mode [m'[m]]. *)
+let (&lt;&lt;) : term_judg -&gt; Mode.t -&gt; term_judg =
+  fun f inner_mode -&gt; <span data-count="19598">f</span>un outer_mode -&gt; <span data-count="19598">f</span> (Mode.compose outer_mode inner_mode)
+
+(* A binding judgment [binder] expects a mode and an inner environment,
+   and returns an outer environment. [binder &gt;&gt; judg] computes
+   the inner environment as the environment returned by [judg]
+   in the ambient mode. *)
+let (&gt;&gt;) : bind_judg -&gt; term_judg -&gt; term_judg =
+  fun binder term mode -&gt; <span data-count="754">b</span>inder mode (term mode)
+
+(* Expression judgment:
+     G |- e : m
+   where (m) is an input of the code and (G) is an output;
+   in the Prolog mode notation, this is (+G |- -e : -m).
+*)
+let rec expression : Typedtree.expression -&gt; term_judg =
+  fun exp -&gt; <span data-count="29772">m</span>atch exp.exp_desc with
+    | <span data-count="15488">T</span>exp_ident (pth, _, _) -&gt;
+      path pth
+    | <span data-count="733">T</span>exp_let (rec_flag, bindings, body) -&gt;
+      (*
+         G  |- &lt;bindings&gt; : m -| G'
+         G' |- body : m
+         -------------------------------
+         G |- let &lt;bindings&gt; in body : m
+      *)
+      value_bindings rec_flag bindings &gt;&gt; expression body
+    | <span data-count="18">T</span>exp_letmodule (x, _, _, mexp, e) -&gt;
+      module_binding (x, mexp) &gt;&gt; expression e
+    | <span data-count="380">T</span>exp_match (e, cases, _) -&gt;
+      (*
+         (Gi; mi |- pi -&gt; ei : m)^i
+         G |- e : sum(mi)^i
+         ----------------------------------------------
+         G + sum(Gi)^i |- match e with (pi -&gt; ei)^i : m
+       *)
+      (fun mode -&gt;
+        <span data-count="380">l</span>et pat_envs, pat_modes =
+          <span data-count="380">L</span>ist.split (List.map (fun c -&gt; <span data-count="1080">c</span>ase c mode) cases) in
+        <span data-count="380">l</span>et env_e = <span data-count="380">e</span>xpression e (List.fold_left Mode.join Ignore pat_modes) in
+        <span data-count="380">E</span>nv.join_list (env_e :: pat_envs))
+    | <span data-count="12">T</span>exp_for (_, _, low, high, _, body) -&gt;
+      (*
+        G1 |- low: m[Dereference]
+        G2 |- high: m[Dereference]
+        G3 |- body: m[Guard]
+        ---
+        G1 + G2 + G3 |- for _ = low to high do body done: m
+      *)
+      join [
+        expression low &lt;&lt; Dereference;
+        expression high &lt;&lt; Dereference;
+        expression body &lt;&lt; Guard;
+      ]
+    | <span data-count="1310">T</span>exp_constant _ -&gt;
+      empty
+    | <span data-count="25">T</span>exp_new (pth, _, _) -&gt;
+      (*
+        G |- c: m[Dereference]
+        -----------------------
+        G |- new c: m
+      *)
+      path pth &lt;&lt; Dereference
+    | <span data-count="0">T</span>exp_instvar (self_path, pth, _inst_var) -&gt;
+        join [path self_path &lt;&lt; Dereference; path pth]
+    | <span data-count="104">T</span>exp_apply ({exp_desc = Texp_ident (_, _, vd)}, [_, Some arg])
+      when <span data-count="1988">i</span>s_ref vd -&gt;
+      (*
+        G |- e: m[Guard]
+        ------------------
+        G |- ref e: m
+      *)
+      expression arg &lt;&lt; Guard
+    | <span data-count="5817">T</span>exp_apply (e, args)  -&gt;
+        let arg (_, eo) = <span data-count="10798">o</span>ption expression eo in
+        <span data-count="5817">l</span>et app_mode = <span data-count="5817">i</span>f List.exists is_abstracted_arg args
+          then (* see the comment on Texp_apply in typedtree.mli;
+                  the non-abstracted arguments are bound to local
+                  variables, which corresponds to a Guard mode. *)
+            <span data-count="4">G</span>uard
+          else <span data-count="5813">D</span>ereference
+        in
+        <span data-count="5817">j</span>oin [expression e; list arg args] &lt;&lt; app_mode
+    | <span data-count="232">T</span>exp_tuple exprs -&gt;
+      list expression exprs &lt;&lt; Guard
+    | <span data-count="23">T</span>exp_array exprs -&gt;
+      let array_mode = <span data-count="23">m</span>atch Typeopt.array_kind exp with
+        | <span data-count="9">L</span>ambda.Pfloatarray -&gt;
+            (* (flat) float arrays unbox their elements *)
+            Dereference
+        | <span data-count="4">L</span>ambda.Pgenarray -&gt;
+            (* This is counted as a use, because constructing a generic array
+               involves inspecting to decide whether to unbox (PR#6939). *)
+            Dereference
+        | <span data-count="5">L</span>ambda.Paddrarray | <span data-count="5">L</span>ambda.Pintarray -&gt;
+            (* non-generic, non-float arrays act as constructors *)
+            Guard
+      in
+      <span data-count="23">l</span>ist expression exprs &lt;&lt; array_mode
+    | <span data-count="2350">T</span>exp_construct (_, desc, exprs) -&gt;
+      let access_constructor =
+        <span data-count="2350">m</span>atch desc.cstr_tag with
+        | <span data-count="50">C</span>str_extension (pth, _) -&gt;
+          path pth &lt;&lt; Dereference
+        | <span data-count="2300">_</span> -&gt; empty
+      in
+      <span data-count="2350">l</span>et m' = <span data-count="2350">m</span>atch desc.cstr_tag with
+        | <span data-count="8">C</span>str_unboxed -&gt;
+          Return
+        | <span data-count="935">C</span>str_constant _ | <span data-count="1357">C</span>str_block _ | <span data-count="50">C</span>str_extension _ -&gt;
+          Guard
+      in
+      <span data-count="2350">j</span>oin [
+        access_constructor;
+        list expression exprs &lt;&lt; m'
+      ]
+    | <span data-count="9">T</span>exp_variant (_, eo) -&gt;
+      (*
+        G |- e: m[Guard]
+        ------------------   -----------
+        G |- `A e: m         [] |- `A: m
+      *)
+      option expression eo &lt;&lt; Guard
+    | <span data-count="34">T</span>exp_record { fields = es; extended_expression = eo;
+                    representation = rep } -&gt;
+        let field_mode = <span data-count="34">m</span>atch rep with
+          | <span data-count="2">R</span>ecord_float -&gt; Dereference
+          | <span data-count="4">R</span>ecord_unboxed _ -&gt; Return
+          | <span data-count="28">R</span>ecord_regular | <span data-count="0">R</span>ecord_inlined _
+          | <span data-count="0">R</span>ecord_extension _ -&gt; Guard
+        in
+        <span data-count="34">l</span>et field (_label, field_def) = <span data-count="76">m</span>atch field_def with
+            <span data-count="9">K</span>ept _ -&gt; empty
+          | <span data-count="67">O</span>verridden (_, e) -&gt; expression e
+        in
+        <span data-count="34">j</span>oin [
+          array field es &lt;&lt; field_mode;
+          option expression eo &lt;&lt; Dereference
+        ]
+    | <span data-count="656">T</span>exp_ifthenelse (cond, ifso, ifnot) -&gt;
+      (*
+        Gc |- c: m[Dereference]
+        G1 |- e1: m
+        G2 |- e2: m
+        ---
+        Gc + G1 + G2 |- if c then e1 else e2: m
+
+      Note: `if c then e1 else e2` is treated in the same way as
+      `match c with true -&gt; e1 | false -&gt; e2`
+      *)
+      join [
+        expression cond &lt;&lt; Dereference;
+        expression ifso;
+        option expression ifnot;
+      ]
+    | <span data-count="4">T</span>exp_setfield (e1, _, _, e2) -&gt;
+      (*
+        G1 |- e1: m[Dereference]
+        G2 |- e2: m[Dereference]
+        ---
+        G1 + G2 |- e1.x &lt;- e2: m
+
+        Note: e2 is dereferenced in the case of a field assignment to
+        a record of unboxed floats in that case, e2 evaluates to
+        a boxed float and it is unboxed on assignment.
+      *)
+      join [
+        expression e1 &lt;&lt; Dereference;
+        expression e2 &lt;&lt; Dereference;
+      ]
+    | <span data-count="624">T</span>exp_sequence (e1, e2) -&gt;
+      (*
+        G1 |- e1: m[Guard]
+        G2 |- e2: m
+        --------------------
+        G1 + G2 |- e1; e2: m
+
+        Note: `e1; e2` is treated in the same way as `let _ = e1 in e2`
+      *)
+      join [
+        expression e1 &lt;&lt; Guard;
+        expression e2;
+      ]
+    | <span data-count="48">T</span>exp_while (cond, body) -&gt;
+      (*
+        G1 |- cond: m[Dereference]
+        G2 |- body: m[Guard]
+        ---------------------------------
+        G1 + G2 |- while cond do body done: m
+      *)
+      join [
+        expression cond &lt;&lt; Dereference;
+        expression body &lt;&lt; Guard;
+      ]
+    | <span data-count="25">T</span>exp_send (e1, _, eo) -&gt;
+      (*
+        G |- e: m[Dereference]
+        ---------------------- (plus weird 'eo' option)
+        G |- e#x: m
+      *)
+      join [
+        expression e1 &lt;&lt; Dereference;
+        option expression eo &lt;&lt; Dereference;
+      ]
+    | <span data-count="84">T</span>exp_field (e, _, _) -&gt;
+      (*
+        G |- e: m[Dereference]
+        -----------------------
+        G |- e.x: m
+      *)
+      expression e &lt;&lt; Dereference
+    | <span data-count="4">T</span>exp_setinstvar (pth,_,_,e) -&gt;
+      (*
+        G |- e: m[Dereference]
+        ----------------------
+        G |- x &lt;- e: m
+      *)
+      join [
+        path pth &lt;&lt; Dereference;
+        expression e &lt;&lt; Dereference;
+      ]
+    | <span data-count="0">T</span>exp_letexception ({ext_id}, e) -&gt;
+      (* G |- e: m
+         ----------------------------
+         G |- let exception A in e: m
+      *)
+      remove_id ext_id (expression e)
+    | <span data-count="45">T</span>exp_assert e -&gt;
+      (*
+        G |- e: m[Dereference]
+        -----------------------
+        G |- assert e: m
+
+        Note: `assert e` is treated just as if `assert` was a function.
+      *)
+      expression e &lt;&lt; Dereference
+    | <span data-count="4">T</span>exp_pack mexp -&gt;
+      (*
+        G |- M: m
+        ----------------
+        G |- module M: m
+      *)
+      modexp mexp
+    | <span data-count="8">T</span>exp_object (clsstrct, _) -&gt;
+      class_structure clsstrct
+    | <span data-count="26">T</span>exp_try (e, cases) -&gt;
+      (*
+        G |- e: m      (Gi; _ |- pi -&gt; ei : m)^i
+        --------------------------------------------
+        G + sum(Gi)^i |- try e with (pi -&gt; ei)^i : m
+
+        Contrarily to match, the patterns p do not inspect
+        the value of e, so their mode does not influence the
+        mode of e.
+      *)
+      let case_env c m = <span data-count="27">f</span>st (case c m) in
+      <span data-count="26">j</span>oin [
+        expression e;
+        list case_env cases;
+      ]
+    | <span data-count="0">T</span>exp_override (pth, fields) -&gt;
+      (*
+         G |- pth : m   (Gi |- ei : m[Derefence])^i
+         ----------------------------------------------------
+         G + sum(Gi)^i |- {&lt; (xi = ei)^i &gt;} (at path pth) : m
+
+         Note: {&lt; .. &gt;} is desugared to a function application, but
+         the function implementation might still use its arguments in
+         a guarded way only -- intuitively it should behave as a constructor.
+         We could possibly refine the arguments' Dereference into Guard here.
+      *)
+      let field (_, _, arg) = <span data-count="0">e</span>xpression arg in
+      <span data-count="0">j</span>oin [
+        path pth &lt;&lt; Dereference;
+        list field fields &lt;&lt; Dereference;
+      ]
+    | <span data-count="1678">T</span>exp_function { cases } -&gt;
+      (*
+         (Gi; _ |- pi -&gt; ei : m[Delay])^i
+         --------------------------------------
+         sum(Gi)^i |- function (pi -&gt; ei)^i : m
+
+         Contrarily to match, the value that is pattern-matched
+         is bound locally, so the pattern modes do not influence
+         the final environment.
+      *)
+      let case_env c m = <span data-count="1996">f</span>st (case c m) in
+      <span data-count="1678">l</span>ist case_env cases &lt;&lt; Delay
+    | <span data-count="22">T</span>exp_lazy e -&gt;
+      (*
+        G |- e: m[Delay]
+        ----------------  (modulo some subtle compiler optimizations)
+        G |- lazy e: m
+      *)
+      let lazy_mode = <span data-count="22">m</span>atch Typeopt.classify_lazy_argument e with
+        | <span data-count="2">`</span>Constant_or_function
+        | <span data-count="2">`</span>Identifier _
+        | <span data-count="0">`</span>Float_that_cannot_be_shortcut -&gt;
+          Return
+        | <span data-count="18">`</span>Other -&gt;
+          Delay
+      in
+      <span data-count="22">e</span>xpression e &lt;&lt; lazy_mode
+    | <span data-count="0">T</span>exp_letop{let_; ands; body; _} -&gt;
+        let case_env c m = <span data-count="0">f</span>st (case c m) in
+        <span data-count="0">j</span>oin [
+          list binding_op (let_ :: ands) &lt;&lt; Dereference;
+          case_env body &lt;&lt; Delay
+        ]
+    | <span data-count="6">T</span>exp_unreachable -&gt;
+      (*
+        ----------
+        [] |- .: m
+      *)
+      empty
+    | <span data-count="0">T</span>exp_extension_constructor (_lid, pth) -&gt;
+      path pth &lt;&lt; Dereference
+    | <span data-count="3">T</span>exp_open (od, e) -&gt;
+      open_declaration od &gt;&gt; expression e
+
+and binding_op : Typedtree.binding_op -&gt; term_judg =
+  fun bop -&gt;
+    <span data-count="0">j</span>oin [path bop.bop_op_path; expression bop.bop_exp]
+
+and class_structure : Typedtree.class_structure -&gt; term_judg =
+  fun cs -&gt; <span data-count="8">l</span>ist class_field cs.cstr_fields
+
+and class_field : Typedtree.class_field -&gt; term_judg =
+  fun cf -&gt; <span data-count="10">m</span>atch cf.cf_desc with
+    | <span data-count="0">T</span>cf_inherit (_, ce, _super, _inh_vars, _inh_meths) -&gt;
+      class_expr ce &lt;&lt; Dereference
+    | <span data-count="2">T</span>cf_val (_lab, _mut, _, cfk, _) -&gt;
+      class_field_kind cfk
+    | <span data-count="8">T</span>cf_method (_, _, cfk) -&gt;
+      class_field_kind cfk
+    | <span data-count="0">T</span>cf_constraint _ -&gt;
+      empty
+    | <span data-count="0">T</span>cf_initializer e -&gt;
+      expression e &lt;&lt; Dereference
+    | <span data-count="0">T</span>cf_attribute _ -&gt;
+      empty
+
+and class_field_kind : Typedtree.class_field_kind -&gt; term_judg =
+  fun cfk -&gt; <span data-count="10">m</span>atch cfk with
+    | <span data-count="0">T</span>cfk_virtual _ -&gt;
+      empty
+    | <span data-count="10">T</span>cfk_concrete (_, e) -&gt;
+      expression e &lt;&lt; Dereference
+
+and modexp : Typedtree.module_expr -&gt; term_judg =
+  fun mexp -&gt; <span data-count="33">m</span>atch mexp.mod_desc with
+    | <span data-count="5">T</span>mod_ident (pth, _) -&gt;
+      path pth
+    | <span data-count="18">T</span>mod_structure s -&gt;
+      structure s
+    | <span data-count="0">T</span>mod_functor (_, _, _, e) -&gt;
+      modexp e &lt;&lt; Delay
+    | <span data-count="0">T</span>mod_apply (f, p, _) -&gt;
+      join [
+        modexp f &lt;&lt; Dereference;
+        modexp p &lt;&lt; Dereference;
+      ]
+    | <span data-count="4">T</span>mod_constraint (mexp, _, _, coe) -&gt;
+      let rec coercion coe k = <span data-count="4">m</span>atch coe with
+        | <span data-count="2">T</span>coerce_none -&gt;
+          k Return
+        | <span data-count="2">T</span>coerce_structure _
+        | <span data-count="0">T</span>coerce_functor _ -&gt;
+          (* These coercions perform a shallow copy of the input module,
+             by creating a new module with fields obtained by accessing
+             the same fields in the input module. *)
+           k Dereference
+        | <span data-count="0">T</span>coerce_primitive _ -&gt;
+          (* This corresponds to 'external' declarations,
+             and the coercion ignores its argument *)
+          k Ignore
+        | <span data-count="0">T</span>coerce_alias (_, pth, coe) -&gt;
+          (* Alias coercions ignore their arguments, but they evaluate
+             their alias module 'pth' under another coercion. *)
+          coercion coe (fun m -&gt; <span data-count="0">p</span>ath pth &lt;&lt; m)
+      in
+      <span data-count="4">c</span>oercion coe (fun m -&gt; <span data-count="4">m</span>odexp mexp &lt;&lt; m)
+    | <span data-count="6">T</span>mod_unpack (e, _) -&gt;
+      expression e
+
+
+(* G |- pth : m *)
+and path : Path.t -&gt; term_judg =
+  (*
+    ------------
+    x: m |- x: m
+
+    G |- A: m[Dereference]
+    -----------------------
+    G |- A.x: m
+
+    G1 |- A: m[Dereference]
+    G2 |- B: m[Dereference]
+    ------------------------ (as for term application)
+    G1 + G2 |- A(B): m
+  *)
+  fun pth -&gt; <span data-count="20046">m</span>atch pth with
+    | <span data-count="15572">P</span>ath.Pident x -&gt;
+        single x
+    | <span data-count="4474">P</span>ath.Pdot (t, _) -&gt;
+        path t &lt;&lt; Dereference
+    | <span data-count="0">P</span>ath.Papply (f, p) -&gt;
+        join [
+          path f &lt;&lt; Dereference;
+          path p &lt;&lt; Dereference;
+        ]
+
+(* G |- struct ... end : m *)
+and structure : Typedtree.structure -&gt; term_judg =
+  (*
+    G1, {x: _, x in vars(G1)} |- item1: G2 + ... + Gn in m
+    G2, {x: _, x in vars(G2)} |- item2: G3 + ... + Gn in m
+    ...
+    Gn, {x: _, x in vars(Gn)} |- itemn: [] in m
+    ---
+    (G1 + ... + Gn) - V |- struct item1 ... itemn end: m
+  *)
+  fun s m -&gt;
+    <span data-count="18">L</span>ist.fold_right (fun it env -&gt; <span data-count="24">s</span>tructure_item it m env)
+      s.str_items Env.empty
+
+(* G |- &lt;structure item&gt; : m -| G'
+   where G is an output and m, G' are inputs *)
+and structure_item : Typedtree.structure_item -&gt; bind_judg =
+  fun s m env -&gt; <span data-count="24">m</span>atch s.str_desc with
+    | <span data-count="0">T</span>str_eval (e, _) -&gt;
+      (*
+        Ge |- e: m[Guard]
+        G |- items: m -| G'
+        ---------------------------------
+        Ge + G |- (e;; items): m -| G'
+
+        The expression `e` is treated in the same way as let _ = e
+      *)
+      let judg_e = <span data-count="0">e</span>xpression e &lt;&lt; Guard in
+      <span data-count="0">E</span>nv.join (judg_e m) env
+    | <span data-count="20">T</span>str_value (rec_flag, bindings) -&gt;
+      value_bindings rec_flag bindings m env
+    | <span data-count="4">T</span>str_module {mb_id; mb_expr} -&gt;
+      module_binding (mb_id, mb_expr) m env
+    | <span data-count="0">T</span>str_recmodule mbs -&gt;
+      let bindings = <span data-count="0">L</span>ist.map (fun {mb_id; mb_expr} -&gt; <span data-count="0">(</span>mb_id, mb_expr)) mbs in
+      <span data-count="0">r</span>ecursive_module_bindings bindings m env
+    | <span data-count="0">T</span>str_primitive _ -&gt;
+      env
+    | <span data-count="0">T</span>str_type _ -&gt;
+      (*
+        -------------------
+        G |- type t: m -| G
+      *)
+      env
+    | <span data-count="0">T</span>str_typext {tyext_constructors = exts; _} -&gt;
+      let ext_ids = <span data-count="0">L</span>ist.map (fun {ext_id = id; _} -&gt; <span data-count="0">i</span>d) exts in
+      <span data-count="0">E</span>nv.join
+        (list extension_constructor exts m)
+        (Env.remove_list ext_ids env)
+    | <span data-count="0">T</span>str_exception {tyexn_constructor = ext; _} -&gt;
+      Env.join
+        (extension_constructor ext m)
+        (Env.remove ext.ext_id env)
+    | <span data-count="0">T</span>str_modtype _
+    | <span data-count="0">T</span>str_class_type _
+    | <span data-count="0">T</span>str_attribute _ -&gt;
+      env
+    | <span data-count="0">T</span>str_open od -&gt;
+      open_declaration od m env
+    | <span data-count="0">T</span>str_class classes -&gt;
+        let class_ids =
+          <span data-count="0">l</span>et class_id ({ci_id_class = id; _}, _) = <span data-count="0">i</span>d in
+          <span data-count="0">L</span>ist.map class_id classes in
+        <span data-count="0">l</span>et class_declaration ({ci_expr; _}, _) m =
+          <span data-count="0">E</span>nv.remove_list class_ids (class_expr ci_expr m) in
+        <span data-count="0">E</span>nv.join
+          (list class_declaration classes m)
+          (Env.remove_list class_ids env)
+    | <span data-count="0">T</span>str_include { incl_mod = mexp; incl_type = mty; _ } -&gt;
+      let included_ids = <span data-count="0">L</span>ist.map Types.signature_item_id mty in
+      <span data-count="0">E</span>nv.join (modexp mexp m) (Env.remove_list included_ids env)
+
+(* G |- module M = E : m -| G *)
+and module_binding : (Ident.t * Typedtree.module_expr) -&gt; bind_judg =
+  fun (id, mexp) m env -&gt;
+      (*
+        GE |- E: m[mM + Guard]
+        -------------------------------------
+        GE + G |- module M = E : m -| M:mM, G
+      *)
+      <span data-count="22">l</span>et mM, env = <span data-count="22">E</span>nv.take id env in
+      <span data-count="22">l</span>et judg_E = <span data-count="22">m</span>odexp mexp &lt;&lt; (Mode.join mM Guard) in
+      <span data-count="22">E</span>nv.join (judg_E m) env
+
+and open_declaration : Typedtree.open_declaration -&gt; bind_judg =
+  fun { open_expr = mexp; open_bound_items = sg; _ } m env -&gt;
+      <span data-count="3">l</span>et judg_E = <span data-count="3">m</span>odexp mexp in
+      <span data-count="3">l</span>et bound_ids = <span data-count="3">L</span>ist.map Types.signature_item_id sg in
+      <span data-count="3">E</span>nv.join (judg_E m) (Env.remove_list bound_ids env)
+
+and recursive_module_bindings
+  : (Ident.t * Typedtree.module_expr) list -&gt; bind_judg =
+  fun m_bindings m env -&gt;
+    <span data-count="0">l</span>et mids = <span data-count="0">L</span>ist.map fst m_bindings in
+    <span data-count="0">l</span>et binding (mid, mexp) m =
+      <span data-count="0">l</span>et mM = <span data-count="0">E</span>nv.find mid env in
+      <span data-count="0">E</span>nv.remove_list mids (modexp mexp Mode.(compose m (join mM Guard)))
+    in
+    <span data-count="0">E</span>nv.join (list binding m_bindings m) (Env.remove_list mids env)
+
+and class_expr : Typedtree.class_expr -&gt; term_judg =
+  fun ce -&gt; <span data-count="0">m</span>atch ce.cl_desc with
+    | <span data-count="0">T</span>cl_ident (pth, _, _) -&gt;
+        path pth &lt;&lt; Dereference
+    | <span data-count="0">T</span>cl_structure cs -&gt;
+        class_structure cs
+    | <span data-count="0">T</span>cl_fun (_, _, args, ce, _) -&gt;
+        let ids = <span data-count="0">L</span>ist.map fst args in
+        <span data-count="0">r</span>emove_ids ids (class_expr ce &lt;&lt; Delay)
+    | <span data-count="0">T</span>cl_apply (ce, args) -&gt;
+        let arg (_label, eo) = <span data-count="0">o</span>ption expression eo in
+        <span data-count="0">j</span>oin [
+          class_expr ce &lt;&lt; Dereference;
+          list arg args &lt;&lt; Dereference;
+        ]
+    | <span data-count="0">T</span>cl_let (rec_flag, bindings, _, ce) -&gt;
+      value_bindings rec_flag bindings &gt;&gt; class_expr ce
+    | <span data-count="0">T</span>cl_constraint (ce, _, _, _, _) -&gt;
+        class_expr ce
+    | <span data-count="0">T</span>cl_open (_, ce) -&gt;
+        class_expr ce
+
+and extension_constructor : Typedtree.extension_constructor -&gt; term_judg =
+  fun ec -&gt; <span data-count="0">m</span>atch ec.ext_kind with
+    | <span data-count="0">T</span>ext_decl _ -&gt;
+      empty
+    | <span data-count="0">T</span>ext_rebind (pth, _lid) -&gt;
+      path pth
+
+(* G |- let (rec?) (pi = ei)^i : m -| G' *)
+and value_bindings : rec_flag -&gt; Typedtree.value_binding list -&gt; bind_judg =
+  fun rec_flag bindings mode bound_env -&gt;
+    <span data-count="775">l</span>et all_bound_pats = <span data-count="775">L</span>ist.map (fun vb -&gt; <span data-count="908">v</span>b.vb_pat) bindings in
+    <span data-count="775">l</span>et outer_env = <span data-count="775">r</span>emove_patlist all_bound_pats bound_env in
+    <span data-count="775">l</span>et bindings_env =
+      <span data-count="775">m</span>atch rec_flag with
+      | <span data-count="757">N</span>onrecursive -&gt;
+        (*
+           (Gi, pi:_ |- ei : m[mbody_i])^i   (pi : mbody_i -| D)^i
+           ------------------------------------------------------------
+           Sum(Gi) + (D - (pi)^i) |- let (pi=ei)^i : m -| D
+        *)
+          let binding_env {vb_pat; vb_expr; _} m =
+            <span data-count="883">l</span>et m' = <span data-count="883">M</span>ode.compose m (pattern vb_pat bound_env) in
+            <span data-count="883">r</span>emove_pat vb_pat (expression vb_expr m') in
+          <span data-count="757">l</span>ist binding_env bindings mode
+      | <span data-count="18">R</span>ecursive -&gt;
+        (*
+           (Gi, (xj : mdef_ij)^j |- ei : m[mbody_i])^i   (xi : mbody_i -| D)^i
+           G'i = Gi + mdef_ij[G'j]
+           -------------------------------------------------------------------
+           Sum(G'i) + (D - (pi)^i) |- let rec (xi=ei)^i : m -| D
+
+           The (mdef_ij)^i,j are a family of modes over two indices:
+           mdef_ij represents the mode of use, within e_i the definition of x_i,
+           of the mutually-recursive variable x_j.
+
+           The (G'i)^i are defined from the (Gi)^i as a family of equations,
+           whose smallest solution is computed as a least fixpoint.
+
+           The (Gi)^i are the "immediate" dependencies of each (ei)^i
+           on the outer context (excluding the mutually-defined
+           variables).
+           The (G'i)^i contain the "transitive" dependencies as well:
+           if ei depends on xj, then the dependencies of G'i of xi
+           must contain the dependencies of G'j, composed by
+           the mode mdef_ij of use of xj in ei.
+
+           For example, consider:
+
+             let rec z =
+               let rec x = ref y
+               and y = ref z
+               in f x
+
+           this definition should be rejected as the body [f x]
+           dereferences [x], which can be used to access the
+           yet-unitialized value [z]. This requires realizing that [x]
+           depends on [z] through [y], which requires the transitive
+           closure computation.
+
+           An earlier version of our check would take only the (Gi)^i
+           instead of the (G'i)^i, which is incorrect and would accept
+           the example above.
+        *)
+          (* [binding_env] takes a binding (x_i = e_i)
+             and computes (Gi, (mdef_ij)^j). *)
+          let binding_env {vb_pat = x_i; vb_expr = e_i; _} =
+            <span data-count="25">l</span>et mbody_i = <span data-count="25">p</span>attern x_i bound_env in
+            (* Gi, (x_j:mdef_ij)^j  *)
+            <span data-count="25">l</span>et rhs_env_i = <span data-count="25">e</span>xpression e_i (Mode.compose mode mbody_i) in
+            (* (mdef_ij)^j (for a fixed i) *)
+            <span data-count="25">l</span>et mutual_modes =
+              <span data-count="25">l</span>et mdef_ij {vb_pat = x_j; _} = <span data-count="39">p</span>attern x_j rhs_env_i in
+              <span data-count="25">L</span>ist.map mdef_ij bindings in
+            (* Gi *)
+            <span data-count="25">l</span>et env_i = <span data-count="25">r</span>emove_patlist all_bound_pats rhs_env_i in
+            (* (Gi, (mdef_ij)^j) *)
+            <span data-count="25">(</span>env_i, mutual_modes) in
+          <span data-count="18">l</span>et env, mdef =
+            <span data-count="18">L</span>ist.split (List.map binding_env bindings) in
+          <span data-count="18">l</span>et rec transitive_closure env =
+            <span data-count="26">l</span>et transitive_deps env_i mdef_i =
+              (* Gi, (mdef_ij)^j =&gt; Gi + Sum_j mdef_ij[Gj] *)
+              <span data-count="41">E</span>nv.join env_i
+                (Env.join_list (List.map2 Env.compose mdef_i env)) in
+            <span data-count="26">l</span>et env' = <span data-count="26">L</span>ist.map2 transitive_deps env mdef in
+            <span data-count="26">i</span>f List.for_all2 Env.equal env env'
+            then <span data-count="18">e</span>nv'
+            else <span data-count="8">t</span>ransitive_closure env'
+          in
+          <span data-count="18">l</span>et env'_i = <span data-count="18">t</span>ransitive_closure env in
+          <span data-count="18">E</span>nv.join_list env'_i
+    in <span data-count="775">E</span>nv.join bindings_env outer_env
+
+(* G; m' |- (p -&gt; e) : m
+   with outputs G, m' and input m
+
+   m' is the mode under which the scrutinee of p
+   (the value matched against p) is placed.
+*)
+and case : Typedtree.case -&gt; mode -&gt; Env.t * mode =
+  fun { Typedtree.c_lhs; c_guard; c_rhs } -&gt;
+    (*
+       Ge |- e : m    Gg |- g : m[Dereference]
+       G := Ge+Gg     p : mp -| G
+       ----------------------------------------
+       G - p; m[mp] |- (p (when g)? -&gt; e) : m
+    *)
+    <span data-count="3103">l</span>et judg = <span data-count="3103">j</span>oin [
+        option expression c_guard &lt;&lt; Dereference;
+        expression c_rhs;
+      ] in
+    <span data-count="3103">(</span>fun m -&gt;
+       <span data-count="3103">l</span>et env = <span data-count="3103">j</span>udg m in
+       <span data-count="3103">(</span>remove_pat c_lhs env), Mode.compose m (pattern c_lhs env))
+
+(* p : m -| G
+   with output m and input G
+
+   m is the mode under which the scrutinee of p is placed.
+*)
+and pattern : pattern -&gt; Env.t -&gt; mode = fun pat env -&gt;
+  (*
+    mp := | Dereference if p is destructuring
+          | Guard       otherwise
+    me := sum{G(x), x in vars(p)}
+    --------------------------------------------
+    p : (mp + me) -| G
+  *)
+  <span data-count="4050">l</span>et m_pat = <span data-count="4050">i</span>f is_destructuring_pattern pat
+              then <span data-count="1599">D</span>ereference
+              else <span data-count="2451">G</span>uard
+  in
+  <span data-count="4050">l</span>et m_env =
+    <span data-count="4050">p</span>at_bound_idents pat
+    |&gt; <span data-count="4050">L</span>ist.map (fun id -&gt; <span data-count="4165">E</span>nv.find id env)
+    |&gt; <span data-count="4050">L</span>ist.fold_left Mode.join Ignore
+  in
+  <span data-count="4050">M</span>ode.join m_pat m_env
+
+and is_destructuring_pattern : Typedtree.pattern -&gt; bool =
+  fun pat -&gt; <span data-count="4115">m</span>atch pat.pat_desc with
+    | <span data-count="98">T</span>pat_any -&gt; false
+    | <span data-count="2347">T</span>pat_var (_, _) -&gt; false
+    | <span data-count="48">T</span>pat_alias (pat, _, _) -&gt; is_destructuring_pattern pat
+    | <span data-count="166">T</span>pat_constant _ -&gt; true
+    | <span data-count="398">T</span>pat_tuple _ -&gt; true
+    | <span data-count="992">T</span>pat_construct (_, _, _) -&gt; true
+    | <span data-count="41">T</span>pat_variant _ -&gt; true
+    | <span data-count="2">T</span>pat_record (_, _) -&gt; true
+    | <span data-count="0">T</span>pat_array _ -&gt; true
+    | <span data-count="17">T</span>pat_or (l,r,_) -&gt;
+        <span data-count="17">i</span>s_destructuring_pattern l || <span data-count="0">i</span>s_destructuring_pattern r
+    | <span data-count="0">T</span>pat_lazy _ -&gt; true
+    | <span data-count="6">T</span>pat_exception _ -&gt; false
+
+let is_valid_recursive_expression idlist expr =
+  <span data-count="1104">l</span>et ty = <span data-count="1104">e</span>xpression expr Return in
+  <span data-count="1104">m</span>atch Env.unguarded ty idlist, Env.dependent ty idlist,
+        classify_expression expr with
+  | <span data-count="86">_</span> :: _, _, _ (* The expression inspects rec-bound variables *)
+  | <span data-count="8">[</span>], _ :: _, Dynamic -&gt; (* The expression depends on rec-bound variables
+                              and its size is unknown *)
+      false
+  | <span data-count="1006">[</span>], _, Static (* The expression has known size *)
+  | <span data-count="4">[</span>], [], Dynamic -&gt; (* The expression has unknown size,
+                          but does not depend on rec-bound variables *)
+      true
+
+(* A class declaration may contain let-bindings. If they are recursive,
+   their validity will already be checked by [is_valid_recursive_expression]
+   during type-checking. This function here prevents a different kind of
+   invalid recursion, which is the unsafe creations of objects of this class
+   in the let-binding. For example,
+   {|class a = let x = new a in object ... end|}
+   is forbidden, but
+   {|class a = let x () = new a in object ... end|}
+   is allowed.
+*)
+let is_valid_class_expr idlist ce =
+  <span data-count="390">l</span>et rec class_expr : mode -&gt; Typedtree.class_expr -&gt; Env.t =
+    fun mode ce -&gt; <span data-count="425">m</span>atch ce.cl_desc with
+      | <span data-count="5">T</span>cl_ident (_, _, _) -&gt;
+        (*
+          ----------
+          [] |- a: m
+        *)
+        Env.empty
+      | <span data-count="186">T</span>cl_structure _ -&gt;
+        (*
+          -----------------------
+          [] |- struct ... end: m
+        *)
+        Env.empty
+      | <span data-count="195">T</span>cl_fun (_, _, _, _, _) -&gt; Env.empty
+        (*
+          ---------------------------
+          [] |- fun x1 ... xn -&gt; C: m
+        *)
+      | <span data-count="4">T</span>cl_apply (_, _) -&gt; Env.empty
+      | <span data-count="22">T</span>cl_let (rec_flag, bindings, _, ce) -&gt;
+        value_bindings rec_flag bindings mode (class_expr mode ce)
+      | <span data-count="11">T</span>cl_constraint (ce, _, _, _, _) -&gt;
+        class_expr mode ce
+      | <span data-count="2">T</span>cl_open (_, ce) -&gt;
+        class_expr mode ce
+  in
+  <span data-count="390">m</span>atch Env.unguarded (class_expr Return ce) idlist with
+  | <span data-count="382">[</span>] -&gt; true
+  | <span data-count="8">_</span> :: _ -&gt; false
+</pre>
+      </div>
+    </div>
+    <div id="footer">Generated on 2019-08-08 13:34:29 by <a href="https://github.com/aantron/bisect_ppx">Bisect_ppx</a> 1.4.1</div>
+    <script src="../coverage.js"></script>
+  </body>
+</html>
