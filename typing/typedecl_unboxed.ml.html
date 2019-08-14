@@ -145,14 +145,14 @@ open Types
 (* We use the Ctype.expand_head_opt version of expand_head to get access
    to the manifest type of private abbreviations. *)
 let rec get_unboxed_type_representation env ty fuel =
-  <span data-count="2306">i</span>f fuel &lt; 0 then <span data-count="18">N</span>one else
-  <span data-count="2288">l</span>et ty = <span data-count="2288">C</span>type.repr (Ctype.expand_head_opt env ty) in
-  <span data-count="2288">m</span>atch ty.desc with
-  | <span data-count="2200">T</span>constr (p, args, _) -&gt;
+  <span data-count="2389">i</span>f fuel &lt; 0 then <span data-count="18">N</span>one else
+  <span data-count="2371">l</span>et ty = <span data-count="2371">C</span>type.repr (Ctype.expand_head_opt env ty) in
+  <span data-count="2371">m</span>atch ty.desc with
+  | <span data-count="2272">T</span>constr (p, args, _) -&gt;
     begin match Env.find_type p env with
     | <span data-count="0">e</span>xception Not_found -&gt; Some ty
-    | <span data-count="161">{</span>type_immediate = true; _} -&gt; Some Predef.type_int
-    | <span data-count="175">{</span>type_unboxed = {unboxed = false}} -&gt; Some ty
+    | <span data-count="213">{</span>type_immediate = true; _} -&gt; Some Predef.type_int
+    | <span data-count="195">{</span>type_unboxed = {unboxed = false}} -&gt; Some ty
     | <span data-count="1864">{</span>type_params; type_kind =
          <span data-count="8">T</span>ype_record ([{ld_type = ty2; _}], _)
        | <span data-count="1854">T</span>ype_variant [{cd_args = Cstr_tuple [ty2]; _}]
@@ -167,16 +167,16 @@ let rec get_unboxed_type_representation env ty fuel =
              declaration. *)
     | _ -&gt; assert false (* only the above can be unboxed *)
     end
-  | <span data-count="88">_</span> -&gt; Some ty
+  | <span data-count="99">_</span> -&gt; Some ty
 
 let get_unboxed_type_representation env ty =
   (* Do not give too much fuel: PR#7424 *)
-  <span data-count="442">g</span>et_unboxed_type_representation env ty 100
+  <span data-count="525">g</span>et_unboxed_type_representation env ty 100
 ;;
 </pre>
       </div>
     </div>
-    <div id="footer">Generated on 2019-08-08 13:34:29 by <a href="https://github.com/aantron/bisect_ppx">Bisect_ppx</a> 1.4.1</div>
+    <div id="footer">Generated on 2019-08-14 11:29:20 by <a href="https://github.com/aantron/bisect_ppx">Bisect_ppx</a> 1.4.1</div>
     <script src="../coverage.js"></script>
   </body>
 </html>

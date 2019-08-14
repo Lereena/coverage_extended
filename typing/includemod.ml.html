@@ -11,7 +11,7 @@
           <span class="dirname">typing/</span>includemod.ml
         </a>
       </h1>
-      <h2>89.51%</h2>
+      <h2>89.77%</h2>
     </div>
     <div id="navbar">
       <span class="unvisited" style="top:15.75%"></span>
@@ -36,7 +36,6 @@
       <span class="unvisited" style="top:50.53%"></span>
       <span class="unvisited" style="top:60.40%"></span>
       <span class="unvisited" style="top:62.98%"></span>
-      <span class="unvisited" style="top:64.98%"></span>
       <span class="unvisited" style="top:65.45%"></span>
       <span class="unvisited" style="top:72.97%"></span>
       <span class="unvisited" style="top:73.09%"></span>
@@ -608,7 +607,7 @@
 <a id="L550"></a><span > </span>
 <a id="L551"></a><span > </span>
 <a id="L552"></a><span > </span>
-<a id="L553"></a><span class="unvisited"> </span>
+<a id="L553"></a><span class="visited"> </span>
 <a id="L554"></a><span class="visited"> </span>
 <a id="L555"></a><span > </span>
 <a id="L556"></a><span > </span>
@@ -1818,13 +1817,13 @@ type mark =
   | Mark_negative
   | Mark_neither
 
-let negate_mark = <span data-count="1031">f</span>unction
+let negate_mark = <span data-count="1170">f</span>unction
   | Mark_both -&gt; Mark_both
   | Mark_positive -&gt; Mark_negative
   | Mark_negative -&gt; Mark_positive
   | Mark_neither -&gt; Mark_neither
 
-let mark_positive = <span data-count="1031">f</span>unction
+let mark_positive = <span data-count="1170">f</span>unction
   | Mark_both | Mark_positive -&gt; true
   | Mark_negative | Mark_neither -&gt; false
 
@@ -1835,55 +1834,55 @@ let mark_positive = <span data-count="1031">f</span>unction
 (* Inclusion between value descriptions *)
 
 let value_descriptions ~loc env ~mark cxt subst id vd1 vd2 =
-  <span data-count="15320">C</span>mt_format.record_value_dependency vd1 vd2;
-  <span data-count="15320">i</span>f mark_positive mark then
-    <span data-count="14103">E</span>nv.mark_value_used (Ident.name id) vd1;
-  <span data-count="15320">l</span>et vd2 = <span data-count="15320">S</span>ubst.value_description subst vd2 in
-  <span data-count="15320">t</span>ry
+  <span data-count="15826">C</span>mt_format.record_value_dependency vd1 vd2;
+  <span data-count="15826">i</span>f mark_positive mark then
+    <span data-count="14606">E</span>nv.mark_value_used (Ident.name id) vd1;
+  <span data-count="15826">l</span>et vd2 = <span data-count="15826">S</span>ubst.value_description subst vd2 in
+  <span data-count="15826">t</span>ry
     Includecore.value_descriptions ~loc env (Ident.name id) vd1 vd2
-  with <span data-count="42">I</span>ncludecore.Dont_match -&gt;
+  with <span data-count="52">I</span>ncludecore.Dont_match -&gt;
     raise(Error[cxt, env, Value_descriptions(id, vd1, vd2)])
 
 (* Inclusion between type declarations *)
 
 let type_declarations ~loc env ~mark ?old_env:_ cxt subst id decl1 decl2 =
-  <span data-count="6216">l</span>et mark = <span data-count="6216">m</span>ark_positive mark in
-  <span data-count="6216">i</span>f mark then
-    <span data-count="5871">E</span>nv.mark_type_used (Ident.name id) decl1;
-  <span data-count="6216">l</span>et decl2 = <span data-count="6216">S</span>ubst.type_declaration subst decl2 in
-  <span data-count="6216">m</span>atch
+  <span data-count="6689">l</span>et mark = <span data-count="6689">m</span>ark_positive mark in
+  <span data-count="6689">i</span>f mark then
+    <span data-count="6326">E</span>nv.mark_type_used (Ident.name id) decl1;
+  <span data-count="6689">l</span>et decl2 = <span data-count="6689">S</span>ubst.type_declaration subst decl2 in
+  <span data-count="6689">m</span>atch
     Includecore.type_declarations ~loc env ~mark
       (Ident.name id) decl1 (Path.Pident id) decl2
   with
-  | <span data-count="6169">N</span>one -&gt; ()
-  | <span data-count="47">S</span>ome err -&gt;
+  | <span data-count="6628">N</span>one -&gt; ()
+  | <span data-count="61">S</span>ome err -&gt;
       raise(Error[cxt, env, Type_declarations(id, decl1, decl2, err)])
 
 (* Inclusion between extension constructors *)
 
 let extension_constructors ~loc env ~mark cxt subst id ext1 ext2 =
-  <span data-count="520">l</span>et mark = <span data-count="520">m</span>ark_positive mark in
-  <span data-count="520">l</span>et ext2 = <span data-count="520">S</span>ubst.extension_constructor subst ext2 in
-  <span data-count="520">m</span>atch Includecore.extension_constructors ~loc env ~mark id ext1 ext2 with
-  | <span data-count="514">N</span>one -&gt; ()
-  | <span data-count="6">S</span>ome err -&gt;
+  <span data-count="532">l</span>et mark = <span data-count="532">m</span>ark_positive mark in
+  <span data-count="532">l</span>et ext2 = <span data-count="532">S</span>ubst.extension_constructor subst ext2 in
+  <span data-count="532">m</span>atch Includecore.extension_constructors ~loc env ~mark id ext1 ext2 with
+  | <span data-count="522">N</span>one -&gt; ()
+  | <span data-count="10">S</span>ome err -&gt;
       raise(Error[cxt, env, Extension_constructors(id, ext1, ext2, err)])
 
 (* Inclusion between class declarations *)
 
 let class_type_declarations ~loc ~old_env:_ env cxt subst id decl1 decl2 =
-  <span data-count="705">l</span>et decl2 = <span data-count="705">S</span>ubst.cltype_declaration subst decl2 in
-  <span data-count="705">m</span>atch Includeclass.class_type_declarations ~loc env decl1 decl2 with
-    <span data-count="699">[</span>]     -&gt; ()
-  | <span data-count="6">r</span>eason -&gt;
+  <span data-count="737">l</span>et decl2 = <span data-count="737">S</span>ubst.cltype_declaration subst decl2 in
+  <span data-count="737">m</span>atch Includeclass.class_type_declarations ~loc env decl1 decl2 with
+    <span data-count="721">[</span>]     -&gt; ()
+  | <span data-count="16">r</span>eason -&gt;
       raise(Error[cxt, env,
                   Class_type_declarations(id, decl1, decl2, reason)])
 
 let class_declarations ~old_env:_ env cxt subst id decl1 decl2 =
-  <span data-count="545">l</span>et decl2 = <span data-count="545">S</span>ubst.class_declaration subst decl2 in
-  <span data-count="545">m</span>atch Includeclass.class_declarations env decl1 decl2 with
-    <span data-count="542">[</span>]     -&gt; ()
-  | <span data-count="3">r</span>eason -&gt;
+  <span data-count="561">l</span>et decl2 = <span data-count="561">S</span>ubst.class_declaration subst decl2 in
+  <span data-count="561">m</span>atch Includeclass.class_declarations env decl1 decl2 with
+    <span data-count="550">[</span>]     -&gt; ()
+  | <span data-count="11">r</span>eason -&gt;
       raise(Error[cxt, env, Class_declarations(id, decl1, decl2, reason)])
 
 (* Expand a module type identifier when possible *)
@@ -1891,17 +1890,17 @@ let class_declarations ~old_env:_ env cxt subst id decl1 decl2 =
 exception Dont_match
 
 let may_expand_module_path env path =
-  <span data-count="982">t</span>ry ignore (Env.find_modtype_expansion path env); <span data-count="945">t</span>rue
-  with <span data-count="37">N</span>ot_found -&gt; false
+  <span data-count="1038">t</span>ry ignore (Env.find_modtype_expansion path env); <span data-count="993">t</span>rue
+  with <span data-count="45">N</span>ot_found -&gt; false
 
 let expand_module_path env cxt path =
-  <span data-count="945">t</span>ry
+  <span data-count="993">t</span>ry
     Env.find_modtype_expansion path env
   with <span data-count="0">N</span>ot_found -&gt;
     raise(Error[cxt, env, Unbound_modtype_path path])
 
 let expand_module_alias env cxt path =
-  <span data-count="665">t</span>ry (Env.find_module path env).md_type
+  <span data-count="703">t</span>ry (Env.find_module path env).md_type
   with <span data-count="0">N</span>ot_found -&gt;
     raise(Error[cxt, env, Unbound_module_path path])
 
@@ -1923,7 +1922,7 @@ type field_desc =
   | Field_class of string
   | Field_classtype of string
 
-let kind_of_field_desc = <span data-count="1031">f</span>unction
+let kind_of_field_desc = <span data-count="1170">f</span>unction
   | Field_value _ -&gt; "value"
   | Field_type _ -&gt; "type"
   | Field_typext _ -&gt; "extension constructor"
@@ -1937,10 +1936,10 @@ let kind_of_field_desc = <span data-count="1031">f</span>unction
     such as values and types. *)
 module FieldMap = Map.Make(struct
     type t = field_desc
-    let compare = <span data-count="1031">S</span>tdlib.compare
+    let compare = <span data-count="1170">S</span>tdlib.compare
   end)
 
-let item_ident_name = <span data-count="1031">f</span>unction
+let item_ident_name = <span data-count="1170">f</span>unction
     Sig_value(id, d, _) -&gt; (id, d.val_loc, Field_value(Ident.name id))
   | Sig_type(id, d, _, _) -&gt; (id, d.type_loc, Field_type(Ident.name id))
   | Sig_typext(id, d, _, _) -&gt; (id, d.ext_loc, Field_typext(Ident.name id))
@@ -1950,7 +1949,7 @@ let item_ident_name = <span data-count="1031">f</span>unction
   | Sig_class_type(id, d, _, _) -&gt;
       (id, d.clty_loc, Field_classtype(Ident.name id))
 
-let is_runtime_component = <span data-count="1031">f</span>unction
+let is_runtime_component = <span data-count="1170">f</span>unction
   | Sig_value(_,{val_kind = Val_prim _}, _)
   | Sig_type(_,_,_,_)
   | Sig_module(_,Mp_absent,_,_,_)
@@ -1998,13 +1997,13 @@ and print_coercion3 ppf (i, n, c) =
 (* Simplify a structure coercion *)
 
 let simplify_structure_coercion cc id_pos_list =
-  <span data-count="8948">l</span>et rec is_identity_coercion pos = <span data-count="25103">f</span>unction
-  | <span data-count="8818">[</span>] -&gt;
+  <span data-count="9710">l</span>et rec is_identity_coercion pos = <span data-count="26399">f</span>unction
+  | <span data-count="9580">[</span>] -&gt;
       true
-  | <span data-count="16285">(</span>n, c) :: rem -&gt;
-      <span data-count="16285">n</span> = pos &amp;&amp; <span data-count="32406">c</span> = Tcoerce_none &amp;&amp; <span data-count="16155">i</span>s_identity_coercion (pos + 1) rem in
-  <span data-count="8948">i</span>f is_identity_coercion 0 cc
-  then <span data-count="8818">T</span>coerce_none
+  | <span data-count="16819">(</span>n, c) :: rem -&gt;
+      <span data-count="16819">n</span> = pos &amp;&amp; <span data-count="33474">c</span> = Tcoerce_none &amp;&amp; <span data-count="16689">i</span>s_identity_coercion (pos + 1) rem in
+  <span data-count="9710">i</span>f is_identity_coercion 0 cc
+  then <span data-count="9580">T</span>coerce_none
   else <span data-count="130">T</span>coerce_structure (cc, id_pos_list)
 
 (* Inclusion between module types.
@@ -2012,52 +2011,52 @@ let simplify_structure_coercion cc id_pos_list =
    into a value of the bigger type. *)
 
 let rec modtypes ~loc env ~mark cxt subst mty1 mty2 =
-  <span data-count="5839">t</span>ry
+  <span data-count="6145">t</span>ry
     try_modtypes ~loc env ~mark cxt subst mty1 mty2
   with
-    <span data-count="15">D</span>ont_match -&gt;
+    <span data-count="19">D</span>ont_match -&gt;
       raise(Error[cxt, env,
                   Module_types(mty1, Subst.modtype Make_local subst mty2)])
-  | <span data-count="165">E</span>rror reasons as err -&gt;
+  | <span data-count="217">E</span>rror reasons as err -&gt;
       match mty1, mty2 with
         <span data-count="14">M</span>ty_alias _, _
       | <span data-count="0">_</span>, Mty_alias _ -&gt; raise err
-      | <span data-count="151">_</span> -&gt;
+      | <span data-count="203">_</span> -&gt;
           raise(Error((cxt, env,
                        Module_types(mty1, Subst.modtype Make_local subst mty2))
                       :: reasons))
 
 and try_modtypes ~loc env ~mark cxt subst mty1 mty2 =
-  <span data-count="6784">m</span>atch mty1, mty2 with
-  | <span data-count="321">M</span>ty_alias p1, Mty_alias p2 -&gt;
+  <span data-count="7138">m</span>atch mty1, mty2 with
+  | <span data-count="331">M</span>ty_alias p1, Mty_alias p2 -&gt;
       if Env.is_functor_arg p2 env then
         <span data-count="4">r</span>aise (Error[cxt, env, Invalid_module_alias p2]);
-      <span data-count="317">i</span>f not (Path.same p1 p2) then <span data-count="82">b</span>egin
+      <span data-count="327">i</span>f not (Path.same p1 p2) then <span data-count="82">b</span>egin
         let p1 = <span data-count="82">E</span>nv.normalize_module_path None env p1
         and p2 = <span data-count="82">E</span>nv.normalize_module_path None env
             (Subst.module_path subst p2)
         in
         <span data-count="82">i</span>f not (Path.same p1 p2) then <span data-count="2">r</span>aise Dont_match
       end;
-      <span data-count="315">T</span>coerce_none
-  | <span data-count="554">(</span>Mty_alias p1, _) -&gt; begin
-      let p1 = <span data-count="554">t</span>ry
+      <span data-count="325">T</span>coerce_none
+  | <span data-count="591">(</span>Mty_alias p1, _) -&gt; begin
+      let p1 = <span data-count="591">t</span>ry
         Env.normalize_module_path (Some Location.none) env p1
       with <span data-count="0">E</span>nv.Error (Env.Missing_module (_, _, path)) -&gt;
         raise (Error[cxt, env, Unbound_module_path path])
       in
-      <span data-count="554">l</span>et mty1 =
-        <span data-count="554">M</span>type.strengthen ~aliasable:true env
+      <span data-count="591">l</span>et mty1 =
+        <span data-count="591">M</span>type.strengthen ~aliasable:true env
           (expand_module_alias env cxt p1) p1
       in
-      <span data-count="554">m</span>odtypes ~loc env ~mark cxt subst mty1 mty2
+      <span data-count="591">m</span>odtypes ~loc env ~mark cxt subst mty1 mty2
     end
-  | <span data-count="237">(</span>Mty_ident p1, _) when <span data-count="267">m</span>ay_expand_module_path env p1 -&gt;
+  | <span data-count="244">(</span>Mty_ident p1, _) when <span data-count="278">m</span>ay_expand_module_path env p1 -&gt;
       try_modtypes ~loc env ~mark cxt subst
         (expand_module_path env cxt p1) mty2
-  | <span data-count="737">(</span>_, Mty_ident _) -&gt;
+  | <span data-count="782">(</span>_, Mty_ident _) -&gt;
       try_modtypes2 ~loc env ~mark cxt mty1 (Subst.modtype Keep subst mty2)
-  | <span data-count="4526">(</span>Mty_signature sig1, Mty_signature sig2) -&gt;
+  | <span data-count="4769">(</span>Mty_signature sig1, Mty_signature sig2) -&gt;
       signatures ~loc env ~mark cxt subst sig1 sig2
   | <span data-count="23">(</span>Mty_functor(param1, None, res1), Mty_functor(_param2, None, res2)) -&gt;
     begin
@@ -2065,21 +2064,21 @@ and try_modtypes ~loc env ~mark cxt subst mty1 mty2 =
       | <span data-count="21">T</span>coerce_none -&gt; Tcoerce_none
       | <span data-count="0">c</span>c -&gt; Tcoerce_functor (Tcoerce_none, cc)
     end
-  | <span data-count="380">(</span>Mty_functor(param1, Some arg1, res1),
+  | <span data-count="392">(</span>Mty_functor(param1, Some arg1, res1),
      Mty_functor(param2, Some arg2, res2)) -&gt;
-      let arg2' = <span data-count="380">S</span>ubst.modtype Keep subst arg2 in
-      <span data-count="380">l</span>et cc_arg =
-        <span data-count="380">m</span>odtypes ~loc env ~mark:(negate_mark mark)
+      let arg2' = <span data-count="392">S</span>ubst.modtype Keep subst arg2 in
+      <span data-count="392">l</span>et cc_arg =
+        <span data-count="392">m</span>odtypes ~loc env ~mark:(negate_mark mark)
           (Arg param1::cxt) Subst.identity arg2' arg1
       in
-      <span data-count="378">l</span>et cc_res =
-        <span data-count="378">m</span>odtypes ~loc (Env.add_module param1 Mp_present arg2' env) ~mark
+      <span data-count="388">l</span>et cc_res =
+        <span data-count="388">m</span>odtypes ~loc (Env.add_module param1 Mp_present arg2' env) ~mark
           (Body param1::cxt)
           (Subst.add_module param2 (Path.Pident param1) subst)
           res1 res2
       in
-      <span data-count="378">b</span>egin match (cc_arg, cc_res) with
-          <span data-count="340">(</span>Tcoerce_none, Tcoerce_none) -&gt; Tcoerce_none
+      <span data-count="388">b</span>egin match (cc_arg, cc_res) with
+          <span data-count="350">(</span>Tcoerce_none, Tcoerce_none) -&gt; Tcoerce_none
         | <span data-count="38">_</span> -&gt; Tcoerce_functor(cc_arg, cc_res)
       end
   | <span data-count="6">(</span>_, _) -&gt;
@@ -2087,35 +2086,35 @@ and try_modtypes ~loc env ~mark cxt subst mty1 mty2 =
 
 and try_modtypes2 ~loc env ~mark cxt mty1 mty2 =
   (* mty2 is an identifier *)
-  <span data-count="737">m</span>atch (mty1, mty2) with
+  <span data-count="782">m</span>atch (mty1, mty2) with
     <span data-count="22">(</span>Mty_ident p1, Mty_ident p2)
-    when <span data-count="30">P</span>ath.same (Env.normalize_path_prefix None env p1)
+    when <span data-count="34">P</span>ath.same (Env.normalize_path_prefix None env p1)
                    (Env.normalize_path_prefix None env p2) -&gt;
       Tcoerce_none
-  | <span data-count="708">(</span>_, Mty_ident p2) when <span data-count="715">m</span>ay_expand_module_path env p2 -&gt;
+  | <span data-count="749">(</span>_, Mty_ident p2) when <span data-count="760">m</span>ay_expand_module_path env p2 -&gt;
       try_modtypes ~loc env ~mark cxt Subst.identity
         mty1 (expand_module_path env cxt p2)
-  | <span data-count="7">(</span>_, _) -&gt;
+  | <span data-count="11">(</span>_, _) -&gt;
       raise Dont_match
 
 (* Inclusion between signatures *)
 
 and signatures ~loc env ~mark cxt subst sig1 sig2 =
   (* Environment used to check inclusion of components *)
-  <span data-count="9427">l</span>et new_env =
-    <span data-count="9427">E</span>nv.add_signature sig1 (Env.in_signature true env) in
+  <span data-count="10251">l</span>et new_env =
+    <span data-count="10251">E</span>nv.add_signature sig1 (Env.in_signature true env) in
   (* Keep ids for module aliases *)
-  <span data-count="9427">l</span>et (id_pos_list,_) =
-    <span data-count="9427">L</span>ist.fold_left
-      (fun (l,pos) -&gt; <span data-count="28880">f</span>unction
-          <span data-count="2246">S</span>ig_module (id, Mp_present, _, _, _) -&gt;
+  <span data-count="10251">l</span>et (id_pos_list,_) =
+    <span data-count="10251">L</span>ist.fold_left
+      (fun (l,pos) -&gt; <span data-count="30251">f</span>unction
+          <span data-count="2392">S</span>ig_module (id, Mp_present, _, _, _) -&gt;
             ((id,pos,Tcoerce_none)::l , pos+1)
-        | <span data-count="26634">i</span>tem -&gt; (l, if is_runtime_component item then <span data-count="17925">p</span>os+1 else <span data-count="8709">p</span>os))
+        | <span data-count="27859">i</span>tem -&gt; (l, if is_runtime_component item then <span data-count="18527">p</span>os+1 else <span data-count="9332">p</span>os))
       ([], 0) sig1 in
   (* Build a table of the components of sig1, along with their positions.
      The table is indexed by kind and name of component *)
-  <span data-count="9427">l</span>et rec build_component_table pos tbl = <span data-count="38307">f</span>unction
-      <span data-count="9427">[</span>] -&gt; pos, tbl
+  <span data-count="10251">l</span>et rec build_component_table pos tbl = <span data-count="40502">f</span>unction
+      <span data-count="10251">[</span>] -&gt; pos, tbl
     | <span data-count="198">(</span><span data-count="165">S</span>ig_value (_, _, Hidden)
       |<span data-count="13">S</span>ig_type (_, _, _, Hidden)
       |<span data-count="3">S</span>ig_typext (_, _, _, Hidden)
@@ -2126,19 +2125,19 @@ and signatures ~loc env ~mark cxt subst sig1 sig2 =
       ) as item :: rem -&gt;
         let pos = <span data-count="198">i</span>f is_runtime_component item then <span data-count="180">p</span>os + 1 else <span data-count="18">p</span>os in
         <span data-count="198">b</span>uild_component_table pos tbl rem (* do not pair private items. *)
-    | <span data-count="28682">i</span>tem :: rem -&gt;
-        let (id, _loc, name) = <span data-count="28682">i</span>tem_ident_name item in
-        <span data-count="28682">l</span>et pos, nextpos =
-          <span data-count="28682">i</span>f is_runtime_component item then <span data-count="19991">p</span>os, pos + 1
-          else <span data-count="8691">-</span>1, pos
+    | <span data-count="30053">i</span>tem :: rem -&gt;
+        let (id, _loc, name) = <span data-count="30053">i</span>tem_ident_name item in
+        <span data-count="30053">l</span>et pos, nextpos =
+          <span data-count="30053">i</span>f is_runtime_component item then <span data-count="20739">p</span>os, pos + 1
+          else <span data-count="9314">-</span>1, pos
         in
-        <span data-count="28682">b</span>uild_component_table nextpos
+        <span data-count="30053">b</span>uild_component_table nextpos
                               (FieldMap.add name (id, item, pos) tbl) rem in
-  <span data-count="9427">l</span>et len1, comps1 =
-    <span data-count="9427">b</span>uild_component_table 0 FieldMap.empty sig1 in
-  <span data-count="9427">l</span>et len2 =
-    <span data-count="9427">L</span>ist.fold_left
-      (fun n i -&gt; <span data-count="26088">i</span>f is_runtime_component i then <span data-count="18153">n</span> + 1 else <span data-count="7935">n</span>)
+  <span data-count="10251">l</span>et len1, comps1 =
+    <span data-count="10251">b</span>uild_component_table 0 FieldMap.empty sig1 in
+  <span data-count="10251">l</span>et len2 =
+    <span data-count="10251">L</span>ist.fold_left
+      (fun n i -&gt; <span data-count="27329">i</span>f is_runtime_component i then <span data-count="18796">n</span> + 1 else <span data-count="8533">n</span>)
       0
       sig2
   in
@@ -2147,46 +2146,46 @@ and signatures ~loc env ~mark cxt subst sig1 sig2 =
      Return a coercion list indicating, for all run-time components
      of sig2, the position of the matching run-time components of sig1
      and the coercion to be applied to it. *)
-  <span data-count="9427">l</span>et rec pair_components subst paired unpaired = <span data-count="35515">f</span>unction
-      <span data-count="9427">[</span>] -&gt;
+  <span data-count="10251">l</span>et rec pair_components subst paired unpaired = <span data-count="37580">f</span>unction
+      <span data-count="10251">[</span>] -&gt;
         begin match unpaired with
-            <span data-count="9413">[</span>] -&gt;
+            <span data-count="10237">[</span>] -&gt;
               let cc =
-                <span data-count="9413">s</span>ignature_components ~loc env ~mark new_env cxt subst
+                <span data-count="10237">s</span>ignature_components ~loc env ~mark new_env cxt subst
                   (List.rev paired)
               in
-              <span data-count="9276">i</span>f len1 = len2 then (* see PR#5098 *)
-                <span data-count="8948">s</span>implify_structure_coercion cc id_pos_list
+              <span data-count="10050">i</span>f len1 = len2 then (* see PR#5098 *)
+                <span data-count="9710">s</span>implify_structure_coercion cc id_pos_list
               else
-                <span data-count="328">T</span>coerce_structure (cc, id_pos_list)
+                <span data-count="340">T</span>coerce_structure (cc, id_pos_list)
           | <span data-count="14">_</span>  -&gt; raise(Error unpaired)
         end
-    | <span data-count="26088">i</span>tem2 :: rem -&gt;
-        let (id2, loc, name2) = <span data-count="26088">i</span>tem_ident_name item2 in
-        <span data-count="26088">l</span>et name2, report =
-          <span data-count="26088">m</span>atch item2, name2 with
-            <span data-count="51">S</span>ig_type (_, {type_manifest=None}, _, _), Field_type s
-            when <span data-count="3115">B</span>type.is_row_name s -&gt;
+    | <span data-count="27329">i</span>tem2 :: rem -&gt;
+        let (id2, loc, name2) = <span data-count="27329">i</span>tem_ident_name item2 in
+        <span data-count="27329">l</span>et name2, report =
+          <span data-count="27329">m</span>atch item2, name2 with
+            <span data-count="57">S</span>ig_type (_, {type_manifest=None}, _, _), Field_type s
+            when <span data-count="3362">B</span>type.is_row_name s -&gt;
               (* Do not report in case of failure,
                  as the main type will generate an error *)
               Field_type (String.sub s 0 (String.length s - 4)), false
-          | <span data-count="26037">_</span> -&gt; name2, true
+          | <span data-count="27272">_</span> -&gt; name2, true
         in
-        <span data-count="26088">b</span>egin try
-          let (id1, item1, pos1) = <span data-count="26088">F</span>ieldMap.find name2 comps1 in
-          <span data-count="26074">l</span>et new_subst =
-            <span data-count="26074">m</span>atch item2 with
-              <span data-count="6063">S</span>ig_type _ -&gt;
+        <span data-count="27329">b</span>egin try
+          let (id1, item1, pos1) = <span data-count="27329">F</span>ieldMap.find name2 comps1 in
+          <span data-count="27315">l</span>et new_subst =
+            <span data-count="27315">m</span>atch item2 with
+              <span data-count="6567">S</span>ig_type _ -&gt;
                 Subst.add_type id2 (Path.Pident id1) subst
-            | <span data-count="2432">S</span>ig_module _ -&gt;
+            | <span data-count="2584">S</span>ig_module _ -&gt;
                 Subst.add_module id2 (Path.Pident id1) subst
-            | <span data-count="484">S</span>ig_modtype _ -&gt;
+            | <span data-count="495">S</span>ig_modtype _ -&gt;
                 Subst.add_modtype id2 (Mty_ident (Path.Pident id1)) subst
-            | <span data-count="15322">S</span>ig_value _ | <span data-count="520">S</span>ig_typext _
-            | <span data-count="545">S</span>ig_class _ | <span data-count="708">S</span>ig_class_type _ -&gt;
+            | <span data-count="15828">S</span>ig_value _ | <span data-count="532">S</span>ig_typext _
+            | <span data-count="561">S</span>ig_class _ | <span data-count="748">S</span>ig_class_type _ -&gt;
                 subst
           in
-          <span data-count="26074">p</span>air_components new_subst
+          <span data-count="27315">p</span>air_components new_subst
             ((item1, item2, pos1) :: paired) unpaired rem
         with <span data-count="14">N</span>ot_found -&gt;
           let unpaired =
@@ -2197,85 +2196,85 @@ and signatures ~loc env ~mark cxt subst sig1 sig2 =
           <span data-count="14">p</span>air_components subst paired unpaired rem
         end in
   (* Do the pairing and checking, and return the final coercion *)
-  <span data-count="9427">p</span>air_components subst [] [] sig2
+  <span data-count="10251">p</span>air_components subst [] [] sig2
 
 (* Inclusion between signature components *)
 
 and signature_components ~loc old_env ~mark env cxt subst paired =
-  <span data-count="35311">l</span>et comps_rec rem =
-    <span data-count="25898">s</span>ignature_components ~loc old_env ~mark env cxt subst rem
+  <span data-count="37282">l</span>et comps_rec rem =
+    <span data-count="27045">s</span>ignature_components ~loc old_env ~mark env cxt subst rem
   in
-  <span data-count="35311">m</span>atch paired with
-    <span data-count="9276">[</span>] -&gt; []
-  | <span data-count="15320">(</span>Sig_value(id1, valdecl1, _), Sig_value(_id2, valdecl2, _), pos) :: rem -&gt;
+  <span data-count="37282">m</span>atch paired with
+    <span data-count="10050">[</span>] -&gt; []
+  | <span data-count="15826">(</span>Sig_value(id1, valdecl1, _), Sig_value(_id2, valdecl2, _), pos) :: rem -&gt;
       let cc =
-        <span data-count="15320">v</span>alue_descriptions ~loc env ~mark cxt subst id1 valdecl1 valdecl2
+        <span data-count="15826">v</span>alue_descriptions ~loc env ~mark cxt subst id1 valdecl1 valdecl2
       in
-      <span data-count="15278">b</span>egin match valdecl2.val_kind with
-        <span data-count="383">V</span>al_prim _ -&gt; comps_rec rem
-      | <span data-count="14895">_</span> -&gt; (pos, cc) :: comps_rec rem
+      <span data-count="15774">b</span>egin match valdecl2.val_kind with
+        <span data-count="416">V</span>al_prim _ -&gt; comps_rec rem
+      | <span data-count="15358">_</span> -&gt; (pos, cc) :: comps_rec rem
       end
-  | <span data-count="6029">(</span>Sig_type(id1, tydecl1, _, _), Sig_type(_id2, tydecl2, _, _), _pos) :: rem
+  | <span data-count="6497">(</span>Sig_type(id1, tydecl1, _, _), Sig_type(_id2, tydecl2, _, _), _pos) :: rem
     -&gt;
       type_declarations ~loc ~old_env env ~mark cxt subst id1 tydecl1 tydecl2;
-      <span data-count="5985">c</span>omps_rec rem
-  | <span data-count="520">(</span>Sig_typext(id1, ext1, _, _), Sig_typext(_id2, ext2, _, _), pos)
+      <span data-count="6439">c</span>omps_rec rem
+  | <span data-count="532">(</span>Sig_typext(id1, ext1, _, _), Sig_typext(_id2, ext2, _, _), pos)
     :: rem -&gt;
       extension_constructors ~loc env ~mark cxt subst id1 ext1 ext2;
-      <span data-count="514">(</span>pos, Tcoerce_none) :: comps_rec rem
-  | <span data-count="2432">(</span>Sig_module(id1, pres1, mty1, _, _),
+      <span data-count="522">(</span>pos, Tcoerce_none) :: comps_rec rem
+  | <span data-count="2584">(</span>Sig_module(id1, pres1, mty1, _, _),
      Sig_module(_id2, pres2, mty2, _, _), pos) :: rem -&gt; begin
-      let cc = <span data-count="2432">m</span>odule_declarations ~loc env ~mark cxt subst id1 mty1 mty2 in
-      <span data-count="2424">l</span>et rem = <span data-count="2424">c</span>omps_rec rem in
-      <span data-count="2422">m</span>atch pres1, pres2, mty1.md_type with
-      | <span data-count="2105">M</span>p_present, Mp_present, _ -&gt; (pos, cc) :: rem
-      | <span data-count="271">_</span>, Mp_absent, _ -&gt; rem
-      | <span data-count="46">M</span>p_absent, Mp_present, Mty_alias p1 -&gt;
+      let cc = <span data-count="2584">m</span>odule_declarations ~loc env ~mark cxt subst id1 mty1 mty2 in
+      <span data-count="2572">l</span>et rem = <span data-count="2572">c</span>omps_rec rem in
+      <span data-count="2570">m</span>atch pres1, pres2, mty1.md_type with
+      | <span data-count="2242">M</span>p_present, Mp_present, _ -&gt; (pos, cc) :: rem
+      | <span data-count="281">_</span>, Mp_absent, _ -&gt; rem
+      | <span data-count="47">M</span>p_absent, Mp_present, Mty_alias p1 -&gt;
           (pos, Tcoerce_alias (env, p1, cc)) :: rem
       | Mp_absent, Mp_present, _ -&gt; assert false
     end
-  | <span data-count="484">(</span>Sig_modtype(id1, info1, _), Sig_modtype(_id2, info2, _), _pos) :: rem -&gt;
+  | <span data-count="495">(</span>Sig_modtype(id1, info1, _), Sig_modtype(_id2, info2, _), _pos) :: rem -&gt;
       modtype_infos ~loc env ~mark cxt subst id1 info1 info2;
-      <span data-count="456">c</span>omps_rec rem
-  | <span data-count="545">(</span>Sig_class(id1, decl1, _, _), Sig_class(_id2, decl2, _, _), pos) :: rem -&gt;
+      <span data-count="467">c</span>omps_rec rem
+  | <span data-count="561">(</span>Sig_class(id1, decl1, _, _), Sig_class(_id2, decl2, _, _), pos) :: rem -&gt;
       class_declarations ~old_env env cxt subst id1 decl1 decl2;
-      <span data-count="542">(</span>pos, Tcoerce_none) :: comps_rec rem
-  | <span data-count="705">(</span>Sig_class_type(id1, info1, _, _),
+      <span data-count="550">(</span>pos, Tcoerce_none) :: comps_rec rem
+  | <span data-count="737">(</span>Sig_class_type(id1, info1, _, _),
      Sig_class_type(_id2, info2, _, _), _pos) :: rem -&gt;
       class_type_declarations ~loc ~old_env env cxt subst id1 info1 info2;
-      <span data-count="699">c</span>omps_rec rem
+      <span data-count="721">c</span>omps_rec rem
   | _ -&gt;
       assert false
 
 and module_declarations ~loc env ~mark cxt subst id1 md1 md2 =
-  <span data-count="2432">B</span>uiltin_attributes.check_alerts_inclusion
+  <span data-count="2584">B</span>uiltin_attributes.check_alerts_inclusion
     ~def:md1.md_loc
     ~use:md2.md_loc
     loc
     md1.md_attributes md2.md_attributes
     (Ident.name id1);
-  <span data-count="2432">l</span>et p1 = <span data-count="2432">P</span>ath.Pident id1 in
-  <span data-count="2432">i</span>f mark_positive mark then
-    <span data-count="2375">E</span>nv.mark_module_used (Ident.name id1) md1.md_loc;
-  <span data-count="2432">m</span>odtypes ~loc env ~mark (Module id1::cxt) subst
+  <span data-count="2584">l</span>et p1 = <span data-count="2584">P</span>ath.Pident id1 in
+  <span data-count="2584">i</span>f mark_positive mark then
+    <span data-count="2522">E</span>nv.mark_module_used (Ident.name id1) md1.md_loc;
+  <span data-count="2584">m</span>odtypes ~loc env ~mark (Module id1::cxt) subst
     (Mtype.strengthen ~aliasable:true env md1.md_type p1) md2.md_type
 
 (* Inclusion between module type specifications *)
 
 and modtype_infos ~loc env ~mark cxt subst id info1 info2 =
-  <span data-count="484">B</span>uiltin_attributes.check_alerts_inclusion
+  <span data-count="495">B</span>uiltin_attributes.check_alerts_inclusion
     ~def:info1.mtd_loc
     ~use:info2.mtd_loc
     loc
     info1.mtd_attributes info2.mtd_attributes
     (Ident.name id);
-  <span data-count="484">l</span>et info2 = <span data-count="484">S</span>ubst.modtype_declaration Keep subst info2 in
-  <span data-count="484">l</span>et cxt' = <span data-count="484">M</span>odtype id :: cxt in
-  <span data-count="484">t</span>ry
+  <span data-count="495">l</span>et info2 = <span data-count="495">S</span>ubst.modtype_declaration Keep subst info2 in
+  <span data-count="495">l</span>et cxt' = <span data-count="495">M</span>odtype id :: cxt in
+  <span data-count="495">t</span>ry
     match (info1.mtd_type, info2.mtd_type) with
       <span data-count="43">(</span>None, None) -&gt; ()
     | <span data-count="9">(</span>Some _, None) -&gt; ()
-    | <span data-count="432">(</span>Some mty1, Some mty2) -&gt;
+    | <span data-count="443">(</span>Some mty1, Some mty2) -&gt;
         check_modtype_equiv ~loc env ~mark cxt' mty1 mty2
     | <span data-count="0">(</span>None, Some mty2) -&gt;
         check_modtype_equiv ~loc env ~mark cxt' (Mty_ident(Path.Pident id)) mty2
@@ -2283,11 +2282,11 @@ and modtype_infos ~loc env ~mark cxt subst id info1 info2 =
     raise(Error((cxt, env, Modtype_infos(id, info1, info2)) :: reasons))
 
 and check_modtype_equiv ~loc env ~mark cxt mty1 mty2 =
-  <span data-count="432">m</span>atch
+  <span data-count="443">m</span>atch
     (modtypes ~loc env ~mark cxt Subst.identity mty1 mty2,
      modtypes ~loc env ~mark:(negate_mark mark) cxt Subst.identity mty2 mty1)
   with
-    <span data-count="404">(</span>Tcoerce_none, Tcoerce_none) -&gt; ()
+    <span data-count="415">(</span>Tcoerce_none, Tcoerce_none) -&gt; ()
   | <span data-count="24">(</span>c1, _c2) -&gt;
       (* Format.eprintf "@[c1 = %a@ c2 = %a@]@."
         print_coercion _c1 print_coercion _c2; *)
@@ -2309,15 +2308,15 @@ let check_modtype_inclusion ~loc env mty1 path1 mty2 =
            (Mtype.strengthen ~aliasable env mty1 path1) mty2)
 
 let () =
-  <span data-count="1031">E</span>nv.check_modtype_inclusion := (fun ~loc a b c d -&gt;
+  <span data-count="1170">E</span>nv.check_modtype_inclusion := (fun ~loc a b c d -&gt;
     <span data-count="113">t</span>ry (check_modtype_inclusion ~loc a b c d : unit)
     with <span data-count="8">E</span>rror _ -&gt; raise Not_found)
 
 (* Check that an implementation of a compilation unit meets its
    interface. *)
 
-let compunit env ?(mark=<span data-count="0">M</span>ark_both) impl_name impl_sig intf_name intf_sig =
-  <span data-count="494">t</span>ry
+let compunit env ?(mark=<span data-count="1">M</span>ark_both) impl_name impl_sig intf_name intf_sig =
+  <span data-count="540">t</span>ry
     signatures ~loc:(Location.in_file impl_name) env ~mark []
       Subst.identity impl_sig intf_sig
   with <span data-count="0">E</span>rror reasons -&gt;
@@ -2326,12 +2325,12 @@ let compunit env ?(mark=<span data-count="0">M</span>ark_both) impl_name impl_si
 
 (* Hide the context and substitution parameters to the outside world *)
 
-let modtypes ~loc env ?(mark=<span data-count="541">M</span>ark_both) mty1 mty2 =
-  <span data-count="1091">m</span>odtypes ~loc env ~mark [] Subst.identity mty1 mty2
-let signatures env ?(mark=<span data-count="4407">M</span>ark_both) sig1 sig2 =
-  <span data-count="4407">s</span>ignatures ~loc:Location.none env ~mark [] Subst.identity sig1 sig2
-let type_declarations ~loc env ?(mark=<span data-count="187">M</span>ark_both) id decl1 decl2 =
-  <span data-count="187">t</span>ype_declarations ~loc env ~mark [] Subst.identity id decl1 decl2
+let modtypes ~loc env ?(mark=<span data-count="564">M</span>ark_both) mty1 mty2 =
+  <span data-count="1164">m</span>odtypes ~loc env ~mark [] Subst.identity mty1 mty2
+let signatures env ?(mark=<span data-count="4942">M</span>ark_both) sig1 sig2 =
+  <span data-count="4942">s</span>ignatures ~loc:Location.none env ~mark [] Subst.identity sig1 sig2
+let type_declarations ~loc env ?(mark=<span data-count="192">M</span>ark_both) id decl1 decl2 =
+  <span data-count="192">t</span>ype_declarations ~loc env ~mark [] Subst.identity id decl1 decl2
 
 (*
 let modtypes env m1 m2 =
@@ -2448,26 +2447,26 @@ end
 open Format
 
 let show_loc msg ppf loc =
-  <span data-count="190">l</span>et pos = <span data-count="190">l</span>oc.Location.loc_start in
-  <span data-count="190">i</span>f List.mem pos.Lexing.pos_fname [""; "_none_"; "//toplevel//"] then <span data-count="174">(</span>)
+  <span data-count="246">l</span>et pos = <span data-count="246">l</span>oc.Location.loc_start in
+  <span data-count="246">i</span>f List.mem pos.Lexing.pos_fname [""; "_none_"; "//toplevel//"] then <span data-count="230">(</span>)
   else <span data-count="16">f</span>printf ppf "@\n@[&lt;2&gt;%a:@ %s@]" Location.print_loc loc msg
 
 let show_locs ppf (loc1, loc2) =
-  <span data-count="91">s</span>how_loc "Expected declaration" ppf loc2;
-  <span data-count="91">s</span>how_loc "Actual declaration" ppf loc1
+  <span data-count="119">s</span>how_loc "Expected declaration" ppf loc2;
+  <span data-count="119">s</span>how_loc "Actual declaration" ppf loc1
 
-let path_of_context = <span data-count="1031">f</span>unction
+let path_of_context = <span data-count="1170">f</span>unction
     Module id :: rem -&gt;
-      let rec subm path = <span data-count="10">f</span>unction
-        | <span data-count="10">[</span>] -&gt; path
+      let rec subm path = <span data-count="16">f</span>unction
+        | <span data-count="16">[</span>] -&gt; path
         | <span data-count="0">M</span>odule id :: rem -&gt; subm (Path.Pdot (path, Ident.name id)) rem
         | _ -&gt; assert false
-      in <span data-count="10">s</span>ubm (Path.Pident id) rem
+      in <span data-count="16">s</span>ubm (Path.Pident id) rem
   | _ -&gt; assert false
 
 
 let rec context ppf = function
-    <span data-count="16">M</span>odule id :: rem -&gt;
+    <span data-count="18">M</span>odule id :: rem -&gt;
       fprintf ppf "@[&lt;2&gt;module %a%a@]" Printtyp.ident id args rem
   | <span data-count="34">M</span>odtype id :: rem -&gt;
       fprintf ppf "@[&lt;2&gt;module type %a =@ %a@]"
@@ -2476,16 +2475,16 @@ let rec context ppf = function
       fprintf ppf "functor (%s) -&gt;@ %a" (argname x) context_mty rem
   | <span data-count="2">A</span>rg x :: rem -&gt;
       fprintf ppf "functor (%a : %a) -&gt; ..." Printtyp.ident x context_mty rem
-  | <span data-count="44">[</span>] -&gt;
+  | <span data-count="46">[</span>] -&gt;
       fprintf ppf "&lt;here&gt;"
 and context_mty ppf = function
     <span data-count="14">(</span><span data-count="12">M</span>odule _ | <span data-count="2">M</span>odtype _) :: _ as rem -&gt;
       fprintf ppf "@[&lt;2&gt;sig@ %a@;&lt;1 -2&gt;end@]" context rem
-  | <span data-count="44">c</span>xt -&gt; context ppf cxt
+  | <span data-count="46">c</span>xt -&gt; context ppf cxt
 and args ppf = function
     <span data-count="6">B</span>ody x :: rem -&gt;
       fprintf ppf "(%s)%a" (argname x) args rem
-  | <span data-count="6">A</span>rg x :: rem -&gt;
+  | <span data-count="8">A</span>rg x :: rem -&gt;
       fprintf ppf "(%a :@ %a) : ..." Printtyp.ident x context_mty rem
   | <span data-count="10">c</span>xt -&gt;
       fprintf ppf " :@ %a" context_mty cxt
@@ -2501,24 +2500,24 @@ let alt_context ppf cxt =
     <span data-count="6">f</span>printf ppf "@[&lt;hv 2&gt;at position@ %a,@]@ " context cxt
 
 let context ppf cxt =
-  <span data-count="315">i</span>f cxt = [] then <span data-count="269">(</span>) else
-  <span data-count="46">i</span>f List.for_all (function <span data-count="10">M</span>odule _ -&gt; true | <span data-count="38">_</span> -&gt; false) cxt then
-    <span data-count="8">f</span>printf ppf "In module %a:@ " Printtyp.path (path_of_context cxt)
+  <span data-count="415">i</span>f cxt = [] then <span data-count="361">(</span>) else
+  <span data-count="54">i</span>f List.for_all (function <span data-count="18">M</span>odule _ -&gt; true | <span data-count="40">_</span> -&gt; false) cxt then
+    <span data-count="14">f</span>printf ppf "In module %a:@ " Printtyp.path (path_of_context cxt)
   else
-    <span data-count="38">f</span>printf ppf "@[&lt;hv 2&gt;At position@ %a@]@ " context cxt
+    <span data-count="40">f</span>printf ppf "@[&lt;hv 2&gt;At position@ %a@]@ " context cxt
 
-let include_err env ppf = <span data-count="315">f</span>unction
+let include_err env ppf = <span data-count="415">f</span>unction
   | <span data-count="8">M</span>issing_field (id, loc, kind) -&gt;
       fprintf ppf "The %s `%a' is required but not provided"
         kind Printtyp.ident id;
       <span data-count="8">s</span>how_loc "Expected declaration" ppf loc
-  | <span data-count="38">V</span>alue_descriptions(id, d1, d2) -&gt;
+  | <span data-count="48">V</span>alue_descriptions(id, d1, d2) -&gt;
       fprintf ppf
         "@[&lt;hv 2&gt;Values do not match:@ %a@;&lt;1 -2&gt;is not included in@ %a@]"
         !Oprint.out_sig_item (Printtyp.tree_of_value_description id d1)
         !Oprint.out_sig_item (Printtyp.tree_of_value_description id d2);
-      <span data-count="38">s</span>how_locs ppf (d1.val_loc, d2.val_loc)
-  | <span data-count="47">T</span>ype_declarations(id, d1, d2, err) -&gt;
+      <span data-count="48">s</span>how_locs ppf (d1.val_loc, d2.val_loc)
+  | <span data-count="61">T</span>ype_declarations(id, d1, d2, err) -&gt;
       fprintf ppf "@[&lt;v&gt;@[&lt;hv&gt;%s:@;&lt;1 2&gt;%a@ %s@;&lt;1 2&gt;%a@]%a%a@]"
         "Type declarations do not match"
         !Oprint.out_sig_item
@@ -2529,7 +2528,7 @@ let include_err env ppf = <span data-count="315">f</span>unction
         show_locs (d1.type_loc, d2.type_loc)
         (Includecore.report_type_mismatch
            "the first" "the second" "declaration") err
-  | <span data-count="6">E</span>xtension_constructors(id, x1, x2, err) -&gt;
+  | <span data-count="10">E</span>xtension_constructors(id, x1, x2, err) -&gt;
       fprintf ppf "@[&lt;v&gt;@[&lt;hv&gt;%s:@;&lt;1 2&gt;%a@ %s@;&lt;1 2&gt;%a@]%a%a@]"
         "Extension declarations do not match"
         !Oprint.out_sig_item
@@ -2540,7 +2539,7 @@ let include_err env ppf = <span data-count="315">f</span>unction
         show_locs (x1.ext_loc, x2.ext_loc)
         (Includecore.report_type_mismatch
            "the first" "the second" "declaration") err
-  | <span data-count="151">M</span>odule_types(mty1, mty2)-&gt;
+  | <span data-count="205">M</span>odule_types(mty1, mty2)-&gt;
       fprintf ppf
        "@[&lt;hv 2&gt;Modules do not match:@ \
         %a@;&lt;1 -2&gt;is not included in@ %a@]"
@@ -2557,7 +2556,7 @@ let include_err env ppf = <span data-count="315">f</span>unction
   | <span data-count="0">I</span>nterface_mismatch(impl_name, intf_name) -&gt;
       fprintf ppf "@[The implementation %s@ does not match the interface %s:"
        impl_name intf_name
-  | <span data-count="6">C</span>lass_type_declarations(id, d1, d2, reason) -&gt;
+  | <span data-count="16">C</span>lass_type_declarations(id, d1, d2, reason) -&gt;
       fprintf ppf
        "@[&lt;hv 2&gt;Class type declarations do not match:@ \
         %a@;&lt;1 -2&gt;does not match@ %a@]@ %a"
@@ -2566,7 +2565,7 @@ let include_err env ppf = <span data-count="315">f</span>unction
        !Oprint.out_sig_item
        (Printtyp.tree_of_cltype_declaration id d2 Trec_first)
       Includeclass.report_error reason
-  | <span data-count="3">C</span>lass_declarations(id, d1, d2, reason) -&gt;
+  | <span data-count="11">C</span>lass_declarations(id, d1, d2, reason) -&gt;
       fprintf ppf
        "@[&lt;hv 2&gt;Class declarations do not match:@ \
         %a@;&lt;1 -2&gt;does not match@ %a@]@ %a"
@@ -2581,13 +2580,13 @@ let include_err env ppf = <span data-count="315">f</span>unction
       fprintf ppf "Module %a cannot be aliased" Printtyp.path path
 
 let include_err ppf (cxt, env, err) =
-  <span data-count="315">P</span>rinttyp.wrap_printing_env ~error:true env (fun () -&gt;
-    <span data-count="315">f</span>printf ppf "@[&lt;v&gt;%a%a@]" context (List.rev cxt) (include_err env) err)
+  <span data-count="415">P</span>rinttyp.wrap_printing_env ~error:true env (fun () -&gt;
+    <span data-count="415">f</span>printf ppf "@[&lt;v&gt;%a%a@]" context (List.rev cxt) (include_err env) err)
 
-let buffer = <span data-count="1031">r</span>ef Bytes.empty
+let buffer = <span data-count="1170">r</span>ef Bytes.empty
 let is_big obj =
-  let size = <span data-count="169">!</span>Clflags.error_size in
-  <span data-count="338">s</span>ize &gt; 0 &amp;&amp;
+  let size = <span data-count="221">!</span>Clflags.error_size in
+  <span data-count="442">s</span>ize &gt; 0 &amp;&amp;
   <span data-count="9">b</span>egin
     if Bytes.length !buffer &lt; size then <span data-count="7">b</span>uffer := Bytes.create size;
     <span data-count="9">t</span>ry ignore (Marshal.to_buffer !buffer 0 size obj []); <span data-count="8">f</span>alse
@@ -2595,22 +2594,22 @@ let is_big obj =
   end
 
 let report_error ppf errs =
-  <span data-count="147">i</span>f errs = [] then <span data-count="0">(</span>) else
-  <span data-count="147">l</span>et (errs , err) = <span data-count="147">s</span>plit_last errs in
-  <span data-count="147">l</span>et pe = <span data-count="147">r</span>ef true in
-  <span data-count="147">l</span>et include_err' ppf (_,_,obj as err) =
-    <span data-count="169">i</span>f not (is_big obj) then <span data-count="168">f</span>printf ppf "%a@ " include_err err
+  <span data-count="195">i</span>f errs = [] then <span data-count="0">(</span>) else
+  <span data-count="195">l</span>et (errs , err) = <span data-count="195">s</span>plit_last errs in
+  <span data-count="195">l</span>et pe = <span data-count="195">r</span>ef true in
+  <span data-count="195">l</span>et include_err' ppf (_,_,obj as err) =
+    <span data-count="221">i</span>f not (is_big obj) then <span data-count="220">f</span>printf ppf "%a@ " include_err err
     else <span data-count="1">i</span>f !pe then <span data-count="1">(</span>fprintf ppf "...@ "; <span data-count="1">p</span>e := false)
   in
-  <span data-count="147">l</span>et print_errs ppf = <span data-count="147">L</span>ist.iter (include_err' ppf) in
-  <span data-count="147">P</span>rinttyp.Conflicts.reset();
-  <span data-count="147">f</span>printf ppf "@[&lt;v&gt;%a%a%t@]" print_errs errs include_err err
+  <span data-count="195">l</span>et print_errs ppf = <span data-count="195">L</span>ist.iter (include_err' ppf) in
+  <span data-count="195">P</span>rinttyp.Conflicts.reset();
+  <span data-count="195">f</span>printf ppf "@[&lt;v&gt;%a%a%t@]" print_errs errs include_err err
     Printtyp.Conflicts.print
 
 (* We could do a better job to split the individual error items
    as sub-messages of the main interface mismatch on the whole unit. *)
 let () =
-  <span data-count="1031">L</span>ocation.register_error_of_exn
+  <span data-count="1170">L</span>ocation.register_error_of_exn
     (function
       | <span data-count="4">E</span>rror err -&gt; Some (Location.error_of_printer_file report_error err)
       | <span data-count="39">_</span> -&gt; None
@@ -2618,7 +2617,7 @@ let () =
 </pre>
       </div>
     </div>
-    <div id="footer">Generated on 2019-08-08 13:34:29 by <a href="https://github.com/aantron/bisect_ppx">Bisect_ppx</a> 1.4.1</div>
+    <div id="footer">Generated on 2019-08-14 11:29:20 by <a href="https://github.com/aantron/bisect_ppx">Bisect_ppx</a> 1.4.1</div>
     <script src="../coverage.js"></script>
   </body>
 </html>

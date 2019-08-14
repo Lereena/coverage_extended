@@ -525,32 +525,32 @@ type error =
 
 exception Error of Location.t * error
 
-let is_ocaml_repr = <span data-count="1031">f</span>unction
+let is_ocaml_repr = <span data-count="1170">f</span>unction
   | Same_as_ocaml_repr -&gt; true
   | Unboxed_float
   | Unboxed_integer _
   | Untagged_int -&gt; false
 
-let is_unboxed = <span data-count="1031">f</span>unction
+let is_unboxed = <span data-count="1170">f</span>unction
   | Same_as_ocaml_repr
   | Untagged_int -&gt; false
   | Unboxed_float
   | Unboxed_integer _ -&gt; true
 
-let is_untagged = <span data-count="1031">f</span>unction
+let is_untagged = <span data-count="1170">f</span>unction
   | Untagged_int -&gt; true
   | Same_as_ocaml_repr
   | Unboxed_float
   | Unboxed_integer _ -&gt; false
 
 let rec make_native_repr_args arity x =
-  <span data-count="86796">i</span>f arity = 0 then
-    <span data-count="29995">[</span>]
+  <span data-count="98496">i</span>f arity = 0 then
+    <span data-count="34038">[</span>]
   else
-    <span data-count="56801">x</span> :: make_native_repr_args (arity - 1) x
+    <span data-count="64458">x</span> :: make_native_repr_args (arity - 1) x
 
 let simple ~name ~arity ~alloc =
-  <span data-count="29987">{</span>prim_name = name;
+  <span data-count="34030">{</span>prim_name = name;
    prim_arity = arity;
    prim_alloc = alloc;
    prim_native_name = "";
@@ -558,7 +558,7 @@ let simple ~name ~arity ~alloc =
    prim_native_repr_res = Same_as_ocaml_repr}
 
 let make ~name ~alloc ~native_name ~native_repr_args ~native_repr_res =
-  <span data-count="4124">{</span>prim_name = name;
+  <span data-count="4680">{</span>prim_name = name;
    prim_arity = List.length native_repr_args;
    prim_alloc = alloc;
    prim_native_name = native_name;
@@ -566,53 +566,53 @@ let make ~name ~alloc ~native_name ~native_repr_args ~native_repr_res =
    prim_native_repr_res = native_repr_res}
 
 let parse_declaration valdecl ~native_repr_args ~native_repr_res =
-  <span data-count="258">l</span>et arity = <span data-count="258">L</span>ist.length native_repr_args in
-  <span data-count="258">l</span>et name, native_name, old_style_noalloc, old_style_float =
-    <span data-count="258">m</span>atch valdecl.pval_prim with
+  <span data-count="291">l</span>et arity = <span data-count="291">L</span>ist.length native_repr_args in
+  <span data-count="291">l</span>et name, native_name, old_style_noalloc, old_style_float =
+    <span data-count="291">m</span>atch valdecl.pval_prim with
     | <span data-count="4">n</span>ame :: "noalloc" :: name2 :: "float" :: _ -&gt; (name, name2, true, true)
     | <span data-count="4">n</span>ame :: "noalloc" :: name2 :: _ -&gt; (name, name2, true, false)
     | <span data-count="8">n</span>ame :: name2 :: "float" :: _ -&gt; (name, name2, false, true)
     | <span data-count="8">n</span>ame :: "noalloc" :: _ -&gt; (name, "", true, false)
     | <span data-count="57">n</span>ame :: name2 :: _ -&gt; (name, name2, false, false)
-    | <span data-count="177">n</span>ame :: _ -&gt; (name, "", false, false)
+    | <span data-count="210">n</span>ame :: _ -&gt; (name, "", false, false)
     | <span data-count="0">[</span>] -&gt;
         fatal_error "Primitive.parse_declaration"
   in
-  <span data-count="258">l</span>et noalloc_attribute =
-    <span data-count="258">A</span>ttr_helper.has_no_payload_attribute ["noalloc"; "ocaml.noalloc"]
+  <span data-count="291">l</span>et noalloc_attribute =
+    <span data-count="291">A</span>ttr_helper.has_no_payload_attribute ["noalloc"; "ocaml.noalloc"]
       valdecl.pval_attributes
   in
-  <span data-count="258">i</span>f <span data-count="258">o</span>ld_style_float &amp;&amp;
+  <span data-count="291">i</span>f <span data-count="291">o</span>ld_style_float &amp;&amp;
      <span data-count="12">n</span>ot (<span data-count="12">L</span>ist.for_all is_ocaml_repr native_repr_args &amp;&amp;
           <span data-count="8">i</span>s_ocaml_repr native_repr_res) then
     <span data-count="4">r</span>aise (Error (valdecl.pval_loc,
                   Old_style_float_with_native_repr_attribute));
-  <span data-count="254">i</span>f <span data-count="254">o</span>ld_style_noalloc &amp;&amp; <span data-count="16">n</span>oalloc_attribute then
+  <span data-count="287">i</span>f <span data-count="287">o</span>ld_style_noalloc &amp;&amp; <span data-count="16">n</span>oalloc_attribute then
     <span data-count="2">r</span>aise (Error (valdecl.pval_loc,
                   Old_style_noalloc_with_noalloc_attribute));
   (* The compiler used to assume "noalloc" with "float", we just make this
      explicit now (GPR#167): *)
-  <span data-count="252">l</span>et old_style_noalloc = <span data-count="504">o</span>ld_style_noalloc || <span data-count="238">o</span>ld_style_float in
-  <span data-count="252">i</span>f old_style_float then
+  <span data-count="285">l</span>et old_style_noalloc = <span data-count="570">o</span>ld_style_noalloc || <span data-count="271">o</span>ld_style_float in
+  <span data-count="285">i</span>f old_style_float then
     <span data-count="8">L</span>ocation.deprecated valdecl.pval_loc
       "[@@unboxed] + [@@noalloc] should be used\n\
        instead of \"float\""
-  else <span data-count="244">i</span>f old_style_noalloc then
+  else <span data-count="277">i</span>f old_style_noalloc then
     <span data-count="10">L</span>ocation.deprecated valdecl.pval_loc
       "[@@noalloc] should be used instead of \"noalloc\"";
-  <span data-count="252">i</span>f <span data-count="252">n</span>ative_name = "" &amp;&amp;
-     <span data-count="183">n</span>ot (<span data-count="183">L</span>ist.for_all is_ocaml_repr native_repr_args &amp;&amp;
-          <span data-count="173">i</span>s_ocaml_repr native_repr_res) then
+  <span data-count="285">i</span>f <span data-count="285">n</span>ative_name = "" &amp;&amp;
+     <span data-count="216">n</span>ot (<span data-count="216">L</span>ist.for_all is_ocaml_repr native_repr_args &amp;&amp;
+          <span data-count="206">i</span>s_ocaml_repr native_repr_res) then
     <span data-count="14">r</span>aise (Error (valdecl.pval_loc,
                   No_native_primitive_with_repr_attribute));
-  <span data-count="238">l</span>et noalloc = <span data-count="476">o</span>ld_style_noalloc || <span data-count="222">n</span>oalloc_attribute in
-  <span data-count="238">l</span>et native_repr_args, native_repr_res =
-    <span data-count="238">i</span>f old_style_float then
+  <span data-count="271">l</span>et noalloc = <span data-count="542">o</span>ld_style_noalloc || <span data-count="255">n</span>oalloc_attribute in
+  <span data-count="271">l</span>et native_repr_args, native_repr_res =
+    <span data-count="271">i</span>f old_style_float then
       <span data-count="8">(</span>make_native_repr_args arity Unboxed_float, Unboxed_float)
     else
-      <span data-count="230">(</span>native_repr_args, native_repr_res)
+      <span data-count="263">(</span>native_repr_args, native_repr_res)
   in
-  <span data-count="238">{</span>prim_name = name;
+  <span data-count="271">{</span>prim_name = name;
    prim_arity = arity;
    prim_alloc = not noalloc;
    prim_native_name = native_name;
@@ -636,9 +636,9 @@ let rec add_native_repr_attributes ty attrs =
     assert (List.for_all (fun x -&gt; <span data-count="136">x</span> = None) attrs);
     <span data-count="136">t</span>y
 
-let oattr_unboxed = <span data-count="1031">{</span> oattr_name = "unboxed" }
-let oattr_untagged = <span data-count="1031">{</span> oattr_name = "untagged" }
-let oattr_noalloc = <span data-count="1031">{</span> oattr_name = "noalloc" }
+let oattr_unboxed = <span data-count="1170">{</span> oattr_name = "unboxed" }
+let oattr_untagged = <span data-count="1170">{</span> oattr_name = "untagged" }
+let oattr_noalloc = <span data-count="1170">{</span> oattr_name = "noalloc" }
 
 let print p osig_val_decl =
   <span data-count="154">l</span>et prims =
@@ -701,7 +701,7 @@ let report_error ppf err =
        when attributes [%@untagged] or [%@unboxed] are present.@]"
 
 let () =
-  <span data-count="1031">L</span>ocation.register_error_of_exn
+  <span data-count="1170">L</span>ocation.register_error_of_exn
     (function
       | <span data-count="20">E</span>rror (loc, err) -&gt;
         Some (Location.error_of_printer ~loc report_error err)
@@ -711,7 +711,7 @@ let () =
 </pre>
       </div>
     </div>
-    <div id="footer">Generated on 2019-08-08 13:34:29 by <a href="https://github.com/aantron/bisect_ppx">Bisect_ppx</a> 1.4.1</div>
+    <div id="footer">Generated on 2019-08-14 11:29:20 by <a href="https://github.com/aantron/bisect_ppx">Bisect_ppx</a> 1.4.1</div>
     <script src="../coverage.js"></script>
   </body>
 </html>

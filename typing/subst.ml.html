@@ -1142,33 +1142,33 @@ type t =
   }
 
 let identity =
-  <span data-count="1031">{</span> types = Path.Map.empty;
+  <span data-count="1170">{</span> types = Path.Map.empty;
     modules = Path.Map.empty;
     modtypes = Ident.Map.empty;
     for_saving = false;
   }
 
-let add_type_path id p s = <span data-count="79550">{</span> s with types = Path.Map.add id (Path p) s.types }
-let add_type id p s = <span data-count="79419">a</span>dd_type_path (Pident id) p s
+let add_type_path id p s = <span data-count="90833">{</span> s with types = Path.Map.add id (Path p) s.types }
+let add_type id p s = <span data-count="90680">a</span>dd_type_path (Pident id) p s
 
 let add_type_function id ~params ~body s =
   <span data-count="20">{</span> s with types = Path.Map.add id (Type_function { params; body }) s.types }
 
-let add_module_path id p s = <span data-count="124553">{</span> s with modules = Path.Map.add id p s.modules }
-let add_module id p s = <span data-count="124532">a</span>dd_module_path (Pident id) p s
+let add_module_path id p s = <span data-count="140797">{</span> s with modules = Path.Map.add id p s.modules }
+let add_module id p s = <span data-count="140776">a</span>dd_module_path (Pident id) p s
 
-let add_modtype id ty s = <span data-count="2048">{</span> s with modtypes = Ident.Map.add id ty s.modtypes }
+let add_modtype id ty s = <span data-count="2185">{</span> s with modtypes = Ident.Map.add id ty s.modtypes }
 
 let for_saving s = { s with for_saving = true }
 
 let loc s x =
-  <span data-count="552879">i</span>f <span data-count="552879">s</span>.for_saving &amp;&amp; <span data-count="8531">n</span>ot !Clflags.keep_locs then <span data-count="0">L</span>ocation.none else <span data-count="552879">x</span>
+  <span data-count="633828">i</span>f <span data-count="633828">s</span>.for_saving &amp;&amp; <span data-count="9107">n</span>ot !Clflags.keep_locs then <span data-count="0">L</span>ocation.none else <span data-count="633828">x</span>
 
 let remove_loc =
-  <span data-count="1031">l</span>et open Ast_mapper in
+  <span data-count="1170">l</span>et open Ast_mapper in
   {default_mapper with location = (fun _this _loc -&gt; <span data-count="0">L</span>ocation.none)}
 
-let is_not_doc = <span data-count="1031">f</span>unction
+let is_not_doc = <span data-count="1170">f</span>unction
   | {Parsetree.attr_name = {Location.txt = "ocaml.doc"}; _} -&gt; false
   | {Parsetree.attr_name = {Location.txt = "ocaml.text"}; _} -&gt; false
   | {Parsetree.attr_name = {Location.txt = "doc"}; _} -&gt; false
@@ -1176,98 +1176,98 @@ let is_not_doc = <span data-count="1031">f</span>unction
   | _ -&gt; true
 
 let attrs s x =
-  <span data-count="568709">l</span>et x =
-    <span data-count="568709">i</span>f <span data-count="568709">s</span>.for_saving &amp;&amp; <span data-count="8595">n</span>ot !Clflags.keep_docs then
-      <span data-count="8595">L</span>ist.filter is_not_doc x
-    else <span data-count="560114">x</span>
+  <span data-count="651753">l</span>et x =
+    <span data-count="651753">i</span>f <span data-count="651753">s</span>.for_saving &amp;&amp; <span data-count="9173">n</span>ot !Clflags.keep_docs then
+      <span data-count="9173">L</span>ist.filter is_not_doc x
+    else <span data-count="642580">x</span>
   in
-    <span data-count="568709">i</span>f <span data-count="568709">s</span>.for_saving &amp;&amp; <span data-count="8595">n</span>ot !Clflags.keep_locs
+    <span data-count="651753">i</span>f <span data-count="651753">s</span>.for_saving &amp;&amp; <span data-count="9173">n</span>ot !Clflags.keep_locs
     then <span data-count="0">r</span>emove_loc.Ast_mapper.attributes remove_loc x
-    else <span data-count="568709">x</span>
+    else <span data-count="651753">x</span>
 
 let rec module_path s path =
-  <span data-count="308611">t</span>ry Path.Map.find path s.modules
-  with <span data-count="191450">N</span>ot_found -&gt;
+  <span data-count="356457">t</span>ry Path.Map.find path s.modules
+  with <span data-count="224189">N</span>ot_found -&gt;
     match path with
-    | <span data-count="152894">P</span>ident _ -&gt; path
-    | <span data-count="37191">P</span>dot(p, n) -&gt;
+    | <span data-count="179185">P</span>ident _ -&gt; path
+    | <span data-count="43620">P</span>dot(p, n) -&gt;
        Pdot(module_path s p, n)
-    | <span data-count="1365">P</span>apply(p1, p2) -&gt;
+    | <span data-count="1384">P</span>apply(p1, p2) -&gt;
        Papply(module_path s p1, module_path s p2)
 
 let modtype_path s = function
-    <span data-count="558">P</span>ident id as p -&gt;
+    <span data-count="572">P</span>ident id as p -&gt;
       begin try
         match Ident.Map.find id s.modtypes with
           | <span data-count="51">M</span>ty_ident p -&gt; p
           | <span data-count="0">_</span> -&gt; fatal_error "Subst.modtype_path"
-      with <span data-count="507">N</span>ot_found -&gt; p end
-  | <span data-count="190">P</span>dot(p, n) -&gt;
+      with <span data-count="521">N</span>ot_found -&gt; p end
+  | <span data-count="199">P</span>dot(p, n) -&gt;
       Pdot(module_path s p, n)
   | <span data-count="0">P</span>apply _ -&gt;
       fatal_error "Subst.modtype_path"
 
 let type_path s path =
-  <span data-count="1556642">m</span>atch Path.Map.find path s.types with
-  | <span data-count="393375">P</span>ath p -&gt; p
+  <span data-count="1731241">m</span>atch Path.Map.find path s.types with
+  | <span data-count="434254">P</span>ath p -&gt; p
   | Type_function _ -&gt; assert false
-  | <span data-count="1163267">e</span>xception Not_found -&gt;
+  | <span data-count="1296987">e</span>xception Not_found -&gt;
      match path with
-     | <span data-count="1068740">P</span>ident _ -&gt; path
-     | <span data-count="94527">P</span>dot(p, n) -&gt;
+     | <span data-count="1183594">P</span>ident _ -&gt; path
+     | <span data-count="113393">P</span>dot(p, n) -&gt;
         Pdot(module_path s p, n)
      | <span data-count="0">P</span>apply _ -&gt;
         fatal_error "Subst.type_path"
 
 let type_path s p =
-  <span data-count="1556656">m</span>atch Path.constructor_typath p with
-  | <span data-count="1530595">R</span>egular p -&gt; type_path s p
-  | <span data-count="4">C</span>str (ty_path, cstr) -&gt; Pdot(type_path s ty_path, cstr)
-  | <span data-count="26043">L</span>ocalExt _ -&gt; type_path s p
+  <span data-count="1731255">m</span>atch Path.constructor_typath p with
+  | <span data-count="1701802">R</span>egular p -&gt; type_path s p
+  | <span data-count="6">C</span>str (ty_path, cstr) -&gt; Pdot(type_path s ty_path, cstr)
+  | <span data-count="29433">L</span>ocalExt _ -&gt; type_path s p
   | <span data-count="14">E</span>xt (p, cstr) -&gt; Pdot(module_path s p, cstr)
 
 let to_subst_by_type_function s p =
-  <span data-count="4198">m</span>atch Path.Map.find p s.types with
-  | <span data-count="1217">P</span>ath _ -&gt; false
+  <span data-count="4388">m</span>atch Path.Map.find p s.types with
+  | <span data-count="1263">P</span>ath _ -&gt; false
   | <span data-count="2">T</span>ype_function _ -&gt; true
-  | <span data-count="2979">e</span>xception Not_found -&gt; false
+  | <span data-count="3123">e</span>xception Not_found -&gt; false
 
 (* Special type ids for saved signatures *)
 
-let new_id = <span data-count="1031">r</span>ef (-1)
+let new_id = <span data-count="1170">r</span>ef (-1)
 let reset_for_saving () = new_id := -1
 
 let newpersty desc =
   decr new_id;
-  <span data-count="40781">{</span> desc; level = generic_level; scope = Btype.lowest_level; id = !new_id }
+  <span data-count="42488">{</span> desc; level = generic_level; scope = Btype.lowest_level; id = !new_id }
 
 (* ensure that all occurrences of 'Tvar None' are physically shared *)
-let tvar_none = <span data-count="1031">T</span>var None
-let tunivar_none = <span data-count="1031">T</span>univar None
-let norm = <span data-count="1031">f</span>unction
+let tvar_none = <span data-count="1170">T</span>var None
+let tunivar_none = <span data-count="1170">T</span>univar None
+let norm = <span data-count="1170">f</span>unction
   | Tvar None -&gt; tvar_none
   | Tunivar None -&gt; tunivar_none
   | d -&gt; d
 
-let ctype_apply_env_empty = <span data-count="1031">r</span>ef (fun _ -&gt; <span data-count="0">a</span>ssert false)
+let ctype_apply_env_empty = <span data-count="1170">r</span>ef (fun _ -&gt; <span data-count="0">a</span>ssert false)
 
 (* Similar to [Ctype.nondep_type_rec]. *)
 let rec typexp copy_scope s ty =
-  <span data-count="3166976">l</span>et ty = <span data-count="3166976">r</span>epr ty in
-  <span data-count="3166976">m</span>atch ty.desc with
-    <span data-count="566095">T</span>var _ | <span data-count="13793">T</span>univar _ as desc -&gt;
-      if <span data-count="579888">s</span>.for_saving || <span data-count="576601">t</span>y.id &lt; 0 then
-        <span data-count="199432">l</span>et ty' =
-          <span data-count="199432">i</span>f s.for_saving then <span data-count="3287">n</span>ewpersty (norm desc)
-          else <span data-count="196145">n</span>ewty2 ty.level desc
+  <span data-count="3497253">l</span>et ty = <span data-count="3497253">r</span>epr ty in
+  <span data-count="3497253">m</span>atch ty.desc with
+    <span data-count="623606">T</span>var _ | <span data-count="13809">T</span>univar _ as desc -&gt;
+      if <span data-count="637415">s</span>.for_saving || <span data-count="634002">t</span>y.id &lt; 0 then
+        <span data-count="223909">l</span>et ty' =
+          <span data-count="223909">i</span>f s.for_saving then <span data-count="3413">n</span>ewpersty (norm desc)
+          else <span data-count="220496">n</span>ewty2 ty.level desc
         in
-        <span data-count="199432">F</span>or_copy.save_desc copy_scope ty desc;
-        <span data-count="199432">t</span>y.desc &lt;- Tsubst ty';
-        <span data-count="199432">t</span>y'
-      else <span data-count="380456">t</span>y
-  | <span data-count="242715">T</span>subst ty -&gt;
+        <span data-count="223909">F</span>or_copy.save_desc copy_scope ty desc;
+        <span data-count="223909">t</span>y.desc &lt;- Tsubst ty';
+        <span data-count="223909">t</span>y'
+      else <span data-count="413506">t</span>y
+  | <span data-count="267133">T</span>subst ty -&gt;
       ty
-  | <span data-count="10">T</span>field (m, k, _t1, _t2) when <span data-count="60104">n</span>ot s.for_saving &amp;&amp; <span data-count="57736">m</span> = dummy_method
+  | <span data-count="10">T</span>field (m, k, _t1, _t2) when <span data-count="60580">n</span>ot s.for_saving &amp;&amp; <span data-count="58212">m</span> = dummy_method
       &amp;&amp; <span data-count="4512">f</span>ield_kind_repr k &lt;&gt; Fabsent &amp;&amp; <span data-count="2256">(</span>repr ty).level &lt; generic_level -&gt;
       (* do not copy the type of self when it is not generalized *)
       ty
@@ -1275,98 +1275,98 @@ let rec typexp copy_scope s ty =
   | Tvariant row when not (static_row row) -&gt;
       ty
 *)
-  | <span data-count="2344363">_</span> -&gt;
-    let desc = <span data-count="2344363">t</span>y.desc in
-    <span data-count="2344363">F</span>or_copy.save_desc copy_scope ty desc;
-    <span data-count="2344363">l</span>et tm = <span data-count="2344363">r</span>ow_of_type ty in
-    <span data-count="2344363">l</span>et has_fixed_row =
-      <span data-count="4688726">n</span>ot (is_Tconstr ty) &amp;&amp; <span data-count="884090">i</span>s_constr_row ~allow_ident:false tm in
+  | <span data-count="2592695">_</span> -&gt;
+    let desc = <span data-count="2592695">t</span>y.desc in
+    <span data-count="2592695">F</span>or_copy.save_desc copy_scope ty desc;
+    <span data-count="2592695">l</span>et tm = <span data-count="2592695">r</span>ow_of_type ty in
+    <span data-count="2592695">l</span>et has_fixed_row =
+      <span data-count="5185390">n</span>ot (is_Tconstr ty) &amp;&amp; <span data-count="970854">i</span>s_constr_row ~allow_ident:false tm in
     (* Make a stub *)
-    <span data-count="2344363">l</span>et ty' = <span data-count="2344363">i</span>f s.for_saving then <span data-count="37251">n</span>ewpersty (Tvar None) else <span data-count="2307112">n</span>ewgenvar () in
-    <span data-count="2344363">t</span>y.desc &lt;- Tsubst ty';
-    <span data-count="2344363">t</span>y'.desc &lt;-
+    <span data-count="2592695">l</span>et ty' = <span data-count="2592695">i</span>f s.for_saving then <span data-count="38772">n</span>ewpersty (Tvar None) else <span data-count="2553923">n</span>ewgenvar () in
+    <span data-count="2592695">t</span>y.desc &lt;- Tsubst ty';
+    <span data-count="2592695">t</span>y'.desc &lt;-
       begin if has_fixed_row then
         <span data-count="8">m</span>atch tm.desc with (* PR#7348 *)
           <span data-count="8">T</span>constr (Pdot(m,i), tl, _abbrev) -&gt;
             let i' = <span data-count="8">S</span>tring.sub i 0 (String.length i - 4) in
             <span data-count="8">T</span>constr(type_path s (Pdot(m,i')), tl, ref Mnil)
         | _ -&gt; assert false
-      else <span data-count="2344355">m</span>atch desc with
-      | <span data-count="1460273">T</span>constr (p, args, _abbrev) -&gt;
-         let args = <span data-count="1460273">L</span>ist.map (typexp copy_scope s) args in
-         <span data-count="1460273">b</span>egin match Path.Map.find p s.types with
-         | <span data-count="1142627">e</span>xception Not_found -&gt; Tconstr(type_path s p, args, ref Mnil)
-         | <span data-count="317630">P</span>ath _ -&gt; Tconstr(type_path s p, args, ref Mnil)
+      else <span data-count="2592687">m</span>atch desc with
+      | <span data-count="1621841">T</span>constr (p, args, _abbrev) -&gt;
+         let args = <span data-count="1621841">L</span>ist.map (typexp copy_scope s) args in
+         <span data-count="1621841">b</span>egin match Path.Map.find p s.types with
+         | <span data-count="1273982">e</span>xception Not_found -&gt; Tconstr(type_path s p, args, ref Mnil)
+         | <span data-count="347843">P</span>ath _ -&gt; Tconstr(type_path s p, args, ref Mnil)
          | <span data-count="16">T</span>ype_function { params; body } -&gt;
             (!ctype_apply_env_empty params body args).desc
          end
-      | <span data-count="748">T</span>package(p, n, tl) -&gt;
+      | <span data-count="771">T</span>package(p, n, tl) -&gt;
           Tpackage(modtype_path s p, n, List.map (typexp copy_scope s) tl)
-      | <span data-count="14439">T</span>object (t1, name) -&gt;
-          let t1' = <span data-count="14439">t</span>ypexp copy_scope s t1 in
-          <span data-count="14439">l</span>et name' =
-            <span data-count="14439">m</span>atch !name with
-            | <span data-count="11179">N</span>one -&gt; None
-            | <span data-count="3260">S</span>ome (p, tl) -&gt;
+      | <span data-count="14921">T</span>object (t1, name) -&gt;
+          let t1' = <span data-count="14921">t</span>ypexp copy_scope s t1 in
+          <span data-count="14921">l</span>et name' =
+            <span data-count="14921">m</span>atch !name with
+            | <span data-count="11547">N</span>one -&gt; None
+            | <span data-count="3374">S</span>ome (p, tl) -&gt;
                 if to_subst_by_type_function s p
                 then <span data-count="0">N</span>one
-                else <span data-count="3260">S</span>ome (type_path s p, List.map (typexp copy_scope s) tl)
+                else <span data-count="3374">S</span>ome (type_path s p, List.map (typexp copy_scope s) tl)
           in
-          <span data-count="14439">T</span>object (t1', ref name')
-      | <span data-count="5617">T</span>variant row -&gt;
-          let row = <span data-count="5617">r</span>ow_repr row in
-          <span data-count="5617">l</span>et more = <span data-count="5617">r</span>epr row.row_more in
+          <span data-count="14921">T</span>object (t1', ref name')
+      | <span data-count="7044">T</span>variant row -&gt;
+          let row = <span data-count="7044">r</span>ow_repr row in
+          <span data-count="7044">l</span>et more = <span data-count="7044">r</span>epr row.row_more in
           (* We must substitute in a subtle way *)
           (* Tsubst takes a tuple containing the row var and the variant *)
-          <span data-count="5617">b</span>egin match more.desc with
-            <span data-count="26">T</span>subst {desc = Ttuple [_;ty2]} -&gt;
+          <span data-count="7044">b</span>egin match more.desc with
+            <span data-count="31">T</span>subst {desc = Ttuple [_;ty2]} -&gt;
               (* This variant type has been already copied *)
               ty.desc &lt;- Tsubst ty2; (* avoid Tlink in the new type *)
-              <span data-count="26">T</span>link ty2
-          | <span data-count="5591">_</span> -&gt;
+              <span data-count="31">T</span>link ty2
+          | <span data-count="7013">_</span> -&gt;
               let dup =
-                <span data-count="11182">s</span>.for_saving || <span data-count="10512">m</span>ore.level = generic_level || <span data-count="3560">s</span>tatic_row row ||
-                <span data-count="1047">m</span>atch more.desc with <span data-count="24">T</span>constr _ -&gt; true | <span data-count="1023">_</span> -&gt; false in
+                <span data-count="14026">s</span>.for_saving || <span data-count="13192">m</span>ore.level = generic_level || <span data-count="4274">s</span>tatic_row row ||
+                <span data-count="1350">m</span>atch more.desc with <span data-count="24">T</span>constr _ -&gt; true | <span data-count="1326">_</span> -&gt; false in
               (* Various cases for the row variable *)
-              <span data-count="5591">l</span>et more' =
-                <span data-count="5591">m</span>atch more.desc with
+              <span data-count="7013">l</span>et more' =
+                <span data-count="7013">m</span>atch more.desc with
                   <span data-count="2">T</span>subst ty -&gt; ty
-                | <span data-count="97">T</span>constr _ | <span data-count="1873">T</span>nil -&gt; typexp copy_scope s more
-                | <span data-count="599">T</span>univar _ | <span data-count="3020">T</span>var _ -&gt;
+                | <span data-count="103">T</span>constr _ | <span data-count="2389">T</span>nil -&gt; typexp copy_scope s more
+                | <span data-count="599">T</span>univar _ | <span data-count="3920">T</span>var _ -&gt;
                     For_copy.save_desc copy_scope more more.desc;
-                    <span data-count="3619">i</span>f s.for_saving then <span data-count="243">n</span>ewpersty (norm more.desc) else
-                    <span data-count="3376">i</span>f <span data-count="3376">d</span>up &amp;&amp; <span data-count="2353">i</span>s_Tvar more then <span data-count="1908">n</span>ewgenty more.desc else <span data-count="1468">m</span>ore
+                    <span data-count="4519">i</span>f s.for_saving then <span data-count="303">n</span>ewpersty (norm more.desc) else
+                    <span data-count="4216">i</span>f <span data-count="4216">d</span>up &amp;&amp; <span data-count="2890">i</span>s_Tvar more then <span data-count="2445">n</span>ewgenty more.desc else <span data-count="1771">m</span>ore
                 | _ -&gt; assert false
               in
               (* Register new type first for recursion *)
-              <span data-count="5591">m</span>ore.desc &lt;- Tsubst(newgenty(Ttuple[more';ty']));
+              <span data-count="7013">m</span>ore.desc &lt;- Tsubst(newgenty(Ttuple[more';ty']));
               (* Return a new copy *)
-              <span data-count="5591">l</span>et row =
-                <span data-count="5591">c</span>opy_row (typexp copy_scope s) true row (not dup) more' in
-              <span data-count="5591">m</span>atch row.row_name with
-              | <span data-count="938">S</span>ome (p, tl) -&gt;
+              <span data-count="7013">l</span>et row =
+                <span data-count="7013">c</span>opy_row (typexp copy_scope s) true row (not dup) more' in
+              <span data-count="7013">m</span>atch row.row_name with
+              | <span data-count="1014">S</span>ome (p, tl) -&gt;
                  Tvariant {row with row_name =
                                       if to_subst_by_type_function s p
                                       then <span data-count="2">N</span>one
-                                      else <span data-count="936">S</span>ome (type_path s p, tl)}
-              | <span data-count="4653">N</span>one -&gt;
+                                      else <span data-count="1012">S</span>ome (type_path s p, tl)}
+              | <span data-count="5999">N</span>one -&gt;
                   Tvariant row
           end
-      | <span data-count="0">T</span>field(_label, kind, _t1, t2) when <span data-count="30042">f</span>ield_kind_repr kind = Fabsent -&gt;
+      | <span data-count="0">T</span>field(_label, kind, _t1, t2) when <span data-count="30280">f</span>ield_kind_repr kind = Fabsent -&gt;
           Tlink (typexp copy_scope s t2)
-      | <span data-count="863278">_</span> -&gt; copy_type_desc (typexp copy_scope s) desc
+      | <span data-count="948110">_</span> -&gt; copy_type_desc (typexp copy_scope s) desc
       end;
-    <span data-count="2344363">t</span>y'
+    <span data-count="2592695">t</span>y'
 
 (*
    Always make a copy of the type. If this is not done, type levels
    might not be correct.
 *)
 let type_expr s ty =
-  <span data-count="229217">F</span>or_copy.with_scope (fun copy_scope -&gt; <span data-count="229217">t</span>ypexp copy_scope s ty)
+  <span data-count="243794">F</span>or_copy.with_scope (fun copy_scope -&gt; <span data-count="243794">t</span>ypexp copy_scope s ty)
 
 let label_declaration copy_scope s l =
-  <span data-count="22385">{</span>
+  <span data-count="28814">{</span>
     ld_id = l.ld_id;
     ld_mutable = l.ld_mutable;
     ld_type = typexp copy_scope s l.ld_type;
@@ -1374,14 +1374,14 @@ let label_declaration copy_scope s l =
     ld_attributes = attrs s l.ld_attributes;
   }
 
-let constructor_arguments copy_scope s = <span data-count="111897">f</span>unction
-  | <span data-count="111825">C</span>str_tuple l -&gt;
+let constructor_arguments copy_scope s = <span data-count="133536">f</span>unction
+  | <span data-count="133358">C</span>str_tuple l -&gt;
       Cstr_tuple (List.map (typexp copy_scope s) l)
-  | <span data-count="72">C</span>str_record l -&gt;
+  | <span data-count="178">C</span>str_record l -&gt;
       Cstr_record (List.map (label_declaration copy_scope s) l)
 
 let constructor_declaration copy_scope s c =
-  <span data-count="96067">{</span>
+  <span data-count="115611">{</span>
     cd_id = c.cd_id;
     cd_args = constructor_arguments copy_scope s c.cd_args;
     cd_res = Option.map (typexp copy_scope s) c.cd_res;
@@ -1390,22 +1390,22 @@ let constructor_declaration copy_scope s c =
   }
 
 let type_declaration' copy_scope s decl =
-  <span data-count="53768">{</span> type_params = List.map (typexp copy_scope s) decl.type_params;
+  <span data-count="61544">{</span> type_params = List.map (typexp copy_scope s) decl.type_params;
     type_arity = decl.type_arity;
     type_kind =
       begin match decl.type_kind with
-        <span data-count="30620">T</span>ype_abstract -&gt; Type_abstract
-      | <span data-count="16583">T</span>ype_variant cstrs -&gt;
+        <span data-count="34262">T</span>ype_abstract -&gt; Type_abstract
+      | <span data-count="19237">T</span>ype_variant cstrs -&gt;
           Type_variant (List.map (constructor_declaration copy_scope s) cstrs)
-      | <span data-count="5942">T</span>ype_record(lbls, rep) -&gt;
+      | <span data-count="7382">T</span>ype_record(lbls, rep) -&gt;
           Type_record (List.map (label_declaration copy_scope s) lbls, rep)
-      | <span data-count="623">T</span>ype_open -&gt; Type_open
+      | <span data-count="663">T</span>ype_open -&gt; Type_open
       end;
     type_manifest =
       begin
         match decl.type_manifest with
-          <span data-count="32567">N</span>one -&gt; None
-        | <span data-count="21201">S</span>ome ty -&gt; Some(typexp copy_scope s ty)
+          <span data-count="37464">N</span>one -&gt; None
+        | <span data-count="24080">S</span>ome ty -&gt; Some(typexp copy_scope s ty)
       end;
     type_private = decl.type_private;
     type_variance = decl.type_variance;
@@ -1418,50 +1418,50 @@ let type_declaration' copy_scope s decl =
   }
 
 let type_declaration s decl =
-  <span data-count="43940">F</span>or_copy.with_scope (fun copy_scope -&gt; <span data-count="43940">t</span>ype_declaration' copy_scope s decl)
+  <span data-count="50576">F</span>or_copy.with_scope (fun copy_scope -&gt; <span data-count="50576">t</span>ype_declaration' copy_scope s decl)
 
 let class_signature copy_scope s sign =
-  <span data-count="4091">{</span> csig_self = typexp copy_scope s sign.csig_self;
+  <span data-count="4309">{</span> csig_self = typexp copy_scope s sign.csig_self;
     csig_vars =
       Vars.map
-        (function <span data-count="1414">(</span>m, v, t) -&gt; (m, v, typexp copy_scope s t)) sign.csig_vars;
+        (function <span data-count="1442">(</span>m, v, t) -&gt; (m, v, typexp copy_scope s t)) sign.csig_vars;
     csig_concr = sign.csig_concr;
     csig_inher =
       List.map
-        (fun (p, tl) -&gt; <span data-count="560">(</span>type_path s p, List.map (typexp copy_scope s) tl))
+        (fun (p, tl) -&gt; <span data-count="564">(</span>type_path s p, List.map (typexp copy_scope s) tl))
         sign.csig_inher;
   }
 
-let rec class_type copy_scope s = <span data-count="5857">f</span>unction
-  | <span data-count="677">C</span>ty_constr (p, tyl, cty) -&gt;
-      let p' = <span data-count="677">t</span>ype_path s p in
-      <span data-count="677">l</span>et tyl' = <span data-count="677">L</span>ist.map (typexp copy_scope s) tyl in
-      <span data-count="677">l</span>et cty' = <span data-count="677">c</span>lass_type copy_scope s cty in
-      <span data-count="677">C</span>ty_constr (p', tyl', cty')
-  | <span data-count="4091">C</span>ty_signature sign -&gt;
+let rec class_type copy_scope s = <span data-count="6131">f</span>unction
+  | <span data-count="721">C</span>ty_constr (p, tyl, cty) -&gt;
+      let p' = <span data-count="721">t</span>ype_path s p in
+      <span data-count="721">l</span>et tyl' = <span data-count="721">L</span>ist.map (typexp copy_scope s) tyl in
+      <span data-count="721">l</span>et cty' = <span data-count="721">c</span>lass_type copy_scope s cty in
+      <span data-count="721">C</span>ty_constr (p', tyl', cty')
+  | <span data-count="4309">C</span>ty_signature sign -&gt;
       Cty_signature (class_signature copy_scope s sign)
-  | <span data-count="1089">C</span>ty_arrow (l, ty, cty) -&gt;
+  | <span data-count="1101">C</span>ty_arrow (l, ty, cty) -&gt;
       Cty_arrow (l, typexp copy_scope s ty, class_type copy_scope s cty)
 
 let class_declaration' copy_scope s decl =
-  <span data-count="1207">{</span> cty_params = List.map (typexp copy_scope s) decl.cty_params;
+  <span data-count="1259">{</span> cty_params = List.map (typexp copy_scope s) decl.cty_params;
     cty_variance = decl.cty_variance;
     cty_type = class_type copy_scope s decl.cty_type;
     cty_path = type_path s decl.cty_path;
     cty_new =
       begin match decl.cty_new with
-      | <span data-count="93">N</span>one    -&gt; None
-      | <span data-count="1114">S</span>ome ty -&gt; Some (typexp copy_scope s ty)
+      | <span data-count="103">N</span>one    -&gt; None
+      | <span data-count="1156">S</span>ome ty -&gt; Some (typexp copy_scope s ty)
       end;
     cty_loc = loc s decl.cty_loc;
     cty_attributes = attrs s decl.cty_attributes;
   }
 
 let class_declaration s decl =
-  <span data-count="1022">F</span>or_copy.with_scope (fun copy_scope -&gt; <span data-count="1022">c</span>lass_declaration' copy_scope s decl)
+  <span data-count="1066">F</span>or_copy.with_scope (fun copy_scope -&gt; <span data-count="1066">c</span>lass_declaration' copy_scope s decl)
 
 let cltype_declaration' copy_scope s decl =
-  <span data-count="1623">{</span> clty_params = List.map (typexp copy_scope s) decl.clty_params;
+  <span data-count="1747">{</span> clty_params = List.map (typexp copy_scope s) decl.clty_params;
     clty_variance = decl.clty_variance;
     clty_type = class_type copy_scope s decl.clty_type;
     clty_path = type_path s decl.clty_path;
@@ -1470,33 +1470,33 @@ let cltype_declaration' copy_scope s decl =
   }
 
 let cltype_declaration s decl =
-  <span data-count="1313">F</span>or_copy.with_scope (fun copy_scope -&gt; <span data-count="1313">c</span>ltype_declaration' copy_scope s decl)
+  <span data-count="1415">F</span>or_copy.with_scope (fun copy_scope -&gt; <span data-count="1415">c</span>ltype_declaration' copy_scope s decl)
 
 let class_type s cty =
-  <span data-count="1261">F</span>or_copy.with_scope (fun copy_scope -&gt; <span data-count="1261">c</span>lass_type copy_scope s cty)
+  <span data-count="1303">F</span>or_copy.with_scope (fun copy_scope -&gt; <span data-count="1303">c</span>lass_type copy_scope s cty)
 
 let value_description' copy_scope s descr =
-  <span data-count="366878">{</span> val_type = typexp copy_scope s descr.val_type;
+  <span data-count="412458">{</span> val_type = typexp copy_scope s descr.val_type;
     val_kind = descr.val_kind;
     val_loc = loc s descr.val_loc;
     val_attributes = attrs s descr.val_attributes;
    }
 
 let value_description s descr =
-  <span data-count="254560">F</span>or_copy.with_scope (fun copy_scope -&gt; <span data-count="254560">v</span>alue_description' copy_scope s descr)
+  <span data-count="288648">F</span>or_copy.with_scope (fun copy_scope -&gt; <span data-count="288648">v</span>alue_description' copy_scope s descr)
 
 let extension_constructor' copy_scope s ext =
-  <span data-count="15830">{</span> ext_type_path = type_path s ext.ext_type_path;
+  <span data-count="17925">{</span> ext_type_path = type_path s ext.ext_type_path;
     ext_type_params = List.map (typexp copy_scope s) ext.ext_type_params;
     ext_args = constructor_arguments copy_scope s ext.ext_args;
     ext_ret_type = Option.map (typexp copy_scope s) ext.ext_ret_type;
     ext_private = ext.ext_private;
     ext_attributes = attrs s ext.ext_attributes;
-    ext_loc = if s.for_saving then <span data-count="64">L</span>ocation.none else <span data-count="15766">e</span>xt.ext_loc; }
+    ext_loc = if s.for_saving then <span data-count="66">L</span>ocation.none else <span data-count="17859">e</span>xt.ext_loc; }
 
 let extension_constructor s ext =
-  <span data-count="13726">F</span>or_copy.with_scope
-    (fun copy_scope -&gt; <span data-count="13726">e</span>xtension_constructor' copy_scope s ext)
+  <span data-count="15528">F</span>or_copy.with_scope
+    (fun copy_scope -&gt; <span data-count="15528">e</span>xtension_constructor' copy_scope s ext)
 
 type scoping =
   | Keep
@@ -1504,116 +1504,116 @@ type scoping =
   | Rescope of int
 
 let rename_bound_idents scoping s sg =
-  <span data-count="8019">l</span>et rename =
-    <span data-count="8019">l</span>et open Ident in
+  <span data-count="8784">l</span>et rename =
+    <span data-count="8784">l</span>et open Ident in
     match scoping with
-    | <span data-count="886">K</span>eep -&gt; (fun id -&gt; <span data-count="1136">c</span>reate_scoped ~scope:(scope id) (name id))
-    | <span data-count="3820">M</span>ake_local -&gt; Ident.rename
-    | <span data-count="3313">R</span>escope scope -&gt; (fun id -&gt; <span data-count="4925">c</span>reate_scoped ~scope (name id))
+    | <span data-count="919">K</span>eep -&gt; (fun id -&gt; <span data-count="1204">c</span>reate_scoped ~scope:(scope id) (name id))
+    | <span data-count="4284">M</span>ake_local -&gt; Ident.rename
+    | <span data-count="3581">R</span>escope scope -&gt; (fun id -&gt; <span data-count="5425">c</span>reate_scoped ~scope (name id))
   in
-  <span data-count="8019">l</span>et rec rename_bound_idents s sg = <span data-count="142196">f</span>unction
-    | <span data-count="8019">[</span>] -&gt; sg, s
-    | <span data-count="9828">S</span>ig_type(id, td, rs, vis) :: rest -&gt;
-        let id' = <span data-count="9828">r</span>ename id in
-        <span data-count="9828">r</span>ename_bound_idents
+  <span data-count="8784">l</span>et rec rename_bound_idents s sg = <span data-count="157249">f</span>unction
+    | <span data-count="8784">[</span>] -&gt; sg, s
+    | <span data-count="10968">S</span>ig_type(id, td, rs, vis) :: rest -&gt;
+        let id' = <span data-count="10968">r</span>ename id in
+        <span data-count="10968">r</span>ename_bound_idents
           (add_type id (Pident id') s)
           (Sig_type(id', td, rs, vis) :: sg)
           rest
-    | <span data-count="8903">S</span>ig_module(id, pres, md, rs, vis) :: rest -&gt;
-        let id' = <span data-count="8903">r</span>ename id in
-        <span data-count="8903">r</span>ename_bound_idents
+    | <span data-count="10210">S</span>ig_module(id, pres, md, rs, vis) :: rest -&gt;
+        let id' = <span data-count="10210">r</span>ename id in
+        <span data-count="10210">r</span>ename_bound_idents
           (add_module id (Pident id') s)
           (Sig_module (id', pres, md, rs, vis) :: sg)
           rest
-    | <span data-count="533">S</span>ig_modtype(id, mtd, vis) :: rest -&gt;
-        let id' = <span data-count="533">r</span>ename id in
-        <span data-count="533">r</span>ename_bound_idents
+    | <span data-count="559">S</span>ig_modtype(id, mtd, vis) :: rest -&gt;
+        let id' = <span data-count="559">r</span>ename id in
+        <span data-count="559">r</span>ename_bound_idents
           (add_modtype id (Mty_ident(Pident id')) s)
           (Sig_modtype(id', mtd, vis) :: sg)
           rest
-    | <span data-count="185">S</span>ig_class(id, cd, rs, vis) :: rest -&gt;
+    | <span data-count="193">S</span>ig_class(id, cd, rs, vis) :: rest -&gt;
         (* cheat and pretend they are types cf. PR#6650 *)
-        let id' = <span data-count="185">r</span>ename id in
-        <span data-count="185">r</span>ename_bound_idents
+        let id' = <span data-count="193">r</span>ename id in
+        <span data-count="193">r</span>ename_bound_idents
           (add_type id (Pident id') s)
           (Sig_class(id', cd, rs, vis) :: sg)
           rest
-    | <span data-count="310">S</span>ig_class_type(id, ctd, rs, vis) :: rest -&gt;
+    | <span data-count="332">S</span>ig_class_type(id, ctd, rs, vis) :: rest -&gt;
         (* cheat and pretend they are types cf. PR#6650 *)
-        let id' = <span data-count="310">r</span>ename id in
-        <span data-count="310">r</span>ename_bound_idents
+        let id' = <span data-count="332">r</span>ename id in
+        <span data-count="332">r</span>ename_bound_idents
           (add_type id (Pident id') s)
           (Sig_class_type(id', ctd, rs, vis) :: sg)
           rest
-    | <span data-count="112314">S</span>ig_value(id, vd, vis) :: rest -&gt;
+    | <span data-count="123806">S</span>ig_value(id, vd, vis) :: rest -&gt;
         (* scope doesn't matter for value identifiers. *)
-        let id' = <span data-count="112314">I</span>dent.rename id in
-        <span data-count="112314">r</span>ename_bound_idents s (Sig_value(id', vd, vis) :: sg) rest
-    | <span data-count="2104">S</span>ig_typext(id, ec, es, vis) :: rest -&gt;
-        let id' = <span data-count="2104">r</span>ename id in
-        <span data-count="2104">r</span>ename_bound_idents s (Sig_typext(id',ec,es,vis) :: sg) rest
+        let id' = <span data-count="123806">I</span>dent.rename id in
+        <span data-count="123806">r</span>ename_bound_idents s (Sig_value(id', vd, vis) :: sg) rest
+    | <span data-count="2397">S</span>ig_typext(id, ec, es, vis) :: rest -&gt;
+        let id' = <span data-count="2397">r</span>ename id in
+        <span data-count="2397">r</span>ename_bound_idents s (Sig_typext(id',ec,es,vis) :: sg) rest
   in
-  <span data-count="8019">r</span>ename_bound_idents s [] sg
+  <span data-count="8784">r</span>ename_bound_idents s [] sg
 
-let rec modtype scoping s = <span data-count="19756">f</span>unction
-    <span data-count="2557">M</span>ty_ident p as mty -&gt;
+let rec modtype scoping s = <span data-count="22122">f</span>unction
+    <span data-count="2730">M</span>ty_ident p as mty -&gt;
       begin match p with
-        <span data-count="1866">P</span>ident id -&gt;
-          begin try Ident.Map.find id s.modtypes with <span data-count="760">N</span>ot_found -&gt; mty end
-      | <span data-count="691">P</span>dot(p, n) -&gt;
+        <span data-count="2008">P</span>ident id -&gt;
+          begin try Ident.Map.find id s.modtypes with <span data-count="832">N</span>ot_found -&gt; mty end
+      | <span data-count="722">P</span>dot(p, n) -&gt;
           Mty_ident(Pdot(module_path s p, n))
       | <span data-count="0">P</span>apply _ -&gt;
           fatal_error "Subst.modtype"
       end
-  | <span data-count="5974">M</span>ty_signature sg -&gt;
+  | <span data-count="6524">M</span>ty_signature sg -&gt;
       Mty_signature(signature scoping s sg)
-  | <span data-count="675">M</span>ty_functor(id, arg, res) -&gt;
-      let id' = <span data-count="675">I</span>dent.rename id in
-      <span data-count="675">M</span>ty_functor(id', Option.map (modtype scoping s) arg,
+  | <span data-count="706">M</span>ty_functor(id, arg, res) -&gt;
+      let id' = <span data-count="706">I</span>dent.rename id in
+      <span data-count="706">M</span>ty_functor(id', Option.map (modtype scoping s) arg,
                        modtype scoping (add_module id (Pident id') s) res)
-  | <span data-count="8092">M</span>ty_alias p -&gt;
+  | <span data-count="9284">M</span>ty_alias p -&gt;
       Mty_alias (module_path s p)
 
 and signature scoping s sg =
   (* Components of signature may be mutually recursive (e.g. type declarations
      or class and type declarations), so first build global renaming
      substitution... *)
-  <span data-count="8019">l</span>et (sg', s') = <span data-count="8019">r</span>ename_bound_idents scoping s sg in
+  <span data-count="8784">l</span>et (sg', s') = <span data-count="8784">r</span>ename_bound_idents scoping s sg in
   (* ... then apply it to each signature component in turn *)
-  <span data-count="8019">F</span>or_copy.with_scope (fun copy_scope -&gt;
-    <span data-count="8019">L</span>ist.rev_map (signature_item' copy_scope scoping s') sg'
+  <span data-count="8784">F</span>or_copy.with_scope (fun copy_scope -&gt;
+    <span data-count="8784">L</span>ist.rev_map (signature_item' copy_scope scoping s') sg'
   )
 
 
 and signature_item' copy_scope scoping s comp =
-  <span data-count="134181">m</span>atch comp with
-    <span data-count="112318">S</span>ig_value(id, d, vis) -&gt;
+  <span data-count="148469">m</span>atch comp with
+    <span data-count="123810">S</span>ig_value(id, d, vis) -&gt;
       Sig_value(id, value_description' copy_scope s d, vis)
-  | <span data-count="9828">S</span>ig_type(id, d, rs, vis) -&gt;
+  | <span data-count="10968">S</span>ig_type(id, d, rs, vis) -&gt;
       Sig_type(id, type_declaration' copy_scope s d, rs, vis)
-  | <span data-count="2104">S</span>ig_typext(id, ext, es, vis) -&gt;
+  | <span data-count="2397">S</span>ig_typext(id, ext, es, vis) -&gt;
       Sig_typext(id, extension_constructor' copy_scope s ext, es, vis)
-  | <span data-count="8903">S</span>ig_module(id, pres, d, rs, vis) -&gt;
+  | <span data-count="10210">S</span>ig_module(id, pres, d, rs, vis) -&gt;
       Sig_module(id, pres, module_declaration scoping s d, rs, vis)
-  | <span data-count="533">S</span>ig_modtype(id, d, vis) -&gt;
+  | <span data-count="559">S</span>ig_modtype(id, d, vis) -&gt;
       Sig_modtype(id, modtype_declaration scoping s d, vis)
-  | <span data-count="185">S</span>ig_class(id, d, rs, vis) -&gt;
+  | <span data-count="193">S</span>ig_class(id, d, rs, vis) -&gt;
       Sig_class(id, class_declaration' copy_scope s d, rs, vis)
-  | <span data-count="310">S</span>ig_class_type(id, d, rs, vis) -&gt;
+  | <span data-count="332">S</span>ig_class_type(id, d, rs, vis) -&gt;
       Sig_class_type(id, cltype_declaration' copy_scope s d, rs, vis)
 
 and signature_item s comp =
   <span data-count="4">F</span>or_copy.with_scope (fun copy_scope -&gt; <span data-count="4">s</span>ignature_item' copy_scope s comp)
 
 and module_declaration scoping s decl =
-  <span data-count="8903">{</span>
+  <span data-count="10210">{</span>
     md_type = modtype scoping s decl.md_type;
     md_attributes = attrs s decl.md_attributes;
     md_loc = loc s decl.md_loc;
   }
 
 and modtype_declaration scoping s decl  =
-  <span data-count="2048">{</span>
+  <span data-count="2185">{</span>
     mtd_type = Option.map (modtype scoping s) decl.mtd_type;
     mtd_attributes = attrs s decl.mtd_attributes;
     mtd_loc = loc s decl.mtd_loc;
@@ -1624,13 +1624,13 @@ and modtype_declaration scoping s decl  =
    and return resulting merged map. *)
 
 let merge_tbls f m1 m2 =
-  <span data-count="2960">I</span>dent.Map.fold (fun k d accu -&gt; <span data-count="668">I</span>dent.Map.add k (f d) accu) m1 m2
+  <span data-count="3429">I</span>dent.Map.fold (fun k d accu -&gt; <span data-count="717">I</span>dent.Map.add k (f d) accu) m1 m2
 
 let merge_path_maps f m1 m2 =
-  <span data-count="5920">P</span>ath.Map.fold (fun k d accu -&gt; <span data-count="163290">P</span>ath.Map.add k (f d) accu) m1 m2
+  <span data-count="6858">P</span>ath.Map.fold (fun k d accu -&gt; <span data-count="184808">P</span>ath.Map.add k (f d) accu) m1 m2
 
 let type_replacement s = function
-  | <span data-count="52780">P</span>ath p -&gt; Path (type_path s p)
+  | <span data-count="60158">P</span>ath p -&gt; Path (type_path s p)
   | <span data-count="12">T</span>ype_function { params; body } -&gt;
      let params = <span data-count="12">L</span>ist.map (type_expr s) params in
      <span data-count="12">l</span>et body = <span data-count="12">t</span>ype_expr s body in
@@ -1640,15 +1640,15 @@ let type_replacement s = function
      apply (compose s1 s2) x = apply s2 (apply s1 x) *)
 
 let compose s1 s2 =
-  <span data-count="2960">{</span> types = merge_path_maps (type_replacement s2) s1.types s2.types;
+  <span data-count="3429">{</span> types = merge_path_maps (type_replacement s2) s1.types s2.types;
     modules = merge_path_maps (module_path s2) s1.modules s2.modules;
     modtypes = merge_tbls (modtype Keep s2) s1.modtypes s2.modtypes;
-    for_saving = <span data-count="2960">s</span>1.for_saving || <span data-count="2960">s</span>2.for_saving;
+    for_saving = <span data-count="3429">s</span>1.for_saving || <span data-count="3429">s</span>2.for_saving;
   }
 </pre>
       </div>
     </div>
-    <div id="footer">Generated on 2019-08-08 13:34:29 by <a href="https://github.com/aantron/bisect_ppx">Bisect_ppx</a> 1.4.1</div>
+    <div id="footer">Generated on 2019-08-14 11:29:20 by <a href="https://github.com/aantron/bisect_ppx">Bisect_ppx</a> 1.4.1</div>
     <script src="../coverage.js"></script>
   </body>
 </html>

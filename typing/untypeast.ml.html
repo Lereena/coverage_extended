@@ -2245,7 +2245,7 @@ let string_is_prefix sub str =
   <span data-count="0">l</span>et sublen = <span data-count="0">S</span>tring.length sub in
   <span data-count="0">S</span>tring.length str &gt;= sublen &amp;&amp; <span data-count="0">S</span>tring.sub str 0 sublen = sub
 
-let rec lident_of_path = <span data-count="1031">f</span>unction
+let rec lident_of_path = <span data-count="1170">f</span>unction
   | Path.Pident id -&gt; Longident.Lident (Ident.name id)
   | Path.Pdot (p, s) -&gt; Longident.Ldot (lident_of_path p, s)
   | Path.Papply (p1, p2) -&gt;
@@ -2283,7 +2283,7 @@ let rec extract_letop_patterns n pat =
 
 (** Mapping functions. *)
 
-let constant = <span data-count="1031">f</span>unction
+let constant = <span data-count="1170">f</span>unction
   | Const_char c -&gt; Pconst_char c
   | Const_string (s,d) -&gt; Pconst_string (s,d)
   | Const_int i -&gt; Pconst_integer (Int.to_string i, None)
@@ -2937,7 +2937,7 @@ let object_field sub {of_loc; of_desc; of_attributes;} =
   in
   <span data-count="0">O</span>f.mk ~loc ~attrs desc
 
-and is_self_pat = <span data-count="1031">f</span>unction
+and is_self_pat = <span data-count="1170">f</span>unction
   | { pat_desc = Tpat_alias(_pat, id, _) } -&gt;
       string_is_prefix "self-" (Ident.name id)
   | _ -&gt; false
@@ -2982,7 +2982,7 @@ let class_field sub cf =
 let location _sub l = <span data-count="0">l</span>
 
 let default_mapper =
-  <span data-count="1031">{</span>
+  <span data-count="1170">{</span>
     attribute = attribute;
     attributes = attributes;
     binding_op = binding_op;
@@ -3038,7 +3038,7 @@ let untype_signature ?(mapper=default_mapper) signature =
 </pre>
       </div>
     </div>
-    <div id="footer">Generated on 2019-08-08 13:34:29 by <a href="https://github.com/aantron/bisect_ppx">Bisect_ppx</a> 1.4.1</div>
+    <div id="footer">Generated on 2019-08-14 11:29:20 by <a href="https://github.com/aantron/bisect_ppx">Bisect_ppx</a> 1.4.1</div>
     <script src="../coverage.js"></script>
   </body>
 </html>

@@ -811,186 +811,186 @@ exception Error of Location.t * error
 (* Compute variance *)
 
 let get_variance ty visited =
-  <span data-count="39354">t</span>ry TypeMap.find ty !visited with <span data-count="32487">N</span>ot_found -&gt; Variance.null
+  <span data-count="41994">t</span>ry TypeMap.find ty !visited with <span data-count="34665">N</span>ot_found -&gt; Variance.null
 
 let compute_variance env visited vari ty =
-  <span data-count="8813">l</span>et rec compute_variance_rec vari ty =
+  <span data-count="9814">l</span>et rec compute_variance_rec vari ty =
     (* Format.eprintf "%a: %x@." Printtyp.type_expr ty (Obj.magic vari); *)
-    <span data-count="30570">l</span>et ty = <span data-count="30570">C</span>type.repr ty in
-    <span data-count="30570">l</span>et vari' = <span data-count="30570">g</span>et_variance ty visited in
-    <span data-count="30570">i</span>f Variance.subset vari vari' then <span data-count="2529">(</span>) else
-    <span data-count="28041">l</span>et vari = <span data-count="28041">V</span>ariance.union vari vari' in
-    <span data-count="28041">v</span>isited := TypeMap.add ty vari !visited;
-    <span data-count="28041">l</span>et compute_same = <span data-count="28041">c</span>ompute_variance_rec vari in
-    <span data-count="28041">m</span>atch ty.desc with
-      <span data-count="2408">T</span>arrow (_, ty1, ty2, _) -&gt;
+    <span data-count="32558">l</span>et ty = <span data-count="32558">C</span>type.repr ty in
+    <span data-count="32558">l</span>et vari' = <span data-count="32558">g</span>et_variance ty visited in
+    <span data-count="32558">i</span>f Variance.subset vari vari' then <span data-count="2627">(</span>) else
+    <span data-count="29931">l</span>et vari = <span data-count="29931">V</span>ariance.union vari vari' in
+    <span data-count="29931">v</span>isited := TypeMap.add ty vari !visited;
+    <span data-count="29931">l</span>et compute_same = <span data-count="29931">c</span>ompute_variance_rec vari in
+    <span data-count="29931">m</span>atch ty.desc with
+      <span data-count="2450">T</span>arrow (_, ty1, ty2, _) -&gt;
         let open Variance in
-        let v = <span data-count="2408">c</span>onjugate vari in
-        <span data-count="2408">l</span>et v1 =
-          <span data-count="2408">i</span>f <span data-count="2408">m</span>em May_pos v || <span data-count="1775">m</span>em May_neg v
-          then <span data-count="2408">s</span>et May_weak true v else <span data-count="0">v</span>
+        let v = <span data-count="2450">c</span>onjugate vari in
+        <span data-count="2450">l</span>et v1 =
+          <span data-count="2450">i</span>f <span data-count="2450">m</span>em May_pos v || <span data-count="1801">m</span>em May_neg v
+          then <span data-count="2450">s</span>et May_weak true v else <span data-count="0">v</span>
         in
-        <span data-count="2408">c</span>ompute_variance_rec v1 ty1;
-        <span data-count="2408">c</span>ompute_same ty2
-    | <span data-count="534">T</span>tuple tl -&gt;
+        <span data-count="2450">c</span>ompute_variance_rec v1 ty1;
+        <span data-count="2450">c</span>ompute_same ty2
+    | <span data-count="563">T</span>tuple tl -&gt;
         List.iter compute_same tl
-    | <span data-count="10564">T</span>constr (path, tl, _) -&gt;
+    | <span data-count="11422">T</span>constr (path, tl, _) -&gt;
         let open Variance in
-        if tl = [] then <span data-count="7345">(</span>) else <span data-count="3219">b</span>egin
+        if tl = [] then <span data-count="8070">(</span>) else <span data-count="3352">b</span>egin
           try
-            let decl = <span data-count="3219">E</span>nv.find_type path env in
-            <span data-count="3219">l</span>et cvari f = <span data-count="13473">m</span>em f vari in
-            <span data-count="3219">L</span>ist.iter2
+            let decl = <span data-count="3352">E</span>nv.find_type path env in
+            <span data-count="3352">l</span>et cvari f = <span data-count="14025">m</span>em f vari in
+            <span data-count="3352">L</span>ist.iter2
               (fun ty v -&gt;
-                <span data-count="4466">l</span>et cv f = <span data-count="6952">m</span>em f v in
-                <span data-count="4466">l</span>et strict =
-                  <span data-count="13398">c</span>vari Inv &amp;&amp; <span data-count="314">c</span>v Inj || <span data-count="8346">(</span><span data-count="4173">c</span>vari Pos || <span data-count="313">c</span>vari Neg) &amp;&amp; <span data-count="4120">c</span>v Inv
+                <span data-count="4641">l</span>et cv f = <span data-count="7226">m</span>em f v in
+                <span data-count="4641">l</span>et strict =
+                  <span data-count="13923">c</span>vari Inv &amp;&amp; <span data-count="316">c</span>v Inj || <span data-count="8692">(</span><span data-count="4346">c</span>vari Pos || <span data-count="316">c</span>vari Neg) &amp;&amp; <span data-count="4290">c</span>v Inv
                 in
-                <span data-count="4466">i</span>f strict then <span data-count="2036">c</span>ompute_variance_rec full ty else
-                <span data-count="2430">l</span>et p1 = <span data-count="2430">i</span>nter v vari
-                and n1 = <span data-count="2430">i</span>nter v (conjugate vari) in
-                <span data-count="2430">l</span>et v1 =
-                  <span data-count="2430">u</span>nion (inter covariant (union p1 (conjugate p1)))
+                <span data-count="4641">i</span>f strict then <span data-count="2109">c</span>ompute_variance_rec full ty else
+                <span data-count="2532">l</span>et p1 = <span data-count="2532">i</span>nter v vari
+                and n1 = <span data-count="2532">i</span>nter v (conjugate vari) in
+                <span data-count="2532">l</span>et v1 =
+                  <span data-count="2532">u</span>nion (inter covariant (union p1 (conjugate p1)))
                     (inter (conjugate covariant) (union n1 (conjugate n1)))
                 and weak =
-                  <span data-count="7290">c</span>vari May_weak &amp;&amp; <span data-count="402">(</span><span data-count="402">c</span>v May_pos || <span data-count="60">c</span>v May_neg) ||
-                  <span data-count="4124">(</span><span data-count="2062">c</span>vari May_pos || <span data-count="29">c</span>vari May_neg) &amp;&amp; <span data-count="2056">c</span>v May_weak
+                  <span data-count="7596">c</span>vari May_weak &amp;&amp; <span data-count="405">(</span><span data-count="405">c</span>v May_pos || <span data-count="60">c</span>v May_neg) ||
+                  <span data-count="4322">(</span><span data-count="2161">c</span>vari May_pos || <span data-count="29">c</span>vari May_neg) &amp;&amp; <span data-count="2155">c</span>v May_weak
                 in
-                <span data-count="2430">l</span>et v2 = <span data-count="2430">s</span>et May_weak weak v1 in
-                <span data-count="2430">c</span>ompute_variance_rec v2 ty)
+                <span data-count="2532">l</span>et v2 = <span data-count="2532">s</span>et May_weak weak v1 in
+                <span data-count="2532">c</span>ompute_variance_rec v2 ty)
               tl decl.type_variance
           with <span data-count="0">N</span>ot_found -&gt;
             List.iter (compute_variance_rec may_inv) tl
         end
-    | <span data-count="1729">T</span>object (ty, _) -&gt;
+    | <span data-count="1875">T</span>object (ty, _) -&gt;
         compute_same ty
-    | <span data-count="2712">T</span>field (_, _, ty1, ty2) -&gt;
+    | <span data-count="2780">T</span>field (_, _, ty1, ty2) -&gt;
         compute_same ty1;
-        <span data-count="2712">c</span>ompute_same ty2
+        <span data-count="2780">c</span>ompute_same ty2
     | <span data-count="0">T</span>subst ty -&gt;
         compute_same ty
-    | <span data-count="690">T</span>variant row -&gt;
-        let row = <span data-count="690">B</span>type.row_repr row in
-        <span data-count="690">L</span>ist.iter
+    | <span data-count="878">T</span>variant row -&gt;
+        let row = <span data-count="878">B</span>type.row_repr row in
+        <span data-count="878">L</span>ist.iter
           (fun (_,f) -&gt;
-            <span data-count="1401">m</span>atch Btype.row_field_repr f with
-              <span data-count="564">R</span>present (Some ty) -&gt;
+            <span data-count="1629">m</span>atch Btype.row_field_repr f with
+              <span data-count="656">R</span>present (Some ty) -&gt;
                 compute_same ty
-            | <span data-count="495">R</span>either (_, tyl, _, _) -&gt;
+            | <span data-count="551">R</span>either (_, tyl, _, _) -&gt;
                 let open Variance in
                 let upper =
-                  <span data-count="495">L</span>ist.fold_left (fun s f -&gt; <span data-count="1485">s</span>et f true s)
+                  <span data-count="551">L</span>ist.fold_left (fun s f -&gt; <span data-count="1653">s</span>et f true s)
                     null [May_pos; May_neg; May_weak]
                 in
-                <span data-count="495">l</span>et v = <span data-count="495">i</span>nter vari upper in
+                <span data-count="551">l</span>et v = <span data-count="551">i</span>nter vari upper in
                 (* cf PR#7269:
                    if List.length tyl &gt; 1 then upper else inter vari upper *)
-                <span data-count="495">L</span>ist.iter (compute_variance_rec v) tyl
-            | <span data-count="342">_</span> -&gt; ())
+                <span data-count="551">L</span>ist.iter (compute_variance_rec v) tyl
+            | <span data-count="422">_</span> -&gt; ())
           row.row_fields;
-        <span data-count="690">c</span>ompute_same row.row_more
-    | <span data-count="2783">T</span>poly (ty, _) -&gt;
+        <span data-count="878">c</span>ompute_same row.row_more
+    | <span data-count="2851">T</span>poly (ty, _) -&gt;
         compute_same ty
-    | <span data-count="4124">T</span>var _ | <span data-count="1791">T</span>nil | <span data-count="0">T</span>link _ | <span data-count="684">T</span>univar _ -&gt; ()
+    | <span data-count="4413">T</span>var _ | <span data-count="1993">T</span>nil | <span data-count="0">T</span>link _ | <span data-count="684">T</span>univar _ -&gt; ()
     | <span data-count="22">T</span>package (_, _, tyl) -&gt;
         let v =
           <span data-count="22">V</span>ariance.(if <span data-count="22">m</span>em Pos vari || <span data-count="0">m</span>em Neg vari then <span data-count="22">f</span>ull else <span data-count="0">m</span>ay_inv)
         in
         <span data-count="22">L</span>ist.iter (compute_variance_rec v) tyl
   in
-  <span data-count="8813">c</span>ompute_variance_rec vari ty
+  <span data-count="9814">c</span>ompute_variance_rec vari ty
 
 let make p n i =
-  <span data-count="6172">l</span>et open Variance in
+  <span data-count="6622">l</span>et open Variance in
   set May_pos p (set May_neg n (set May_weak n (set Inj i null)))
 
 let compute_variance_type env ~check (required, loc) decl tyl =
   (* Requirements *)
-  <span data-count="8393">l</span>et required =
-    <span data-count="8393">L</span>ist.map (fun (c,n,i) -&gt; <span data-count="5841">i</span>f <span data-count="5841">c</span> || <span data-count="5751">n</span> then <span data-count="131">(</span>c,n,i) else <span data-count="5710">(</span>true,true,i))
+  <span data-count="9271">l</span>et required =
+    <span data-count="9271">L</span>ist.map (fun (c,n,i) -&gt; <span data-count="6270">i</span>f <span data-count="6270">c</span> || <span data-count="6150">n</span> then <span data-count="167">(</span>c,n,i) else <span data-count="6103">(</span>true,true,i))
       required
   in
   (* Prepare *)
-  <span data-count="8393">l</span>et params = <span data-count="8393">L</span>ist.map Btype.repr decl.type_params in
-  <span data-count="8393">l</span>et tvl = <span data-count="8393">r</span>ef TypeMap.empty in
+  <span data-count="9271">l</span>et params = <span data-count="9271">L</span>ist.map Btype.repr decl.type_params in
+  <span data-count="9271">l</span>et tvl = <span data-count="9271">r</span>ef TypeMap.empty in
   (* Compute occurrences in the body *)
-  <span data-count="8393">l</span>et open Variance in
+  <span data-count="9271">l</span>et open Variance in
   List.iter
     (fun (cn,ty) -&gt;
-      <span data-count="8424">c</span>ompute_variance env tvl (if cn then <span data-count="90">f</span>ull else <span data-count="8334">c</span>ovariant) ty)
+      <span data-count="9381">c</span>ompute_variance env tvl (if cn then <span data-count="119">f</span>ull else <span data-count="9262">c</span>ovariant) ty)
     tyl;
-  <span data-count="8393">i</span>f check then <span data-count="3620">b</span>egin
+  <span data-count="9271">i</span>f check then <span data-count="4018">b</span>egin
     (* Check variance of parameters *)
-    let pos = <span data-count="3620">r</span>ef 0 in
-    <span data-count="3620">L</span>ist.iter2
+    let pos = <span data-count="4018">r</span>ef 0 in
+    <span data-count="4018">L</span>ist.iter2
       (fun ty (c, n, i) -&gt;
-        <span data-count="1882">i</span>ncr pos;
-        <span data-count="1882">l</span>et var = <span data-count="1882">g</span>et_variance ty tvl in
-        <span data-count="1882">l</span>et (co,cn) = <span data-count="1882">g</span>et_upper var and ij = <span data-count="1882">m</span>em Inj var in
-        <span data-count="1882">i</span>f <span data-count="1882">B</span>type.is_Tvar ty &amp;&amp; <span data-count="1016">(</span><span data-count="2032">c</span>o &amp;&amp; <span data-count="575">n</span>ot c || <span data-count="3048">c</span>n &amp;&amp; <span data-count="368">n</span>ot n || <span data-count="2024">n</span>ot ij &amp;&amp; <span data-count="409">i</span>)
+        <span data-count="2043">i</span>ncr pos;
+        <span data-count="2043">l</span>et var = <span data-count="2043">g</span>et_variance ty tvl in
+        <span data-count="2043">l</span>et (co,cn) = <span data-count="2043">g</span>et_upper var and ij = <span data-count="2043">m</span>em Inj var in
+        <span data-count="2043">i</span>f <span data-count="2043">B</span>type.is_Tvar ty &amp;&amp; <span data-count="1105">(</span><span data-count="2210">c</span>o &amp;&amp; <span data-count="620">n</span>ot c || <span data-count="3315">c</span>n &amp;&amp; <span data-count="374">n</span>ot n || <span data-count="2202">n</span>ot ij &amp;&amp; <span data-count="449">i</span>)
         then <span data-count="4">r</span>aise (Error(loc, Bad_variance (!pos, (co,cn,ij), (c,n,i)))))
       params required;
     (* Check propagation from constrained parameters *)
-    <span data-count="3616">l</span>et args = <span data-count="3616">B</span>type.newgenty (Ttuple params) in
-    <span data-count="3616">l</span>et fvl = <span data-count="3616">C</span>type.free_variables args in
-    <span data-count="3616">l</span>et fvl = <span data-count="3616">L</span>ist.filter (fun v -&gt; <span data-count="1431">n</span>ot (List.memq v params)) fvl in
+    <span data-count="4014">l</span>et args = <span data-count="4014">B</span>type.newgenty (Ttuple params) in
+    <span data-count="4014">l</span>et fvl = <span data-count="4014">C</span>type.free_variables args in
+    <span data-count="4014">l</span>et fvl = <span data-count="4014">L</span>ist.filter (fun v -&gt; <span data-count="1564">n</span>ot (List.memq v params)) fvl in
     (* If there are no extra variables there is nothing to do *)
-    <span data-count="3616">i</span>f fvl = [] then <span data-count="3256">(</span>) else
-    <span data-count="360">l</span>et tvl2 = <span data-count="360">r</span>ef TypeMap.empty in
-    <span data-count="360">L</span>ist.iter2
+    <span data-count="4014">i</span>f fvl = [] then <span data-count="3612">(</span>) else
+    <span data-count="402">l</span>et tvl2 = <span data-count="402">r</span>ef TypeMap.empty in
+    <span data-count="402">L</span>ist.iter2
       (fun ty (p,n,_) -&gt;
-        <span data-count="500">i</span>f Btype.is_Tvar ty then <span data-count="111">(</span>) else
-        <span data-count="389">l</span>et v =
-          <span data-count="389">i</span>f p then <span data-count="385">i</span>f n then <span data-count="371">f</span>ull else <span data-count="14">c</span>ovariant else <span data-count="4">c</span>onjugate covariant in
-        <span data-count="389">c</span>ompute_variance env tvl2 v ty)
+        <span data-count="556">i</span>f Btype.is_Tvar ty then <span data-count="123">(</span>) else
+        <span data-count="433">l</span>et v =
+          <span data-count="433">i</span>f p then <span data-count="429">i</span>f n then <span data-count="407">f</span>ull else <span data-count="22">c</span>ovariant else <span data-count="4">c</span>onjugate covariant in
+        <span data-count="433">c</span>ompute_variance env tvl2 v ty)
       params required;
-    <span data-count="360">l</span>et visited = <span data-count="360">r</span>ef TypeSet.empty in
-    <span data-count="360">l</span>et rec check ty =
-      <span data-count="1175">l</span>et ty = <span data-count="1175">C</span>type.repr ty in
-      <span data-count="1175">i</span>f TypeSet.mem ty !visited then <span data-count="90">(</span>) else
-      <span data-count="1085">l</span>et visited' = <span data-count="1085">T</span>ypeSet.add ty !visited in
-      <span data-count="1085">v</span>isited := visited';
-      <span data-count="1085">l</span>et v1 = <span data-count="1085">g</span>et_variance ty tvl in
-      <span data-count="1085">l</span>et snap = <span data-count="1085">B</span>type.snapshot () in
-      <span data-count="1085">l</span>et v2 =
-        <span data-count="1085">T</span>ypeMap.fold
+    <span data-count="402">l</span>et visited = <span data-count="402">r</span>ef TypeSet.empty in
+    <span data-count="402">l</span>et rec check ty =
+      <span data-count="1237">l</span>et ty = <span data-count="1237">C</span>type.repr ty in
+      <span data-count="1237">i</span>f TypeSet.mem ty !visited then <span data-count="90">(</span>) else
+      <span data-count="1147">l</span>et visited' = <span data-count="1147">T</span>ypeSet.add ty !visited in
+      <span data-count="1147">v</span>isited := visited';
+      <span data-count="1147">l</span>et v1 = <span data-count="1147">g</span>et_variance ty tvl in
+      <span data-count="1147">l</span>et snap = <span data-count="1147">B</span>type.snapshot () in
+      <span data-count="1147">l</span>et v2 =
+        <span data-count="1147">T</span>ypeMap.fold
           (fun t vt v -&gt;
-            <span data-count="5092">i</span>f Ctype.equal env false [ty] [t] then <span data-count="416">u</span>nion vt v else <span data-count="4676">v</span>)
+            <span data-count="5260">i</span>f Ctype.equal env false [ty] [t] then <span data-count="448">u</span>nion vt v else <span data-count="4812">v</span>)
           !tvl2 null in
-      <span data-count="1085">B</span>type.backtrack snap;
-      <span data-count="1085">l</span>et (c1,n1) = <span data-count="1085">g</span>et_upper v1 and (c2,n2,_,i2) = <span data-count="1085">g</span>et_lower v2 in
-      <span data-count="1085">i</span>f <span data-count="2170">c</span>1 &amp;&amp; <span data-count="1034">n</span>ot c2 || <span data-count="842">n</span>1 &amp;&amp; <span data-count="307">n</span>ot n2 then
-        <span data-count="691">i</span>f List.memq ty fvl then
+      <span data-count="1147">B</span>type.backtrack snap;
+      <span data-count="1147">l</span>et (c1,n1) = <span data-count="1147">g</span>et_upper v1 and (c2,n2,_,i2) = <span data-count="1147">g</span>et_lower v2 in
+      <span data-count="1147">i</span>f <span data-count="2294">c</span>1 &amp;&amp; <span data-count="1088">n</span>ot c2 || <span data-count="922">n</span>1 &amp;&amp; <span data-count="325">n</span>ot n2 then
+        <span data-count="713">i</span>f List.memq ty fvl then
           <span data-count="20">l</span>et code = <span data-count="20">i</span>f not i2 then <span data-count="14">-</span>2 else <span data-count="6">i</span>f <span data-count="6">c</span>2 || <span data-count="6">n</span>2 then <span data-count="2">-</span>1 else <span data-count="4">-</span>3 in
           <span data-count="20">r</span>aise (Error (loc, Bad_variance (code, (c1,n1,false), (c2,n2,false))))
         else
-          <span data-count="671">B</span>type.iter_type_expr check ty
+          <span data-count="693">B</span>type.iter_type_expr check ty
     in
-    <span data-count="360">L</span>ist.iter (fun (_,ty) -&gt; <span data-count="381">c</span>heck ty) tyl;
+    <span data-count="402">L</span>ist.iter (fun (_,ty) -&gt; <span data-count="421">c</span>heck ty) tyl;
   end;
-  <span data-count="8369">L</span>ist.map2
+  <span data-count="9247">L</span>ist.map2
     (fun ty (p, n, i) -&gt;
-      <span data-count="5817">l</span>et v = <span data-count="5817">g</span>et_variance ty tvl in
-      <span data-count="5817">l</span>et tr = <span data-count="5817">d</span>ecl.type_private in
+      <span data-count="6246">l</span>et v = <span data-count="6246">g</span>et_variance ty tvl in
+      <span data-count="6246">l</span>et tr = <span data-count="6246">d</span>ecl.type_private in
       (* Use required variance where relevant *)
-      <span data-count="5817">l</span>et concr = <span data-count="5817">d</span>ecl.type_kind &lt;&gt; Type_abstract (*|| tr = Type_new*) in
-      <span data-count="5817">l</span>et (p, n) =
-        <span data-count="5817">i</span>f <span data-count="5817">t</span>r = Private || <span data-count="1686">n</span>ot (Btype.is_Tvar ty) then <span data-count="4539">(</span>p, n) (* set *)
-        else <span data-count="1278">(</span>false, false) (* only check *)
-      and i = <span data-count="11634">c</span>oncr  || <span data-count="2276">i</span> &amp;&amp; <span data-count="0">t</span>r = Private in
-      <span data-count="5817">l</span>et v = <span data-count="5817">u</span>nion v (make p n i) in
-      <span data-count="5817">l</span>et v =
-        <span data-count="5817">i</span>f not concr then <span data-count="1138">v</span> else
-        <span data-count="4679">i</span>f <span data-count="4679">m</span>em Pos v &amp;&amp; <span data-count="1078">m</span>em Neg v then <span data-count="667">f</span>ull else
-        <span data-count="4012">i</span>f Btype.is_Tvar ty then <span data-count="1771">v</span> else
-        <span data-count="2241">u</span>nion v
-          (if p then <span data-count="2241">i</span>f n then <span data-count="2229">f</span>ull else <span data-count="12">c</span>ovariant else <span data-count="0">c</span>onjugate covariant)
+      <span data-count="6246">l</span>et concr = <span data-count="6246">d</span>ecl.type_kind &lt;&gt; Type_abstract (*|| tr = Type_new*) in
+      <span data-count="6246">l</span>et (p, n) =
+        <span data-count="6246">i</span>f <span data-count="6246">t</span>r = Private || <span data-count="1944">n</span>ot (Btype.is_Tvar ty) then <span data-count="4815">(</span>p, n) (* set *)
+        else <span data-count="1431">(</span>false, false) (* only check *)
+      and i = <span data-count="12492">c</span>oncr  || <span data-count="2546">i</span> &amp;&amp; <span data-count="0">t</span>r = Private in
+      <span data-count="6246">l</span>et v = <span data-count="6246">u</span>nion v (make p n i) in
+      <span data-count="6246">l</span>et v =
+        <span data-count="6246">i</span>f not concr then <span data-count="1273">v</span> else
+        <span data-count="4973">i</span>f <span data-count="4973">m</span>em Pos v &amp;&amp; <span data-count="1179">m</span>em Neg v then <span data-count="697">f</span>ull else
+        <span data-count="4276">i</span>f Btype.is_Tvar ty then <span data-count="1909">v</span> else
+        <span data-count="2367">u</span>nion v
+          (if p then <span data-count="2367">i</span>f n then <span data-count="2343">f</span>ull else <span data-count="24">c</span>ovariant else <span data-count="0">c</span>onjugate covariant)
       in
-      <span data-count="5817">i</span>f <span data-count="5817">d</span>ecl.type_kind = Type_abstract &amp;&amp; <span data-count="1138">t</span>r = Public then <span data-count="1080">v</span> else
-      <span data-count="4737">s</span>et May_weak (mem May_neg v) v)
+      <span data-count="6246">i</span>f <span data-count="6246">d</span>ecl.type_kind = Type_abstract &amp;&amp; <span data-count="1273">t</span>r = Public then <span data-count="1215">v</span> else
+      <span data-count="5031">s</span>et May_weak (mem May_neg v) v)
     params required
 
-let add_false = <span data-count="1031">L</span>ist.map (fun ty -&gt; <span data-count="3734">f</span>alse, ty)
+let add_false = <span data-count="1170">L</span>ist.map (fun ty -&gt; <span data-count="4029">f</span>alse, ty)
 
 (* A parameter is constrained if it is either instantiated,
    or it is a variable appearing in another parameter *)
@@ -999,117 +999,117 @@ let constrained vars ty =
   | <span data-count="10">T</span>var _ -&gt; List.exists (fun tl -&gt; <span data-count="2">L</span>ist.memq ty tl) vars
   | <span data-count="0">_</span> -&gt; true
 
-let for_constr = <span data-count="1031">f</span>unction
+let for_constr = <span data-count="1170">f</span>unction
   | Types.Cstr_tuple l -&gt; add_false l
   | Types.Cstr_record l -&gt;
       List.map
-        (fun {Types.ld_mutable; ld_type} -&gt; <span data-count="45">(</span>ld_mutable = Mutable, ld_type))
+        (fun {Types.ld_mutable; ld_type} -&gt; <span data-count="65">(</span>ld_mutable = Mutable, ld_type))
         l
 
 let compute_variance_gadt env ~check (required, loc as rloc) decl
     (tl, ret_type_opt) =
-  <span data-count="3126">m</span>atch ret_type_opt with
-  | <span data-count="226">N</span>one -&gt;
+  <span data-count="3262">m</span>atch ret_type_opt with
+  | <span data-count="234">N</span>one -&gt;
       compute_variance_type env ~check rloc {decl with type_private = Private}
         (for_constr tl)
-  | <span data-count="2900">S</span>ome ret_type -&gt;
+  | <span data-count="3028">S</span>ome ret_type -&gt;
       match Ctype.repr ret_type with
-      | <span data-count="2900">{</span>desc=Tconstr (_, tyl, _)} -&gt;
+      | <span data-count="3028">{</span>desc=Tconstr (_, tyl, _)} -&gt;
           (* let tyl = List.map (Ctype.expand_head env) tyl in *)
-          let tyl = <span data-count="2900">L</span>ist.map Ctype.repr tyl in
-          <span data-count="2900">l</span>et fvl = <span data-count="2900">L</span>ist.map (Ctype.free_variables ?env:None) tyl in
-          <span data-count="2900">l</span>et _ =
-            <span data-count="2900">L</span>ist.fold_left2
+          let tyl = <span data-count="3028">L</span>ist.map Ctype.repr tyl in
+          <span data-count="3028">l</span>et fvl = <span data-count="3028">L</span>ist.map (Ctype.free_variables ?env:None) tyl in
+          <span data-count="3028">l</span>et _ =
+            <span data-count="3028">L</span>ist.fold_left2
               (fun (fv1,fv2) ty (c,n,_) -&gt;
-                <span data-count="4047">m</span>atch fv2 with [] -&gt; assert false
-                | <span data-count="4047">f</span>v :: fv2 -&gt;
+                <span data-count="4193">m</span>atch fv2 with [] -&gt; assert false
+                | <span data-count="4193">f</span>v :: fv2 -&gt;
                     (* fv1 @ fv2 = free_variables of other parameters *)
-                    if <span data-count="4047">(</span><span data-count="4047">c</span>||<span data-count="4037">n</span>) &amp;&amp; <span data-count="10">c</span>onstrained (fv1 @ fv2) ty then
+                    if <span data-count="4193">(</span><span data-count="4193">c</span>||<span data-count="4183">n</span>) &amp;&amp; <span data-count="10">c</span>onstrained (fv1 @ fv2) ty then
                       <span data-count="2">r</span>aise (Error(loc, Varying_anonymous));
-                    <span data-count="4045">(</span>fv :: fv1, fv2))
+                    <span data-count="4191">(</span>fv :: fv1, fv2))
               ([], fvl) tyl required
           in
-          <span data-count="2898">c</span>ompute_variance_type env ~check rloc
+          <span data-count="3026">c</span>ompute_variance_type env ~check rloc
             {decl with type_params = tyl; type_private = Private}
             (for_constr tl)
       | _ -&gt; assert false
 
 let compute_variance_extension env ~check decl ext rloc =
-  <span data-count="207">c</span>ompute_variance_gadt env ~check rloc
+  <span data-count="219">c</span>ompute_variance_gadt env ~check rloc
     {decl with type_params = ext.ext_type_params}
     (ext.ext_args, ext.ext_ret_type)
 
 let compute_variance_decl env ~check decl (required, _ as rloc) =
-  <span data-count="8119">i</span>f <span data-count="8119">(</span><span data-count="8119">d</span>ecl.type_kind = Type_abstract || <span data-count="3642">d</span>ecl.type_kind = Type_open)
-       &amp;&amp; <span data-count="4749">d</span>ecl.type_manifest = None then
-    <span data-count="1407">L</span>ist.map
+  <span data-count="9040">i</span>f <span data-count="9040">(</span><span data-count="9040">d</span>ecl.type_kind = Type_abstract || <span data-count="4154">d</span>ecl.type_kind = Type_open)
+       &amp;&amp; <span data-count="5164">d</span>ecl.type_manifest = None then
+    <span data-count="1504">L</span>ist.map
       (fun (c, n, i) -&gt;
-        <span data-count="355">m</span>ake (not n) (not c) (<span data-count="355">d</span>ecl.type_kind &lt;&gt; Type_abstract || <span data-count="289">i</span>))
+        <span data-count="376">m</span>ake (not n) (not c) (<span data-count="376">d</span>ecl.type_kind &lt;&gt; Type_abstract || <span data-count="298">i</span>))
       required
   else
-  <span data-count="6712">l</span>et mn =
-    <span data-count="6712">m</span>atch decl.type_manifest with
-      <span data-count="3234">N</span>one -&gt; []
-    | <span data-count="3478">S</span>ome ty -&gt; [false, ty]
+  <span data-count="7536">l</span>et mn =
+    <span data-count="7536">m</span>atch decl.type_manifest with
+      <span data-count="3672">N</span>one -&gt; []
+    | <span data-count="3864">S</span>ome ty -&gt; [false, ty]
   in
-  <span data-count="6712">m</span>atch decl.type_kind with
-    <span data-count="3288">T</span>ype_abstract | <span data-count="54">T</span>ype_open -&gt;
+  <span data-count="7536">m</span>atch decl.type_kind with
+    <span data-count="3606">T</span>ype_abstract | <span data-count="54">T</span>ype_open -&gt;
       compute_variance_type env ~check rloc decl mn
-  | <span data-count="2706">T</span>ype_variant tll -&gt;
-      if List.for_all (fun c -&gt; <span data-count="4985">c</span>.Types.cd_res = None) tll then
-        <span data-count="1263">c</span>ompute_variance_type env ~check rloc decl
-          (mn @ List.flatten (List.map (fun c -&gt; <span data-count="3529">f</span>or_constr c.Types.cd_args)
+  | <span data-count="3031">T</span>ype_variant tll -&gt;
+      if List.for_all (fun c -&gt; <span data-count="6541">c</span>.Types.cd_res = None) tll then
+        <span data-count="1506">c</span>ompute_variance_type env ~check rloc decl
+          (mn @ List.flatten (List.map (fun c -&gt; <span data-count="5003">f</span>or_constr c.Types.cd_args)
                                 tll))
-      else <span data-count="1443">b</span>egin
+      else <span data-count="1525">b</span>egin
         let mn =
-          <span data-count="1443">L</span>ist.map (fun (_,ty) -&gt; <span data-count="10">(</span>Types.Cstr_tuple [ty],None)) mn in
-        <span data-count="1443">l</span>et tll =
-          <span data-count="1443">m</span>n @ List.map (fun c -&gt; <span data-count="2909">c</span>.Types.cd_args, c.Types.cd_res) tll in
-        <span data-count="1443">m</span>atch List.map (compute_variance_gadt env ~check rloc decl) tll with
-        | <span data-count="1431">v</span>ari :: rem -&gt;
-            let varl = <span data-count="1431">L</span>ist.fold_left (List.map2 Variance.union) vari rem in
-            <span data-count="1431">L</span>ist.map
-              Variance.(fun v -&gt; <span data-count="1870">i</span>f <span data-count="1870">m</span>em Pos v &amp;&amp; <span data-count="1328">m</span>em Neg v then <span data-count="1250">f</span>ull else <span data-count="620">v</span>)
+          <span data-count="1525">L</span>ist.map (fun (_,ty) -&gt; <span data-count="10">(</span>Types.Cstr_tuple [ty],None)) mn in
+        <span data-count="1525">l</span>et tll =
+          <span data-count="1525">m</span>n @ List.map (fun c -&gt; <span data-count="3033">c</span>.Types.cd_args, c.Types.cd_res) tll in
+        <span data-count="1525">m</span>atch List.map (compute_variance_gadt env ~check rloc decl) tll with
+        | <span data-count="1513">v</span>ari :: rem -&gt;
+            let varl = <span data-count="1513">L</span>ist.fold_left (List.map2 Variance.union) vari rem in
+            <span data-count="1513">L</span>ist.map
+              Variance.(fun v -&gt; <span data-count="1954">i</span>f <span data-count="1954">m</span>em Pos v &amp;&amp; <span data-count="1400">m</span>em Neg v then <span data-count="1310">f</span>ull else <span data-count="644">v</span>)
               varl
         | _ -&gt; assert false
       end
-  | <span data-count="664">T</span>ype_record (ftl, _) -&gt;
+  | <span data-count="845">T</span>ype_record (ftl, _) -&gt;
       compute_variance_type env ~check rloc decl
         (mn @ List.map (fun {Types.ld_mutable; ld_type} -&gt;
-             <span data-count="1177">(</span>ld_mutable = Mutable, ld_type)) ftl)
+             <span data-count="1433">(</span>ld_mutable = Mutable, ld_type)) ftl)
 
 let is_hash id =
-  let s = <span data-count="3438">I</span>dent.name id in
-  <span data-count="6876">S</span>tring.length s &gt; 0 &amp;&amp; <span data-count="3438">s</span>.[0] = '#'
+  let s = <span data-count="3851">I</span>dent.name id in
+  <span data-count="7702">S</span>tring.length s &gt; 0 &amp;&amp; <span data-count="3851">s</span>.[0] = '#'
 
 let check_variance_extension env decl ext rloc =
   (* TODO: refactorize compute_variance_extension *)
-  <span data-count="207">i</span>gnore (compute_variance_extension env ~check:true decl
+  <span data-count="219">i</span>gnore (compute_variance_extension env ~check:true decl
     ext.Typedtree.ext_type rloc)
 
 let compute_decl env ~check decl req =
-  <span data-count="4681">c</span>ompute_variance_decl env ~check decl (req, decl.type_loc)
+  <span data-count="5189">c</span>ompute_variance_decl env ~check decl (req, decl.type_loc)
 
 let check_decl env decl req =
-  <span data-count="3438">i</span>gnore (compute_variance_decl env ~check:true decl (req, decl.type_loc))
+  <span data-count="3851">i</span>gnore (compute_variance_decl env ~check:true decl (req, decl.type_loc))
 
 type prop = Variance.t list
 type req = surface_variance list
 let property : (prop, req) Typedecl_properties.property =
   let open Typedecl_properties in
   let eq li1 li2 =
-    <span data-count="4403">t</span>ry List.for_all2 Variance.eq li1 li2 with <span data-count="0">_</span> -&gt; false in
-  <span data-count="1031">l</span>et merge ~prop ~new_prop =
-    <span data-count="4492">L</span>ist.map2 Variance.union prop new_prop in
-  <span data-count="1031">l</span>et default decl =
-    <span data-count="3440">L</span>ist.map (fun _ -&gt; <span data-count="1305">V</span>ariance.null) decl.type_params in
-  <span data-count="1031">l</span>et compute env decl req =
-    <span data-count="4494">c</span>ompute_decl env ~check:false decl req in
-  <span data-count="1031">l</span>et update_decl decl variance =
-    <span data-count="4494">{</span> decl with type_variance = variance } in
-  <span data-count="1031">l</span>et check env id decl req =
-    <span data-count="3438">i</span>f is_hash id then <span data-count="0">(</span>) else <span data-count="3438">c</span>heck_decl env decl req in
-  <span data-count="1031">{</span>
+    <span data-count="4902">t</span>ry List.for_all2 Variance.eq li1 li2 with <span data-count="0">_</span> -&gt; false in
+  <span data-count="1170">l</span>et merge ~prop ~new_prop =
+    <span data-count="4995">L</span>ist.map2 Variance.union prop new_prop in
+  <span data-count="1170">l</span>et default decl =
+    <span data-count="3853">L</span>ist.map (fun _ -&gt; <span data-count="1431">V</span>ariance.null) decl.type_params in
+  <span data-count="1170">l</span>et compute env decl req =
+    <span data-count="4997">c</span>ompute_decl env ~check:false decl req in
+  <span data-count="1170">l</span>et update_decl decl variance =
+    <span data-count="4997">{</span> decl with type_variance = variance } in
+  <span data-count="1170">l</span>et check env id decl req =
+    <span data-count="3851">i</span>f is_hash id then <span data-count="0">(</span>) else <span data-count="3851">c</span>heck_decl env decl req in
+  <span data-count="1170">{</span>
     eq;
     merge;
     default;
@@ -1119,9 +1119,9 @@ let property : (prop, req) Typedecl_properties.property =
   }
 
 let transl_variance : Asttypes.variance -&gt; _ = function
-  | <span data-count="45">C</span>ovariant -&gt; (true, false, false)
-  | <span data-count="18">C</span>ontravariant -&gt; (false, true, false)
-  | <span data-count="1277">I</span>nvariant -&gt; (false, false, false)
+  | <span data-count="55">C</span>ovariant -&gt; (true, false, false)
+  | <span data-count="20">C</span>ontravariant -&gt; (false, true, false)
+  | <span data-count="1415">I</span>nvariant -&gt; (false, false, false)
 
 let variance_of_params ptype_params =
   List.map transl_variance (List.map snd ptype_params)
@@ -1130,30 +1130,30 @@ let variance_of_sdecl sdecl =
   variance_of_params sdecl.Parsetree.ptype_params
 
 let update_decls env sdecls decls =
-  <span data-count="2781">l</span>et required = <span data-count="2781">L</span>ist.map variance_of_sdecl sdecls in
-  <span data-count="2781">T</span>ypedecl_properties.compute_property property env decls required
+  <span data-count="3114">l</span>et required = <span data-count="3114">L</span>ist.map variance_of_sdecl sdecls in
+  <span data-count="3114">T</span>ypedecl_properties.compute_property property env decls required
 
 let update_class_decls env cldecls =
-  <span data-count="514">l</span>et decls, required =
-    <span data-count="514">L</span>ist.fold_right
+  <span data-count="582">l</span>et decls, required =
+    <span data-count="582">L</span>ist.fold_right
       (fun (obj_id, obj_abbr, _cl_abbr, _clty, _cltydef, ci) (decls, req) -&gt;
-        <span data-count="549">(</span>obj_id, obj_abbr) :: decls,
+        <span data-count="617">(</span>obj_id, obj_abbr) :: decls,
         variance_of_params ci.Typedtree.ci_params :: req)
       cldecls ([],[])
   in
-  <span data-count="514">l</span>et decls =
-    <span data-count="514">T</span>ypedecl_properties.compute_property property env decls required in
-  <span data-count="512">L</span>ist.map2
+  <span data-count="582">l</span>et decls =
+    <span data-count="582">T</span>ypedecl_properties.compute_property property env decls required in
+  <span data-count="580">L</span>ist.map2
     (fun (_,decl) (_, _, cl_abbr, clty, cltydef, _) -&gt;
-      <span data-count="547">l</span>et variance = <span data-count="547">d</span>ecl.type_variance in
-      <span data-count="547">(</span>decl, {cl_abbr with type_variance = variance},
+      <span data-count="615">l</span>et variance = <span data-count="615">d</span>ecl.type_variance in
+      <span data-count="615">(</span>decl, {cl_abbr with type_variance = variance},
        {clty with cty_variance = variance},
        {cltydef with clty_variance = variance}))
     decls cldecls
 </pre>
       </div>
     </div>
-    <div id="footer">Generated on 2019-08-08 13:34:29 by <a href="https://github.com/aantron/bisect_ppx">Bisect_ppx</a> 1.4.1</div>
+    <div id="footer">Generated on 2019-08-14 11:29:20 by <a href="https://github.com/aantron/bisect_ppx">Bisect_ppx</a> 1.4.1</div>
     <script src="../coverage.js"></script>
   </body>
 </html>

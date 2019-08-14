@@ -778,8 +778,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-let lowest_scope  = <span data-count="1031">0</span>
-let highest_scope = <span data-count="1031">1</span>00000000
+let lowest_scope  = <span data-count="1170">0</span>
+let highest_scope = <span data-count="1170">1</span>00000000
 
 type t =
   | Local of { name: string; stamp: int }
@@ -791,39 +791,39 @@ type t =
 
 (* A stamp of 0 denotes a persistent identifier *)
 
-let currentstamp = <span data-count="1031">r</span>ef 0
-let predefstamp = <span data-count="1031">r</span>ef 0
+let currentstamp = <span data-count="1170">r</span>ef 0
+let predefstamp = <span data-count="1170">r</span>ef 0
 
 let create_scoped ~scope s =
-  <span data-count="18572">i</span>ncr currentstamp;
-  <span data-count="18572">S</span>coped { name = s; stamp = !currentstamp; scope }
+  <span data-count="20201">i</span>ncr currentstamp;
+  <span data-count="20201">S</span>coped { name = s; stamp = !currentstamp; scope }
 
 let create_local s =
   incr currentstamp;
-  <span data-count="54999">L</span>ocal { name = s; stamp = !currentstamp }
+  <span data-count="60441">L</span>ocal { name = s; stamp = !currentstamp }
 
 let create_predef s =
   incr predefstamp;
-  <span data-count="37116">P</span>redef { name = s; stamp = !predefstamp }
+  <span data-count="42120">P</span>redef { name = s; stamp = !predefstamp }
 
 let create_persistent s =
   Global s
 
-let name = <span data-count="1031">f</span>unction
+let name = <span data-count="1170">f</span>unction
   | Local { name; _ }
   | Scoped { name; _ }
   | Global name
   | Predef { name; _ } -&gt; name
 
-let rename = <span data-count="1031">f</span>unction
+let rename = <span data-count="1170">f</span>unction
   | Local { name; stamp = _ }
   | Scoped { name; stamp = _; scope = _ } -&gt;
       incr currentstamp;
-      <span data-count="215690">L</span>ocal { name; stamp = !currentstamp }
+      <span data-count="241533">L</span>ocal { name; stamp = !currentstamp }
   | id -&gt;
       Misc.fatal_errorf "Ident.rename %s" (name id)
 
-let unique_name = <span data-count="1031">f</span>unction
+let unique_name = <span data-count="1170">f</span>unction
   | Local { name; stamp }
   | Scoped { name; stamp } -&gt; name ^ "_" ^ Int.to_string stamp
   | Global name -&gt;
@@ -836,19 +836,19 @@ let unique_name = <span data-count="1031">f</span>unction
          "_&lt;some number&gt;", and that their name is unique. *)
       name
 
-let unique_toplevel_name = <span data-count="1031">f</span>unction
+let unique_toplevel_name = <span data-count="1170">f</span>unction
   | Local { name; stamp }
   | Scoped { name; stamp } -&gt; name ^ "/" ^ Int.to_string stamp
   | Global name
   | Predef { name; _ } -&gt; name
 
-let persistent = <span data-count="1031">f</span>unction
+let persistent = <span data-count="1170">f</span>unction
   | Global _ -&gt; true
   | _ -&gt; false
 
 let equal i1 i2 =
-  <span data-count="158">m</span>atch i1, i2 with
-  | <span data-count="158">L</span>ocal { name = name1; _ }, Local { name = name2; _ }
+  <span data-count="162">m</span>atch i1, i2 with
+  | <span data-count="162">L</span>ocal { name = name1; _ }, Local { name = name2; _ }
   | <span data-count="0">S</span>coped { name = name1; _ }, Scoped { name = name2; _ }
   | <span data-count="0">G</span>lobal name1, Global name2 -&gt;
       name1 = name2
@@ -858,38 +858,38 @@ let equal i1 i2 =
   | <span data-count="0">_</span> -&gt;
       false
 
-let same i1 i2 = <span data-count="5084205">i</span>1 = i2
+let same i1 i2 = <span data-count="5215878">i</span>1 = i2
   (* Possibly more efficient version (with a real compiler, at least):
        if i1.stamp &lt;&gt; 0
        then i1.stamp = i2.stamp
        else i2.stamp = 0 &amp;&amp; i1.name = i2.name *)
 
-let compare i1 i2 = <span data-count="21517148">S</span>tdlib.compare i1 i2
+let compare i1 i2 = <span data-count="23715432">S</span>tdlib.compare i1 i2
 
-let stamp = <span data-count="1031">f</span>unction
+let stamp = <span data-count="1170">f</span>unction
   | Local { stamp; _ }
   | Scoped { stamp; _ } -&gt; stamp
   | _ -&gt; 0
 
-let scope = <span data-count="1031">f</span>unction
+let scope = <span data-count="1170">f</span>unction
   | Scoped { scope; _ } -&gt; scope
   | Local _ -&gt; highest_scope
   | Global _ | Predef _ -&gt; lowest_scope
 
-let reinit_level = <span data-count="1031">r</span>ef (-1)
+let reinit_level = <span data-count="1170">r</span>ef (-1)
 
 let reinit () =
   if !reinit_level &lt; 0
-  then <span data-count="948">r</span>einit_level := !currentstamp
-  else <span data-count="50">c</span>urrentstamp := !reinit_level
+  then <span data-count="1077">r</span>einit_level := !currentstamp
+  else <span data-count="52">c</span>urrentstamp := !reinit_level
 
-let global = <span data-count="1031">f</span>unction
+let global = <span data-count="1170">f</span>unction
   | Local _
   | Scoped _ -&gt; false
   | Global _
   | Predef _ -&gt; true
 
-let is_predef = <span data-count="1031">f</span>unction
+let is_predef = <span data-count="1170">f</span>unction
   | Predef _ -&gt; true
   | _ -&gt; false
 
@@ -921,7 +921,7 @@ and 'a data =
     data: 'a;
     previous: 'a data option }
 
-let empty = <span data-count="1031">E</span>mpty
+let empty = <span data-count="1170">E</span>mpty
 
 (* Inline expansion of height for better speed
  * let height = function
@@ -930,52 +930,52 @@ let empty = <span data-count="1031">E</span>mpty
  *)
 
 let mknode l d r =
-  <span data-count="2664386">l</span>et hl = <span data-count="2664386">m</span>atch l with <span data-count="528591">E</span>mpty -&gt; 0 | <span data-count="2135795">N</span>ode(_,_,_,h) -&gt; h
-  and hr = <span data-count="2664386">m</span>atch r with <span data-count="399764">E</span>mpty -&gt; 0 | <span data-count="2264622">N</span>ode(_,_,_,h) -&gt; h in
-  <span data-count="2664386">N</span>ode(l, d, r, (if hl &gt;= hr then <span data-count="1737345">h</span>l + 1 else <span data-count="927041">h</span>r + 1))
+  <span data-count="2951684">l</span>et hl = <span data-count="2951684">m</span>atch l with <span data-count="594013">E</span>mpty -&gt; 0 | <span data-count="2357671">N</span>ode(_,_,_,h) -&gt; h
+  and hr = <span data-count="2951684">m</span>atch r with <span data-count="440778">E</span>mpty -&gt; 0 | <span data-count="2510906">N</span>ode(_,_,_,h) -&gt; h in
+  <span data-count="2951684">N</span>ode(l, d, r, (if hl &gt;= hr then <span data-count="1906886">h</span>l + 1 else <span data-count="1044798">h</span>r + 1))
 
 let balance l d r =
-  <span data-count="2269015">l</span>et hl = <span data-count="2269015">m</span>atch l with <span data-count="409729">E</span>mpty -&gt; 0 | <span data-count="1859286">N</span>ode(_,_,_,h) -&gt; h
-  and hr = <span data-count="2269015">m</span>atch r with <span data-count="238878">E</span>mpty -&gt; 0 | <span data-count="2030137">N</span>ode(_,_,_,h) -&gt; h in
-  <span data-count="2269015">i</span>f hl &gt; hr + 1 then
-    <span data-count="118918">m</span>atch l with
-    | <span data-count="82159">N</span>ode (ll, ld, lr, _)
-      when <span data-count="118918">(</span>match ll with <span data-count="31196">E</span>mpty -&gt; 0 | <span data-count="87722">N</span>ode(_,_,_,h) -&gt; h) &gt;=
-           (match lr with <span data-count="43157">E</span>mpty -&gt; 0 | <span data-count="75761">N</span>ode(_,_,_,h) -&gt; h) -&gt;
+  <span data-count="2510383">l</span>et hl = <span data-count="2510383">m</span>atch l with <span data-count="462941">E</span>mpty -&gt; 0 | <span data-count="2047442">N</span>ode(_,_,_,h) -&gt; h
+  and hr = <span data-count="2510383">m</span>atch r with <span data-count="259283">E</span>mpty -&gt; 0 | <span data-count="2251100">N</span>ode(_,_,_,h) -&gt; h in
+  <span data-count="2510383">i</span>f hl &gt; hr + 1 then
+    <span data-count="128242">m</span>atch l with
+    | <span data-count="86692">N</span>ode (ll, ld, lr, _)
+      when <span data-count="128242">(</span>match ll with <span data-count="35157">E</span>mpty -&gt; 0 | <span data-count="93085">N</span>ode(_,_,_,h) -&gt; h) &gt;=
+           (match lr with <span data-count="45715">E</span>mpty -&gt; 0 | <span data-count="82527">N</span>ode(_,_,_,h) -&gt; h) -&gt;
         mknode ll ld (mknode lr d r)
-    | <span data-count="36759">N</span>ode (ll, ld, Node(lrl, lrd, lrr, _), _) -&gt;
+    | <span data-count="41550">N</span>ode (ll, ld, Node(lrl, lrd, lrr, _), _) -&gt;
         mknode (mknode ll ld lrl) lrd (mknode lrr d r)
     | _ -&gt; assert false
-  else <span data-count="2150097">i</span>f hr &gt; hl + 1 then
-    <span data-count="226589">m</span>atch r with
-    | <span data-count="213484">N</span>ode (rl, rd, rr, _)
-      when <span data-count="226589">(</span>match rr with <span data-count="8292">E</span>mpty -&gt; 0 | <span data-count="218297">N</span>ode(_,_,_,h) -&gt; h) &gt;=
-           (match rl with <span data-count="110550">E</span>mpty -&gt; 0 | <span data-count="116039">N</span>ode(_,_,_,h) -&gt; h) -&gt;
+  else <span data-count="2382141">i</span>f hr &gt; hl + 1 then
+    <span data-count="256682">m</span>atch r with
+    | <span data-count="241855">N</span>ode (rl, rd, rr, _)
+      when <span data-count="256682">(</span>match rr with <span data-count="9119">E</span>mpty -&gt; 0 | <span data-count="247563">N</span>ode(_,_,_,h) -&gt; h) &gt;=
+           (match rl with <span data-count="125318">E</span>mpty -&gt; 0 | <span data-count="131364">N</span>ode(_,_,_,h) -&gt; h) -&gt;
         mknode (mknode l d rl) rd rr
-    | <span data-count="13105">N</span>ode (Node (rll, rld, rlr, _), rd, rr, _) -&gt;
+    | <span data-count="14827">N</span>ode (Node (rll, rld, rlr, _), rd, rr, _) -&gt;
         mknode (mknode l d rll) rld (mknode rlr rd rr)
     | _ -&gt; assert false
   else
-    <span data-count="1923508">m</span>knode l d r
+    <span data-count="2125459">m</span>knode l d r
 
-let rec add id data = <span data-count="2835643">f</span>unction
-    <span data-count="530519">E</span>mpty -&gt;
+let rec add id data = <span data-count="3139123">f</span>unction
+    <span data-count="590024">E</span>mpty -&gt;
       Node(Empty, {ident = id; data = data; previous = None}, Empty, 1)
-  | <span data-count="2305124">N</span>ode(l, k, r, h) -&gt;
-      let c = <span data-count="2305124">c</span>ompare (name id) (name k.ident) in
-      <span data-count="2305124">i</span>f c = 0 then
-        <span data-count="36109">N</span>ode(l, {ident = id; data = data; previous = Some k}, r, h)
-      else <span data-count="2269015">i</span>f c &lt; 0 then
-        <span data-count="779761">b</span>alance (add id data l) k r
+  | <span data-count="2549099">N</span>ode(l, k, r, h) -&gt;
+      let c = <span data-count="2549099">c</span>ompare (name id) (name k.ident) in
+      <span data-count="2549099">i</span>f c = 0 then
+        <span data-count="38716">N</span>ode(l, {ident = id; data = data; previous = Some k}, r, h)
+      else <span data-count="2510383">i</span>f c &lt; 0 then
+        <span data-count="834891">b</span>alance (add id data l) k r
       else
-        <span data-count="1489254">b</span>alance l k (add id data r)
+        <span data-count="1675492">b</span>alance l k (add id data r)
 
-let rec min_binding = <span data-count="1031">f</span>unction
+let rec min_binding = <span data-count="1170">f</span>unction
     Empty -&gt; raise Not_found
   | Node (Empty, d, _, _) -&gt; d
   | Node (l, _, _, _) -&gt; min_binding l
 
-let rec remove_min_binding = <span data-count="1031">f</span>unction
+let rec remove_min_binding = <span data-count="1170">f</span>unction
     Empty -&gt; invalid_arg "Map.remove_min_elt"
   | Node (Empty, _, r, _) -&gt; r
   | Node (l, d, r, _) -&gt; balance (remove_min_binding l) d r
@@ -1003,57 +1003,57 @@ let rec remove id = function
         <span data-count="0">l</span>et rr = <span data-count="0">r</span>emove id r in <span data-count="0">i</span>f r == rr then <span data-count="0">m</span> else <span data-count="0">b</span>alance l k rr
 
 let rec find_previous id = function
-    <span data-count="1994">N</span>one -&gt;
+    <span data-count="2099">N</span>one -&gt;
       raise Not_found
-  | <span data-count="12399">S</span>ome k -&gt;
-      if same id k.ident then <span data-count="4781">k</span>.data else <span data-count="7618">f</span>ind_previous id k.previous
+  | <span data-count="13468">S</span>ome k -&gt;
+      if same id k.ident then <span data-count="5388">k</span>.data else <span data-count="8080">f</span>ind_previous id k.previous
 
 let rec find_same id = function
-    <span data-count="2333289">E</span>mpty -&gt;
+    <span data-count="2499919">E</span>mpty -&gt;
       raise Not_found
-  | <span data-count="14792565">N</span>ode(l, k, r, _) -&gt;
-      let c = <span data-count="14792565">c</span>ompare (name id) (name k.ident) in
-      <span data-count="14792565">i</span>f c = 0 then
-        <span data-count="3684182">i</span>f same id k.ident
-        then <span data-count="3677407">k</span>.data
-        else <span data-count="6775">f</span>ind_previous id k.previous
+  | <span data-count="15275516">N</span>ode(l, k, r, _) -&gt;
+      let c = <span data-count="15275516">c</span>ompare (name id) (name k.ident) in
+      <span data-count="15275516">i</span>f c = 0 then
+        <span data-count="3781305">i</span>f same id k.ident
+        then <span data-count="3773818">k</span>.data
+        else <span data-count="7487">f</span>ind_previous id k.previous
       else
-        <span data-count="11108383">f</span>ind_same id (if c &lt; 0 then <span data-count="5464856">l</span> else <span data-count="5643527">r</span>)
+        <span data-count="11494211">f</span>ind_same id (if c &lt; 0 then <span data-count="5648547">l</span> else <span data-count="5845664">r</span>)
 
 let rec find_name n = function
-    <span data-count="94586">E</span>mpty -&gt;
+    <span data-count="104387">E</span>mpty -&gt;
       raise Not_found
-  | <span data-count="451226">N</span>ode(l, k, r, _) -&gt;
-      let c = <span data-count="451226">c</span>ompare n (name k.ident) in
-      <span data-count="451226">i</span>f c = 0 then
-        <span data-count="86282">k</span>.ident, k.data
+  | <span data-count="491393">N</span>ode(l, k, r, _) -&gt;
+      let c = <span data-count="491393">c</span>ompare n (name k.ident) in
+      <span data-count="491393">i</span>f c = 0 then
+        <span data-count="93628">k</span>.ident, k.data
       else
-        <span data-count="364944">f</span>ind_name n (if c &lt; 0 then <span data-count="224007">l</span> else <span data-count="140937">r</span>)
+        <span data-count="397765">f</span>ind_name n (if c &lt; 0 then <span data-count="241846">l</span> else <span data-count="155919">r</span>)
 
-let rec get_all = <span data-count="1031">f</span>unction
+let rec get_all = <span data-count="1170">f</span>unction
   | None -&gt; []
   | Some k -&gt; (k.ident, k.data) :: get_all k.previous
 
 let rec find_all n = function
-    <span data-count="49597">E</span>mpty -&gt;
+    <span data-count="57173">E</span>mpty -&gt;
       []
-  | <span data-count="175639">N</span>ode(l, k, r, _) -&gt;
-      let c = <span data-count="175639">c</span>ompare n (name k.ident) in
-      <span data-count="175639">i</span>f c = 0 then
-        <span data-count="31340">(</span>k.ident, k.data) :: get_all k.previous
+  | <span data-count="192098">N</span>ode(l, k, r, _) -&gt;
+      let c = <span data-count="192098">c</span>ompare n (name k.ident) in
+      <span data-count="192098">i</span>f c = 0 then
+        <span data-count="33111">(</span>k.ident, k.data) :: get_all k.previous
       else
-        <span data-count="144299">f</span>ind_all n (if c &lt; 0 then <span data-count="75967">l</span> else <span data-count="68332">r</span>)
+        <span data-count="158987">f</span>ind_all n (if c &lt; 0 then <span data-count="84870">l</span> else <span data-count="74117">r</span>)
 
-let rec fold_aux f stack accu = <span data-count="13268">f</span>unction
-    <span data-count="6953">E</span>mpty -&gt;
+let rec fold_aux f stack accu = <span data-count="14618">f</span>unction
+    <span data-count="7675">E</span>mpty -&gt;
       begin match stack with
-        <span data-count="638">[</span>] -&gt; accu
-      | <span data-count="6315">a</span> :: l -&gt; fold_aux f l accu a
+        <span data-count="732">[</span>] -&gt; accu
+      | <span data-count="6943">a</span> :: l -&gt; fold_aux f l accu a
       end
-  | <span data-count="6315">N</span>ode(l, k, r, _) -&gt;
+  | <span data-count="6943">N</span>ode(l, k, r, _) -&gt;
       fold_aux f (l :: stack) (f k accu) r
 
-let fold_name f tbl accu = <span data-count="222">f</span>old_aux (fun k -&gt; <span data-count="1880">f</span> k.ident k.data) [] accu tbl
+let fold_name f tbl accu = <span data-count="316">f</span>old_aux (fun k -&gt; <span data-count="2508">f</span> k.ident k.data) [] accu tbl
 
 let rec fold_data f d accu =
   <span data-count="10200">m</span>atch d with
@@ -1073,55 +1073,55 @@ let rec iter f = function
 (* Idents for sharing keys *)
 
 (* They should be 'totally fresh' -&gt; neg numbers *)
-let key_name = <span data-count="1031">"</span>"
+let key_name = <span data-count="1170">"</span>"
 
 let make_key_generator () =
-  let c = <span data-count="18480">r</span>ef 1 in
-  <span data-count="18480">f</span>unction
-  | <span data-count="880">L</span>ocal _
+  let c = <span data-count="19515">r</span>ef 1 in
+  <span data-count="19515">f</span>unction
+  | <span data-count="916">L</span>ocal _
   | <span data-count="0">S</span>coped _ -&gt;
-      let stamp = <span data-count="880">!</span>c in
-      <span data-count="880">d</span>ecr c ;
-      <span data-count="880">L</span>ocal { name = key_name; stamp = stamp }
+      let stamp = <span data-count="916">!</span>c in
+      <span data-count="916">d</span>ecr c ;
+      <span data-count="916">L</span>ocal { name = key_name; stamp = stamp }
   | <span data-count="0">g</span>lobal_id -&gt;
       Misc.fatal_errorf "Ident.make_key_generator () %s" (name global_id)
 
 let compare x y =
-  <span data-count="21423076">m</span>atch x, y with
-  | <span data-count="5499646">L</span>ocal x, Local y -&gt;
-      let c = <span data-count="5499646">x</span>.stamp - y.stamp in
-      <span data-count="5499646">i</span>f c &lt;&gt; 0 then <span data-count="4703832">c</span>
-      else <span data-count="795814">c</span>ompare x.name y.name
-  | <span data-count="20634">L</span>ocal _, _ -&gt; 1
-  | <span data-count="5848262">_</span>, Local _ -&gt; (-1)
-  | <span data-count="4717363">S</span>coped x, Scoped y -&gt;
-      let c = <span data-count="4717363">x</span>.stamp - y.stamp in
-      <span data-count="4717363">i</span>f c &lt;&gt; 0 then <span data-count="4463835">c</span>
-      else <span data-count="253528">c</span>ompare x.name y.name
-  | <span data-count="157">S</span>coped _, _ -&gt; 1
-  | <span data-count="2375212">_</span>, Scoped _ -&gt; (-1)
-  | <span data-count="2609702">G</span>lobal x, Global y -&gt; compare x y
-  | <span data-count="146480">G</span>lobal _, _ -&gt; 1
-  | <span data-count="72070">_</span>, Global _ -&gt; (-1)
-  | <span data-count="133550">P</span>redef { stamp = s1; _ }, Predef { stamp = s2; _ } -&gt; compare s1 s2
+  <span data-count="24329018">m</span>atch x, y with
+  | <span data-count="6169018">L</span>ocal x, Local y -&gt;
+      let c = <span data-count="6169018">x</span>.stamp - y.stamp in
+      <span data-count="6169018">i</span>f c &lt;&gt; 0 then <span data-count="5280904">c</span>
+      else <span data-count="888114">c</span>ompare x.name y.name
+  | <span data-count="21710">L</span>ocal _, _ -&gt; 1
+  | <span data-count="6697055">_</span>, Local _ -&gt; (-1)
+  | <span data-count="4724500">S</span>coped x, Scoped y -&gt;
+      let c = <span data-count="4724500">x</span>.stamp - y.stamp in
+      <span data-count="4724500">i</span>f c &lt;&gt; 0 then <span data-count="4468310">c</span>
+      else <span data-count="256190">c</span>ompare x.name y.name
+  | <span data-count="171">S</span>coped _, _ -&gt; 1
+  | <span data-count="2379032">_</span>, Scoped _ -&gt; (-1)
+  | <span data-count="3904114">G</span>lobal x, Global y -&gt; compare x y
+  | <span data-count="173105">G</span>lobal _, _ -&gt; 1
+  | <span data-count="101405">_</span>, Global _ -&gt; (-1)
+  | <span data-count="158908">P</span>redef { stamp = s1; _ }, Predef { stamp = s2; _ } -&gt; compare s1 s2
 
 let output oc id = <span data-count="0">o</span>utput_string oc (unique_name id)
 let hash i = (Char.code (name i).[0]) lxor (stamp i)
 
-let original_equal = <span data-count="1031">e</span>qual
+let original_equal = <span data-count="1170">e</span>qual
 include Identifiable.Make (struct
   type nonrec t = t
-  let compare = <span data-count="1031">c</span>ompare
-  let output = <span data-count="1031">o</span>utput
-  let print = <span data-count="1031">p</span>rint
-  let hash = <span data-count="1031">h</span>ash
-  let equal = <span data-count="1031">s</span>ame
+  let compare = <span data-count="1170">c</span>ompare
+  let output = <span data-count="1170">o</span>utput
+  let print = <span data-count="1170">p</span>rint
+  let hash = <span data-count="1170">h</span>ash
+  let equal = <span data-count="1170">s</span>ame
 end)
-let equal = <span data-count="1031">o</span>riginal_equal
+let equal = <span data-count="1170">o</span>riginal_equal
 </pre>
       </div>
     </div>
-    <div id="footer">Generated on 2019-08-08 13:34:29 by <a href="https://github.com/aantron/bisect_ppx">Bisect_ppx</a> 1.4.1</div>
+    <div id="footer">Generated on 2019-08-14 11:29:20 by <a href="https://github.com/aantron/bisect_ppx">Bisect_ppx</a> 1.4.1</div>
     <script src="../coverage.js"></script>
   </body>
 </html>

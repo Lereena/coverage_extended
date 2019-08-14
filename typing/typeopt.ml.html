@@ -496,39 +496,39 @@ open Typedtree
 open Lambda
 
 let scrape_ty env ty =
-  <span data-count="140706">l</span>et ty = <span data-count="140706">C</span>type.expand_head_opt env (Ctype.correct_levels ty) in
-  <span data-count="140706">m</span>atch ty.desc with
-  | <span data-count="86161">T</span>constr (p, _, _) -&gt;
+  <span data-count="151570">l</span>et ty = <span data-count="151570">C</span>type.expand_head_opt env (Ctype.correct_levels ty) in
+  <span data-count="151570">m</span>atch ty.desc with
+  | <span data-count="93635">T</span>constr (p, _, _) -&gt;
       begin match Env.find_type p env with
       | <span data-count="34">{</span>type_unboxed = {unboxed = true; _}; _} -&gt;
         begin match Typedecl.get_unboxed_type_representation env ty with
         | <span data-count="6">N</span>one -&gt; ty
         | <span data-count="28">S</span>ome ty2 -&gt; ty2
         end
-      | <span data-count="86103">_</span> -&gt; ty
+      | <span data-count="93577">_</span> -&gt; ty
       | <span data-count="24">e</span>xception Not_found -&gt; ty
       end
-  | <span data-count="54545">_</span> -&gt; ty
+  | <span data-count="57935">_</span> -&gt; ty
 
 let scrape env ty =
-  <span data-count="133985">(</span>scrape_ty env ty).desc
+  <span data-count="144198">(</span>scrape_ty env ty).desc
 
 let is_function_type env ty =
-  <span data-count="39355">m</span>atch scrape env ty with
-  | <span data-count="34243">T</span>arrow (_, lhs, rhs, _) -&gt; Some (lhs, rhs)
-  | <span data-count="5112">_</span> -&gt; None
+  <span data-count="42098">m</span>atch scrape env ty with
+  | <span data-count="36368">T</span>arrow (_, lhs, rhs, _) -&gt; Some (lhs, rhs)
+  | <span data-count="5730">_</span> -&gt; None
 
 let is_base_type env ty base_ty_path =
-  <span data-count="11178">m</span>atch scrape env ty with
-  | <span data-count="9970">T</span>constr(p, _, _) -&gt; Path.same p base_ty_path
-  | <span data-count="1208">_</span> -&gt; false
+  <span data-count="11317">m</span>atch scrape env ty with
+  | <span data-count="10085">T</span>constr(p, _, _) -&gt; Path.same p base_ty_path
+  | <span data-count="1232">_</span> -&gt; false
 
 let maybe_pointer_type env ty =
-  <span data-count="4681">l</span>et ty = <span data-count="4681">s</span>crape_ty env ty in
-  <span data-count="4681">i</span>f Ctype.maybe_pointer_type env ty then
-    <span data-count="3981">P</span>ointer
+  <span data-count="5046">l</span>et ty = <span data-count="5046">s</span>crape_ty env ty in
+  <span data-count="5046">i</span>f Ctype.maybe_pointer_type env ty then
+    <span data-count="4299">P</span>ointer
   else
-    <span data-count="700">I</span>mmediate
+    <span data-count="747">I</span>mmediate
 
 let maybe_pointer exp = maybe_pointer_type exp.exp_env exp.exp_type
 
@@ -540,20 +540,20 @@ type classification =
   | Any
 
 let classify env ty =
-  <span data-count="2040">l</span>et ty = <span data-count="2040">s</span>crape_ty env ty in
-  <span data-count="2040">i</span>f maybe_pointer_type env ty = Immediate then <span data-count="276">I</span>nt
-  else <span data-count="1764">m</span>atch ty.desc with
-  | <span data-count="1057">T</span>var _ | <span data-count="0">T</span>univar _ -&gt;
+  <span data-count="2326">l</span>et ty = <span data-count="2326">s</span>crape_ty env ty in
+  <span data-count="2326">i</span>f maybe_pointer_type env ty = Immediate then <span data-count="290">I</span>nt
+  else <span data-count="2036">m</span>atch ty.desc with
+  | <span data-count="1064">T</span>var _ | <span data-count="0">T</span>univar _ -&gt;
       Any
-  | <span data-count="656">T</span>constr (p, _args, _abbrev) -&gt;
-      if Path.same p Predef.path_float then <span data-count="281">F</span>loat
-      else <span data-count="375">i</span>f Path.same p Predef.path_lazy_t then <span data-count="0">L</span>azy
-      else <span data-count="375">i</span>f <span data-count="375">P</span>ath.same p Predef.path_string
+  | <span data-count="906">T</span>constr (p, _args, _abbrev) -&gt;
+      if Path.same p Predef.path_float then <span data-count="285">F</span>loat
+      else <span data-count="621">i</span>f Path.same p Predef.path_lazy_t then <span data-count="0">L</span>azy
+      else <span data-count="621">i</span>f <span data-count="621">P</span>ath.same p Predef.path_string
            || <span data-count="514">P</span>ath.same p Predef.path_bytes
            || <span data-count="506">P</span>ath.same p Predef.path_array
            || <span data-count="346">P</span>ath.same p Predef.path_nativeint
            || <span data-count="336">P</span>ath.same p Predef.path_int32
-           || <span data-count="96">P</span>ath.same p Predef.path_int64 then <span data-count="285">A</span>ddr
+           || <span data-count="96">P</span>ath.same p Predef.path_int64 then <span data-count="531">A</span>ddr
       else <span data-count="90">b</span>egin
         try
           match (Env.find_type p env).type_kind with
@@ -567,20 +567,20 @@ let classify env ty =
              Maybe we should emit a warning. *)
           Any
       end
-  | <span data-count="5">T</span>arrow _ | <span data-count="36">T</span>tuple _ | <span data-count="0">T</span>package _ | <span data-count="6">T</span>object _ | <span data-count="0">T</span>nil | <span data-count="4">T</span>variant _ -&gt;
+  | <span data-count="8">T</span>arrow _ | <span data-count="48">T</span>tuple _ | <span data-count="0">T</span>package _ | <span data-count="6">T</span>object _ | <span data-count="0">T</span>nil | <span data-count="4">T</span>variant _ -&gt;
       Addr
   | Tlink _ | Tsubst _ | Tpoly _ | Tfield _ -&gt;
       assert false
 
 let array_type_kind env ty =
-  <span data-count="2043">m</span>atch scrape env ty with
-  | <span data-count="2035">T</span>constr(p, [elt_ty], _) | <span data-count="0">T</span>poly({desc = Tconstr(p, [elt_ty], _)}, _)
-    when <span data-count="2035">P</span>ath.same p Predef.path_array -&gt;
+  <span data-count="2329">m</span>atch scrape env ty with
+  | <span data-count="2321">T</span>constr(p, [elt_ty], _) | <span data-count="0">T</span>poly({desc = Tconstr(p, [elt_ty], _)}, _)
+    when <span data-count="2321">P</span>ath.same p Predef.path_array -&gt;
       begin match classify env elt_ty with
-      | <span data-count="1085">A</span>ny -&gt; if Config.flat_float_array then <span data-count="1085">P</span>genarray else <span data-count="0">P</span>addrarray
-      | <span data-count="281">F</span>loat -&gt; if Config.flat_float_array then <span data-count="281">P</span>floatarray else <span data-count="0">P</span>addrarray
-      | <span data-count="395">A</span>ddr | <span data-count="0">L</span>azy -&gt; Paddrarray
-      | <span data-count="274">I</span>nt -&gt; Pintarray
+      | <span data-count="1092">A</span>ny -&gt; if Config.flat_float_array then <span data-count="1092">P</span>genarray else <span data-count="0">P</span>addrarray
+      | <span data-count="285">F</span>loat -&gt; if Config.flat_float_array then <span data-count="285">P</span>floatarray else <span data-count="0">P</span>addrarray
+      | <span data-count="656">A</span>ddr | <span data-count="0">L</span>azy -&gt; Paddrarray
+      | <span data-count="288">I</span>nt -&gt; Pintarray
       end
   | <span data-count="2">T</span>constr(p, [], _) | <span data-count="0">T</span>poly({desc = Tconstr(p, [], _)}, _)
     when <span data-count="8">P</span>ath.same p Predef.path_floatarray -&gt;
@@ -602,7 +602,7 @@ let bigarray_decode_type env ty tbl dfl =
       dfl
 
 let kind_table =
-  <span data-count="1031">[</span>"float32_elt", Pbigarray_float32;
+  <span data-count="1170">[</span>"float32_elt", Pbigarray_float32;
    "float64_elt", Pbigarray_float64;
    "int8_signed_elt", Pbigarray_sint8;
    "int8_unsigned_elt", Pbigarray_uint8;
@@ -616,7 +616,7 @@ let kind_table =
    "complex64_elt", Pbigarray_complex64]
 
 let layout_table =
-  <span data-count="1031">[</span>"c_layout", Pbigarray_c_layout;
+  <span data-count="1170">[</span>"c_layout", Pbigarray_c_layout;
    "fortran_layout", Pbigarray_fortran_layout]
 
 let bigarray_type_kind_and_layout env typ =
@@ -629,25 +629,25 @@ let bigarray_type_kind_and_layout env typ =
       (Pbigarray_unknown, Pbigarray_unknown_layout)
 
 let value_kind env ty =
-  <span data-count="80902">m</span>atch scrape env ty with
-  | <span data-count="10611">T</span>constr(p, _, _) when <span data-count="64629">P</span>ath.same p Predef.path_int -&gt;
+  <span data-count="87947">m</span>atch scrape env ty with
+  | <span data-count="11134">T</span>constr(p, _, _) when <span data-count="70490">P</span>ath.same p Predef.path_int -&gt;
       Pintval
-  | <span data-count="847">T</span>constr(p, _, _) when <span data-count="54018">P</span>ath.same p Predef.path_char -&gt;
+  | <span data-count="885">T</span>constr(p, _, _) when <span data-count="59356">P</span>ath.same p Predef.path_char -&gt;
       Pintval
-  | <span data-count="9342">T</span>constr(p, _, _) when <span data-count="53171">P</span>ath.same p Predef.path_float -&gt;
+  | <span data-count="9351">T</span>constr(p, _, _) when <span data-count="58471">P</span>ath.same p Predef.path_float -&gt;
       Pfloatval
-  | <span data-count="254">T</span>constr(p, _, _) when <span data-count="43829">P</span>ath.same p Predef.path_int32 -&gt;
+  | <span data-count="254">T</span>constr(p, _, _) when <span data-count="49120">P</span>ath.same p Predef.path_int32 -&gt;
       Pboxedintval Pint32
-  | <span data-count="190">T</span>constr(p, _, _) when <span data-count="43575">P</span>ath.same p Predef.path_int64 -&gt;
+  | <span data-count="190">T</span>constr(p, _, _) when <span data-count="48866">P</span>ath.same p Predef.path_int64 -&gt;
       Pboxedintval Pint64
-  | <span data-count="274">T</span>constr(p, _, _) when <span data-count="43385">P</span>ath.same p Predef.path_nativeint -&gt;
+  | <span data-count="277">T</span>constr(p, _, _) when <span data-count="48676">P</span>ath.same p Predef.path_nativeint -&gt;
       Pboxedintval Pnativeint
-  | <span data-count="59384">_</span> -&gt;
+  | <span data-count="65856">_</span> -&gt;
       Pgenval
 
 let function_return_value_kind env ty =
-  <span data-count="8192">m</span>atch is_function_type env ty with
-  | <span data-count="7958">S</span>ome (_lhs, rhs) -&gt; value_kind env rhs
+  <span data-count="9215">m</span>atch is_function_type env ty with
+  | <span data-count="8981">S</span>ome (_lhs, rhs) -&gt; value_kind env rhs
   | <span data-count="234">N</span>one -&gt; Pgenval
 
 (** Whether a forward block is needed for a lazy thunk on a value, i.e.
@@ -685,12 +685,12 @@ let classify_lazy_argument : Typedtree.expression -&gt;
        `Other
 
 let value_kind_union k1 k2 =
-  <span data-count="947">i</span>f k1 = k2 then <span data-count="947">k</span>1
+  <span data-count="1018">i</span>f k1 = k2 then <span data-count="1018">k</span>1
   else <span data-count="0">P</span>genval
 </pre>
       </div>
     </div>
-    <div id="footer">Generated on 2019-08-08 13:34:29 by <a href="https://github.com/aantron/bisect_ppx">Bisect_ppx</a> 1.4.1</div>
+    <div id="footer">Generated on 2019-08-14 11:29:20 by <a href="https://github.com/aantron/bisect_ppx">Bisect_ppx</a> 1.4.1</div>
     <script src="../coverage.js"></script>
   </body>
 </html>

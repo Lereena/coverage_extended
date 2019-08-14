@@ -11,7 +11,7 @@
           <span class="dirname">typing/</span>typetexp.ml
         </a>
       </h1>
-      <h2>88.32%</h2>
+      <h2>88.71%</h2>
     </div>
     <div id="navbar">
       <span class="some-visited" style="top:7.36%"></span>
@@ -37,8 +37,6 @@
       <span class="some-visited" style="top:31.56%"></span>
       <span class="unvisited" style="top:31.75%"></span>
       <span class="unvisited" style="top:32.40%"></span>
-      <span class="some-visited" style="top:35.47%"></span>
-      <span class="unvisited" style="top:35.57%"></span>
       <span class="unvisited" style="top:35.94%"></span>
       <span class="unvisited" style="top:37.99%"></span>
       <span class="unvisited" style="top:39.29%"></span>
@@ -70,7 +68,6 @@
       <span class="unvisited" style="top:45.44%"></span>
       <span class="unvisited" style="top:49.26%"></span>
       <span class="some-visited" style="top:50.93%"></span>
-      <span class="unvisited" style="top:51.21%"></span>
       <span class="unvisited" style="top:51.30%"></span>
       <span class="unvisited" style="top:53.26%"></span>
       <span class="unvisited" style="top:55.87%"></span>
@@ -481,8 +478,8 @@
 <a id="L378"></a><span class="visited"> </span>
 <a id="L379"></a><span class="visited"> </span>
 <a id="L380"></a><span class="visited"> </span>
-<a id="L381"></a><span class="some-visited"> </span>
-<a id="L382"></a><span class="unvisited"> </span>
+<a id="L381"></a><span class="visited"> </span>
+<a id="L382"></a><span class="visited"> </span>
 <a id="L383"></a><span class="visited"> </span>
 <a id="L384"></a><span > </span>
 <a id="L385"></a><span class="visited"> </span>
@@ -650,7 +647,7 @@
 <a id="L547"></a><span class="some-visited"> </span>
 <a id="L548"></a><span class="visited"> </span>
 <a id="L549"></a><span class="visited"> </span>
-<a id="L550"></a><span class="unvisited"> </span>
+<a id="L550"></a><span class="visited"> </span>
 <a id="L551"></a><span class="unvisited"> </span>
 <a id="L552"></a><span > </span>
 <a id="L553"></a><span class="visited"> </span>
@@ -2333,32 +2330,32 @@ type variable_context = int * type_expr TyVarMap.t
 
 (* To update locations from Typemod.check_well_founded_module. *)
 
-let typemod_update_location = <span data-count="1031">r</span>ef (fun _ -&gt; <span data-count="0">a</span>ssert false)
+let typemod_update_location = <span data-count="1170">r</span>ef (fun _ -&gt; <span data-count="0">a</span>ssert false)
 
 (* Narrowing unbound identifier errors. *)
 
 let rec narrow_unbound_lid_error : 'a. _ -&gt; _ -&gt; _ -&gt; _ -&gt; 'a =
-  <span data-count="1031">f</span>un env loc lid make_error -&gt;
-  <span data-count="137">l</span>et check_module mlid =
-    <span data-count="52">t</span>ry ignore (Env.lookup_module ~load:true mlid env) with
-    | <span data-count="27">N</span>ot_found -&gt;
-        narrow_unbound_lid_error env loc mlid (fun lid -&gt; <span data-count="15">U</span>nbound_module lid)
+  <span data-count="1170">f</span>un env loc lid make_error -&gt;
+  <span data-count="186">l</span>et check_module mlid =
+    <span data-count="59">t</span>ry ignore (Env.lookup_module ~load:true mlid env) with
+    | <span data-count="31">N</span>ot_found -&gt;
+        narrow_unbound_lid_error env loc mlid (fun lid -&gt; <span data-count="19">U</span>nbound_module lid)
     | <span data-count="0">E</span>nv.Recmodule -&gt;
         raise (Error (loc, env, Illegal_reference_to_recursive_module))
   in
-  <span data-count="137">l</span>et error e = <span data-count="110">r</span>aise (Error (loc, env, e)) in
-  <span data-count="137">b</span>egin match lid with
-  | <span data-count="93">L</span>ongident.Lident _ -&gt; ()
-  | <span data-count="28">L</span>ongident.Ldot (mlid, _) -&gt;
+  <span data-count="186">l</span>et error e = <span data-count="155">r</span>aise (Error (loc, env, e)) in
+  <span data-count="186">b</span>egin match lid with
+  | <span data-count="135">L</span>ongident.Lident _ -&gt; ()
+  | <span data-count="35">L</span>ongident.Ldot (mlid, _) -&gt;
       check_module mlid;
-      <span data-count="7">l</span>et md = <span data-count="7">E</span>nv.find_module (Env.lookup_module ~load:true mlid env) env in
-      <span data-count="7">b</span>egin match Env.scrape_alias env md.md_type with
+      <span data-count="10">l</span>et md = <span data-count="10">E</span>nv.find_module (Env.lookup_module ~load:true mlid env) env in
+      <span data-count="10">b</span>egin match Env.scrape_alias env md.md_type with
       | <span data-count="2">M</span>ty_functor _ -&gt;
          error (Wrong_use_of_module (mlid, `Functor_used_as_structure))
       | <span data-count="0">M</span>ty_ident _ -&gt;
          error (Wrong_use_of_module (mlid, `Abstract_used_as_structure))
       | <span data-count="0">M</span>ty_alias p -&gt; error (Cannot_scrape_alias(mlid, p))
-      | <span data-count="5">M</span>ty_signature _ -&gt; ()
+      | <span data-count="8">M</span>ty_signature _ -&gt; ()
       end
   | <span data-count="16">L</span>ongident.Lapply (flid, mlid) -&gt;
       check_module flid;
@@ -2389,16 +2386,16 @@ let rec narrow_unbound_lid_error : 'a. _ -&gt; _ -&gt; _ -&gt; _ -&gt; 'a =
          <span data-count="4">e</span>rror (Ill_typed_functor_application (flid, mlid, details))
       end
   end;
-  <span data-count="98">e</span>rror (make_error lid)
+  <span data-count="143">e</span>rror (make_error lid)
 
 let find_component (lookup : ?loc:_ -&gt; ?mark:_ -&gt; _) make_error env loc lid =
-  <span data-count="125747">t</span>ry
+  <span data-count="136488">t</span>ry
     match lid with
-    | <span data-count="12">L</span>ongident.Ldot (Longident.Lident "*predef*", s) -&gt;
+    | <span data-count="14">L</span>ongident.Ldot (Longident.Lident "*predef*", s) -&gt;
         lookup ~loc (Longident.Lident s) Env.initial_safe_string
-    | <span data-count="125735">_</span> -&gt;
+    | <span data-count="136474">_</span> -&gt;
         lookup ~loc lid env
-  with <span data-count="68">N</span>ot_found -&gt;
+  with <span data-count="75">N</span>ot_found -&gt;
     narrow_unbound_lid_error env loc lid make_error
   | <span data-count="2">E</span>nv.Recmodule -&gt;
     raise (Error (loc, env, Illegal_reference_to_recursive_module))
@@ -2406,89 +2403,89 @@ let find_component (lookup : ?loc:_ -&gt; ?mark:_ -&gt; _) make_error env loc li
     raise (!typemod_update_location loc err)
 
 let find_type env loc lid =
-  <span data-count="14845">l</span>et path =
-    <span data-count="14845">f</span>ind_component Env.lookup_type (fun lid -&gt; <span data-count="12">U</span>nbound_type_constructor lid)
+  <span data-count="16163">l</span>et path =
+    <span data-count="16163">f</span>ind_component Env.lookup_type (fun lid -&gt; <span data-count="12">U</span>nbound_type_constructor lid)
       env loc lid
   in
-  <span data-count="14813">l</span>et decl = <span data-count="14813">E</span>nv.find_type path env in
-  <span data-count="14813">B</span>uiltin_attributes.check_alerts loc decl.type_attributes (Path.name path);
-  <span data-count="14813">(</span>path, decl)
+  <span data-count="16131">l</span>et decl = <span data-count="16131">E</span>nv.find_type path env in
+  <span data-count="16131">B</span>uiltin_attributes.check_alerts loc decl.type_attributes (Path.name path);
+  <span data-count="16131">(</span>path, decl)
 
 let find_constructor =
-  <span data-count="1031">f</span>ind_component Env.lookup_constructor (fun lid -&gt; <span data-count="4">U</span>nbound_constructor lid)
+  <span data-count="1170">f</span>ind_component Env.lookup_constructor (fun lid -&gt; <span data-count="4">U</span>nbound_constructor lid)
 let find_all_constructors =
-  <span data-count="1031">f</span>ind_component Env.lookup_all_constructors
+  <span data-count="1170">f</span>ind_component Env.lookup_all_constructors
     (fun lid -&gt; <span data-count="0">U</span>nbound_constructor lid)
 let find_label =
-  <span data-count="1031">f</span>ind_component Env.lookup_label (fun lid -&gt; <span data-count="0">U</span>nbound_label lid)
+  <span data-count="1170">f</span>ind_component Env.lookup_label (fun lid -&gt; <span data-count="0">U</span>nbound_label lid)
 let find_all_labels =
-  <span data-count="1031">f</span>ind_component Env.lookup_all_labels (fun lid -&gt; <span data-count="0">U</span>nbound_label lid)
+  <span data-count="1170">f</span>ind_component Env.lookup_all_labels (fun lid -&gt; <span data-count="0">U</span>nbound_label lid)
 
 let find_class env loc lid =
-  <span data-count="363">l</span>et (path, decl) as r =
-    <span data-count="363">f</span>ind_component Env.lookup_class (fun lid -&gt; <span data-count="6">U</span>nbound_class lid) env loc lid
+  <span data-count="373">l</span>et (path, decl) as r =
+    <span data-count="373">f</span>ind_component Env.lookup_class (fun lid -&gt; <span data-count="6">U</span>nbound_class lid) env loc lid
   in
-  <span data-count="355">B</span>uiltin_attributes.check_alerts loc decl.cty_attributes (Path.name path);
-  <span data-count="355">r</span>
+  <span data-count="365">B</span>uiltin_attributes.check_alerts loc decl.cty_attributes (Path.name path);
+  <span data-count="365">r</span>
 
 let find_value env loc lid =
-  <span data-count="62992">E</span>nv.check_value_name (Longident.last lid) loc;
-  <span data-count="62992">l</span>et (path, decl) as r =
-    <span data-count="62992">f</span>ind_component Env.lookup_value (fun lid -&gt; <span data-count="15">U</span>nbound_value lid) env loc lid
+  <span data-count="68797">E</span>nv.check_value_name (Longident.last lid) loc;
+  <span data-count="68797">l</span>et (path, decl) as r =
+    <span data-count="68797">f</span>ind_component Env.lookup_value (fun lid -&gt; <span data-count="18">U</span>nbound_value lid) env loc lid
   in
-  <span data-count="62974">B</span>uiltin_attributes.check_alerts loc decl.val_attributes (Path.name path);
-  <span data-count="62974">r</span>
+  <span data-count="68776">B</span>uiltin_attributes.check_alerts loc decl.val_attributes (Path.name path);
+  <span data-count="68776">r</span>
 
 let lookup_module ?(load=false) env loc lid =
-  <span data-count="2531">f</span>ind_component
-    (fun ?loc ?mark lid env -&gt; <span data-count="2531">(</span>Env.lookup_module ~load ?loc ?mark lid env))
+  <span data-count="2856">f</span>ind_component
+    (fun ?loc ?mark lid env -&gt; <span data-count="2856">(</span>Env.lookup_module ~load ?loc ?mark lid env))
     (fun lid -&gt; <span data-count="2">U</span>nbound_module lid) env loc lid
 
 let find_module env loc lid =
-  <span data-count="89">l</span>et path = <span data-count="89">l</span>ookup_module ~load:true env loc lid in
-  <span data-count="83">l</span>et decl = <span data-count="83">E</span>nv.find_module path env in
+  <span data-count="98">l</span>et path = <span data-count="98">l</span>ookup_module ~load:true env loc lid in
+  <span data-count="92">l</span>et decl = <span data-count="92">E</span>nv.find_module path env in
   (* No need to check for alerts here, this is done in Env. *)
-  <span data-count="83">(</span>path, decl)
+  <span data-count="92">(</span>path, decl)
 
 let find_modtype env loc lid =
-  <span data-count="739">l</span>et (path, decl) as r =
-    <span data-count="739">f</span>ind_component Env.lookup_modtype (fun lid -&gt; <span data-count="2">U</span>nbound_modtype lid)
+  <span data-count="780">l</span>et (path, decl) as r =
+    <span data-count="780">f</span>ind_component Env.lookup_modtype (fun lid -&gt; <span data-count="2">U</span>nbound_modtype lid)
       env loc lid
   in
-  <span data-count="737">B</span>uiltin_attributes.check_alerts loc decl.mtd_attributes (Path.name path);
-  <span data-count="737">r</span>
+  <span data-count="778">B</span>uiltin_attributes.check_alerts loc decl.mtd_attributes (Path.name path);
+  <span data-count="778">r</span>
 
 let find_class_type env loc lid =
-  <span data-count="66">l</span>et (path, decl) as r =
-    <span data-count="66">f</span>ind_component Env.lookup_cltype (fun lid -&gt; <span data-count="0">U</span>nbound_cltype lid)
+  <span data-count="84">l</span>et (path, decl) as r =
+    <span data-count="84">f</span>ind_component Env.lookup_cltype (fun lid -&gt; <span data-count="0">U</span>nbound_cltype lid)
       env loc lid
   in
-  <span data-count="66">B</span>uiltin_attributes.check_alerts loc decl.clty_attributes (Path.name path);
-  <span data-count="66">r</span>
+  <span data-count="84">B</span>uiltin_attributes.check_alerts loc decl.clty_attributes (Path.name path);
+  <span data-count="84">r</span>
 
 let unbound_constructor_error env lid =
-  <span data-count="22">n</span>arrow_unbound_lid_error env lid.loc lid.txt
-    (fun lid -&gt; <span data-count="22">U</span>nbound_constructor lid)
+  <span data-count="40">n</span>arrow_unbound_lid_error env lid.loc lid.txt
+    (fun lid -&gt; <span data-count="40">U</span>nbound_constructor lid)
 
 let unbound_label_error env lid =
-  <span data-count="20">n</span>arrow_unbound_lid_error env lid.loc lid.txt
-    (fun lid -&gt; <span data-count="20">U</span>nbound_label lid)
+  <span data-count="40">n</span>arrow_unbound_lid_error env lid.loc lid.txt
+    (fun lid -&gt; <span data-count="40">U</span>nbound_label lid)
 
 (* Support for first-class modules. *)
 
-let transl_modtype_longident = <span data-count="1031">r</span>ef (fun _ -&gt; <span data-count="0">a</span>ssert false)
-let transl_modtype = <span data-count="1031">r</span>ef (fun _ -&gt; <span data-count="0">a</span>ssert false)
+let transl_modtype_longident = <span data-count="1170">r</span>ef (fun _ -&gt; <span data-count="0">a</span>ssert false)
+let transl_modtype = <span data-count="1170">r</span>ef (fun _ -&gt; <span data-count="0">a</span>ssert false)
 
 let create_package_mty fake loc env (p, l) =
-  <span data-count="120">l</span>et l =
-    <span data-count="120">L</span>ist.sort
+  <span data-count="128">l</span>et l =
+    <span data-count="128">L</span>ist.sort
       (fun (s1, _t1) (s2, _t2) -&gt;
          <span data-count="10">i</span>f s1.txt = s2.txt then
            <span data-count="0">r</span>aise (Error (loc, env, Multiple_constraints_on_type s1.txt));
          <span data-count="10">c</span>ompare s1.txt s2.txt)
       l
   in
-  <span data-count="120">l</span>,
+  <span data-count="128">l</span>,
   List.fold_left
     (fun mty (s, t) -&gt;
       <span data-count="43">l</span>et d = <span data-count="43">{</span>ptype_name = mkloc (Longident.last s.txt) s.loc;
@@ -2507,34 +2504,34 @@ let create_package_mty fake loc env (p, l) =
 
 (* Translation of type expressions *)
 
-let type_variables = <span data-count="1031">r</span>ef (TyVarMap.empty : type_expr TyVarMap.t)
-let univars        = <span data-count="1031">r</span>ef ([] : (string * type_expr) list)
-let pre_univars    = <span data-count="1031">r</span>ef ([] : type_expr list)
-let used_variables = <span data-count="1031">r</span>ef (TyVarMap.empty : (type_expr * Location.t) TyVarMap.t)
+let type_variables = <span data-count="1170">r</span>ef (TyVarMap.empty : type_expr TyVarMap.t)
+let univars        = <span data-count="1170">r</span>ef ([] : (string * type_expr) list)
+let pre_univars    = <span data-count="1170">r</span>ef ([] : type_expr list)
+let used_variables = <span data-count="1170">r</span>ef (TyVarMap.empty : (type_expr * Location.t) TyVarMap.t)
 
 let reset_type_variables () =
   reset_global_level ();
-  <span data-count="13186">C</span>type.reset_reified_var_counter ();
-  <span data-count="13186">t</span>ype_variables := TyVarMap.empty
+  <span data-count="14640">C</span>type.reset_reified_var_counter ();
+  <span data-count="14640">t</span>ype_variables := TyVarMap.empty
 
 let narrow () =
   (increase_global_level (), !type_variables)
 
 let widen (gl, tv) =
   restore_global_level gl;
-  <span data-count="1281">t</span>ype_variables := tv
+  <span data-count="1367">t</span>ype_variables := tv
 
-let strict_ident c = (<span data-count="5585">c</span> = '_' || <span data-count="15279">c</span> &gt;= 'a' &amp;&amp; <span data-count="5089">c</span> &lt;= 'z' || <span data-count="8">c</span> &gt;= 'A' &amp;&amp; <span data-count="4">c</span> &lt;= 'Z')
+let strict_ident c = (<span data-count="6698">c</span> = '_' || <span data-count="18594">c</span> &gt;= 'a' &amp;&amp; <span data-count="6190">c</span> &lt;= 'z' || <span data-count="16">c</span> &gt;= 'A' &amp;&amp; <span data-count="8">c</span> &lt;= 'Z')
 
-let validate_name = <span data-count="1031">f</span>unction
+let validate_name = <span data-count="1170">f</span>unction
     None -&gt; None
   | Some name as s -&gt;
-      if <span data-count="5585">n</span>ame &lt;&gt; "" &amp;&amp; <span data-count="5585">s</span>trict_ident name.[0] then <span data-count="5585">s</span> else <span data-count="0">N</span>one
+      if <span data-count="6698">n</span>ame &lt;&gt; "" &amp;&amp; <span data-count="6698">s</span>trict_ident name.[0] then <span data-count="6698">s</span> else <span data-count="0">N</span>one
 
 let new_global_var ?name () =
-  <span data-count="6345">n</span>ew_global_var ?name:(validate_name name) ()
+  <span data-count="7628">n</span>ew_global_var ?name:(validate_name name) ()
 let newvar ?name () =
-  <span data-count="7276">n</span>ewvar ?name:(validate_name name) ()
+  <span data-count="8705">n</span>ewvar ?name:(validate_name name) ()
 
 let type_variable loc name =
   <span data-count="0">t</span>ry
@@ -2543,36 +2540,36 @@ let type_variable loc name =
     raise(Error(loc, Env.empty, Unbound_type_variable ("'" ^ name)))
 
 let valid_tyvar_name name =
-  <span data-count="7169">n</span>ame &lt;&gt; "" &amp;&amp; <span data-count="7169">n</span>ame.[0] &lt;&gt; '_'
+  <span data-count="8368">n</span>ame &lt;&gt; "" &amp;&amp; <span data-count="8368">n</span>ame.[0] &lt;&gt; '_'
 
 let transl_type_param env styp =
-  <span data-count="1428">l</span>et loc = <span data-count="1428">s</span>typ.ptyp_loc in
-  <span data-count="1428">m</span>atch styp.ptyp_desc with
-    <span data-count="492">P</span>typ_any -&gt;
-      let ty = <span data-count="492">n</span>ew_global_var ~name:"_" () in
-        <span data-count="492">{</span> ctyp_desc = Ttyp_any; ctyp_type = ty; ctyp_env = env;
+  <span data-count="1602">l</span>et loc = <span data-count="1602">s</span>typ.ptyp_loc in
+  <span data-count="1602">m</span>atch styp.ptyp_desc with
+    <span data-count="500">P</span>typ_any -&gt;
+      let ty = <span data-count="500">n</span>ew_global_var ~name:"_" () in
+        <span data-count="500">{</span> ctyp_desc = Ttyp_any; ctyp_type = ty; ctyp_env = env;
           ctyp_loc = loc; ctyp_attributes = styp.ptyp_attributes; }
-  | <span data-count="936">P</span>typ_var name -&gt;
+  | <span data-count="1102">P</span>typ_var name -&gt;
       let ty =
-        <span data-count="936">t</span>ry
+        <span data-count="1102">t</span>ry
           if not (valid_tyvar_name name) then
-            <span data-count="2">r</span>aise (Error (loc, Env.empty, Invalid_variable_name ("'" ^ name)));
-          <span data-count="934">i</span>gnore (TyVarMap.find name !type_variables);
+            <span data-count="4">r</span>aise (Error (loc, Env.empty, Invalid_variable_name ("'" ^ name)));
+          <span data-count="1098">i</span>gnore (TyVarMap.find name !type_variables);
           <span data-count="0">r</span>aise Already_bound
-        with <span data-count="934">N</span>ot_found -&gt;
-          let v = <span data-count="934">n</span>ew_global_var ~name () in
-            <span data-count="934">t</span>ype_variables := TyVarMap.add name v !type_variables;
-            <span data-count="934">v</span>
+        with <span data-count="1098">N</span>ot_found -&gt;
+          let v = <span data-count="1098">n</span>ew_global_var ~name () in
+            <span data-count="1098">t</span>ype_variables := TyVarMap.add name v !type_variables;
+            <span data-count="1098">v</span>
       in
-        <span data-count="934">{</span> ctyp_desc = Ttyp_var name; ctyp_type = ty; ctyp_env = env;
+        <span data-count="1098">{</span> ctyp_desc = Ttyp_var name; ctyp_type = ty; ctyp_env = env;
           ctyp_loc = loc; ctyp_attributes = styp.ptyp_attributes; }
   | _ -&gt; assert false
 
 let transl_type_param env styp =
   (* Currently useless, since type parameters cannot hold attributes
      (but this could easily be lifted in the future). *)
-  <span data-count="1428">B</span>uiltin_attributes.warning_scope styp.ptyp_attributes
-    (fun () -&gt; <span data-count="1428">t</span>ransl_type_param env styp)
+  <span data-count="1602">B</span>uiltin_attributes.warning_scope styp.ptyp_attributes
+    (fun () -&gt; <span data-count="1602">t</span>ransl_type_param env styp)
 
 
 let new_pre_univar ?name () =
@@ -2581,94 +2578,94 @@ let new_pre_univar ?name () =
 type policy = Fixed | Extensible | Univars
 
 let rec transl_type env policy styp =
-  <span data-count="27833">B</span>uiltin_attributes.warning_scope styp.ptyp_attributes
-    (fun () -&gt; <span data-count="27833">t</span>ransl_type_aux env policy styp)
+  <span data-count="30887">B</span>uiltin_attributes.warning_scope styp.ptyp_attributes
+    (fun () -&gt; <span data-count="30887">t</span>ransl_type_aux env policy styp)
 
 and transl_type_aux env policy styp =
-  <span data-count="27833">l</span>et loc = <span data-count="27833">s</span>typ.ptyp_loc in
-  <span data-count="27833">l</span>et ctyp ctyp_desc ctyp_type =
-    <span data-count="27750">{</span> ctyp_desc; ctyp_type; ctyp_env = env;
+  <span data-count="30887">l</span>et loc = <span data-count="30887">s</span>typ.ptyp_loc in
+  <span data-count="30887">l</span>et ctyp ctyp_desc ctyp_type =
+    <span data-count="30792">{</span> ctyp_desc; ctyp_type; ctyp_env = env;
       ctyp_loc = loc; ctyp_attributes = styp.ptyp_attributes }
   in
-  <span data-count="27833">m</span>atch styp.ptyp_desc with
-    <span data-count="429">P</span>typ_any -&gt;
+  <span data-count="30887">m</span>atch styp.ptyp_desc with
+    <span data-count="505">P</span>typ_any -&gt;
       let ty =
-        <span data-count="429">i</span>f policy = Univars then <span data-count="0">n</span>ew_pre_univar () else
-          <span data-count="429">i</span>f policy = Fixed then
+        <span data-count="505">i</span>f policy = Univars then <span data-count="0">n</span>ew_pre_univar () else
+          <span data-count="505">i</span>f policy = Fixed then
             <span data-count="0">r</span>aise (Error (styp.ptyp_loc, env, Unbound_type_variable "_"))
-          else <span data-count="429">n</span>ewvar ()
+          else <span data-count="505">n</span>ewvar ()
       in
-      <span data-count="429">c</span>typ Ttyp_any ty
-  | <span data-count="5430">P</span>typ_var name -&gt;
+      <span data-count="505">c</span>typ Ttyp_any ty
+  | <span data-count="6429">P</span>typ_var name -&gt;
     let ty =
-      <span data-count="5430">i</span>f not (valid_tyvar_name name) then
+      <span data-count="6429">i</span>f not (valid_tyvar_name name) then
         <span data-count="0">r</span>aise (Error (styp.ptyp_loc, env, Invalid_variable_name ("'" ^ name)));
-      <span data-count="5430">b</span>egin try
+      <span data-count="6429">b</span>egin try
         instance (List.assoc name !univars)
-      with <span data-count="3895">N</span>ot_found -&gt; try
+      with <span data-count="4868">N</span>ot_found -&gt; try
         instance (fst (TyVarMap.find name !used_variables))
-      with <span data-count="3298">N</span>ot_found -&gt;
+      with <span data-count="4215">N</span>ot_found -&gt;
         let v =
-          <span data-count="3298">i</span>f policy = Univars then <span data-count="55">n</span>ew_pre_univar ~name () else <span data-count="3243">n</span>ewvar ~name ()
+          <span data-count="4215">i</span>f policy = Univars then <span data-count="55">n</span>ew_pre_univar ~name () else <span data-count="4160">n</span>ewvar ~name ()
         in
-        <span data-count="3298">u</span>sed_variables := TyVarMap.add name (v, styp.ptyp_loc) !used_variables;
-        <span data-count="3298">v</span>
+        <span data-count="4215">u</span>sed_variables := TyVarMap.add name (v, styp.ptyp_loc) !used_variables;
+        <span data-count="4215">v</span>
       end
     in
-    <span data-count="5430">c</span>typ (Ttyp_var name) ty
-  | <span data-count="3536">P</span>typ_arrow(l, st1, st2) -&gt;
-    let cty1 = <span data-count="3536">t</span>ransl_type env policy st1 in
-    <span data-count="3536">l</span>et cty2 = <span data-count="3536">t</span>ransl_type env policy st2 in
-    <span data-count="3534">l</span>et ty1 = <span data-count="3534">c</span>ty1.ctyp_type in
-    <span data-count="3534">l</span>et ty1 =
-      <span data-count="3534">i</span>f Btype.is_optional l
-      then <span data-count="13">n</span>ewty (Tconstr(Predef.path_option,[ty1], ref Mnil))
-      else <span data-count="3521">t</span>y1 in
-    <span data-count="3534">l</span>et ty = <span data-count="3534">n</span>ewty (Tarrow(l, ty1, cty2.ctyp_type, Cok)) in
-    <span data-count="3534">c</span>typ (Ttyp_arrow (l, cty1, cty2)) ty
-  | <span data-count="497">P</span>typ_tuple stl -&gt;
+    <span data-count="6429">c</span>typ (Ttyp_var name) ty
+  | <span data-count="3761">P</span>typ_arrow(l, st1, st2) -&gt;
+    let cty1 = <span data-count="3761">t</span>ransl_type env policy st1 in
+    <span data-count="3761">l</span>et cty2 = <span data-count="3761">t</span>ransl_type env policy st2 in
+    <span data-count="3759">l</span>et ty1 = <span data-count="3759">c</span>ty1.ctyp_type in
+    <span data-count="3759">l</span>et ty1 =
+      <span data-count="3759">i</span>f Btype.is_optional l
+      then <span data-count="16">n</span>ewty (Tconstr(Predef.path_option,[ty1], ref Mnil))
+      else <span data-count="3743">t</span>y1 in
+    <span data-count="3759">l</span>et ty = <span data-count="3759">n</span>ewty (Tarrow(l, ty1, cty2.ctyp_type, Cok)) in
+    <span data-count="3759">c</span>typ (Ttyp_arrow (l, cty1, cty2)) ty
+  | <span data-count="529">P</span>typ_tuple stl -&gt;
     assert (List.length stl &gt;= 2);
-    <span data-count="497">l</span>et ctys = <span data-count="497">L</span>ist.map (transl_type env policy) stl in
-    <span data-count="493">l</span>et ty = <span data-count="493">n</span>ewty (Ttuple (List.map (fun ctyp -&gt; <span data-count="1033">c</span>typ.ctyp_type) ctys)) in
-    <span data-count="493">c</span>typ (Ttyp_tuple ctys) ty
-  | <span data-count="14595">P</span>typ_constr(lid, stl) -&gt;
-      let (path, decl) = <span data-count="14595">f</span>ind_type env lid.loc lid.txt in
-      <span data-count="14567">l</span>et stl =
-        <span data-count="14567">m</span>atch stl with
-        | <span data-count="0">[</span> {ptyp_desc=Ptyp_any} as t ] when <span data-count="44">d</span>ecl.type_arity &gt; 1 -&gt;
-            List.map (fun _ -&gt; <span data-count="0">t</span>) decl.type_params
-        | <span data-count="14567">_</span> -&gt; stl
+    <span data-count="529">l</span>et ctys = <span data-count="529">L</span>ist.map (transl_type env policy) stl in
+    <span data-count="523">l</span>et ty = <span data-count="523">n</span>ewty (Ttuple (List.map (fun ctyp -&gt; <span data-count="1093">c</span>typ.ctyp_type) ctys)) in
+    <span data-count="523">c</span>typ (Ttyp_tuple ctys) ty
+  | <span data-count="15895">P</span>typ_constr(lid, stl) -&gt;
+      let (path, decl) = <span data-count="15895">f</span>ind_type env lid.loc lid.txt in
+      <span data-count="15867">l</span>et stl =
+        <span data-count="15867">m</span>atch stl with
+        | <span data-count="2">[</span> {ptyp_desc=Ptyp_any} as t ] when <span data-count="54">d</span>ecl.type_arity &gt; 1 -&gt;
+            List.map (fun _ -&gt; <span data-count="12">t</span>) decl.type_params
+        | <span data-count="15865">_</span> -&gt; stl
       in
-      <span data-count="14567">i</span>f List.length stl &lt;&gt; decl.type_arity then
+      <span data-count="15867">i</span>f List.length stl &lt;&gt; decl.type_arity then
         <span data-count="0">r</span>aise(Error(styp.ptyp_loc, env,
                     Type_arity_mismatch(lid.txt, decl.type_arity,
                                         List.length stl)));
-      <span data-count="14567">l</span>et args = <span data-count="14567">L</span>ist.map (transl_type env policy) stl in
-      <span data-count="14567">l</span>et params = <span data-count="14567">i</span>nstance_list decl.type_params in
-      <span data-count="14567">l</span>et unify_param =
-        <span data-count="14567">m</span>atch decl.type_manifest with
-          <span data-count="13027">N</span>one -&gt; unify_var
-        | <span data-count="1540">S</span>ome ty -&gt;
-            if (repr ty).level = Btype.generic_level then <span data-count="1349">u</span>nify_var else <span data-count="191">u</span>nify
+      <span data-count="15867">l</span>et args = <span data-count="15867">L</span>ist.map (transl_type env policy) stl in
+      <span data-count="15867">l</span>et params = <span data-count="15867">i</span>nstance_list decl.type_params in
+      <span data-count="15867">l</span>et unify_param =
+        <span data-count="15867">m</span>atch decl.type_manifest with
+          <span data-count="14128">N</span>one -&gt; unify_var
+        | <span data-count="1739">S</span>ome ty -&gt;
+            if (repr ty).level = Btype.generic_level then <span data-count="1500">u</span>nify_var else <span data-count="239">u</span>nify
       in
-      <span data-count="14567">L</span>ist.iter2
+      <span data-count="15867">L</span>ist.iter2
         (fun (sty, cty) ty' -&gt;
-           <span data-count="6817">t</span>ry unify_param env ty' cty.ctyp_type with <span data-count="3">U</span>nify trace -&gt;
+           <span data-count="7223">t</span>ry unify_param env ty' cty.ctyp_type with <span data-count="3">U</span>nify trace -&gt;
              let trace = <span data-count="3">U</span>nification_trace.swap trace in
              <span data-count="3">r</span>aise (Error(sty.ptyp_loc, env, Type_mismatch trace))
         )
         (List.combine stl args) params;
-      <span data-count="14564">l</span>et constr =
-        <span data-count="14564">n</span>ewconstr path (List.map (fun ctyp -&gt; <span data-count="6814">c</span>typ.ctyp_type) args) in
-      <span data-count="14564">b</span>egin try
+      <span data-count="15864">l</span>et constr =
+        <span data-count="15864">n</span>ewconstr path (List.map (fun ctyp -&gt; <span data-count="7220">c</span>typ.ctyp_type) args) in
+      <span data-count="15864">b</span>egin try
         Ctype.enforce_constraints env constr
       with <span data-count="0">U</span>nify trace -&gt;
         raise (Error(styp.ptyp_loc, env, Type_mismatch trace))
       end;
-      <span data-count="14564">c</span>typ (Ttyp_constr (path, lid, args)) constr
-  | <span data-count="425">P</span>typ_object (fields, o) -&gt;
-      let ty, fields = <span data-count="425">t</span>ransl_fields env policy o fields in
-      <span data-count="409">c</span>typ (Ttyp_object (fields, o)) (newobj ty)
+      <span data-count="15864">c</span>typ (Ttyp_constr (path, lid, args)) constr
+  | <span data-count="435">P</span>typ_object (fields, o) -&gt;
+      let ty, fields = <span data-count="435">t</span>ransl_fields env policy o fields in
+      <span data-count="419">c</span>typ (Ttyp_object (fields, o)) (newobj ty)
   | <span data-count="103">P</span>typ_class(lid, stl) -&gt;
       let (path, decl, _is_variant) =
         <span data-count="103">t</span>ry
@@ -2751,197 +2748,197 @@ and transl_type_aux env policy styp =
           assert false
       in
       <span data-count="99">c</span>typ (Ttyp_class (path, lid, args)) ty
-  | <span data-count="220">P</span>typ_alias(st, alias) -&gt;
+  | <span data-count="254">P</span>typ_alias(st, alias) -&gt;
       let cty =
-        <span data-count="220">t</span>ry
+        <span data-count="254">t</span>ry
           let t =
-            <span data-count="220">t</span>ry List.assoc alias !univars
-            with <span data-count="140">N</span>ot_found -&gt;
+            <span data-count="254">t</span>ry List.assoc alias !univars
+            with <span data-count="166">N</span>ot_found -&gt;
               instance (fst(TyVarMap.find alias !used_variables))
           in
-          <span data-count="86">l</span>et ty = <span data-count="86">t</span>ransl_type env policy st in
-          <span data-count="86">b</span>egin try unify_var env t ty.ctyp_type with <span data-count="2">U</span>nify trace -&gt;
-            let trace = <span data-count="2">U</span>nification_trace.swap trace in
-            <span data-count="2">r</span>aise(Error(styp.ptyp_loc, env, Alias_type_mismatch trace))
+          <span data-count="96">l</span>et ty = <span data-count="96">t</span>ransl_type env policy st in
+          <span data-count="96">b</span>egin try unify_var env t ty.ctyp_type with <span data-count="4">U</span>nify trace -&gt;
+            let trace = <span data-count="4">U</span>nification_trace.swap trace in
+            <span data-count="4">r</span>aise(Error(styp.ptyp_loc, env, Alias_type_mismatch trace))
           end;
-          <span data-count="84">t</span>y
-        with <span data-count="134">N</span>ot_found -&gt;
-          if !Clflags.principal then <span data-count="61">b</span>egin_def ();
-          <span data-count="134">l</span>et t = <span data-count="134">n</span>ewvar () in
-          <span data-count="134">u</span>sed_variables :=
+          <span data-count="92">t</span>y
+        with <span data-count="158">N</span>ot_found -&gt;
+          if !Clflags.principal then <span data-count="73">b</span>egin_def ();
+          <span data-count="158">l</span>et t = <span data-count="158">n</span>ewvar () in
+          <span data-count="158">u</span>sed_variables :=
             TyVarMap.add alias (t, styp.ptyp_loc) !used_variables;
-          <span data-count="134">l</span>et ty = <span data-count="134">t</span>ransl_type env policy st in
-          <span data-count="134">b</span>egin try unify_var env t ty.ctyp_type with <span data-count="3">U</span>nify trace -&gt;
+          <span data-count="158">l</span>et ty = <span data-count="158">t</span>ransl_type env policy st in
+          <span data-count="158">b</span>egin try unify_var env t ty.ctyp_type with <span data-count="3">U</span>nify trace -&gt;
             let trace = <span data-count="3">U</span>nification_trace.swap trace in
             <span data-count="3">r</span>aise(Error(styp.ptyp_loc, env, Alias_type_mismatch trace))
           end;
-          <span data-count="131">i</span>f !Clflags.principal then <span data-count="60">b</span>egin
+          <span data-count="155">i</span>f !Clflags.principal then <span data-count="72">b</span>egin
             end_def ();
-            <span data-count="60">g</span>eneralize_structure t;
+            <span data-count="72">g</span>eneralize_structure t;
           end;
-          <span data-count="131">l</span>et t = <span data-count="131">i</span>nstance t in
-          <span data-count="131">l</span>et px = <span data-count="131">B</span>type.proxy t in
-          <span data-count="131">b</span>egin match px.desc with
-          | <span data-count="42">T</span>var None -&gt; Btype.log_type px; <span data-count="42">p</span>x.desc &lt;- Tvar (Some alias)
+          <span data-count="155">l</span>et t = <span data-count="155">i</span>nstance t in
+          <span data-count="155">l</span>et px = <span data-count="155">B</span>type.proxy t in
+          <span data-count="155">b</span>egin match px.desc with
+          | <span data-count="56">T</span>var None -&gt; Btype.log_type px; <span data-count="56">p</span>x.desc &lt;- Tvar (Some alias)
           | <span data-count="0">T</span>univar None -&gt; Btype.log_type px; <span data-count="0">p</span>x.desc &lt;- Tunivar (Some alias)
-          | <span data-count="89">_</span> -&gt; ()
+          | <span data-count="99">_</span> -&gt; ()
           end;
-          <span data-count="131">{</span> ty with ctyp_type = t }
+          <span data-count="155">{</span> ty with ctyp_type = t }
       in
-      <span data-count="215">c</span>typ (Ttyp_alias (cty, alias)) cty.ctyp_type
-  | <span data-count="557">P</span>typ_variant(fields, closed, present) -&gt;
-      let name = <span data-count="557">r</span>ef None in
-      <span data-count="557">l</span>et mkfield l f =
-        <span data-count="4">n</span>ewty (Tvariant {row_fields=[l,f]; row_more=newvar();
+      <span data-count="247">c</span>typ (Ttyp_alias (cty, alias)) cty.ctyp_type
+  | <span data-count="710">P</span>typ_variant(fields, closed, present) -&gt;
+      let name = <span data-count="710">r</span>ef None in
+      <span data-count="710">l</span>et mkfield l f =
+        <span data-count="20">n</span>ewty (Tvariant {row_fields=[l,f]; row_more=newvar();
                          row_bound=(); row_closed=true;
                          row_fixed=false; row_name=None}) in
-      <span data-count="557">l</span>et hfields = <span data-count="557">H</span>ashtbl.create 17 in
-      <span data-count="557">l</span>et add_typed_field loc l f =
-        <span data-count="1007">l</span>et h = <span data-count="1007">B</span>type.hash_variant l in
-        <span data-count="1007">t</span>ry
-          let (l',f') = <span data-count="1007">H</span>ashtbl.find hfields h in
+      <span data-count="710">l</span>et hfields = <span data-count="710">H</span>ashtbl.create 17 in
+      <span data-count="710">l</span>et add_typed_field loc l f =
+        <span data-count="1202">l</span>et h = <span data-count="1202">B</span>type.hash_variant l in
+        <span data-count="1202">t</span>ry
+          let (l',f') = <span data-count="1202">H</span>ashtbl.find hfields h in
           (* Check for tag conflicts *)
-          <span data-count="2">i</span>f l &lt;&gt; l' then <span data-count="0">r</span>aise(Error(styp.ptyp_loc, env, Variant_tags(l, l')));
-          <span data-count="2">l</span>et ty = <span data-count="2">m</span>kfield l f and ty' = <span data-count="2">m</span>kfield l f' in
-          <span data-count="2">i</span>f equal env false [ty] [ty'] then <span data-count="2">(</span>) else
-          <span data-count="0">t</span>ry unify env ty ty'
+          <span data-count="10">i</span>f l &lt;&gt; l' then <span data-count="0">r</span>aise(Error(styp.ptyp_loc, env, Variant_tags(l, l')));
+          <span data-count="10">l</span>et ty = <span data-count="10">m</span>kfield l f and ty' = <span data-count="10">m</span>kfield l f' in
+          <span data-count="10">i</span>f equal env false [ty] [ty'] then <span data-count="2">(</span>) else
+          <span data-count="8">t</span>ry unify env ty ty'
           with <span data-count="0">U</span>nify _trace -&gt;
             raise(Error(loc, env, Constructor_mismatch (ty,ty')))
-        with <span data-count="1005">N</span>ot_found -&gt;
+        with <span data-count="1192">N</span>ot_found -&gt;
           Hashtbl.add hfields h (l,f)
       in
-      <span data-count="557">l</span>et add_field field =
-        <span data-count="852">l</span>et rf_loc = <span data-count="852">f</span>ield.prf_loc in
-        <span data-count="852">l</span>et rf_attributes = <span data-count="852">f</span>ield.prf_attributes in
-        <span data-count="852">l</span>et rf_desc = <span data-count="852">m</span>atch field.prf_desc with
-        | <span data-count="760">R</span>tag (l, c, stl) -&gt;
+      <span data-count="710">l</span>et add_field field =
+        <span data-count="1047">l</span>et rf_loc = <span data-count="1047">f</span>ield.prf_loc in
+        <span data-count="1047">l</span>et rf_attributes = <span data-count="1047">f</span>ield.prf_attributes in
+        <span data-count="1047">l</span>et rf_desc = <span data-count="1047">m</span>atch field.prf_desc with
+        | <span data-count="933">R</span>tag (l, c, stl) -&gt;
             name := None;
-            <span data-count="760">l</span>et tl =
-              <span data-count="760">B</span>uiltin_attributes.warning_scope rf_attributes
-                (fun () -&gt; <span data-count="760">L</span>ist.map (transl_type env policy) stl)
+            <span data-count="933">l</span>et tl =
+              <span data-count="933">B</span>uiltin_attributes.warning_scope rf_attributes
+                (fun () -&gt; <span data-count="933">L</span>ist.map (transl_type env policy) stl)
             in
-            <span data-count="758">l</span>et f = <span data-count="758">m</span>atch present with
-              <span data-count="166">S</span>ome present when <span data-count="176">n</span>ot (List.mem l.txt present) -&gt;
-                let ty_tl = <span data-count="166">L</span>ist.map (fun cty -&gt; <span data-count="100">c</span>ty.ctyp_type) tl in
-                <span data-count="166">R</span>either(c, ty_tl, false, ref None)
-            | <span data-count="592">_</span> -&gt;
-                if <span data-count="592">L</span>ist.length stl &gt; 1 || <span data-count="1184">c</span> &amp;&amp; <span data-count="296">s</span>tl &lt;&gt; [] then
+            <span data-count="931">l</span>et f = <span data-count="931">m</span>atch present with
+              <span data-count="186">S</span>ome present when <span data-count="198">n</span>ot (List.mem l.txt present) -&gt;
+                let ty_tl = <span data-count="186">L</span>ist.map (fun cty -&gt; <span data-count="108">c</span>ty.ctyp_type) tl in
+                <span data-count="186">R</span>either(c, ty_tl, false, ref None)
+            | <span data-count="745">_</span> -&gt;
+                if <span data-count="745">L</span>ist.length stl &gt; 1 || <span data-count="1490">c</span> &amp;&amp; <span data-count="389">s</span>tl &lt;&gt; [] then
                   <span data-count="0">r</span>aise(Error(styp.ptyp_loc, env,
                               Present_has_conjunction l.txt));
-                <span data-count="592">m</span>atch tl with <span data-count="296">[</span>] -&gt; Rpresent None
-                | <span data-count="296">s</span>t :: _ -&gt;
+                <span data-count="745">m</span>atch tl with <span data-count="389">[</span>] -&gt; Rpresent None
+                | <span data-count="356">s</span>t :: _ -&gt;
                       Rpresent (Some st.ctyp_type)
             in
-            <span data-count="758">a</span>dd_typed_field styp.ptyp_loc l.txt f;
-              <span data-count="758">T</span>tag (l,c,tl)
-        | <span data-count="92">R</span>inherit sty -&gt;
-            let cty = <span data-count="92">t</span>ransl_type env policy sty in
-            <span data-count="92">l</span>et ty = <span data-count="92">c</span>ty.ctyp_type in
-            <span data-count="92">l</span>et nm =
-              <span data-count="92">m</span>atch repr cty.ctyp_type with
-                <span data-count="84">{</span>desc=Tconstr(p, tl, _)} -&gt; Some(p, tl)
-              | <span data-count="8">_</span>                        -&gt; None
+            <span data-count="931">a</span>dd_typed_field styp.ptyp_loc l.txt f;
+              <span data-count="931">T</span>tag (l,c,tl)
+        | <span data-count="114">R</span>inherit sty -&gt;
+            let cty = <span data-count="114">t</span>ransl_type env policy sty in
+            <span data-count="114">l</span>et ty = <span data-count="114">c</span>ty.ctyp_type in
+            <span data-count="114">l</span>et nm =
+              <span data-count="114">m</span>atch repr cty.ctyp_type with
+                <span data-count="98">{</span>desc=Tconstr(p, tl, _)} -&gt; Some(p, tl)
+              | <span data-count="16">_</span>                        -&gt; None
             in
-            <span data-count="92">b</span>egin try
+            <span data-count="114">b</span>egin try
               (* Set name if there are no fields yet *)
-              Hashtbl.iter (fun _ _ -&gt; <span data-count="9">r</span>aise Exit) hfields;
-              <span data-count="83">n</span>ame := nm
-            with <span data-count="9">E</span>xit -&gt;
+              Hashtbl.iter (fun _ _ -&gt; <span data-count="15">r</span>aise Exit) hfields;
+              <span data-count="99">n</span>ame := nm
+            with <span data-count="15">E</span>xit -&gt;
               (* Unset it otherwise *)
               name := None
             end;
-            <span data-count="92">l</span>et fl = <span data-count="92">m</span>atch expand_head env cty.ctyp_type, nm with
-              <span data-count="88">{</span>desc=Tvariant row}, _ when <span data-count="88">B</span>type.static_row row -&gt;
-                let row = <span data-count="88">B</span>type.row_repr row in
-                <span data-count="88">r</span>ow.row_fields
+            <span data-count="114">l</span>et fl = <span data-count="114">m</span>atch expand_head env cty.ctyp_type, nm with
+              <span data-count="106">{</span>desc=Tvariant row}, _ when <span data-count="106">B</span>type.static_row row -&gt;
+                let row = <span data-count="106">B</span>type.row_repr row in
+                <span data-count="106">r</span>ow.row_fields
             | <span data-count="0">{</span>desc=Tvar _}, Some(p, _) -&gt;
                 raise(Error(sty.ptyp_loc, env, Unbound_type_constructor_2 p))
-            | <span data-count="4">_</span> -&gt;
+            | <span data-count="8">_</span> -&gt;
                 raise(Error(sty.ptyp_loc, env, Not_a_variant ty))
             in
-            <span data-count="88">L</span>ist.iter
+            <span data-count="106">L</span>ist.iter
               (fun (l, f) -&gt;
-                <span data-count="249">l</span>et f = <span data-count="249">m</span>atch present with
-                  <span data-count="140">S</span>ome present when <span data-count="158">n</span>ot (List.mem l present) -&gt;
+                <span data-count="271">l</span>et f = <span data-count="271">m</span>atch present with
+                  <span data-count="150">S</span>ome present when <span data-count="168">n</span>ot (List.mem l present) -&gt;
                     begin match f with
-                      <span data-count="10">R</span>present(Some ty) -&gt;
+                      <span data-count="14">R</span>present(Some ty) -&gt;
                         Reither(false, [ty], false, ref None)
-                    | <span data-count="130">R</span>present None -&gt;
+                    | <span data-count="136">R</span>present None -&gt;
                         Reither(true, [], false, ref None)
                     | _ -&gt;
                         assert false
                     end
-                | <span data-count="109">_</span> -&gt; f
+                | <span data-count="121">_</span> -&gt; f
                 in
-                <span data-count="249">a</span>dd_typed_field sty.ptyp_loc l f)
+                <span data-count="271">a</span>dd_typed_field sty.ptyp_loc l f)
               fl;
-              <span data-count="88">T</span>inherit cty
+              <span data-count="106">T</span>inherit cty
         in
-        <span data-count="846">{</span> rf_desc; rf_loc; rf_attributes; }
+        <span data-count="1037">{</span> rf_desc; rf_loc; rf_attributes; }
       in
-      <span data-count="557">l</span>et tfields = <span data-count="557">L</span>ist.map add_field fields in
-      <span data-count="551">l</span>et fields = <span data-count="551">H</span>ashtbl.fold (fun _ p l -&gt; <span data-count="1005">p</span> :: l) hfields [] in
-      <span data-count="551">b</span>egin match present with <span data-count="398">N</span>one -&gt; ()
-      | <span data-count="153">S</span>ome present -&gt;
+      <span data-count="710">l</span>et tfields = <span data-count="710">L</span>ist.map add_field fields in
+      <span data-count="700">l</span>et fields = <span data-count="700">H</span>ashtbl.fold (fun _ p l -&gt; <span data-count="1192">p</span> :: l) hfields [] in
+      <span data-count="700">b</span>egin match present with <span data-count="523">N</span>one -&gt; ()
+      | <span data-count="177">S</span>ome present -&gt;
           List.iter
-            (fun l -&gt; <span data-count="30">i</span>f not (List.mem_assoc l fields) then
-              <span data-count="2">r</span>aise(Error(styp.ptyp_loc, env, Present_has_no_type l)))
+            (fun l -&gt; <span data-count="34">i</span>f not (List.mem_assoc l fields) then
+              <span data-count="4">r</span>aise(Error(styp.ptyp_loc, env, Present_has_no_type l)))
             present
       end;
-      <span data-count="549">l</span>et row =
-        <span data-count="549">{</span> row_fields = List.rev fields; row_more = newvar ();
+      <span data-count="696">l</span>et row =
+        <span data-count="696">{</span> row_fields = List.rev fields; row_more = newvar ();
           row_bound = (); row_closed = (closed = Closed);
           row_fixed = false; row_name = !name } in
-      <span data-count="549">l</span>et static = <span data-count="549">B</span>type.static_row row in
-      <span data-count="549">l</span>et row =
-        <span data-count="549">i</span>f static then <span data-count="289">{</span> row with row_more = newty Tnil }
-        else <span data-count="260">i</span>f policy &lt;&gt; Univars then <span data-count="258">r</span>ow
+      <span data-count="696">l</span>et static = <span data-count="696">B</span>type.static_row row in
+      <span data-count="696">l</span>et row =
+        <span data-count="696">i</span>f static then <span data-count="376">{</span> row with row_more = newty Tnil }
+        else <span data-count="320">i</span>f policy &lt;&gt; Univars then <span data-count="318">r</span>ow
         else <span data-count="2">{</span> row with row_more = new_pre_univar () }
       in
-      <span data-count="549">l</span>et ty = <span data-count="549">n</span>ewty (Tvariant row) in
-      <span data-count="549">c</span>typ (Ttyp_variant (tfields, closed, present)) ty
-  | <span data-count="1921">P</span>typ_poly(vars, st) -&gt;
-      let vars = <span data-count="1921">L</span>ist.map (fun v -&gt; <span data-count="861">v</span>.txt) vars in
-      <span data-count="1921">b</span>egin_def();
-      <span data-count="1921">l</span>et new_univars = <span data-count="1921">L</span>ist.map (fun name -&gt; <span data-count="861">n</span>ame, newvar ~name ()) vars in
-      <span data-count="1921">l</span>et old_univars = <span data-count="1921">!</span>univars in
-      <span data-count="1921">u</span>nivars := new_univars @ !univars;
-      <span data-count="1921">l</span>et cty = <span data-count="1921">t</span>ransl_type env policy st in
-      <span data-count="1919">l</span>et ty = <span data-count="1919">c</span>ty.ctyp_type in
-      <span data-count="1919">u</span>nivars := old_univars;
-      <span data-count="1919">e</span>nd_def();
-      <span data-count="1919">g</span>eneralize ty;
-      <span data-count="1919">l</span>et ty_list =
-        <span data-count="1919">L</span>ist.fold_left
+      <span data-count="696">l</span>et ty = <span data-count="696">n</span>ewty (Tvariant row) in
+      <span data-count="696">c</span>typ (Ttyp_variant (tfields, closed, present)) ty
+  | <span data-count="2138">P</span>typ_poly(vars, st) -&gt;
+      let vars = <span data-count="2138">L</span>ist.map (fun v -&gt; <span data-count="885">v</span>.txt) vars in
+      <span data-count="2138">b</span>egin_def();
+      <span data-count="2138">l</span>et new_univars = <span data-count="2138">L</span>ist.map (fun name -&gt; <span data-count="885">n</span>ame, newvar ~name ()) vars in
+      <span data-count="2138">l</span>et old_univars = <span data-count="2138">!</span>univars in
+      <span data-count="2138">u</span>nivars := new_univars @ !univars;
+      <span data-count="2138">l</span>et cty = <span data-count="2138">t</span>ransl_type env policy st in
+      <span data-count="2134">l</span>et ty = <span data-count="2134">c</span>ty.ctyp_type in
+      <span data-count="2134">u</span>nivars := old_univars;
+      <span data-count="2134">e</span>nd_def();
+      <span data-count="2134">g</span>eneralize ty;
+      <span data-count="2134">l</span>et ty_list =
+        <span data-count="2134">L</span>ist.fold_left
           (fun tyl (name, ty1) -&gt;
-            <span data-count="861">l</span>et v = <span data-count="861">B</span>type.proxy ty1 in
-            <span data-count="861">i</span>f deep_occur v ty then <span data-count="853">b</span>egin
+            <span data-count="885">l</span>et v = <span data-count="885">B</span>type.proxy ty1 in
+            <span data-count="885">i</span>f deep_occur v ty then <span data-count="877">b</span>egin
               match v.desc with
-                <span data-count="843">T</span>var name when <span data-count="847">v</span>.level = Btype.generic_level -&gt;
+                <span data-count="867">T</span>var name when <span data-count="871">v</span>.level = Btype.generic_level -&gt;
                   v.desc &lt;- Tunivar name;
-                  <span data-count="843">v</span> :: tyl
+                  <span data-count="867">v</span> :: tyl
               | <span data-count="10">_</span> -&gt;
                 raise (Error (styp.ptyp_loc, env, Cannot_quantify (name, v)))
             end else <span data-count="8">t</span>yl)
           [] new_univars
       in
-      <span data-count="1909">l</span>et ty' = <span data-count="1909">B</span>type.newgenty (Tpoly(ty, List.rev ty_list)) in
-      <span data-count="1909">u</span>nify_var env (newvar()) ty';
-      <span data-count="1909">c</span>typ (Ttyp_poly (vars, cty)) ty'
-  | <span data-count="120">P</span>typ_package (p, l) -&gt;
-      let l, mty = <span data-count="120">c</span>reate_package_mty true styp.ptyp_loc env (p, l) in
-      <span data-count="120">l</span>et z = <span data-count="120">n</span>arrow () in
-      <span data-count="120">l</span>et mty = <span data-count="120">!</span>transl_modtype env mty in
-      <span data-count="119">w</span>iden z;
-      <span data-count="119">l</span>et ptys = <span data-count="119">L</span>ist.map (fun (s, pty) -&gt;
+      <span data-count="2124">l</span>et ty' = <span data-count="2124">B</span>type.newgenty (Tpoly(ty, List.rev ty_list)) in
+      <span data-count="2124">u</span>nify_var env (newvar()) ty';
+      <span data-count="2124">c</span>typ (Ttyp_poly (vars, cty)) ty'
+  | <span data-count="128">P</span>typ_package (p, l) -&gt;
+      let l, mty = <span data-count="128">c</span>reate_package_mty true styp.ptyp_loc env (p, l) in
+      <span data-count="128">l</span>et z = <span data-count="128">n</span>arrow () in
+      <span data-count="128">l</span>et mty = <span data-count="128">!</span>transl_modtype env mty in
+      <span data-count="127">w</span>iden z;
+      <span data-count="127">l</span>et ptys = <span data-count="127">L</span>ist.map (fun (s, pty) -&gt;
                              <span data-count="42">s</span>, transl_type env policy pty
                           ) l in
-      <span data-count="119">l</span>et path = <span data-count="119">!</span>transl_modtype_longident styp.ptyp_loc env p.txt in
-      <span data-count="119">l</span>et ty = <span data-count="119">n</span>ewty (Tpackage (path,
+      <span data-count="127">l</span>et path = <span data-count="127">!</span>transl_modtype_longident styp.ptyp_loc env p.txt in
+      <span data-count="127">l</span>et ty = <span data-count="127">n</span>ewty (Tpackage (path,
                        List.map (fun (s, _pty) -&gt; <span data-count="42">s</span>.txt) l,
                        List.map (fun (_,cty) -&gt; <span data-count="42">c</span>ty.ctyp_type) ptys))
       in
-      <span data-count="119">c</span>typ (Ttyp_package {
+      <span data-count="127">c</span>typ (Ttyp_package {
             pack_path = path;
             pack_type = mty.mty_type;
             pack_fields = ptys;
@@ -2951,31 +2948,31 @@ and transl_type_aux env policy styp =
       raise (Error_forward (Builtin_attributes.error_of_extension ext))
 
 and transl_poly_type env policy t =
-  <span data-count="450">t</span>ransl_type env policy (Ast_helper.Typ.force_poly t)
+  <span data-count="452">t</span>ransl_type env policy (Ast_helper.Typ.force_poly t)
 
 and transl_fields env policy o fields =
-  <span data-count="425">l</span>et hfields = <span data-count="425">H</span>ashtbl.create 17 in
-  <span data-count="425">l</span>et add_typed_field loc l ty =
-    <span data-count="474">t</span>ry
-      let ty' = <span data-count="474">H</span>ashtbl.find hfields l in
+  <span data-count="435">l</span>et hfields = <span data-count="435">H</span>ashtbl.create 17 in
+  <span data-count="435">l</span>et add_typed_field loc l ty =
+    <span data-count="476">t</span>ry
+      let ty' = <span data-count="476">H</span>ashtbl.find hfields l in
       <span data-count="12">i</span>f equal env false [ty] [ty'] then <span data-count="4">(</span>) else
         <span data-count="8">t</span>ry unify env ty ty'
         with <span data-count="4">U</span>nify _trace -&gt;
           raise(Error(loc, env, Method_mismatch (l, ty, ty')))
-    with <span data-count="462">N</span>ot_found -&gt;
+    with <span data-count="464">N</span>ot_found -&gt;
       Hashtbl.add hfields l ty in
-  <span data-count="425">l</span>et add_field {pof_desc; pof_loc; pof_attributes;} =
-    <span data-count="490">l</span>et of_loc = <span data-count="490">p</span>of_loc in
-    <span data-count="490">l</span>et of_attributes = <span data-count="490">p</span>of_attributes in
-    <span data-count="490">l</span>et of_desc = <span data-count="490">m</span>atch pof_desc with
-    | <span data-count="450">O</span>tag (s, ty1) -&gt; begin
+  <span data-count="435">l</span>et add_field {pof_desc; pof_loc; pof_attributes;} =
+    <span data-count="492">l</span>et of_loc = <span data-count="492">p</span>of_loc in
+    <span data-count="492">l</span>et of_attributes = <span data-count="492">p</span>of_attributes in
+    <span data-count="492">l</span>et of_desc = <span data-count="492">m</span>atch pof_desc with
+    | <span data-count="452">O</span>tag (s, ty1) -&gt; begin
         let ty1 =
-          <span data-count="450">B</span>uiltin_attributes.warning_scope of_attributes
-            (fun () -&gt; <span data-count="450">t</span>ransl_poly_type env policy ty1)
+          <span data-count="452">B</span>uiltin_attributes.warning_scope of_attributes
+            (fun () -&gt; <span data-count="452">t</span>ransl_poly_type env policy ty1)
         in
-        <span data-count="444">l</span>et field = <span data-count="444">O</span>Ttag (s, ty1) in
-        <span data-count="444">a</span>dd_typed_field ty1.ctyp_loc s.txt ty1.ctyp_type;
-        <span data-count="442">f</span>ield
+        <span data-count="446">l</span>et field = <span data-count="446">O</span>Ttag (s, ty1) in
+        <span data-count="446">a</span>dd_typed_field ty1.ctyp_loc s.txt ty1.ctyp_type;
+        <span data-count="444">f</span>ield
       end
     | <span data-count="40">O</span>inherit sty -&gt; begin
         let cty = <span data-count="40">t</span>ransl_type env policy sty in
@@ -3002,95 +2999,95 @@ and transl_fields env policy o fields =
             raise (Error (sty.ptyp_loc, env, Unbound_type_constructor_2 p))
         | <span data-count="2">_</span> -&gt; raise (Error (sty.ptyp_loc, env, Not_an_object t))
       end in
-    <span data-count="474">{</span> of_desc; of_loc; of_attributes; }
+    <span data-count="476">{</span> of_desc; of_loc; of_attributes; }
   in
-  <span data-count="425">l</span>et object_fields = <span data-count="425">L</span>ist.map add_field fields in
-  <span data-count="409">l</span>et fields = <span data-count="409">H</span>ashtbl.fold (fun s ty l -&gt; <span data-count="456">(</span>s, ty) :: l) hfields [] in
-  <span data-count="409">l</span>et ty_init =
-     <span data-count="409">m</span>atch o, policy with
+  <span data-count="435">l</span>et object_fields = <span data-count="435">L</span>ist.map add_field fields in
+  <span data-count="419">l</span>et fields = <span data-count="419">H</span>ashtbl.fold (fun s ty l -&gt; <span data-count="458">(</span>s, ty) :: l) hfields [] in
+  <span data-count="419">l</span>et ty_init =
+     <span data-count="419">m</span>atch o, policy with
      | <span data-count="319">C</span>losed, _ -&gt; newty Tnil
      | <span data-count="0">O</span>pen, Univars -&gt; new_pre_univar ()
-     | <span data-count="90">O</span>pen, _ -&gt; newvar () in
-  <span data-count="409">l</span>et ty = <span data-count="409">L</span>ist.fold_left (fun ty (s, ty') -&gt;
-      <span data-count="456">n</span>ewty (Tfield (s, Fpresent, ty', ty))) ty_init fields in
-  <span data-count="409">t</span>y, object_fields
+     | <span data-count="100">O</span>pen, _ -&gt; newvar () in
+  <span data-count="419">l</span>et ty = <span data-count="419">L</span>ist.fold_left (fun ty (s, ty') -&gt;
+      <span data-count="458">n</span>ewty (Tfield (s, Fpresent, ty', ty))) ty_init fields in
+  <span data-count="419">t</span>y, object_fields
 
 
 (* Make the rows "fixed" in this type, to make universal check easier *)
 let rec make_fixed_univars ty =
-  let ty = <span data-count="31122">r</span>epr ty in
-  <span data-count="31122">i</span>f ty.level &gt;= Btype.lowest_level then <span data-count="28468">b</span>egin
+  let ty = <span data-count="34514">r</span>epr ty in
+  <span data-count="34514">i</span>f ty.level &gt;= Btype.lowest_level then <span data-count="31784">b</span>egin
     Btype.mark_type_node ty;
-    <span data-count="28468">m</span>atch ty.desc with
-    | <span data-count="598">T</span>variant row -&gt;
-        let row = <span data-count="598">B</span>type.row_repr row in
-        <span data-count="598">i</span>f Btype.is_Tunivar (Btype.row_more row) then
-          <span data-count="68">t</span>y.desc &lt;- Tvariant
+    <span data-count="31784">m</span>atch ty.desc with
+    | <span data-count="764">T</span>variant row -&gt;
+        let row = <span data-count="764">B</span>type.row_repr row in
+        <span data-count="764">i</span>f Btype.is_Tunivar (Btype.row_more row) then
+          <span data-count="84">t</span>y.desc &lt;- Tvariant
               {row with row_fixed=true;
                row_fields = List.map
-                 (fun (s,f as p) -&gt; <span data-count="100">m</span>atch Btype.row_field_repr f with
-                   <span data-count="66">R</span>either (c, tl, _m, r) -&gt; s, Reither (c, tl, true, r)
-                 | <span data-count="34">_</span> -&gt; p)
+                 (fun (s,f as p) -&gt; <span data-count="116">m</span>atch Btype.row_field_repr f with
+                   <span data-count="74">R</span>either (c, tl, _m, r) -&gt; s, Reither (c, tl, true, r)
+                 | <span data-count="42">_</span> -&gt; p)
                  row.row_fields};
-        <span data-count="598">B</span>type.iter_row make_fixed_univars row
-    | <span data-count="27870">_</span> -&gt;
+        <span data-count="764">B</span>type.iter_row make_fixed_univars row
+    | <span data-count="31020">_</span> -&gt;
         Btype.iter_type_expr make_fixed_univars ty
   end
 
 let make_fixed_univars ty =
   make_fixed_univars ty;
-  <span data-count="9603">B</span>type.unmark_type ty
+  <span data-count="11384">B</span>type.unmark_type ty
 
-let create_package_mty = <span data-count="1031">c</span>reate_package_mty false
+let create_package_mty = <span data-count="1170">c</span>reate_package_mty false
 
 let globalize_used_variables env fixed =
-  <span data-count="9605">l</span>et r = <span data-count="9605">r</span>ef [] in
-  <span data-count="9605">T</span>yVarMap.iter
+  <span data-count="11388">l</span>et r = <span data-count="11388">r</span>ef [] in
+  <span data-count="11388">T</span>yVarMap.iter
     (fun name (ty, loc) -&gt;
-      <span data-count="3412">l</span>et v = <span data-count="3412">n</span>ew_global_var () in
-      <span data-count="3412">l</span>et snap = <span data-count="3412">B</span>type.snapshot () in
-      <span data-count="3412">i</span>f try unify env v ty; <span data-count="3402">t</span>rue with <span data-count="10">_</span> -&gt; Btype.backtrack snap; <span data-count="10">f</span>alse
-      then <span data-count="3402">t</span>ry
+      <span data-count="4347">l</span>et v = <span data-count="4347">n</span>ew_global_var () in
+      <span data-count="4347">l</span>et snap = <span data-count="4347">B</span>type.snapshot () in
+      <span data-count="4347">i</span>f try unify env v ty; <span data-count="4337">t</span>rue with <span data-count="10">_</span> -&gt; Btype.backtrack snap; <span data-count="10">f</span>alse
+      then <span data-count="4337">t</span>ry
         r := (loc, v,  TyVarMap.find name !type_variables) :: !r
-      with <span data-count="1509">N</span>ot_found -&gt;
-        if <span data-count="1509">f</span>ixed &amp;&amp; <span data-count="21">B</span>type.is_Tvar (repr ty) then
-          <span data-count="2">r</span>aise(Error(loc, env, Unbound_type_variable ("'"^name)));
-        <span data-count="1507">l</span>et v2 = <span data-count="1507">n</span>ew_global_var () in
-        <span data-count="1507">r</span> := (loc, v, v2) :: !r;
-        <span data-count="1507">t</span>ype_variables := TyVarMap.add name v2 !type_variables)
+      with <span data-count="1687">N</span>ot_found -&gt;
+        if <span data-count="1687">f</span>ixed &amp;&amp; <span data-count="23">B</span>type.is_Tvar (repr ty) then
+          <span data-count="4">r</span>aise(Error(loc, env, Unbound_type_variable ("'"^name)));
+        <span data-count="1683">l</span>et v2 = <span data-count="1683">n</span>ew_global_var () in
+        <span data-count="1683">r</span> := (loc, v, v2) :: !r;
+        <span data-count="1683">t</span>ype_variables := TyVarMap.add name v2 !type_variables)
     !used_variables;
-  <span data-count="9603">u</span>sed_variables := TyVarMap.empty;
-  <span data-count="9603">f</span>un () -&gt;
-    <span data-count="9542">L</span>ist.iter
-      (function <span data-count="3399">(</span>loc, t1, t2) -&gt;
+  <span data-count="11384">u</span>sed_variables := TyVarMap.empty;
+  <span data-count="11384">f</span>un () -&gt;
+    <span data-count="11319">L</span>ist.iter
+      (function <span data-count="4332">(</span>loc, t1, t2) -&gt;
         try unify env t1 t2 with <span data-count="0">U</span>nify trace -&gt;
           raise (Error(loc, env, Type_mismatch trace)))
       !r
 
 let transl_simple_type env fixed styp =
-  <span data-count="7509">u</span>nivars := []; <span data-count="7509">u</span>sed_variables := TyVarMap.empty;
-  <span data-count="7509">l</span>et typ = <span data-count="7509">t</span>ransl_type env (if fixed then <span data-count="2590">F</span>ixed else <span data-count="4919">E</span>xtensible) styp in
-  <span data-count="7460">g</span>lobalize_used_variables env fixed ();
-  <span data-count="7458">m</span>ake_fixed_univars typ.ctyp_type;
-  <span data-count="7458">t</span>yp
+  <span data-count="9033">u</span>nivars := []; <span data-count="9033">u</span>sed_variables := TyVarMap.empty;
+  <span data-count="9033">l</span>et typ = <span data-count="9033">t</span>ransl_type env (if fixed then <span data-count="2950">F</span>ixed else <span data-count="6083">E</span>xtensible) styp in
+  <span data-count="8980">g</span>lobalize_used_variables env fixed ();
+  <span data-count="8976">m</span>ake_fixed_univars typ.ctyp_type;
+  <span data-count="8976">t</span>yp
 
 let transl_simple_type_univars env styp =
-  <span data-count="89">u</span>nivars := []; <span data-count="89">u</span>sed_variables := TyVarMap.empty; <span data-count="89">p</span>re_univars := [];
-  <span data-count="89">b</span>egin_def ();
-  <span data-count="89">l</span>et typ = <span data-count="89">t</span>ransl_type env Univars styp in
+  <span data-count="105">u</span>nivars := []; <span data-count="105">u</span>sed_variables := TyVarMap.empty; <span data-count="105">p</span>re_univars := [];
+  <span data-count="105">b</span>egin_def ();
+  <span data-count="105">l</span>et typ = <span data-count="105">t</span>ransl_type env Univars styp in
   (* Only keep already global variables in used_variables *)
-  <span data-count="89">l</span>et new_variables = <span data-count="89">!</span>used_variables in
-  <span data-count="89">u</span>sed_variables := TyVarMap.empty;
-  <span data-count="89">T</span>yVarMap.iter
+  <span data-count="105">l</span>et new_variables = <span data-count="105">!</span>used_variables in
+  <span data-count="105">u</span>sed_variables := TyVarMap.empty;
+  <span data-count="105">T</span>yVarMap.iter
     (fun name p -&gt;
       <span data-count="59">i</span>f TyVarMap.mem name !type_variables then
         <span data-count="52">u</span>sed_variables := TyVarMap.add name p !used_variables)
     new_variables;
-  <span data-count="89">g</span>lobalize_used_variables env false ();
-  <span data-count="89">e</span>nd_def ();
-  <span data-count="89">g</span>eneralize typ.ctyp_type;
-  <span data-count="89">l</span>et univs =
-    <span data-count="89">L</span>ist.fold_left
+  <span data-count="105">g</span>lobalize_used_variables env false ();
+  <span data-count="105">e</span>nd_def ();
+  <span data-count="105">g</span>eneralize typ.ctyp_type;
+  <span data-count="105">l</span>et univs =
+    <span data-count="105">L</span>ist.fold_left
       (fun acc v -&gt;
         <span data-count="61">l</span>et v = <span data-count="61">r</span>epr v in
         <span data-count="61">m</span>atch v.desc with
@@ -3099,23 +3096,23 @@ let transl_simple_type_univars env styp =
         | <span data-count="52">_</span> -&gt; acc)
       [] !pre_univars
   in
-  <span data-count="89">m</span>ake_fixed_univars typ.ctyp_type;
-    <span data-count="89">{</span> typ with ctyp_type =
+  <span data-count="105">m</span>ake_fixed_univars typ.ctyp_type;
+    <span data-count="105">{</span> typ with ctyp_type =
         instance (Btype.newgenty (Tpoly (typ.ctyp_type, univs))) }
 
 let transl_simple_type_delayed env styp =
-  <span data-count="2074">u</span>nivars := []; <span data-count="2074">u</span>sed_variables := TyVarMap.empty;
-  <span data-count="2074">l</span>et typ = <span data-count="2074">t</span>ransl_type env Extensible styp in
-  <span data-count="2056">m</span>ake_fixed_univars typ.ctyp_type;
-  <span data-count="2056">(</span>typ, globalize_used_variables env false)
+  <span data-count="2325">u</span>nivars := []; <span data-count="2325">u</span>sed_variables := TyVarMap.empty;
+  <span data-count="2325">l</span>et typ = <span data-count="2325">t</span>ransl_type env Extensible styp in
+  <span data-count="2303">m</span>ake_fixed_univars typ.ctyp_type;
+  <span data-count="2303">(</span>typ, globalize_used_variables env false)
 
 let transl_type_scheme env styp =
-  <span data-count="1121">r</span>eset_type_variables();
-  <span data-count="1121">b</span>egin_def();
-  <span data-count="1121">l</span>et typ = <span data-count="1121">t</span>ransl_simple_type env false styp in
-  <span data-count="1121">e</span>nd_def();
-  <span data-count="1121">g</span>eneralize typ.ctyp_type;
-  <span data-count="1121">t</span>yp
+  <span data-count="1186">r</span>eset_type_variables();
+  <span data-count="1186">b</span>egin_def();
+  <span data-count="1186">l</span>et typ = <span data-count="1186">t</span>ransl_simple_type env false styp in
+  <span data-count="1186">e</span>nd_def();
+  <span data-count="1186">g</span>eneralize typ.ctyp_type;
+  <span data-count="1186">t</span>yp
 
 
 (* Error report *)
@@ -3124,18 +3121,18 @@ open Format
 open Printtyp
 
 let spellcheck ppf fold env lid =
-  <span data-count="106">l</span>et choices ~path name =
-    <span data-count="106">l</span>et env = <span data-count="106">f</span>old (fun x xs -&gt; <span data-count="6244">x</span>::xs) path env [] in
-    <span data-count="106">M</span>isc.spellcheck env name in
-  <span data-count="106">m</span>atch lid with
+  <span data-count="151">l</span>et choices ~path name =
+    <span data-count="151">l</span>et env = <span data-count="151">f</span>old (fun x xs -&gt; <span data-count="7768">x</span>::xs) path env [] in
+    <span data-count="151">M</span>isc.spellcheck env name in
+  <span data-count="151">m</span>atch lid with
     | <span data-count="0">L</span>ongident.Lapply _ -&gt; ()
-    | <span data-count="101">L</span>ongident.Lident s -&gt;
-       Misc.did_you_mean ppf (fun () -&gt; <span data-count="101">c</span>hoices ~path:None s)
-    | <span data-count="5">L</span>ongident.Ldot (r, s) -&gt;
-       Misc.did_you_mean ppf (fun () -&gt; <span data-count="5">c</span>hoices ~path:(Some r) s)
+    | <span data-count="143">L</span>ongident.Lident s -&gt;
+       Misc.did_you_mean ppf (fun () -&gt; <span data-count="143">c</span>hoices ~path:None s)
+    | <span data-count="8">L</span>ongident.Ldot (r, s) -&gt;
+       Misc.did_you_mean ppf (fun () -&gt; <span data-count="8">c</span>hoices ~path:(Some r) s)
 
-let fold_descr fold get_name f = <span data-count="46">f</span>old (fun descr acc -&gt; <span data-count="1298">f</span> (get_name descr) acc)
-let fold_simple fold4 f = <span data-count="37">f</span>old4 (fun name _path _descr acc -&gt; <span data-count="1288">f</span> name acc)
+let fold_descr fold get_name f = <span data-count="84">f</span>old (fun descr acc -&gt; <span data-count="2200">f</span> (get_name descr) acc)
+let fold_simple fold4 f = <span data-count="41">f</span>old4 (fun name _path _descr acc -&gt; <span data-count="1516">f</span> name acc)
 
 let fold_values f =
   (* We only use "real" values while spellchecking (as opposed to "ghost"
@@ -3144,24 +3141,24 @@ let fold_values f =
      "unbound value x, did you mean x?" *)
   Env.fold_values
     (fun name _path descr acc -&gt;
-       <span data-count="3672">m</span>atch descr.val_kind with
-       | <span data-count="14">V</span>al_unbound _ -&gt; acc
-       | <span data-count="3658">_</span> -&gt; f name acc)
-let fold_types = <span data-count="1031">f</span>old_simple Env.fold_types
-let fold_modules = <span data-count="1031">f</span>old_simple Env.fold_modules
-let fold_constructors = <span data-count="1031">f</span>old_descr Env.fold_constructors (fun d -&gt; <span data-count="1268">d</span>.cstr_name)
-let fold_labels = <span data-count="1031">f</span>old_descr Env.fold_labels (fun d -&gt; <span data-count="30">d</span>.lbl_name)
-let fold_classes = <span data-count="1031">f</span>old_simple Env.fold_classes
-let fold_modtypes = <span data-count="1031">f</span>old_simple Env.fold_modtypes
-let fold_cltypes = <span data-count="1031">f</span>old_simple Env.fold_cltypes
+       <span data-count="4068">m</span>atch descr.val_kind with
+       | <span data-count="16">V</span>al_unbound _ -&gt; acc
+       | <span data-count="4052">_</span> -&gt; f name acc)
+let fold_types = <span data-count="1170">f</span>old_simple Env.fold_types
+let fold_modules = <span data-count="1170">f</span>old_simple Env.fold_modules
+let fold_constructors = <span data-count="1170">f</span>old_descr Env.fold_constructors (fun d -&gt; <span data-count="2140">d</span>.cstr_name)
+let fold_labels = <span data-count="1170">f</span>old_descr Env.fold_labels (fun d -&gt; <span data-count="60">d</span>.lbl_name)
+let fold_classes = <span data-count="1170">f</span>old_simple Env.fold_classes
+let fold_modtypes = <span data-count="1170">f</span>old_simple Env.fold_modtypes
+let fold_cltypes = <span data-count="1170">f</span>old_simple Env.fold_cltypes
 
-let report_error env ppf = <span data-count="164">f</span>unction
-  | <span data-count="2">U</span>nbound_type_variable name -&gt;
-      let add_name name _ l = <span data-count="8">i</span>f name = "_" then <span data-count="0">l</span> else <span data-count="8">(</span>"'" ^ name) :: l in
-      <span data-count="2">l</span>et names = <span data-count="2">T</span>yVarMap.fold add_name !type_variables [] in
-    <span data-count="2">f</span>printf ppf "The type variable %s is unbound in this type declaration.@ %a"
+let report_error env ppf = <span data-count="227">f</span>unction
+  | <span data-count="4">U</span>nbound_type_variable name -&gt;
+      let add_name name _ l = <span data-count="16">i</span>f name = "_" then <span data-count="0">l</span> else <span data-count="16">(</span>"'" ^ name) :: l in
+      <span data-count="4">l</span>et names = <span data-count="4">T</span>yVarMap.fold add_name !type_variables [] in
+    <span data-count="4">f</span>printf ppf "The type variable %s is unbound in this type declaration.@ %a"
       name
-      did_you_mean (fun () -&gt; <span data-count="2">M</span>isc.spellcheck names name )
+      did_you_mean (fun () -&gt; <span data-count="4">M</span>isc.spellcheck names name )
   | <span data-count="12">U</span>nbound_type_constructor lid -&gt;
     fprintf ppf "Unbound type constructor %a" longident lid;
     <span data-count="12">s</span>pellcheck ppf fold_types env lid;
@@ -3187,15 +3184,15 @@ let report_error env ppf = <span data-count="164">f</span>unction
            fprintf ppf "This type")
         (function <span data-count="3">p</span>pf -&gt;
            fprintf ppf "should be an instance of type")
-  | <span data-count="5">A</span>lias_type_mismatch trace -&gt;
+  | <span data-count="7">A</span>lias_type_mismatch trace -&gt;
       Printtyp.report_unification_error ppf Env.empty trace
-        (function <span data-count="5">p</span>pf -&gt;
+        (function <span data-count="7">p</span>pf -&gt;
            fprintf ppf "This alias is bound to type")
-        (function <span data-count="5">p</span>pf -&gt;
+        (function <span data-count="7">p</span>pf -&gt;
            fprintf ppf "but is used as an instance of type")
   | <span data-count="0">P</span>resent_has_conjunction l -&gt;
       fprintf ppf "The present constructor %s has a conjunctive type" l
-  | <span data-count="2">P</span>resent_has_no_type l -&gt;
+  | <span data-count="4">P</span>resent_has_no_type l -&gt;
       fprintf ppf
         "@[&lt;v&gt;@[The constructor %s is missing from the upper bound@ \
          (between '&lt;'@ and '&gt;')@ of this polymorphic variant@ \
@@ -3211,22 +3208,22 @@ let report_error env ppf = <span data-count="164">f</span>unction
           !Oprint.out_type (tree_of_typexp false ty)
           "which should be"
            !Oprint.out_type (tree_of_typexp false ty'))
-  | <span data-count="4">N</span>ot_a_variant ty -&gt;
+  | <span data-count="8">N</span>ot_a_variant ty -&gt;
       Printtyp.reset_and_mark_loops ty;
-      <span data-count="4">f</span>printf ppf
+      <span data-count="8">f</span>printf ppf
         "@[The type %a@ does not expand to a polymorphic variant type@]"
         Printtyp.type_expr ty;
-      <span data-count="4">b</span>egin match ty.desc with
-        | <span data-count="4">T</span>var (Some s) -&gt;
+      <span data-count="8">b</span>egin match ty.desc with
+        | <span data-count="8">T</span>var (Some s) -&gt;
            (* PR#7012: help the user that wrote 'Foo instead of `Foo *)
-           Misc.did_you_mean ppf (fun () -&gt; <span data-count="4">[</span>"`" ^ s])
+           Misc.did_you_mean ppf (fun () -&gt; <span data-count="8">[</span>"`" ^ s])
         | <span data-count="0">_</span> -&gt; ()
       end
-  | <span data-count="6">V</span>ariant_tags (lab1, lab2) -&gt;
+  | <span data-count="12">V</span>ariant_tags (lab1, lab2) -&gt;
       fprintf ppf
         "@[Variant tags `%s@ and `%s have the same hash value.@ %s@]"
         lab1 lab2 "Change one of them."
-  | <span data-count="2">I</span>nvalid_variable_name name -&gt;
+  | <span data-count="4">I</span>nvalid_variable_name name -&gt;
       fprintf ppf "The type variable name %s is not allowed in programs" name
   | <span data-count="10">C</span>annot_quantify (name, v) -&gt;
       fprintf ppf
@@ -3246,18 +3243,18 @@ let report_error env ppf = <span data-count="164">f</span>unction
         <span data-count="4">P</span>rinttyp.reset_and_mark_loops_list [ty; ty'];
         <span data-count="4">f</span>printf ppf "@[&lt;hov&gt;Method '%s' has type %a,@ which should be %a@]"
           l Printtyp.type_expr ty Printtyp.type_expr ty')
-  | <span data-count="15">U</span>nbound_value lid -&gt;
+  | <span data-count="18">U</span>nbound_value lid -&gt;
       fprintf ppf "Unbound value %a" longident lid;
-      <span data-count="15">s</span>pellcheck ppf fold_values env lid;
-  | <span data-count="17">U</span>nbound_module lid -&gt;
+      <span data-count="18">s</span>pellcheck ppf fold_values env lid;
+  | <span data-count="21">U</span>nbound_module lid -&gt;
       fprintf ppf "Unbound module %a" longident lid;
-      <span data-count="17">s</span>pellcheck ppf fold_modules env lid;
-  | <span data-count="26">U</span>nbound_constructor lid -&gt;
+      <span data-count="21">s</span>pellcheck ppf fold_modules env lid;
+  | <span data-count="44">U</span>nbound_constructor lid -&gt;
       fprintf ppf "Unbound constructor %a" longident lid;
-      <span data-count="26">s</span>pellcheck ppf fold_constructors env lid;
-  | <span data-count="20">U</span>nbound_label lid -&gt;
+      <span data-count="44">s</span>pellcheck ppf fold_constructors env lid;
+  | <span data-count="40">U</span>nbound_label lid -&gt;
       fprintf ppf "Unbound record field %a" longident lid;
-      <span data-count="20">s</span>pellcheck ppf fold_labels env lid;
+      <span data-count="40">s</span>pellcheck ppf fold_labels env lid;
   | <span data-count="6">U</span>nbound_class lid -&gt;
       fprintf ppf "Unbound class %a" longident lid;
       <span data-count="6">s</span>pellcheck ppf fold_classes env lid;
@@ -3320,9 +3317,9 @@ let report_error env ppf = <span data-count="164">f</span>unction
         line
 
 let () =
-  <span data-count="1031">L</span>ocation.register_error_of_exn
+  <span data-count="1170">L</span>ocation.register_error_of_exn
     (function
-      | <span data-count="164">E</span>rror (loc, env, err) -&gt;
+      | <span data-count="227">E</span>rror (loc, env, err) -&gt;
         Some (Location.error_of_printer ~loc (report_error env) err)
       | <span data-count="0">E</span>rror_forward err -&gt;
         Some err
@@ -3332,7 +3329,7 @@ let () =
 </pre>
       </div>
     </div>
-    <div id="footer">Generated on 2019-08-08 13:34:29 by <a href="https://github.com/aantron/bisect_ppx">Bisect_ppx</a> 1.4.1</div>
+    <div id="footer">Generated on 2019-08-14 11:29:20 by <a href="https://github.com/aantron/bisect_ppx">Bisect_ppx</a> 1.4.1</div>
     <script src="../coverage.js"></script>
   </body>
 </html>

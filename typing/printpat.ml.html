@@ -388,12 +388,12 @@ open Typedtree
 open Types
 open Format
 
-let is_cons = <span data-count="1031">f</span>unction
+let is_cons = <span data-count="1170">f</span>unction
 | {cstr_name = "::"} -&gt; true
 | _ -&gt; false
 
 let pretty_const c = match c with
-| <span data-count="34">C</span>onst_int i -&gt; Printf.sprintf "%d" i
+| <span data-count="38">C</span>onst_int i -&gt; Printf.sprintf "%d" i
 | <span data-count="2">C</span>onst_char c -&gt; Printf.sprintf "%C" c
 | <span data-count="9">C</span>onst_string (s, _) -&gt; Printf.sprintf "%S" s
 | <span data-count="4">C</span>onst_float f -&gt; Printf.sprintf "%s" f
@@ -402,7 +402,7 @@ let pretty_const c = match c with
 | <span data-count="0">C</span>onst_nativeint i -&gt; Printf.sprintf "%ndn" i
 
 let rec pretty_val ppf v =
-  <span data-count="539">m</span>atch v.pat_extra with
+  <span data-count="573">m</span>atch v.pat_extra with
       <span data-count="0">(</span>cstr, _loc, _attrs) :: rem -&gt;
         begin match cstr with
           | <span data-count="0">T</span>pat_unpack -&gt;
@@ -414,14 +414,14 @@ let rec pretty_val ppf v =
           | <span data-count="0">T</span>pat_open _ -&gt;
               fprintf ppf "@[(# %a)@]" pretty_val { v with pat_extra = rem }
         end
-    | <span data-count="539">[</span>] -&gt;
+    | <span data-count="573">[</span>] -&gt;
   match v.pat_desc with
-  | <span data-count="62">T</span>pat_any -&gt; fprintf ppf "_"
+  | <span data-count="68">T</span>pat_any -&gt; fprintf ppf "_"
   | <span data-count="6">T</span>pat_var (x,_) -&gt; fprintf ppf "%s" (Ident.name x)
-  | <span data-count="49">T</span>pat_constant c -&gt; fprintf ppf "%s" (pretty_const c)
-  | <span data-count="62">T</span>pat_tuple vs -&gt;
+  | <span data-count="53">T</span>pat_constant c -&gt; fprintf ppf "%s" (pretty_const c)
+  | <span data-count="70">T</span>pat_tuple vs -&gt;
       fprintf ppf "@[(%a)@]" (pretty_vals ",") vs
-  | <span data-count="183">T</span>pat_construct (_, cstr, []) -&gt;
+  | <span data-count="185">T</span>pat_construct (_, cstr, []) -&gt;
       fprintf ppf "%s" cstr.cstr_name
   | <span data-count="82">T</span>pat_construct (_, cstr, [w]) -&gt;
       fprintf ppf "@[&lt;2&gt;%s@ %a@]" cstr.cstr_name pretty_arg w
@@ -433,24 +433,24 @@ let rec pretty_val ppf v =
       |  <span data-count="3">_</span> -&gt;
           fprintf ppf "@[&lt;2&gt;%s@ @[(%a)@]@]" name (pretty_vals ",") vs
       end
-  | <span data-count="17">T</span>pat_variant (l, None, _) -&gt;
+  | <span data-count="27">T</span>pat_variant (l, None, _) -&gt;
       fprintf ppf "`%s" l
-  | <span data-count="10">T</span>pat_variant (l, Some w, _) -&gt;
+  | <span data-count="12">T</span>pat_variant (l, Some w, _) -&gt;
       fprintf ppf "@[&lt;2&gt;`%s@ %a@]" l pretty_arg w
-  | <span data-count="35">T</span>pat_record (lvs,_) -&gt;
-      let filtered_lvs = <span data-count="35">L</span>ist.filter
+  | <span data-count="37">T</span>pat_record (lvs,_) -&gt;
+      let filtered_lvs = <span data-count="37">L</span>ist.filter
           (function
             | <span data-count="2">(</span>_,_,{pat_desc=Tpat_any}) -&gt; false (* do not show lbl=_ *)
-            | <span data-count="45">_</span> -&gt; true) lvs in
-      <span data-count="35">b</span>egin match filtered_lvs with
+            | <span data-count="47">_</span> -&gt; true) lvs in
+      <span data-count="37">b</span>egin match filtered_lvs with
       | <span data-count="2">[</span>] -&gt; fprintf ppf "_"
-      | <span data-count="33">(</span>_, lbl, _) :: q -&gt;
+      | <span data-count="35">(</span>_, lbl, _) :: q -&gt;
           let elision_mark ppf =
             (* we assume that there is no label repetitions here *)
-             <span data-count="33">i</span>f Array.length lbl.lbl_all &gt; 1 + List.length q then
+             <span data-count="35">i</span>f Array.length lbl.lbl_all &gt; 1 + List.length q then
                <span data-count="2">f</span>printf ppf ";@ _@ "
-             else <span data-count="31">(</span>) in
-          <span data-count="33">f</span>printf ppf "@[{%a%t}@]"
+             else <span data-count="33">(</span>) in
+          <span data-count="35">f</span>printf ppf "@[{%a%t}@]"
             pretty_lvals filtered_lvs elision_mark
       end
   | <span data-count="7">T</span>pat_array vs -&gt;
@@ -476,32 +476,32 @@ and pretty_cdr ppf v = <span data-count="8">m</span>atch v.pat_desc with
       fprintf ppf "%a::@,%a" pretty_car v1 pretty_cdr v2
 | <span data-count="8">_</span> -&gt; pretty_val ppf v
 
-and pretty_arg ppf v = <span data-count="95">m</span>atch v.pat_desc with
+and pretty_arg ppf v = <span data-count="97">m</span>atch v.pat_desc with
 | <span data-count="14">T</span>pat_construct (_,_,_::_)
 | <span data-count="4">T</span>pat_variant (_, Some _, _) -&gt; fprintf ppf "(%a)" pretty_val v
-|  <span data-count="77">_</span> -&gt; pretty_val ppf v
+|  <span data-count="79">_</span> -&gt; pretty_val ppf v
 
 and pretty_or ppf v = <span data-count="24">m</span>atch v.pat_desc with
 | <span data-count="0">T</span>pat_or (v,w,_) -&gt;
     fprintf ppf "%a|@,%a" pretty_or v pretty_or w
 | <span data-count="24">_</span> -&gt; pretty_val ppf v
 
-and pretty_vals sep ppf = <span data-count="181">f</span>unction
+and pretty_vals sep ppf = <span data-count="197">f</span>unction
   | <span data-count="0">[</span>] -&gt; ()
-  | <span data-count="72">[</span>v] -&gt; pretty_val ppf v
-  | <span data-count="109">v</span>::vs -&gt;
+  | <span data-count="80">[</span>v] -&gt; pretty_val ppf v
+  | <span data-count="117">v</span>::vs -&gt;
       fprintf ppf "%a%s@ %a" pretty_val v sep (pretty_vals sep) vs
 
 and pretty_lvals ppf = function
   | <span data-count="0">[</span>] -&gt; ()
-  | <span data-count="33">[</span>_,lbl,v] -&gt;
+  | <span data-count="35">[</span>_,lbl,v] -&gt;
       fprintf ppf "%s=%a" lbl.lbl_name pretty_val v
   | <span data-count="12">(</span>_, lbl,v)::rest -&gt;
       fprintf ppf "%s=%a;@ %a"
         lbl.lbl_name pretty_val v pretty_lvals rest
 
 let top_pretty ppf v =
-  <span data-count="178">f</span>printf ppf "@[%a@]@?" pretty_val v
+  <span data-count="192">f</span>printf ppf "@[%a@]@?" pretty_val v
 
 
 let pretty_pat p =
@@ -527,7 +527,7 @@ let pretty_matrix fmt (pss : matrix) =
 </pre>
       </div>
     </div>
-    <div id="footer">Generated on 2019-08-08 13:34:29 by <a href="https://github.com/aantron/bisect_ppx">Bisect_ppx</a> 1.4.1</div>
+    <div id="footer">Generated on 2019-08-14 11:29:20 by <a href="https://github.com/aantron/bisect_ppx">Bisect_ppx</a> 1.4.1</div>
     <script src="../coverage.js"></script>
   </body>
 </html>

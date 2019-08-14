@@ -551,63 +551,63 @@ open Btype
 
 (* Simplified version of Ctype.free_vars *)
 let free_vars ?(param=false) ty =
-  <span data-count="33839">l</span>et ret = <span data-count="33839">r</span>ef TypeSet.empty in
-  <span data-count="33839">l</span>et rec loop ty =
-    <span data-count="226890">l</span>et ty = <span data-count="226890">r</span>epr ty in
-    <span data-count="226890">i</span>f ty.level &gt;= lowest_level then <span data-count="207434">b</span>egin
+  <span data-count="37033">l</span>et ret = <span data-count="37033">r</span>ef TypeSet.empty in
+  <span data-count="37033">l</span>et rec loop ty =
+    <span data-count="251839">l</span>et ty = <span data-count="251839">r</span>epr ty in
+    <span data-count="251839">i</span>f ty.level &gt;= lowest_level then <span data-count="230187">b</span>egin
       ty.level &lt;- pivot_level - ty.level;
-      <span data-count="207434">m</span>atch ty.desc with
-      | <span data-count="130753">T</span>var _ -&gt;
+      <span data-count="230187">m</span>atch ty.desc with
+      | <span data-count="145942">T</span>var _ -&gt;
           ret := TypeSet.add ty !ret
-      | <span data-count="648">T</span>variant row -&gt;
-          let row = <span data-count="648">r</span>ow_repr row in
-          <span data-count="648">i</span>ter_row loop row;
-          <span data-count="648">i</span>f not (static_row row) then <span data-count="475">b</span>egin
+      | <span data-count="680">T</span>variant row -&gt;
+          let row = <span data-count="680">r</span>ow_repr row in
+          <span data-count="680">i</span>ter_row loop row;
+          <span data-count="680">i</span>f not (static_row row) then <span data-count="507">b</span>egin
             match row.row_more.desc with
-            | <span data-count="7">T</span>var _ when <span data-count="475">p</span>aram -&gt; ret := TypeSet.add ty !ret
-            | <span data-count="468">_</span> -&gt; loop row.row_more
+            | <span data-count="7">T</span>var _ when <span data-count="507">p</span>aram -&gt; ret := TypeSet.add ty !ret
+            | <span data-count="500">_</span> -&gt; loop row.row_more
           end
       (* XXX: What about Tobject ? *)
-      | <span data-count="76033">_</span> -&gt;
+      | <span data-count="83565">_</span> -&gt;
           iter_type_expr loop ty
     end
   in
-  <span data-count="33839">l</span>oop ty;
-  <span data-count="33839">u</span>nmark_type ty;
-  <span data-count="33839">!</span>ret
+  <span data-count="37033">l</span>oop ty;
+  <span data-count="37033">u</span>nmark_type ty;
+  <span data-count="37033">!</span>ret
 
-let newgenconstr path tyl = <span data-count="50177">n</span>ewgenty (Tconstr (path, tyl, ref Mnil))
+let newgenconstr path tyl = <span data-count="57589">n</span>ewgenty (Tconstr (path, tyl, ref Mnil))
 
 let constructor_existentials cd_args cd_res =
-  <span data-count="95485">l</span>et tyl =
-    <span data-count="95485">m</span>atch cd_args with
-    | <span data-count="95324">C</span>str_tuple l -&gt; l
-    | <span data-count="161">C</span>str_record l -&gt; List.map (fun l -&gt; <span data-count="181">l</span>.ld_type) l
+  <span data-count="112937">l</span>et tyl =
+    <span data-count="112937">m</span>atch cd_args with
+    | <span data-count="112668">C</span>str_tuple l -&gt; l
+    | <span data-count="269">C</span>str_record l -&gt; List.map (fun l -&gt; <span data-count="337">l</span>.ld_type) l
   in
-  <span data-count="95485">l</span>et existentials =
-    <span data-count="95485">m</span>atch cd_res with
-    | <span data-count="78643">N</span>one -&gt; []
-    | <span data-count="16842">S</span>ome type_ret -&gt;
-        let arg_vars_set = <span data-count="16842">f</span>ree_vars (newgenty (Ttuple tyl)) in
-        <span data-count="16842">l</span>et res_vars = <span data-count="16842">f</span>ree_vars type_ret in
-        <span data-count="16842">T</span>ypeSet.elements (TypeSet.diff arg_vars_set res_vars)
+  <span data-count="112937">l</span>et existentials =
+    <span data-count="112937">m</span>atch cd_res with
+    | <span data-count="94552">N</span>one -&gt; []
+    | <span data-count="18385">S</span>ome type_ret -&gt;
+        let arg_vars_set = <span data-count="18385">f</span>ree_vars (newgenty (Ttuple tyl)) in
+        <span data-count="18385">l</span>et res_vars = <span data-count="18385">f</span>ree_vars type_ret in
+        <span data-count="18385">T</span>ypeSet.elements (TypeSet.diff arg_vars_set res_vars)
   in
-  <span data-count="95485">(</span>tyl, existentials)
+  <span data-count="112937">(</span>tyl, existentials)
 
 let constructor_args priv cd_args cd_res path rep =
-  <span data-count="95402">l</span>et tyl, existentials = <span data-count="95402">c</span>onstructor_existentials cd_args cd_res in
-  <span data-count="95402">m</span>atch cd_args with
-  | <span data-count="95247">C</span>str_tuple l -&gt; existentials, l, None
-  | <span data-count="155">C</span>str_record lbls -&gt;
-      let arg_vars_set = <span data-count="155">f</span>ree_vars ~param:true (newgenty (Ttuple tyl)) in
-      <span data-count="155">l</span>et type_params = <span data-count="155">T</span>ypeSet.elements arg_vars_set in
-      <span data-count="155">l</span>et type_unboxed =
-        <span data-count="155">m</span>atch rep with
+  <span data-count="112852">l</span>et tyl, existentials = <span data-count="112852">c</span>onstructor_existentials cd_args cd_res in
+  <span data-count="112852">m</span>atch cd_args with
+  | <span data-count="112589">C</span>str_tuple l -&gt; existentials, l, None
+  | <span data-count="263">C</span>str_record lbls -&gt;
+      let arg_vars_set = <span data-count="263">f</span>ree_vars ~param:true (newgenty (Ttuple tyl)) in
+      <span data-count="263">l</span>et type_params = <span data-count="263">T</span>ypeSet.elements arg_vars_set in
+      <span data-count="263">l</span>et type_unboxed =
+        <span data-count="263">m</span>atch rep with
         | <span data-count="34">R</span>ecord_unboxed _ -&gt; unboxed_true_default_false
-        | <span data-count="121">_</span> -&gt; unboxed_false_default_false
+        | <span data-count="229">_</span> -&gt; unboxed_false_default_false
       in
-      <span data-count="155">l</span>et tdecl =
-        <span data-count="155">{</span>
+      <span data-count="263">l</span>et tdecl =
+        <span data-count="263">{</span>
           type_params;
           type_arity = List.length type_params;
           type_kind = Type_record (lbls, rep);
@@ -622,47 +622,47 @@ let constructor_args priv cd_args cd_res path rep =
           type_unboxed;
         }
       in
-      <span data-count="155">e</span>xistentials,
+      <span data-count="263">e</span>xistentials,
       [ newgenconstr path type_params ],
       Some tdecl
 
 let constructor_descrs ty_path decl cstrs =
-  <span data-count="18757">l</span>et ty_res = <span data-count="18757">n</span>ewgenconstr ty_path decl.type_params in
-  <span data-count="18757">l</span>et num_consts = <span data-count="18757">r</span>ef 0 and num_nonconsts = <span data-count="18757">r</span>ef 0  and num_normal = <span data-count="18757">r</span>ef 0 in
-  <span data-count="18757">L</span>ist.iter
+  <span data-count="21445">l</span>et ty_res = <span data-count="21445">n</span>ewgenconstr ty_path decl.type_params in
+  <span data-count="21445">l</span>et num_consts = <span data-count="21445">r</span>ef 0 and num_nonconsts = <span data-count="21445">r</span>ef 0  and num_normal = <span data-count="21445">r</span>ef 0 in
+  <span data-count="21445">L</span>ist.iter
     (fun {cd_args; cd_res; _} -&gt;
-      <span data-count="68531">i</span>f cd_args = Cstr_tuple [] then <span data-count="45111">i</span>ncr num_consts else <span data-count="23420">i</span>ncr num_nonconsts;
-      <span data-count="68531">i</span>f cd_res = None then <span data-count="51801">i</span>ncr num_normal)
+      <span data-count="82483">i</span>f cd_args = Cstr_tuple [] then <span data-count="54775">i</span>ncr num_consts else <span data-count="27708">i</span>ncr num_nonconsts;
+      <span data-count="82483">i</span>f cd_res = None then <span data-count="64220">i</span>ncr num_normal)
     cstrs;
-  <span data-count="18757">l</span>et rec describe_constructors idx_const idx_nonconst = <span data-count="86916">f</span>unction
-      <span data-count="18385">[</span>] -&gt; []
-    | <span data-count="68531">{</span>cd_id; cd_args; cd_res; cd_loc; cd_attributes} :: rem -&gt;
+  <span data-count="21445">l</span>et rec describe_constructors idx_const idx_nonconst = <span data-count="103548">f</span>unction
+      <span data-count="21065">[</span>] -&gt; []
+    | <span data-count="82483">{</span>cd_id; cd_args; cd_res; cd_loc; cd_attributes} :: rem -&gt;
         let ty_res =
-          <span data-count="68531">m</span>atch cd_res with
-          | <span data-count="16730">S</span>ome ty_res' -&gt; ty_res'
-          | <span data-count="51801">N</span>one -&gt; ty_res
+          <span data-count="82483">m</span>atch cd_res with
+          | <span data-count="18263">S</span>ome ty_res' -&gt; ty_res'
+          | <span data-count="64220">N</span>one -&gt; ty_res
         in
-        <span data-count="68531">l</span>et (tag, descr_rem) =
-          <span data-count="68531">m</span>atch cd_args with
-          | <span data-count="372">_</span> when <span data-count="68531">d</span>ecl.type_unboxed.unboxed -&gt;
+        <span data-count="82483">l</span>et (tag, descr_rem) =
+          <span data-count="82483">m</span>atch cd_args with
+          | <span data-count="380">_</span> when <span data-count="82483">d</span>ecl.type_unboxed.unboxed -&gt;
             assert (rem = []);
-            <span data-count="372">(</span>Cstr_unboxed, [])
-          | <span data-count="45111">C</span>str_tuple [] -&gt; (Cstr_constant idx_const,
+            <span data-count="380">(</span>Cstr_unboxed, [])
+          | <span data-count="54775">C</span>str_tuple [] -&gt; (Cstr_constant idx_const,
                    describe_constructors (idx_const+1) idx_nonconst rem)
-          | <span data-count="23048">_</span>  -&gt; (Cstr_block idx_nonconst,
+          | <span data-count="27328">_</span>  -&gt; (Cstr_block idx_nonconst,
                    describe_constructors idx_const (idx_nonconst+1) rem) in
-        <span data-count="68531">l</span>et cstr_name = <span data-count="68531">I</span>dent.name cd_id in
-        <span data-count="68531">l</span>et existentials, cstr_args, cstr_inlined =
-          <span data-count="68531">l</span>et representation =
-            <span data-count="68531">i</span>f decl.type_unboxed.unboxed
-            then <span data-count="372">R</span>ecord_unboxed true
-            else <span data-count="68159">R</span>ecord_inlined idx_nonconst
+        <span data-count="82483">l</span>et cstr_name = <span data-count="82483">I</span>dent.name cd_id in
+        <span data-count="82483">l</span>et existentials, cstr_args, cstr_inlined =
+          <span data-count="82483">l</span>et representation =
+            <span data-count="82483">i</span>f decl.type_unboxed.unboxed
+            then <span data-count="380">R</span>ecord_unboxed true
+            else <span data-count="82103">R</span>ecord_inlined idx_nonconst
           in
-          <span data-count="68531">c</span>onstructor_args decl.type_private cd_args cd_res
+          <span data-count="82483">c</span>onstructor_args decl.type_private cd_args cd_res
             (Path.Pdot (ty_path, cstr_name)) representation
         in
-        <span data-count="68531">l</span>et cstr =
-          <span data-count="68531">{</span> cstr_name;
+        <span data-count="82483">l</span>et cstr =
+          <span data-count="82483">{</span> cstr_name;
             cstr_res = ty_res;
             cstr_existentials = existentials;
             cstr_args;
@@ -677,20 +677,20 @@ let constructor_descrs ty_path decl cstrs =
             cstr_attributes = cd_attributes;
             cstr_inlined;
           } in
-        <span data-count="68531">(</span>cd_id, cstr) :: descr_rem in
-  <span data-count="18757">d</span>escribe_constructors 0 0 cstrs
+        <span data-count="82483">(</span>cd_id, cstr) :: descr_rem in
+  <span data-count="21445">d</span>escribe_constructors 0 0 cstrs
 
 let extension_descr path_ext ext =
-  <span data-count="26871">l</span>et ty_res =
-    <span data-count="26871">m</span>atch ext.ext_ret_type with
-        <span data-count="66">S</span>ome type_ret -&gt; type_ret
-      | <span data-count="26805">N</span>one -&gt; newgenconstr ext.ext_type_path ext.ext_type_params
+  <span data-count="30369">l</span>et ty_res =
+    <span data-count="30369">m</span>atch ext.ext_ret_type with
+        <span data-count="76">S</span>ome type_ret -&gt; type_ret
+      | <span data-count="30293">N</span>one -&gt; newgenconstr ext.ext_type_path ext.ext_type_params
   in
-  <span data-count="26871">l</span>et existentials, cstr_args, cstr_inlined =
-    <span data-count="26871">c</span>onstructor_args ext.ext_private ext.ext_args ext.ext_ret_type
+  <span data-count="30369">l</span>et existentials, cstr_args, cstr_inlined =
+    <span data-count="30369">c</span>onstructor_args ext.ext_private ext.ext_args ext.ext_ret_type
       path_ext (Record_extension path_ext)
   in
-    <span data-count="26871">{</span> cstr_name = Path.last path_ext;
+    <span data-count="30369">{</span> cstr_name = Path.last path_ext;
       cstr_res = ty_res;
       cstr_existentials = existentials;
       cstr_args;
@@ -706,10 +706,10 @@ let extension_descr path_ext ext =
       cstr_inlined;
     }
 
-let none = <span data-count="1031">{</span>desc = Ttuple []; level = -1; scope = Btype.generic_level; id = -1}
+let none = <span data-count="1170">{</span>desc = Ttuple []; level = -1; scope = Btype.generic_level; id = -1}
                                         (* Clearly ill-formed type *)
 let dummy_label =
-  <span data-count="1031">{</span> lbl_name = ""; lbl_res = none; lbl_arg = none; lbl_mut = Immutable;
+  <span data-count="1170">{</span> lbl_name = ""; lbl_res = none; lbl_arg = none; lbl_mut = Immutable;
     lbl_pos = (-1); lbl_all = [||]; lbl_repres = Record_regular;
     lbl_private = Public;
     lbl_loc = Location.none;
@@ -717,12 +717,12 @@ let dummy_label =
   }
 
 let label_descrs ty_res lbls repres priv =
-  <span data-count="4460">l</span>et all_labels = <span data-count="4460">A</span>rray.make (List.length lbls) dummy_label in
-  <span data-count="4460">l</span>et rec describe_labels num = <span data-count="17199">f</span>unction
-      <span data-count="4460">[</span>] -&gt; []
-    | <span data-count="12739">l</span> :: rest -&gt;
+  <span data-count="5588">l</span>et all_labels = <span data-count="5588">A</span>rray.make (List.length lbls) dummy_label in
+  <span data-count="5588">l</span>et rec describe_labels num = <span data-count="21695">f</span>unction
+      <span data-count="5588">[</span>] -&gt; []
+    | <span data-count="16107">l</span> :: rest -&gt;
         let lbl =
-          <span data-count="12739">{</span> lbl_name = Ident.name l.ld_id;
+          <span data-count="16107">{</span> lbl_name = Ident.name l.ld_id;
             lbl_res = ty_res;
             lbl_arg = l.ld_type;
             lbl_mut = l.ld_mutable;
@@ -733,55 +733,55 @@ let label_descrs ty_res lbls repres priv =
             lbl_loc = l.ld_loc;
             lbl_attributes = l.ld_attributes;
           } in
-        <span data-count="12739">a</span>ll_labels.(num) &lt;- lbl;
-        <span data-count="12739">(</span>l.ld_id, lbl) :: describe_labels (num+1) rest in
-  <span data-count="4460">d</span>escribe_labels 0 lbls
+        <span data-count="16107">a</span>ll_labels.(num) &lt;- lbl;
+        <span data-count="16107">(</span>l.ld_id, lbl) :: describe_labels (num+1) rest in
+  <span data-count="5588">d</span>escribe_labels 0 lbls
 
 exception Constr_not_found
 
-let rec find_constr tag num_const num_nonconst = <span data-count="1903">f</span>unction
+let rec find_constr tag num_const num_nonconst = <span data-count="2039">f</span>unction
     <span data-count="0">[</span>] -&gt;
       raise Constr_not_found
-  | <span data-count="535">{</span>cd_args = Cstr_tuple []; _} as c  :: rem -&gt;
+  | <span data-count="645">{</span>cd_args = Cstr_tuple []; _} as c  :: rem -&gt;
       if tag = Cstr_constant num_const
-      then <span data-count="337">c</span>
-      else <span data-count="198">f</span>ind_constr tag (num_const + 1) num_nonconst rem
-  | <span data-count="1368">c</span> :: rem -&gt;
-      if <span data-count="1368">t</span>ag = Cstr_block num_nonconst || <span data-count="848">t</span>ag = Cstr_unboxed
-      then <span data-count="522">c</span>
+      then <span data-count="421">c</span>
+      else <span data-count="224">f</span>ind_constr tag (num_const + 1) num_nonconst rem
+  | <span data-count="1394">c</span> :: rem -&gt;
+      if <span data-count="1394">t</span>ag = Cstr_block num_nonconst || <span data-count="848">t</span>ag = Cstr_unboxed
+      then <span data-count="548">c</span>
       else <span data-count="846">f</span>ind_constr tag num_const (num_nonconst + 1) rem
 
 let find_constr_by_tag tag cstrlist =
-  <span data-count="859">f</span>ind_constr tag 0 0 cstrlist
+  <span data-count="969">f</span>ind_constr tag 0 0 cstrlist
 
 let constructors_of_type ty_path decl =
-  <span data-count="69035">m</span>atch decl.type_kind with
-  | <span data-count="18757">T</span>ype_variant cstrs -&gt; constructor_descrs ty_path decl cstrs
-  | <span data-count="4377">T</span>ype_record _ | <span data-count="43828">T</span>ype_abstract | <span data-count="2073">T</span>ype_open -&gt; []
+  <span data-count="78075">m</span>atch decl.type_kind with
+  | <span data-count="21445">T</span>ype_variant cstrs -&gt; constructor_descrs ty_path decl cstrs
+  | <span data-count="5481">T</span>ype_record _ | <span data-count="48908">T</span>ype_abstract | <span data-count="2241">T</span>ype_open -&gt; []
 
 let labels_of_type ty_path decl =
-  <span data-count="69118">m</span>atch decl.type_kind with
-  | <span data-count="4460">T</span>ype_record(labels, rep) -&gt;
+  <span data-count="78182">m</span>atch decl.type_kind with
+  | <span data-count="5588">T</span>ype_record(labels, rep) -&gt;
       label_descrs (newgenconstr ty_path decl.type_params)
         labels rep decl.type_private
-  | <span data-count="18757">T</span>ype_variant _ | <span data-count="43828">T</span>ype_abstract | <span data-count="2073">T</span>ype_open -&gt; []
+  | <span data-count="21445">T</span>ype_variant _ | <span data-count="48908">T</span>ype_abstract | <span data-count="2241">T</span>ype_open -&gt; []
 
 (* Set row_name in Env, cf. GPR#1204/1329 *)
 let set_row_name decl path =
-  <span data-count="19518">m</span>atch decl.type_manifest with
-    <span data-count="12405">N</span>one -&gt; ()
-  | <span data-count="7113">S</span>ome ty -&gt;
-      let ty = <span data-count="7113">r</span>epr ty in
-      <span data-count="7113">m</span>atch ty.desc with
-        <span data-count="102">T</span>variant row when <span data-count="130">s</span>tatic_row row -&gt;
-          let row = <span data-count="102">{</span>(row_repr row) with
+  <span data-count="22662">m</span>atch decl.type_manifest with
+    <span data-count="14511">N</span>one -&gt; ()
+  | <span data-count="8151">S</span>ome ty -&gt;
+      let ty = <span data-count="8151">r</span>epr ty in
+      <span data-count="8151">m</span>atch ty.desc with
+        <span data-count="176">T</span>variant row when <span data-count="206">s</span>tatic_row row -&gt;
+          let row = <span data-count="176">{</span>(row_repr row) with
                      row_name = Some (path, decl.type_params)} in
-          <span data-count="102">t</span>y.desc &lt;- Tvariant row
-      | <span data-count="7011">_</span> -&gt; ()
+          <span data-count="176">t</span>y.desc &lt;- Tvariant row
+      | <span data-count="7975">_</span> -&gt; ()
 </pre>
       </div>
     </div>
-    <div id="footer">Generated on 2019-08-08 13:34:29 by <a href="https://github.com/aantron/bisect_ppx">Bisect_ppx</a> 1.4.1</div>
+    <div id="footer">Generated on 2019-08-14 11:29:20 by <a href="https://github.com/aantron/bisect_ppx">Bisect_ppx</a> 1.4.1</div>
     <script src="../coverage.js"></script>
   </body>
 </html>

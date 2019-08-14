@@ -4335,7 +4335,7 @@ let type_open_descr :
   ref (fun ?used_slot:_ _ -&gt; <span data-count="0">a</span>ssert false)
 
 let ctyp desc typ env loc =
-  <span data-count="89">{</span> ctyp_desc = desc; ctyp_type = typ; ctyp_loc = loc; ctyp_env = env;
+  <span data-count="105">{</span> ctyp_desc = desc; ctyp_type = typ; ctyp_loc = loc; ctyp_env = env;
     ctyp_attributes = [] }
 
                        (**********************)
@@ -4347,14 +4347,14 @@ let ctyp desc typ env loc =
    Self type have a dummy private method, thus preventing it to become
    closed.
 *)
-let dummy_method = <span data-count="1031">B</span>type.dummy_method
+let dummy_method = <span data-count="1170">B</span>type.dummy_method
 
 (*
    Path associated to the temporary class type of a class being typed
    (its constructor is not available).
 *)
 let unbound_class =
-  <span data-count="1031">P</span>ath.Pident (Ident.create_local "*undef*")
+  <span data-count="1170">P</span>ath.Pident (Ident.create_local "*undef*")
 
 
                 (************************************)
@@ -4364,75 +4364,75 @@ let unbound_class =
 
 (* Fully expand the head of a class type *)
 let rec scrape_class_type =
-  <span data-count="1031">f</span>unction
+  <span data-count="1170">f</span>unction
     Cty_constr (_, _, cty) -&gt; scrape_class_type cty
   | cty                     -&gt; cty
 
 (* Generalize a class type *)
 let rec generalize_class_type gen =
   function
-    <span data-count="100">C</span>ty_constr (_, params, cty) -&gt;
+    <span data-count="110">C</span>ty_constr (_, params, cty) -&gt;
       List.iter gen params;
-      <span data-count="100">g</span>eneralize_class_type gen cty
-  | <span data-count="601">C</span>ty_signature {csig_self = sty; csig_vars = vars; csig_inher = inher} -&gt;
+      <span data-count="110">g</span>eneralize_class_type gen cty
+  | <span data-count="669">C</span>ty_signature {csig_self = sty; csig_vars = vars; csig_inher = inher} -&gt;
       gen sty;
-      <span data-count="601">V</span>ars.iter (fun _ (_, _, ty) -&gt; <span data-count="260">g</span>en ty) vars;
-      <span data-count="601">L</span>ist.iter (fun (_,tl) -&gt; <span data-count="98">L</span>ist.iter gen tl) inher
-  | <span data-count="312">C</span>ty_arrow (_, ty, cty) -&gt;
+      <span data-count="669">V</span>ars.iter (fun _ (_, _, ty) -&gt; <span data-count="268">g</span>en ty) vars;
+      <span data-count="669">L</span>ist.iter (fun (_,tl) -&gt; <span data-count="100">L</span>ist.iter gen tl) inher
+  | <span data-count="316">C</span>ty_arrow (_, ty, cty) -&gt;
       gen ty;
-      <span data-count="312">g</span>eneralize_class_type gen cty
+      <span data-count="316">g</span>eneralize_class_type gen cty
 
 let generalize_class_type vars =
-  let gen = <span data-count="601">i</span>f vars then <span data-count="559">C</span>type.generalize else <span data-count="42">C</span>type.generalize_structure in
-  <span data-count="601">g</span>eneralize_class_type gen
+  let gen = <span data-count="669">i</span>f vars then <span data-count="627">C</span>type.generalize else <span data-count="42">C</span>type.generalize_structure in
+  <span data-count="669">g</span>eneralize_class_type gen
 
 (* Return the virtual methods of a class type *)
 let virtual_methods sign =
   let (fields, _) =
-    <span data-count="636">C</span>type.flatten_fields (Ctype.object_fields sign.Types.csig_self)
+    <span data-count="706">C</span>type.flatten_fields (Ctype.object_fields sign.Types.csig_self)
   in
-  <span data-count="636">L</span>ist.fold_left
+  <span data-count="706">L</span>ist.fold_left
     (fun virt (lab, _, _) -&gt;
-       <span data-count="1489">i</span>f lab = dummy_method then <span data-count="468">v</span>irt else
-       <span data-count="1021">i</span>f Concr.mem lab sign.csig_concr then <span data-count="1017">v</span>irt else
+       <span data-count="1579">i</span>f lab = dummy_method then <span data-count="520">v</span>irt else
+       <span data-count="1059">i</span>f Concr.mem lab sign.csig_concr then <span data-count="1055">v</span>irt else
        <span data-count="4">l</span>ab::virt)
     [] fields
 
 (* Return the constructor type associated to a class type *)
 let rec constructor_type constr cty =
-  <span data-count="901">m</span>atch cty with
-    <span data-count="58">C</span>ty_constr (_, _, cty) -&gt;
+  <span data-count="983">m</span>atch cty with
+    <span data-count="68">C</span>ty_constr (_, _, cty) -&gt;
       constructor_type constr cty
-  | <span data-count="575">C</span>ty_signature _ -&gt;
+  | <span data-count="643">C</span>ty_signature _ -&gt;
       constr
-  | <span data-count="268">C</span>ty_arrow (l, ty, cty) -&gt;
+  | <span data-count="272">C</span>ty_arrow (l, ty, cty) -&gt;
       Ctype.newty (Tarrow (l, ty, constructor_type constr cty, Cok))
 
 let rec class_body cty =
   match cty with
-    <span data-count="116">C</span>ty_constr _ -&gt;
+    <span data-count="136">C</span>ty_constr _ -&gt;
       cty (* Only class bodies can be abbreviated *)
-  | <span data-count="1030">C</span>ty_signature _ -&gt;
+  | <span data-count="1146">C</span>ty_signature _ -&gt;
       cty
-  | <span data-count="534">C</span>ty_arrow (_, _, cty) -&gt;
+  | <span data-count="542">C</span>ty_arrow (_, _, cty) -&gt;
       class_body cty
 
 let extract_constraints cty =
-  let sign = <span data-count="166">C</span>type.signature_of_class_type cty in
-  <span data-count="166">(</span>Vars.fold (fun lab _ vars -&gt; <span data-count="73">l</span>ab :: vars) sign.csig_vars [],
+  let sign = <span data-count="174">C</span>type.signature_of_class_type cty in
+  <span data-count="174">(</span>Vars.fold (fun lab _ vars -&gt; <span data-count="73">l</span>ab :: vars) sign.csig_vars [],
    begin let (fields, _) =
-     <span data-count="166">C</span>type.flatten_fields (Ctype.object_fields sign.csig_self)
+     <span data-count="174">C</span>type.flatten_fields (Ctype.object_fields sign.csig_self)
    in
-   <span data-count="166">L</span>ist.fold_left
+   <span data-count="174">L</span>ist.fold_left
      (fun meths (lab, _, _) -&gt;
-        <span data-count="442">i</span>f lab = dummy_method then <span data-count="18">m</span>eths else <span data-count="424">l</span>ab::meths)
+        <span data-count="448">i</span>f lab = dummy_method then <span data-count="18">m</span>eths else <span data-count="430">l</span>ab::meths)
      [] fields
    end,
    sign.csig_concr)
 
 let rec abbreviate_class_type path params cty =
-  <span data-count="264">m</span>atch cty with
-    <span data-count="1">C</span>ty_constr (_, _, _) | <span data-count="159">C</span>ty_signature _ -&gt;
+  <span data-count="272">m</span>atch cty with
+    <span data-count="1">C</span>ty_constr (_, _, _) | <span data-count="167">C</span>ty_signature _ -&gt;
       Cty_constr (path, params, cty)
   | <span data-count="104">C</span>ty_arrow (l, ty, cty) -&gt;
       Cty_arrow (l, ty, abbreviate_class_type path params cty)
@@ -4441,45 +4441,45 @@ let rec abbreviate_class_type path params cty =
 (* Use Env.empty to prevent expansion of recursively defined object types;
    cf. typing-poly/poly.ml *)
 let rec closed_class_type =
-  <span data-count="1031">f</span>unction
+  <span data-count="1170">f</span>unction
     Cty_constr (_, params, _) -&gt;
       List.for_all (Ctype.closed_schema Env.empty) params
   | Cty_signature sign -&gt;
-      <span data-count="497">C</span>type.closed_schema Env.empty sign.csig_self
+      <span data-count="555">C</span>type.closed_schema Env.empty sign.csig_self
         &amp;&amp;
-      <span data-count="497">V</span>ars.fold (fun _ (_, _, ty) cc -&gt; <span data-count="454">C</span>type.closed_schema Env.empty ty &amp;&amp; <span data-count="227">c</span>c)
+      <span data-count="555">V</span>ars.fold (fun _ (_, _, ty) cc -&gt; <span data-count="470">C</span>type.closed_schema Env.empty ty &amp;&amp; <span data-count="235">c</span>c)
         sign.csig_vars
         true
   | Cty_arrow (_, ty, cty) -&gt;
-      <span data-count="260">C</span>type.closed_schema Env.empty ty
+      <span data-count="264">C</span>type.closed_schema Env.empty ty
         &amp;&amp;
-      <span data-count="260">c</span>losed_class_type cty
+      <span data-count="264">c</span>losed_class_type cty
 
 let closed_class cty =
-  <span data-count="559">L</span>ist.for_all (Ctype.closed_schema Env.empty) cty.cty_params
+  <span data-count="627">L</span>ist.for_all (Ctype.closed_schema Env.empty) cty.cty_params
     &amp;&amp;
-  <span data-count="555">c</span>losed_class_type cty.cty_type
+  <span data-count="623">c</span>losed_class_type cty.cty_type
 
 let rec limited_generalize rv =
   function
-    <span data-count="75">C</span>ty_constr (_path, params, cty) -&gt;
+    <span data-count="95">C</span>ty_constr (_path, params, cty) -&gt;
       List.iter (Ctype.limited_generalize rv) params;
-      <span data-count="75">l</span>imited_generalize rv cty
-  | <span data-count="617">C</span>ty_signature sign -&gt;
+      <span data-count="95">l</span>imited_generalize rv cty
+  | <span data-count="705">C</span>ty_signature sign -&gt;
       Ctype.limited_generalize rv sign.csig_self;
-      <span data-count="617">V</span>ars.iter (fun _ (_, _, ty) -&gt; <span data-count="243">C</span>type.limited_generalize rv ty)
+      <span data-count="705">V</span>ars.iter (fun _ (_, _, ty) -&gt; <span data-count="259">C</span>type.limited_generalize rv ty)
         sign.csig_vars;
-      <span data-count="617">L</span>ist.iter (fun (_, tl) -&gt; <span data-count="95">L</span>ist.iter (Ctype.limited_generalize rv) tl)
+      <span data-count="705">L</span>ist.iter (fun (_, tl) -&gt; <span data-count="97">L</span>ist.iter (Ctype.limited_generalize rv) tl)
         sign.csig_inher
-  | <span data-count="276">C</span>ty_arrow (_, ty, cty) -&gt;
+  | <span data-count="280">C</span>ty_arrow (_, ty, cty) -&gt;
       Ctype.limited_generalize rv ty;
-      <span data-count="276">l</span>imited_generalize rv cty
+      <span data-count="280">l</span>imited_generalize rv cty
 
 (* Record a class type *)
 let rc node =
   Cmt_format.add_saved_type (Cmt_format.Partial_class_expr node);
-  <span data-count="1128">S</span>types.record (Stypes.Ti_class node); (* moved to genannot *)
-  <span data-count="1128">n</span>ode
+  <span data-count="1172">S</span>types.record (Stypes.Ti_class node); (* moved to genannot *)
+  <span data-count="1172">n</span>ode
 
 
                 (***********************************)
@@ -4489,14 +4489,14 @@ let rc node =
 
 (* Enter a value in the method environment only *)
 let enter_met_env ?check loc lab kind ty val_env met_env par_env =
-  <span data-count="269">l</span>et (id, val_env) =
-    <span data-count="269">E</span>nv.enter_value lab
+  <span data-count="283">l</span>et (id, val_env) =
+    <span data-count="283">E</span>nv.enter_value lab
       {val_type = ty;
        val_kind = Val_unbound Val_unbound_instance_variable;
        val_attributes = [];
        Types.val_loc = loc} val_env
   in
-  <span data-count="269">(</span>id, val_env,
+  <span data-count="283">(</span>id, val_env,
    Env.add_value ?check id {val_type = ty; val_kind = kind;
                             val_attributes = [];
                             Types.val_loc = loc} met_env,
@@ -4507,9 +4507,9 @@ let enter_met_env ?check loc lab kind ty val_env met_env par_env =
 
 (* Enter an instance variable in the environment *)
 let enter_val cl_num vars inh lab mut virt ty val_env met_env par_env loc =
-  <span data-count="264">l</span>et (id, virt) =
-    <span data-count="264">t</span>ry
-      let (id, mut', virt', ty') = <span data-count="264">V</span>ars.find lab !vars in
+  <span data-count="276">l</span>et (id, virt) =
+    <span data-count="276">t</span>ry
+      let (id, mut', virt', ty') = <span data-count="276">V</span>ars.find lab !vars in
       <span data-count="16">i</span>f mut' &lt;&gt; mut then
         <span data-count="0">r</span>aise (Error(loc, val_env, Mutability_mismatch(lab, mut)));
       <span data-count="16">C</span>type.unify val_env (Ctype.instance ty) (Ctype.instance ty');
@@ -4519,16 +4519,16 @@ let enter_val cl_num vars inh lab mut virt ty val_env met_env par_env loc =
       <span data-count="0">C</span>type.Unify tr -&gt;
         raise (Error(loc, val_env,
                      Field_type_mismatch("instance variable", lab, tr)))
-    | <span data-count="248">N</span>ot_found -&gt; None, virt
+    | <span data-count="260">N</span>ot_found -&gt; None, virt
   in
-  <span data-count="264">l</span>et (id, _, _, _) as result =
-    <span data-count="264">m</span>atch id with <span data-count="5">S</span>ome id -&gt; (id, val_env, met_env, par_env)
-    | <span data-count="259">N</span>one -&gt;
+  <span data-count="276">l</span>et (id, _, _, _) as result =
+    <span data-count="276">m</span>atch id with <span data-count="5">S</span>ome id -&gt; (id, val_env, met_env, par_env)
+    | <span data-count="271">N</span>one -&gt;
         enter_met_env Location.none lab (Val_ivar (mut, cl_num))
           ty val_env met_env par_env
   in
-  <span data-count="264">v</span>ars := Vars.add lab (id, mut, virt, ty) !vars;
-  <span data-count="264">r</span>esult
+  <span data-count="276">v</span>ars := Vars.add lab (id, mut, virt, ty) !vars;
+  <span data-count="276">r</span>esult
 
 let concr_vals vars =
   Vars.fold
@@ -4536,174 +4536,174 @@ let concr_vals vars =
     vars Concr.empty
 
 let inheritance self_type env ovf concr_meths warn_vals loc parent =
-  <span data-count="152">m</span>atch scrape_class_type parent with
-    <span data-count="152">C</span>ty_signature cl_sig -&gt;
+  <span data-count="158">m</span>atch scrape_class_type parent with
+    <span data-count="158">C</span>ty_signature cl_sig -&gt;
 
       (* Methods *)
       begin try
         Ctype.unify env self_type cl_sig.csig_self
-      with <span data-count="2">C</span>type.Unify trace -&gt;
+      with <span data-count="4">C</span>type.Unify trace -&gt;
         let open Ctype.Unification_trace in
         match trace with
-        | <span data-count="2">D</span>iff _ :: Incompatible_fields {name = n; _ } :: rem -&gt;
+        | <span data-count="4">D</span>iff _ :: Incompatible_fields {name = n; _ } :: rem -&gt;
             raise(Error(loc, env, Field_type_mismatch ("method", n, rem)))
         | _ -&gt; assert false
       end;
 
       (* Overriding *)
-      <span data-count="150">l</span>et over_meths = <span data-count="150">C</span>oncr.inter cl_sig.csig_concr concr_meths in
-      <span data-count="150">l</span>et concr_vals = <span data-count="150">c</span>oncr_vals cl_sig.csig_vars in
-      <span data-count="150">l</span>et over_vals = <span data-count="150">C</span>oncr.inter concr_vals warn_vals in
-      <span data-count="150">b</span>egin match ovf with
-        <span data-count="143">S</span>ome Fresh -&gt;
+      <span data-count="154">l</span>et over_meths = <span data-count="154">C</span>oncr.inter cl_sig.csig_concr concr_meths in
+      <span data-count="154">l</span>et concr_vals = <span data-count="154">c</span>oncr_vals cl_sig.csig_vars in
+      <span data-count="154">l</span>et over_vals = <span data-count="154">C</span>oncr.inter concr_vals warn_vals in
+      <span data-count="154">b</span>egin match ovf with
+        <span data-count="145">S</span>ome Fresh -&gt;
           let cname =
-            <span data-count="143">m</span>atch parent with
-              <span data-count="142">C</span>ty_constr (p, _, _) -&gt; Path.name p
+            <span data-count="145">m</span>atch parent with
+              <span data-count="144">C</span>ty_constr (p, _, _) -&gt; Path.name p
             | <span data-count="1">_</span> -&gt; "inherited"
           in
-          <span data-count="143">i</span>f not (Concr.is_empty over_meths) then
+          <span data-count="145">i</span>f not (Concr.is_empty over_meths) then
             <span data-count="8">L</span>ocation.prerr_warning loc
               (Warnings.Method_override (cname :: Concr.elements over_meths));
-          <span data-count="143">i</span>f not (Concr.is_empty over_vals) then
+          <span data-count="145">i</span>f not (Concr.is_empty over_vals) then
             <span data-count="6">L</span>ocation.prerr_warning loc
               (Warnings.Instance_variable_override
                  (cname :: Concr.elements over_vals));
       | <span data-count="0">S</span>ome Override
         when <span data-count="2">C</span>oncr.is_empty over_meths &amp;&amp; <span data-count="0">C</span>oncr.is_empty over_vals -&gt;
         raise (Error(loc, env, No_overriding ("","")))
-      | <span data-count="7">_</span> -&gt; ()
+      | <span data-count="9">_</span> -&gt; ()
       end;
 
-      <span data-count="150">l</span>et concr_meths = <span data-count="150">C</span>oncr.union cl_sig.csig_concr concr_meths
-      and warn_vals = <span data-count="150">C</span>oncr.union concr_vals warn_vals in
+      <span data-count="154">l</span>et concr_meths = <span data-count="154">C</span>oncr.union cl_sig.csig_concr concr_meths
+      and warn_vals = <span data-count="154">C</span>oncr.union concr_vals warn_vals in
 
-      <span data-count="150">(</span>cl_sig, concr_meths, warn_vals)
+      <span data-count="154">(</span>cl_sig, concr_meths, warn_vals)
 
   | <span data-count="0">_</span> -&gt;
       raise(Error(loc, env, Structure_expected parent))
 
 let virtual_method val_env meths self_type lab priv sty loc =
-  <span data-count="87">l</span>et (_, ty') =
-     <span data-count="87">C</span>type.filter_self_method val_env lab priv meths self_type
+  <span data-count="97">l</span>et (_, ty') =
+     <span data-count="97">C</span>type.filter_self_method val_env lab priv meths self_type
   in
-  <span data-count="87">l</span>et sty = <span data-count="87">A</span>st_helper.Typ.force_poly sty in
-  <span data-count="87">l</span>et cty = <span data-count="87">t</span>ransl_simple_type val_env false sty in
-  <span data-count="85">l</span>et ty = <span data-count="85">c</span>ty.ctyp_type in
-  <span data-count="85">b</span>egin
+  <span data-count="97">l</span>et sty = <span data-count="97">A</span>st_helper.Typ.force_poly sty in
+  <span data-count="97">l</span>et cty = <span data-count="97">t</span>ransl_simple_type val_env false sty in
+  <span data-count="95">l</span>et ty = <span data-count="95">c</span>ty.ctyp_type in
+  <span data-count="95">b</span>egin
     try Ctype.unify val_env ty ty' with <span data-count="0">C</span>type.Unify trace -&gt;
         raise(Error(loc, val_env, Field_type_mismatch ("method", lab, trace)));
   end;
-  <span data-count="85">c</span>ty
+  <span data-count="95">c</span>ty
 
-let delayed_meth_specs = <span data-count="1031">r</span>ef []
+let delayed_meth_specs = <span data-count="1170">r</span>ef []
 
 let declare_method val_env meths self_type lab priv sty loc =
-  <span data-count="99">l</span>et (_, ty') =
-     <span data-count="99">C</span>type.filter_self_method val_env lab priv meths self_type
+  <span data-count="119">l</span>et (_, ty') =
+     <span data-count="119">C</span>type.filter_self_method val_env lab priv meths self_type
   in
-  <span data-count="99">l</span>et unif ty =
-    <span data-count="99">t</span>ry Ctype.unify val_env ty ty' with <span data-count="0">C</span>type.Unify trace -&gt;
+  <span data-count="119">l</span>et unif ty =
+    <span data-count="119">t</span>ry Ctype.unify val_env ty ty' with <span data-count="0">C</span>type.Unify trace -&gt;
       raise(Error(loc, val_env, Field_type_mismatch ("method", lab, trace)))
   in
-  <span data-count="99">l</span>et sty = <span data-count="99">A</span>st_helper.Typ.force_poly sty in
-  <span data-count="99">m</span>atch sty.ptyp_desc, priv with
-    <span data-count="89">P</span>typ_poly ([],sty'), Public -&gt;
+  <span data-count="119">l</span>et sty = <span data-count="119">A</span>st_helper.Typ.force_poly sty in
+  <span data-count="119">m</span>atch sty.ptyp_desc, priv with
+    <span data-count="105">P</span>typ_poly ([],sty'), Public -&gt;
 (* TODO: we moved the [transl_simple_type_univars] outside of the lazy,
 so that we can get an immediate value. Is that correct ? Ask Jacques. *)
-      let returned_cty = <span data-count="89">c</span>typ Ttyp_any (Ctype.newty Tnil) val_env loc in
-      <span data-count="89">d</span>elayed_meth_specs :=
+      let returned_cty = <span data-count="105">c</span>typ Ttyp_any (Ctype.newty Tnil) val_env loc in
+      <span data-count="105">d</span>elayed_meth_specs :=
       Warnings.mk_lazy (fun () -&gt;
-            <span data-count="89">l</span>et cty = <span data-count="89">t</span>ransl_simple_type_univars val_env sty' in
-            <span data-count="89">l</span>et ty = <span data-count="89">c</span>ty.ctyp_type in
-            <span data-count="89">u</span>nif ty;
-            <span data-count="89">r</span>eturned_cty.ctyp_desc &lt;- Ttyp_poly ([], cty);
-            <span data-count="89">r</span>eturned_cty.ctyp_type &lt;- ty;
+            <span data-count="105">l</span>et cty = <span data-count="105">t</span>ransl_simple_type_univars val_env sty' in
+            <span data-count="105">l</span>et ty = <span data-count="105">c</span>ty.ctyp_type in
+            <span data-count="105">u</span>nif ty;
+            <span data-count="105">r</span>eturned_cty.ctyp_desc &lt;- Ttyp_poly ([], cty);
+            <span data-count="105">r</span>eturned_cty.ctyp_type &lt;- ty;
           ) ::
       !delayed_meth_specs;
-      <span data-count="89">r</span>eturned_cty
-  | <span data-count="10">_</span> -&gt;
-      let cty = <span data-count="10">t</span>ransl_simple_type val_env false sty in
-      <span data-count="10">l</span>et ty = <span data-count="10">c</span>ty.ctyp_type in
-      <span data-count="10">u</span>nif ty;
-      <span data-count="10">c</span>ty
+      <span data-count="105">r</span>eturned_cty
+  | <span data-count="14">_</span> -&gt;
+      let cty = <span data-count="14">t</span>ransl_simple_type val_env false sty in
+      <span data-count="14">l</span>et ty = <span data-count="14">c</span>ty.ctyp_type in
+      <span data-count="14">u</span>nif ty;
+      <span data-count="14">c</span>ty
 
 let type_constraint val_env sty sty' loc =
-  <span data-count="48">l</span>et cty  = <span data-count="48">t</span>ransl_simple_type val_env false sty in
-  <span data-count="48">l</span>et ty = <span data-count="48">c</span>ty.ctyp_type in
-  <span data-count="48">l</span>et cty' = <span data-count="48">t</span>ransl_simple_type val_env false sty' in
-  <span data-count="48">l</span>et ty' = <span data-count="48">c</span>ty'.ctyp_type in
-  <span data-count="48">b</span>egin
+  <span data-count="50">l</span>et cty  = <span data-count="50">t</span>ransl_simple_type val_env false sty in
+  <span data-count="50">l</span>et ty = <span data-count="50">c</span>ty.ctyp_type in
+  <span data-count="50">l</span>et cty' = <span data-count="50">t</span>ransl_simple_type val_env false sty' in
+  <span data-count="50">l</span>et ty' = <span data-count="50">c</span>ty'.ctyp_type in
+  <span data-count="50">b</span>egin
     try Ctype.unify val_env ty ty' with <span data-count="0">C</span>type.Unify trace -&gt;
         raise(Error(loc, val_env, Unconsistent_constraint trace));
   end;
-  <span data-count="48">(</span>cty, cty')
+  <span data-count="50">(</span>cty, cty')
 
 let make_method loc cl_num expr =
-  <span data-count="683">l</span>et open Ast_helper in
-  let mkid s = <span data-count="1366">m</span>kloc s loc in
-  <span data-count="683">E</span>xp.fun_ ~loc:expr.pexp_loc Nolabel None
+  <span data-count="705">l</span>et open Ast_helper in
+  let mkid s = <span data-count="1410">m</span>kloc s loc in
+  <span data-count="705">E</span>xp.fun_ ~loc:expr.pexp_loc Nolabel None
     (Pat.alias ~loc (Pat.var ~loc (mkid "self-*")) (mkid ("self-" ^ cl_num)))
     expr
 
 (*******************************)
 
 let add_val lab (mut, virt, ty) val_sig =
-  <span data-count="13">l</span>et virt =
-    <span data-count="13">t</span>ry
-      let (_mut', virt', _ty') = <span data-count="13">V</span>ars.find lab val_sig in
+  <span data-count="21">l</span>et virt =
+    <span data-count="21">t</span>ry
+      let (_mut', virt', _ty') = <span data-count="21">V</span>ars.find lab val_sig in
       <span data-count="0">i</span>f virt' = Concrete then <span data-count="0">v</span>irt' else <span data-count="0">v</span>irt
-    with <span data-count="13">N</span>ot_found -&gt; virt
+    with <span data-count="21">N</span>ot_found -&gt; virt
   in
-  <span data-count="13">V</span>ars.add lab (mut, virt, ty) val_sig
+  <span data-count="21">V</span>ars.add lab (mut, virt, ty) val_sig
 
 let rec class_type_field env self_type meths arg ctf =
-  <span data-count="123">B</span>uiltin_attributes.warning_scope ctf.pctf_attributes
-    (fun () -&gt; <span data-count="123">c</span>lass_type_field_aux env self_type meths arg ctf)
+  <span data-count="155">B</span>uiltin_attributes.warning_scope ctf.pctf_attributes
+    (fun () -&gt; <span data-count="155">c</span>lass_type_field_aux env self_type meths arg ctf)
 
 and class_type_field_aux env self_type meths
     (fields, val_sig, concr_meths, inher) ctf =
 
-  <span data-count="123">l</span>et loc = <span data-count="123">c</span>tf.pctf_loc in
-  <span data-count="123">l</span>et mkctf desc =
-    <span data-count="123">{</span> ctf_desc = desc; ctf_loc = loc; ctf_attributes = ctf.pctf_attributes }
+  <span data-count="155">l</span>et loc = <span data-count="155">c</span>tf.pctf_loc in
+  <span data-count="155">l</span>et mkctf desc =
+    <span data-count="155">{</span> ctf_desc = desc; ctf_loc = loc; ctf_attributes = ctf.pctf_attributes }
   in
-  <span data-count="123">m</span>atch ctf.pctf_desc with
-    <span data-count="6">P</span>ctf_inherit sparent -&gt;
-      let parent = <span data-count="6">c</span>lass_type env sparent in
-      <span data-count="6">l</span>et inher =
-        <span data-count="6">m</span>atch parent.cltyp_type with
-          <span data-count="6">C</span>ty_constr (p, tl, _) -&gt; (p, tl) :: inher
+  <span data-count="155">m</span>atch ctf.pctf_desc with
+    <span data-count="8">P</span>ctf_inherit sparent -&gt;
+      let parent = <span data-count="8">c</span>lass_type env sparent in
+      <span data-count="8">l</span>et inher =
+        <span data-count="8">m</span>atch parent.cltyp_type with
+          <span data-count="8">C</span>ty_constr (p, tl, _) -&gt; (p, tl) :: inher
         | <span data-count="0">_</span> -&gt; inher
       in
-      <span data-count="6">l</span>et (cl_sig, concr_meths, _) =
-        <span data-count="6">i</span>nheritance self_type env None concr_meths Concr.empty sparent.pcty_loc
+      <span data-count="8">l</span>et (cl_sig, concr_meths, _) =
+        <span data-count="8">i</span>nheritance self_type env None concr_meths Concr.empty sparent.pcty_loc
           parent.cltyp_type
       in
-      <span data-count="6">l</span>et val_sig =
-        <span data-count="6">V</span>ars.fold add_val cl_sig.csig_vars val_sig in
-      <span data-count="6">(</span>mkctf (Tctf_inherit parent) :: fields,
+      <span data-count="8">l</span>et val_sig =
+        <span data-count="8">V</span>ars.fold add_val cl_sig.csig_vars val_sig in
+      <span data-count="8">(</span>mkctf (Tctf_inherit parent) :: fields,
        val_sig, concr_meths, inher)
 
-  | <span data-count="13">P</span>ctf_val ({txt=lab}, mut, virt, sty) -&gt;
-      let cty = <span data-count="13">t</span>ransl_simple_type env false sty in
-      <span data-count="13">l</span>et ty = <span data-count="13">c</span>ty.ctyp_type in
-      <span data-count="13">(</span>mkctf (Tctf_val (lab, mut, virt, cty)) :: fields,
+  | <span data-count="21">P</span>ctf_val ({txt=lab}, mut, virt, sty) -&gt;
+      let cty = <span data-count="21">t</span>ransl_simple_type env false sty in
+      <span data-count="21">l</span>et ty = <span data-count="21">c</span>ty.ctyp_type in
+      <span data-count="21">(</span>mkctf (Tctf_val (lab, mut, virt, cty)) :: fields,
       add_val lab (mut, virt, ty) val_sig, concr_meths, inher)
 
-  | <span data-count="99">P</span>ctf_method ({txt=lab}, priv, virt, sty)  -&gt;
+  | <span data-count="119">P</span>ctf_method ({txt=lab}, priv, virt, sty)  -&gt;
       let cty =
-        <span data-count="99">d</span>eclare_method env meths self_type lab priv sty  ctf.pctf_loc in
-      <span data-count="99">l</span>et concr_meths =
-        <span data-count="99">m</span>atch virt with
-        | <span data-count="97">C</span>oncrete -&gt; Concr.add lab concr_meths
+        <span data-count="119">d</span>eclare_method env meths self_type lab priv sty  ctf.pctf_loc in
+      <span data-count="119">l</span>et concr_meths =
+        <span data-count="119">m</span>atch virt with
+        | <span data-count="117">C</span>oncrete -&gt; Concr.add lab concr_meths
         | <span data-count="2">V</span>irtual -&gt; concr_meths
       in
-      <span data-count="99">(</span>mkctf (Tctf_method (lab, priv, virt, cty)) :: fields,
+      <span data-count="119">(</span>mkctf (Tctf_method (lab, priv, virt, cty)) :: fields,
         val_sig, concr_meths, inher)
 
-  | <span data-count="5">P</span>ctf_constraint (sty, sty') -&gt;
-      let (cty, cty') = <span data-count="5">t</span>ype_constraint env sty sty'  ctf.pctf_loc in
-      <span data-count="5">(</span>mkctf (Tctf_constraint (cty, cty')) :: fields,
+  | <span data-count="7">P</span>ctf_constraint (sty, sty') -&gt;
+      let (cty, cty') = <span data-count="7">t</span>ype_constraint env sty sty'  ctf.pctf_loc in
+      <span data-count="7">(</span>mkctf (Tctf_constraint (cty, cty')) :: fields,
         val_sig, concr_meths, inher)
 
   | <span data-count="0">P</span>ctf_attribute x -&gt;
@@ -4715,49 +4715,49 @@ and class_type_field_aux env self_type meths
       raise (Error_forward (Builtin_attributes.error_of_extension ext))
 
 and class_signature env {pcsig_self=sty; pcsig_fields=sign} =
-  <span data-count="120">l</span>et meths = <span data-count="120">r</span>ef Meths.empty in
-  <span data-count="120">l</span>et self_cty = <span data-count="120">t</span>ransl_simple_type env false sty in
-  <span data-count="120">l</span>et self_cty = <span data-count="120">{</span> self_cty with
+  <span data-count="162">l</span>et meths = <span data-count="162">r</span>ef Meths.empty in
+  <span data-count="162">l</span>et self_cty = <span data-count="162">t</span>ransl_simple_type env false sty in
+  <span data-count="162">l</span>et self_cty = <span data-count="162">{</span> self_cty with
     ctyp_type = Ctype.expand_head env self_cty.ctyp_type } in
-  <span data-count="120">l</span>et self_type =  <span data-count="120">s</span>elf_cty.ctyp_type in
+  <span data-count="162">l</span>et self_type =  <span data-count="162">s</span>elf_cty.ctyp_type in
 
   (* Check that the binder is a correct type, and introduce a dummy
      method preventing self type from being closed. *)
-  <span data-count="120">l</span>et dummy_obj = <span data-count="120">C</span>type.newvar () in
-  <span data-count="120">C</span>type.unify env (Ctype.filter_method env dummy_method Private dummy_obj)
+  <span data-count="162">l</span>et dummy_obj = <span data-count="162">C</span>type.newvar () in
+  <span data-count="162">C</span>type.unify env (Ctype.filter_method env dummy_method Private dummy_obj)
     (Ctype.newty (Ttuple []));
-  <span data-count="120">b</span>egin try
+  <span data-count="162">b</span>egin try
     Ctype.unify env self_type dummy_obj
   with <span data-count="0">C</span>type.Unify _ -&gt;
     raise(Error(sty.ptyp_loc, env, Pattern_type_clash self_type))
   end;
 
   (* Class type fields *)
-  <span data-count="120">l</span>et (rev_fields, val_sig, concr_meths, inher) =
-    <span data-count="120">B</span>uiltin_attributes.warning_scope []
+  <span data-count="162">l</span>et (rev_fields, val_sig, concr_meths, inher) =
+    <span data-count="162">B</span>uiltin_attributes.warning_scope []
       (fun () -&gt;
-         <span data-count="120">L</span>ist.fold_left (class_type_field env self_type meths)
+         <span data-count="162">L</span>ist.fold_left (class_type_field env self_type meths)
            ([], Vars.empty, Concr.empty, [])
            sign
       )
   in
-  <span data-count="120">l</span>et cty =   <span data-count="120">{</span>csig_self = self_type;
+  <span data-count="162">l</span>et cty =   <span data-count="162">{</span>csig_self = self_type;
    csig_vars = val_sig;
    csig_concr = concr_meths;
    csig_inher = inher}
   in
-  <span data-count="120">{</span> csig_self = self_cty;
+  <span data-count="162">{</span> csig_self = self_cty;
     csig_fields = List.rev rev_fields;
     csig_type = cty;
   }
 
 and class_type env scty =
-  <span data-count="205">B</span>uiltin_attributes.warning_scope scty.pcty_attributes
-    (fun () -&gt; <span data-count="205">c</span>lass_type_aux env scty)
+  <span data-count="267">B</span>uiltin_attributes.warning_scope scty.pcty_attributes
+    (fun () -&gt; <span data-count="267">c</span>lass_type_aux env scty)
 
 and class_type_aux env scty =
-  <span data-count="205">l</span>et cltyp desc typ =
-    <span data-count="203">{</span>
+  <span data-count="267">l</span>et cltyp desc typ =
+    <span data-count="265">{</span>
      cltyp_desc = desc;
      cltyp_type = typ;
      cltyp_loc = scty.pcty_loc;
@@ -4765,19 +4765,19 @@ and class_type_aux env scty =
      cltyp_attributes = scty.pcty_attributes;
     }
   in
-  <span data-count="205">m</span>atch scty.pcty_desc with
-    <span data-count="66">P</span>cty_constr (lid, styl) -&gt;
-      let (path, decl) = <span data-count="66">T</span>ypetexp.find_class_type env scty.pcty_loc lid.txt in
-      <span data-count="66">i</span>f Path.same decl.clty_path unbound_class then
+  <span data-count="267">m</span>atch scty.pcty_desc with
+    <span data-count="84">P</span>cty_constr (lid, styl) -&gt;
+      let (path, decl) = <span data-count="84">T</span>ypetexp.find_class_type env scty.pcty_loc lid.txt in
+      <span data-count="84">i</span>f Path.same decl.clty_path unbound_class then
         <span data-count="2">r</span>aise(Error(scty.pcty_loc, env, Unbound_class_type_2 lid.txt));
-      <span data-count="64">l</span>et (params, clty) =
-        <span data-count="64">C</span>type.instance_class decl.clty_params decl.clty_type
+      <span data-count="82">l</span>et (params, clty) =
+        <span data-count="82">C</span>type.instance_class decl.clty_params decl.clty_type
       in
-      <span data-count="64">i</span>f List.length params &lt;&gt; List.length styl then
+      <span data-count="82">i</span>f List.length params &lt;&gt; List.length styl then
         <span data-count="0">r</span>aise(Error(scty.pcty_loc, env,
                     Parameter_arity_mismatch (lid.txt, List.length params,
                                                    List.length styl)));
-      <span data-count="64">l</span>et ctys = <span data-count="64">L</span>ist.map2
+      <span data-count="82">l</span>et ctys = <span data-count="82">L</span>ist.map2
         (fun sty ty -&gt;
           <span data-count="12">l</span>et cty' = <span data-count="12">t</span>ransl_simple_type env false sty in
           <span data-count="12">l</span>et ty' = <span data-count="12">c</span>ty'.ctyp_type in
@@ -4788,24 +4788,24 @@ and class_type_aux env scty =
             <span data-count="12">c</span>ty'
         )       styl params
       in
-      <span data-count="64">l</span>et typ = <span data-count="64">C</span>ty_constr (path, params, clty) in
-      <span data-count="64">c</span>ltyp (Tcty_constr ( path, lid , ctys)) typ
+      <span data-count="82">l</span>et typ = <span data-count="82">C</span>ty_constr (path, params, clty) in
+      <span data-count="82">c</span>ltyp (Tcty_constr ( path, lid , ctys)) typ
 
-  | <span data-count="120">P</span>cty_signature pcsig -&gt;
-      let clsig = <span data-count="120">c</span>lass_signature env pcsig in
-      <span data-count="120">l</span>et typ = <span data-count="120">C</span>ty_signature clsig.csig_type in
-      <span data-count="120">c</span>ltyp (Tcty_signature clsig) typ
+  | <span data-count="162">P</span>cty_signature pcsig -&gt;
+      let clsig = <span data-count="162">c</span>lass_signature env pcsig in
+      <span data-count="162">l</span>et typ = <span data-count="162">C</span>ty_signature clsig.csig_type in
+      <span data-count="162">c</span>ltyp (Tcty_signature clsig) typ
 
-  | <span data-count="17">P</span>cty_arrow (l, sty, scty) -&gt;
-      let cty = <span data-count="17">t</span>ransl_simple_type env false sty in
-      <span data-count="17">l</span>et ty = <span data-count="17">c</span>ty.ctyp_type in
-      <span data-count="17">l</span>et ty =
-        <span data-count="17">i</span>f Btype.is_optional l
+  | <span data-count="19">P</span>cty_arrow (l, sty, scty) -&gt;
+      let cty = <span data-count="19">t</span>ransl_simple_type env false sty in
+      <span data-count="19">l</span>et ty = <span data-count="19">c</span>ty.ctyp_type in
+      <span data-count="19">l</span>et ty =
+        <span data-count="19">i</span>f Btype.is_optional l
         then <span data-count="1">C</span>type.newty (Tconstr(Predef.path_option,[ty], ref Mnil))
-        else <span data-count="16">t</span>y in
-      <span data-count="17">l</span>et clty = <span data-count="17">c</span>lass_type env scty in
-      <span data-count="17">l</span>et typ = <span data-count="17">C</span>ty_arrow (l, ty, clty.cltyp_type) in
-      <span data-count="17">c</span>ltyp (Tcty_arrow (l, cty, clty)) typ
+        else <span data-count="18">t</span>y in
+      <span data-count="19">l</span>et clty = <span data-count="19">c</span>lass_type env scty in
+      <span data-count="19">l</span>et typ = <span data-count="19">C</span>ty_arrow (l, ty, clty.cltyp_type) in
+      <span data-count="19">c</span>ltyp (Tcty_arrow (l, cty, clty)) typ
 
   | <span data-count="2">P</span>cty_open (od, e) -&gt;
       let (od, newenv) = <span data-count="2">!</span>type_open_descr env od in
@@ -4816,40 +4816,40 @@ and class_type_aux env scty =
       raise (Error_forward (Builtin_attributes.error_of_extension ext))
 
 let class_type env scty =
-  <span data-count="180">d</span>elayed_meth_specs := [];
-  <span data-count="180">l</span>et cty = <span data-count="180">c</span>lass_type env scty in
-  <span data-count="178">L</span>ist.iter Lazy.force (List.rev !delayed_meth_specs);
-  <span data-count="178">d</span>elayed_meth_specs := [];
-  <span data-count="178">c</span>ty
+  <span data-count="238">d</span>elayed_meth_specs := [];
+  <span data-count="238">l</span>et cty = <span data-count="238">c</span>lass_type env scty in
+  <span data-count="236">L</span>ist.iter Lazy.force (List.rev !delayed_meth_specs);
+  <span data-count="236">d</span>elayed_meth_specs := [];
+  <span data-count="236">c</span>ty
 
 (*******************************)
 
 let rec class_field self_loc cl_num self_type meths vars arg cf =
-  <span data-count="1160">B</span>uiltin_attributes.warning_scope cf.pcf_attributes
-    (fun () -&gt; <span data-count="1160">c</span>lass_field_aux self_loc cl_num self_type meths vars arg cf)
+  <span data-count="1210">B</span>uiltin_attributes.warning_scope cf.pcf_attributes
+    (fun () -&gt; <span data-count="1210">c</span>lass_field_aux self_loc cl_num self_type meths vars arg cf)
 
 and class_field_aux self_loc cl_num self_type meths vars
     (val_env, met_env, par_env, fields, concr_meths, warn_vals, inher,
      local_meths, local_vals) cf =
-  <span data-count="1160">l</span>et loc = <span data-count="1160">c</span>f.pcf_loc in
-  <span data-count="1160">l</span>et mkcf desc =
-    <span data-count="1098">{</span> cf_desc = desc; cf_loc = loc; cf_attributes = cf.pcf_attributes }
+  <span data-count="1210">l</span>et loc = <span data-count="1210">c</span>f.pcf_loc in
+  <span data-count="1210">l</span>et mkcf desc =
+    <span data-count="1130">{</span> cf_desc = desc; cf_loc = loc; cf_attributes = cf.pcf_attributes }
   in
-  <span data-count="1160">m</span>atch cf.pcf_desc with
-    <span data-count="150">P</span>cf_inherit (ovf, sparent, super) -&gt;
-      let parent = <span data-count="150">c</span>lass_expr cl_num val_env par_env sparent in
-      <span data-count="146">l</span>et inher =
-        <span data-count="146">m</span>atch parent.cl_type with
-          <span data-count="145">C</span>ty_constr (p, tl, _) -&gt; (p, tl) :: inher
+  <span data-count="1210">m</span>atch cf.pcf_desc with
+    <span data-count="154">P</span>cf_inherit (ovf, sparent, super) -&gt;
+      let parent = <span data-count="154">c</span>lass_expr cl_num val_env par_env sparent in
+      <span data-count="150">l</span>et inher =
+        <span data-count="150">m</span>atch parent.cl_type with
+          <span data-count="149">C</span>ty_constr (p, tl, _) -&gt; (p, tl) :: inher
         | <span data-count="1">_</span> -&gt; inher
       in
-      <span data-count="146">l</span>et (cl_sig, concr_meths, warn_vals) =
-        <span data-count="146">i</span>nheritance self_type val_env (Some ovf) concr_meths warn_vals
+      <span data-count="150">l</span>et (cl_sig, concr_meths, warn_vals) =
+        <span data-count="150">i</span>nheritance self_type val_env (Some ovf) concr_meths warn_vals
           sparent.pcl_loc parent.cl_type
       in
       (* Variables *)
-      <span data-count="144">l</span>et (val_env, met_env, par_env, inh_vars) =
-        <span data-count="144">V</span>ars.fold
+      <span data-count="146">l</span>et (val_env, met_env, par_env, inh_vars) =
+        <span data-count="146">V</span>ars.fold
           (fun lab info (val_env, met_env, par_env, inh_vars) -&gt;
              <span data-count="71">l</span>et mut, vr, ty = <span data-count="71">i</span>nfo in
              <span data-count="71">l</span>et (id, val_env, met_env, par_env) =
@@ -4860,118 +4860,118 @@ and class_field_aux self_loc cl_num self_type meths vars
           cl_sig.csig_vars (val_env, met_env, par_env, [])
       in
       (* Inherited concrete methods *)
-      <span data-count="144">l</span>et inh_meths =
-        <span data-count="144">C</span>oncr.fold (fun lab rem -&gt; <span data-count="318">(</span>lab, Ident.create_local lab)::rem)
+      <span data-count="146">l</span>et inh_meths =
+        <span data-count="146">C</span>oncr.fold (fun lab rem -&gt; <span data-count="318">(</span>lab, Ident.create_local lab)::rem)
           cl_sig.csig_concr []
       in
       (* Super *)
-      <span data-count="144">l</span>et (val_env, met_env, par_env,super) =
-        <span data-count="144">m</span>atch super with
+      <span data-count="146">l</span>et (val_env, met_env, par_env,super) =
+        <span data-count="146">m</span>atch super with
           <span data-count="134">N</span>one -&gt;
             (val_env, met_env, par_env,None)
-        | <span data-count="10">S</span>ome {txt=name} -&gt;
+        | <span data-count="12">S</span>ome {txt=name} -&gt;
             let (_id, val_env, met_env, par_env) =
-              <span data-count="10">e</span>nter_met_env ~check:(fun s -&gt; <span data-count="10">W</span>arnings.Unused_ancestor s)
+              <span data-count="12">e</span>nter_met_env ~check:(fun s -&gt; <span data-count="12">W</span>arnings.Unused_ancestor s)
                 sparent.pcl_loc name (Val_anc (inh_meths, cl_num)) self_type
                 val_env met_env par_env
             in
-            <span data-count="10">(</span>val_env, met_env, par_env,Some name)
+            <span data-count="12">(</span>val_env, met_env, par_env,Some name)
       in
-      <span data-count="144">(</span>val_env, met_env, par_env,
+      <span data-count="146">(</span>val_env, met_env, par_env,
        lazy (mkcf (Tcf_inherit (ovf, parent, super, inh_vars, inh_meths)))
        :: fields,
        concr_meths, warn_vals, inher, local_meths, local_vals)
 
-  | <span data-count="6">P</span>cf_val (lab, mut, Cfk_virtual styp) -&gt;
-      if !Clflags.principal then <span data-count="1">C</span>type.begin_def ();
-      <span data-count="6">l</span>et cty = <span data-count="6">T</span>ypetexp.transl_simple_type val_env false styp in
-      <span data-count="6">l</span>et ty = <span data-count="6">c</span>ty.ctyp_type in
-      <span data-count="6">i</span>f !Clflags.principal then <span data-count="1">b</span>egin
+  | <span data-count="8">P</span>cf_val (lab, mut, Cfk_virtual styp) -&gt;
+      if !Clflags.principal then <span data-count="2">C</span>type.begin_def ();
+      <span data-count="8">l</span>et cty = <span data-count="8">T</span>ypetexp.transl_simple_type val_env false styp in
+      <span data-count="8">l</span>et ty = <span data-count="8">c</span>ty.ctyp_type in
+      <span data-count="8">i</span>f !Clflags.principal then <span data-count="2">b</span>egin
         Ctype.end_def ();
-        <span data-count="1">C</span>type.generalize_structure ty
+        <span data-count="2">C</span>type.generalize_structure ty
       end;
-      <span data-count="6">l</span>et (id, val_env, met_env', par_env) =
-        <span data-count="6">e</span>nter_val cl_num vars false lab.txt mut Virtual ty
+      <span data-count="8">l</span>et (id, val_env, met_env', par_env) =
+        <span data-count="8">e</span>nter_val cl_num vars false lab.txt mut Virtual ty
           val_env met_env par_env loc
       in
-      <span data-count="6">(</span>val_env, met_env', par_env,
+      <span data-count="8">(</span>val_env, met_env', par_env,
        lazy (mkcf (Tcf_val (lab, mut, id, Tcfk_virtual cty,
                             met_env == met_env')))
              :: fields,
              concr_meths, warn_vals, inher, local_meths, local_vals)
 
-  | <span data-count="191">P</span>cf_val (lab, mut, Cfk_concrete (ovf, sexp)) -&gt;
+  | <span data-count="203">P</span>cf_val (lab, mut, Cfk_concrete (ovf, sexp)) -&gt;
       if Concr.mem lab.txt local_vals then
         <span data-count="0">r</span>aise(Error(loc, val_env, Duplicate ("instance variable", lab.txt)));
-      <span data-count="191">i</span>f Concr.mem lab.txt warn_vals then <span data-count="5">b</span>egin
+      <span data-count="203">i</span>f Concr.mem lab.txt warn_vals then <span data-count="5">b</span>egin
         if ovf = Fresh then
           <span data-count="4">L</span>ocation.prerr_warning lab.loc
             (Warnings.Instance_variable_override[lab.txt])
-      end else <span data-count="186">b</span>egin
+      end else <span data-count="198">b</span>egin
         if ovf = Override then
           <span data-count="0">r</span>aise(Error(loc, val_env,
                       No_overriding ("instance variable", lab.txt)))
       end;
-      <span data-count="191">i</span>f !Clflags.principal then <span data-count="82">C</span>type.begin_def ();
-      <span data-count="191">l</span>et exp = <span data-count="191">t</span>ype_exp val_env sexp in
-      <span data-count="187">i</span>f !Clflags.principal then <span data-count="80">b</span>egin
+      <span data-count="203">i</span>f !Clflags.principal then <span data-count="88">C</span>type.begin_def ();
+      <span data-count="203">l</span>et exp = <span data-count="203">t</span>ype_exp val_env sexp in
+      <span data-count="197">i</span>f !Clflags.principal then <span data-count="85">b</span>egin
         Ctype.end_def ();
-        <span data-count="80">C</span>type.generalize_structure exp.exp_type
+        <span data-count="85">C</span>type.generalize_structure exp.exp_type
        end;
-      <span data-count="187">l</span>et (id, val_env, met_env', par_env) =
-        <span data-count="187">e</span>nter_val cl_num vars false lab.txt mut Concrete exp.exp_type
+      <span data-count="197">l</span>et (id, val_env, met_env', par_env) =
+        <span data-count="197">e</span>nter_val cl_num vars false lab.txt mut Concrete exp.exp_type
           val_env met_env par_env loc
       in
-      <span data-count="187">(</span>val_env, met_env', par_env,
+      <span data-count="197">(</span>val_env, met_env', par_env,
        lazy (mkcf (Tcf_val (lab, mut, id,
                             Tcfk_concrete (ovf, exp), met_env == met_env')))
        :: fields,
        concr_meths, Concr.add lab.txt warn_vals, inher, local_meths,
        Concr.add lab.txt local_vals)
 
-  | <span data-count="87">P</span>cf_method (lab, priv, Cfk_virtual sty) -&gt;
-      let cty = <span data-count="87">v</span>irtual_method val_env meths self_type lab.txt priv sty loc in
-      <span data-count="85">(</span>val_env, met_env, par_env,
+  | <span data-count="97">P</span>cf_method (lab, priv, Cfk_virtual sty) -&gt;
+      let cty = <span data-count="97">v</span>irtual_method val_env meths self_type lab.txt priv sty loc in
+      <span data-count="95">(</span>val_env, met_env, par_env,
         lazy (mkcf(Tcf_method (lab, priv, Tcfk_virtual cty)))
        ::fields,
         concr_meths, warn_vals, inher, local_meths, local_vals)
 
-  | <span data-count="680">P</span>cf_method (lab, priv, Cfk_concrete (ovf, expr))  -&gt;
+  | <span data-count="702">P</span>cf_method (lab, priv, Cfk_concrete (ovf, expr))  -&gt;
       let expr =
-        <span data-count="680">m</span>atch expr.pexp_desc with
-        | <span data-count="680">P</span>exp_poly _ -&gt; expr
+        <span data-count="702">m</span>atch expr.pexp_desc with
+        | <span data-count="702">P</span>exp_poly _ -&gt; expr
         | <span data-count="0">_</span> -&gt; Ast_helper.Exp.poly ~loc:expr.pexp_loc expr None
       in
-      <span data-count="680">i</span>f Concr.mem lab.txt local_meths then
+      <span data-count="702">i</span>f Concr.mem lab.txt local_meths then
         <span data-count="0">r</span>aise(Error(loc, val_env, Duplicate ("method", lab.txt)));
-      <span data-count="680">i</span>f Concr.mem lab.txt concr_meths then <span data-count="38">b</span>egin
+      <span data-count="702">i</span>f Concr.mem lab.txt concr_meths then <span data-count="38">b</span>egin
         if ovf = Fresh then
           <span data-count="22">L</span>ocation.prerr_warning loc (Warnings.Method_override [lab.txt])
-      end else <span data-count="642">b</span>egin
+      end else <span data-count="664">b</span>egin
         if ovf = Override then
           <span data-count="0">r</span>aise(Error(loc, val_env, No_overriding("method", lab.txt)))
       end;
-      <span data-count="680">l</span>et (_, ty) =
-        <span data-count="680">C</span>type.filter_self_method val_env lab.txt priv meths self_type
+      <span data-count="702">l</span>et (_, ty) =
+        <span data-count="702">C</span>type.filter_self_method val_env lab.txt priv meths self_type
       in
-      <span data-count="680">b</span>egin try match expr.pexp_desc with
-        <span data-count="680">P</span>exp_poly (sbody, sty) -&gt;
-          begin match sty with <span data-count="592">N</span>one -&gt; ()
-                | <span data-count="88">S</span>ome sty -&gt;
-                    let sty = <span data-count="88">A</span>st_helper.Typ.force_poly sty in
-                    <span data-count="88">l</span>et cty' = <span data-count="88">T</span>ypetexp.transl_simple_type val_env false sty in
-                    <span data-count="88">l</span>et ty' = <span data-count="88">c</span>ty'.ctyp_type in
-              <span data-count="88">C</span>type.unify val_env ty' ty
+      <span data-count="702">b</span>egin try match expr.pexp_desc with
+        <span data-count="702">P</span>exp_poly (sbody, sty) -&gt;
+          begin match sty with <span data-count="608">N</span>one -&gt; ()
+                | <span data-count="94">S</span>ome sty -&gt;
+                    let sty = <span data-count="94">A</span>st_helper.Typ.force_poly sty in
+                    <span data-count="94">l</span>et cty' = <span data-count="94">T</span>ypetexp.transl_simple_type val_env false sty in
+                    <span data-count="94">l</span>et ty' = <span data-count="94">c</span>ty'.ctyp_type in
+              <span data-count="94">C</span>type.unify val_env ty' ty
           end;
-          <span data-count="680">b</span>egin match (Ctype.repr ty).desc with
-            <span data-count="428">T</span>var _ -&gt;
-              let ty' = <span data-count="428">C</span>type.newvar () in
-              <span data-count="428">C</span>type.unify val_env (Ctype.newty (Tpoly (ty', []))) ty;
-              <span data-count="428">C</span>type.unify val_env (type_approx val_env sbody) ty'
-          | <span data-count="252">T</span>poly (ty1, tl) -&gt;
-              let _, ty1' = <span data-count="252">C</span>type.instance_poly false tl ty1 in
-              <span data-count="252">l</span>et ty2 = <span data-count="252">t</span>ype_approx val_env sbody in
-              <span data-count="252">C</span>type.unify val_env ty2 ty1'
+          <span data-count="702">b</span>egin match (Ctype.repr ty).desc with
+            <span data-count="442">T</span>var _ -&gt;
+              let ty' = <span data-count="442">C</span>type.newvar () in
+              <span data-count="442">C</span>type.unify val_env (Ctype.newty (Tpoly (ty', []))) ty;
+              <span data-count="442">C</span>type.unify val_env (type_approx val_env sbody) ty'
+          | <span data-count="260">T</span>poly (ty1, tl) -&gt;
+              let _, ty1' = <span data-count="260">C</span>type.instance_poly false tl ty1 in
+              <span data-count="260">l</span>et ty2 = <span data-count="260">t</span>ype_approx val_env sbody in
+              <span data-count="260">C</span>type.unify val_env ty2 ty1'
           | _ -&gt; assert false
           end
       | _ -&gt; assert false
@@ -4979,26 +4979,26 @@ and class_field_aux self_loc cl_num self_type meths vars
         raise(Error(loc, val_env,
                     Field_type_mismatch ("method", lab.txt, trace)))
       end;
-      <span data-count="680">l</span>et meth_expr = <span data-count="680">m</span>ake_method self_loc cl_num expr in
+      <span data-count="702">l</span>et meth_expr = <span data-count="702">m</span>ake_method self_loc cl_num expr in
       (* backup variables for Pexp_override *)
-      <span data-count="680">l</span>et vars_local = <span data-count="680">!</span>vars in
+      <span data-count="702">l</span>et vars_local = <span data-count="702">!</span>vars in
 
-      <span data-count="680">l</span>et field =
-        <span data-count="680">W</span>arnings.mk_lazy
+      <span data-count="702">l</span>et field =
+        <span data-count="702">W</span>arnings.mk_lazy
           (fun () -&gt;
              (* Read the generalized type *)
-             <span data-count="672">l</span>et (_, ty) = <span data-count="672">M</span>eths.find lab.txt !meths in
-             <span data-count="672">l</span>et meth_type = <span data-count="672">m</span>k_expected (
+             <span data-count="694">l</span>et (_, ty) = <span data-count="694">M</span>eths.find lab.txt !meths in
+             <span data-count="694">l</span>et meth_type = <span data-count="694">m</span>k_expected (
                Btype.newgenty (Tarrow(Nolabel, self_type, ty, Cok))
              ) in
-             <span data-count="672">C</span>type.raise_nongen_level ();
-             <span data-count="672">v</span>ars := vars_local;
-             <span data-count="672">l</span>et texp = <span data-count="672">t</span>ype_expect met_env meth_expr meth_type in
-             <span data-count="640">C</span>type.end_def ();
-             <span data-count="640">m</span>kcf (Tcf_method (lab, priv, Tcfk_concrete (ovf, texp)))
+             <span data-count="694">C</span>type.raise_nongen_level ();
+             <span data-count="694">v</span>ars := vars_local;
+             <span data-count="694">l</span>et texp = <span data-count="694">t</span>ype_expect met_env meth_expr meth_type in
+             <span data-count="650">C</span>type.end_def ();
+             <span data-count="650">m</span>kcf (Tcf_method (lab, priv, Tcfk_concrete (ovf, texp)))
           )
       in
-      <span data-count="680">(</span>val_env, met_env, par_env, field::fields,
+      <span data-count="702">(</span>val_env, met_env, par_env, field::fields,
        Concr.add lab.txt concr_meths, warn_vals, inher,
        Concr.add lab.txt local_meths, local_vals)
 
@@ -5046,42 +5046,42 @@ and class_field_aux self_loc cl_num self_type meths vars
 and class_structure cl_num final val_env met_env loc
   { pcstr_self = spat; pcstr_fields = str } =
   (* Environment for substructures *)
-  <span data-count="580">l</span>et par_env = <span data-count="580">m</span>et_env in
+  <span data-count="624">l</span>et par_env = <span data-count="624">m</span>et_env in
 
   (* Location of self. Used for locations of self arguments *)
-  <span data-count="580">l</span>et self_loc = <span data-count="580">{</span>spat.ppat_loc with Location.loc_ghost = true} in
+  <span data-count="624">l</span>et self_loc = <span data-count="624">{</span>spat.ppat_loc with Location.loc_ghost = true} in
 
-  <span data-count="580">l</span>et self_type = <span data-count="580">C</span>type.newobj (Ctype.newvar ()) in
+  <span data-count="624">l</span>et self_type = <span data-count="624">C</span>type.newobj (Ctype.newvar ()) in
 
   (* Adding a dummy method to the self type prevents it from being closed /
      escaping.
      That isn't needed for objects though. *)
-  <span data-count="580">i</span>f not final then
-    <span data-count="461">C</span>type.unify val_env
+  <span data-count="624">i</span>f not final then
+    <span data-count="495">C</span>type.unify val_env
       (Ctype.filter_method val_env dummy_method Private self_type)
       (Ctype.newty (Ttuple []));
 
   (* Private self is used for private method calls *)
-  <span data-count="580">l</span>et private_self = <span data-count="580">i</span>f final then <span data-count="119">C</span>type.newvar () else <span data-count="461">s</span>elf_type in
+  <span data-count="624">l</span>et private_self = <span data-count="624">i</span>f final then <span data-count="129">C</span>type.newvar () else <span data-count="495">s</span>elf_type in
 
   (* Self binder *)
-  <span data-count="580">l</span>et (pat, meths, vars, val_env, meth_env, par_env) =
-    <span data-count="580">t</span>ype_self_pattern cl_num private_self val_env met_env par_env spat
+  <span data-count="624">l</span>et (pat, meths, vars, val_env, meth_env, par_env) =
+    <span data-count="624">t</span>ype_self_pattern cl_num private_self val_env met_env par_env spat
   in
-  <span data-count="576">l</span>et public_self = <span data-count="576">p</span>at.pat_type in
+  <span data-count="620">l</span>et public_self = <span data-count="620">p</span>at.pat_type in
 
   (* Check that the binder has a correct type *)
-  <span data-count="576">l</span>et ty =
-    <span data-count="576">i</span>f final then <span data-count="119">C</span>type.newty (Tobject (Ctype.newvar(), ref None))
-    else <span data-count="457">s</span>elf_type in
-  <span data-count="576">b</span>egin try Ctype.unify val_env public_self ty with
+  <span data-count="620">l</span>et ty =
+    <span data-count="620">i</span>f final then <span data-count="129">C</span>type.newty (Tobject (Ctype.newvar(), ref None))
+    else <span data-count="491">s</span>elf_type in
+  <span data-count="620">b</span>egin try Ctype.unify val_env public_self ty with
     <span data-count="2">C</span>type.Unify _ -&gt;
       raise(Error(spat.ppat_loc, val_env, Pattern_type_clash public_self))
   end;
-  <span data-count="574">l</span>et get_methods ty =
-    <span data-count="1205">(</span>fst (Ctype.flatten_fields
+  <span data-count="618">l</span>et get_methods ty =
+    <span data-count="1283">(</span>fst (Ctype.flatten_fields
             (Ctype.object_fields (Ctype.expand_head val_env ty)))) in
-  <span data-count="574">i</span>f final then <span data-count="119">b</span>egin
+  <span data-count="618">i</span>f final then <span data-count="129">b</span>egin
     (* Copy known information to still empty self_type *)
     List.iter
       (fun (lab,kind,ty) -&gt;
@@ -5094,127 +5094,127 @@ and class_structure cl_num final val_env met_env loc
   end;
 
   (* Typing of class fields *)
-  <span data-count="574">l</span>et (_, _, _, fields, concr_meths, _, inher, _local_meths, _local_vals) =
-    <span data-count="574">B</span>uiltin_attributes.warning_scope []
+  <span data-count="618">l</span>et (_, _, _, fields, concr_meths, _, inher, _local_meths, _local_vals) =
+    <span data-count="618">B</span>uiltin_attributes.warning_scope []
       (fun () -&gt;
-         <span data-count="574">L</span>ist.fold_left (class_field self_loc cl_num self_type meths vars)
+         <span data-count="618">L</span>ist.fold_left (class_field self_loc cl_num self_type meths vars)
            (val_env, meth_env, par_env, [], Concr.empty, Concr.empty, [],
             Concr.empty, Concr.empty)
            str
       )
   in
-  <span data-count="562">C</span>type.unify val_env self_type (Ctype.newvar ());
-  <span data-count="562">l</span>et sign =
-    <span data-count="562">{</span>csig_self = public_self;
-     csig_vars = Vars.map (fun (_id, mut, vr, ty) -&gt; <span data-count="246">(</span>mut, vr, ty)) !vars;
+  <span data-count="602">C</span>type.unify val_env self_type (Ctype.newvar ());
+  <span data-count="602">l</span>et sign =
+    <span data-count="602">{</span>csig_self = public_self;
+     csig_vars = Vars.map (fun (_id, mut, vr, ty) -&gt; <span data-count="256">(</span>mut, vr, ty)) !vars;
      csig_concr = concr_meths;
       csig_inher = inher} in
-  <span data-count="562">l</span>et methods = <span data-count="562">g</span>et_methods self_type in
-  <span data-count="562">l</span>et priv_meths =
-    <span data-count="562">L</span>ist.filter (fun (_,kind,_) -&gt; <span data-count="1448">B</span>type.field_kind_repr kind &lt;&gt; Fpresent)
+  <span data-count="602">l</span>et methods = <span data-count="602">g</span>et_methods self_type in
+  <span data-count="602">l</span>et priv_meths =
+    <span data-count="602">L</span>ist.filter (fun (_,kind,_) -&gt; <span data-count="1512">B</span>type.field_kind_repr kind &lt;&gt; Fpresent)
       methods in
-  <span data-count="562">i</span>f final then <span data-count="115">b</span>egin
+  <span data-count="602">i</span>f final then <span data-count="123">b</span>egin
     (* Unify private_self and a copy of self_type. self_type will not
        be modified after this point *)
     if not (Ctype.close_object self_type) then
       <span data-count="4">r</span>aise(Error(loc, val_env, Closing_self_type self_type));
-    <span data-count="111">l</span>et mets = <span data-count="111">v</span>irtual_methods {sign with csig_self = self_type} in
-    <span data-count="111">l</span>et vals =
-      <span data-count="111">V</span>ars.fold
-        (fun name (_mut, vr, _ty) l -&gt; <span data-count="12">i</span>f vr = Virtual then <span data-count="0">n</span>ame :: l else <span data-count="12">l</span>)
+    <span data-count="119">l</span>et mets = <span data-count="119">v</span>irtual_methods {sign with csig_self = self_type} in
+    <span data-count="119">l</span>et vals =
+      <span data-count="119">V</span>ars.fold
+        (fun name (_mut, vr, _ty) l -&gt; <span data-count="14">i</span>f vr = Virtual then <span data-count="0">n</span>ame :: l else <span data-count="14">l</span>)
         sign.csig_vars [] in
-    <span data-count="111">i</span>f <span data-count="111">m</span>ets &lt;&gt; [] || <span data-count="111">v</span>als &lt;&gt; [] then
+    <span data-count="119">i</span>f <span data-count="119">m</span>ets &lt;&gt; [] || <span data-count="119">v</span>als &lt;&gt; [] then
       <span data-count="0">r</span>aise(Error(loc, val_env, Virtual_class(true, final, mets, vals)));
-    <span data-count="111">l</span>et self_methods =
-      <span data-count="111">L</span>ist.fold_right
+    <span data-count="119">l</span>et self_methods =
+      <span data-count="119">L</span>ist.fold_right
         (fun (lab,kind,ty) rem -&gt;
-           <span data-count="145">C</span>type.newty(Tfield(lab, Btype.copy_kind kind, ty, rem)))
+           <span data-count="151">C</span>type.newty(Tfield(lab, Btype.copy_kind kind, ty, rem)))
         methods (Ctype.newty Tnil) in
-    <span data-count="111">b</span>egin try
+    <span data-count="119">b</span>egin try
       Ctype.unify val_env private_self
         (Ctype.newty (Tobject(self_methods, ref None)));
-      <span data-count="111">C</span>type.unify val_env public_self self_type
+      <span data-count="119">C</span>type.unify val_env public_self self_type
     with <span data-count="2">C</span>type.Unify trace -&gt; raise(Error(loc, val_env, Final_self_clash trace))
     end;
   end;
 
   (* Typing of method bodies *)
-  (* if !Clflags.principal then *) <span data-count="556">b</span>egin
-    let ms = <span data-count="556">!</span>meths in
+  (* if !Clflags.principal then *) <span data-count="596">b</span>egin
+    let ms = <span data-count="596">!</span>meths in
     (* Generalize the spine of methods accessed through self *)
-    <span data-count="556">M</span>eths.iter (fun _ (_,ty) -&gt; <span data-count="721">C</span>type.generalize_spine ty) ms;
-    <span data-count="556">m</span>eths :=
-      Meths.map (fun (id,ty) -&gt; <span data-count="721">(</span>id, Ctype.generic_instance ty)) ms;
+    <span data-count="596">M</span>eths.iter (fun _ (_,ty) -&gt; <span data-count="753">C</span>type.generalize_spine ty) ms;
+    <span data-count="596">m</span>eths :=
+      Meths.map (fun (id,ty) -&gt; <span data-count="753">(</span>id, Ctype.generic_instance ty)) ms;
     (* But keep levels correct on the type of self *)
-    <span data-count="556">M</span>eths.iter (fun _ (_,ty) -&gt; <span data-count="721">C</span>type.unify val_env ty (Ctype.newvar ())) ms
+    <span data-count="596">M</span>eths.iter (fun _ (_,ty) -&gt; <span data-count="753">C</span>type.unify val_env ty (Ctype.newvar ())) ms
   end;
-  <span data-count="556">l</span>et fields = <span data-count="556">L</span>ist.map Lazy.force (List.rev fields) in
-  <span data-count="524">l</span>et meths = <span data-count="524">M</span>eths.map (function <span data-count="693">(</span>id, _ty) -&gt; id) !meths in
+  <span data-count="596">l</span>et fields = <span data-count="596">L</span>ist.map Lazy.force (List.rev fields) in
+  <span data-count="552">l</span>et meths = <span data-count="552">M</span>eths.map (function <span data-count="711">(</span>id, _ty) -&gt; id) !meths in
 
   (* Check for private methods made public *)
-  <span data-count="524">l</span>et pub_meths' =
-    <span data-count="524">L</span>ist.filter (fun (_,kind,_) -&gt; <span data-count="1362">B</span>type.field_kind_repr kind = Fpresent)
+  <span data-count="552">l</span>et pub_meths' =
+    <span data-count="552">L</span>ist.filter (fun (_,kind,_) -&gt; <span data-count="1406">B</span>type.field_kind_repr kind = Fpresent)
       (get_methods public_self) in
-  <span data-count="524">l</span>et names = <span data-count="524">L</span>ist.map (fun (x,_,_) -&gt; <span data-count="1366">x</span>) in
-  <span data-count="524">l</span>et l1 = <span data-count="524">n</span>ames priv_meths and l2 = <span data-count="524">n</span>ames pub_meths' in
-  <span data-count="524">l</span>et added = <span data-count="524">L</span>ist.filter (fun x -&gt; <span data-count="898">L</span>ist.mem x l1) l2 in
-  <span data-count="524">i</span>f added &lt;&gt; [] then
+  <span data-count="552">l</span>et names = <span data-count="552">L</span>ist.map (fun (x,_,_) -&gt; <span data-count="1410">x</span>) in
+  <span data-count="552">l</span>et l1 = <span data-count="552">n</span>ames priv_meths and l2 = <span data-count="552">n</span>ames pub_meths' in
+  <span data-count="552">l</span>et added = <span data-count="552">L</span>ist.filter (fun x -&gt; <span data-count="914">L</span>ist.mem x l1) l2 in
+  <span data-count="552">i</span>f added &lt;&gt; [] then
     <span data-count="2">L</span>ocation.prerr_warning loc (Warnings.Implicit_public_methods added);
-  <span data-count="524">l</span>et sign = <span data-count="524">i</span>f final then <span data-count="103">s</span>ign else
-      <span data-count="421">{</span>sign with Types.csig_self = Ctype.expand_head val_env public_self} in
-  <span data-count="524">{</span>
+  <span data-count="552">l</span>et sign = <span data-count="552">i</span>f final then <span data-count="105">s</span>ign else
+      <span data-count="447">{</span>sign with Types.csig_self = Ctype.expand_head val_env public_self} in
+  <span data-count="552">{</span>
     cstr_self = pat;
     cstr_fields = fields;
     cstr_type = sign;
     cstr_meths = meths}, sign (* redondant, since already in cstr_type *)
 
 and class_expr cl_num val_env met_env scl =
-  <span data-count="1051">B</span>uiltin_attributes.warning_scope scl.pcl_attributes
-    (fun () -&gt; <span data-count="1051">c</span>lass_expr_aux cl_num val_env met_env scl)
+  <span data-count="1105">B</span>uiltin_attributes.warning_scope scl.pcl_attributes
+    (fun () -&gt; <span data-count="1105">c</span>lass_expr_aux cl_num val_env met_env scl)
 
 and class_expr_aux cl_num val_env met_env scl =
-  <span data-count="1051">m</span>atch scl.pcl_desc with
-    <span data-count="162">P</span>cl_constr (lid, styl) -&gt;
-      let (path, decl) = <span data-count="162">T</span>ypetexp.find_class val_env scl.pcl_loc lid.txt in
-      <span data-count="160">i</span>f Path.same decl.cty_path unbound_class then
+  <span data-count="1105">m</span>atch scl.pcl_desc with
+    <span data-count="170">P</span>cl_constr (lid, styl) -&gt;
+      let (path, decl) = <span data-count="170">T</span>ypetexp.find_class val_env scl.pcl_loc lid.txt in
+      <span data-count="168">i</span>f Path.same decl.cty_path unbound_class then
         <span data-count="0">r</span>aise(Error(scl.pcl_loc, val_env, Unbound_class_2 lid.txt));
-      <span data-count="160">l</span>et tyl = <span data-count="160">L</span>ist.map
+      <span data-count="168">l</span>et tyl = <span data-count="168">L</span>ist.map
           (fun sty -&gt; <span data-count="46">t</span>ransl_simple_type val_env false sty)
           styl
       in
-      <span data-count="160">l</span>et (params, clty) =
-        <span data-count="160">C</span>type.instance_class decl.cty_params decl.cty_type
+      <span data-count="168">l</span>et (params, clty) =
+        <span data-count="168">C</span>type.instance_class decl.cty_params decl.cty_type
       in
-      <span data-count="160">l</span>et clty' = <span data-count="160">a</span>bbreviate_class_type path params clty in
-      <span data-count="160">i</span>f List.length params &lt;&gt; List.length tyl then
+      <span data-count="168">l</span>et clty' = <span data-count="168">a</span>bbreviate_class_type path params clty in
+      <span data-count="168">i</span>f List.length params &lt;&gt; List.length tyl then
         <span data-count="0">r</span>aise(Error(scl.pcl_loc, val_env,
                     Parameter_arity_mismatch (lid.txt, List.length params,
                                                    List.length tyl)));
-      <span data-count="160">L</span>ist.iter2
+      <span data-count="168">L</span>ist.iter2
         (fun cty' ty -&gt;
           <span data-count="46">l</span>et ty' = <span data-count="46">c</span>ty'.ctyp_type in
            <span data-count="46">t</span>ry Ctype.unify val_env ty' ty with <span data-count="0">C</span>type.Unify trace -&gt;
              raise(Error(cty'.ctyp_loc, val_env, Parameter_mismatch trace)))
         tyl params;
-      <span data-count="160">l</span>et cl =
-        <span data-count="160">r</span>c {cl_desc = Tcl_ident (path, lid, tyl);
+      <span data-count="168">l</span>et cl =
+        <span data-count="168">r</span>c {cl_desc = Tcl_ident (path, lid, tyl);
             cl_loc = scl.pcl_loc;
             cl_type = clty';
             cl_env = val_env;
             cl_attributes = scl.pcl_attributes;
            }
       in
-      <span data-count="160">l</span>et (vals, meths, concrs) = <span data-count="160">e</span>xtract_constraints clty in
-      <span data-count="160">r</span>c {cl_desc = Tcl_constraint (cl, None, vals, meths, concrs);
+      <span data-count="168">l</span>et (vals, meths, concrs) = <span data-count="168">e</span>xtract_constraints clty in
+      <span data-count="168">r</span>c {cl_desc = Tcl_constraint (cl, None, vals, meths, concrs);
           cl_loc = scl.pcl_loc;
           cl_type = clty';
           cl_env = val_env;
           cl_attributes = []; (* attributes are kept on the inner cl node *)
          }
-  | <span data-count="461">P</span>cl_structure cl_str -&gt;
+  | <span data-count="495">P</span>cl_structure cl_str -&gt;
       let (desc, ty) =
-        <span data-count="461">c</span>lass_structure cl_num false val_env met_env scl.pcl_loc cl_str in
-      <span data-count="421">r</span>c {cl_desc = Tcl_structure desc;
+        <span data-count="495">c</span>lass_structure cl_num false val_env met_env scl.pcl_loc cl_str in
+      <span data-count="447">r</span>c {cl_desc = Tcl_structure desc;
           cl_loc = scl.pcl_loc;
           cl_type = Cty_signature ty;
           cl_env = val_env;
@@ -5250,22 +5250,22 @@ and class_expr_aux cl_num val_env met_env scl =
              is not detected for class-level let bindings.  See #5975.*)
       in
       <span data-count="4">c</span>lass_expr cl_num val_env met_env sfun
-  | <span data-count="276">P</span>cl_fun (l, None, spat, scl') -&gt;
-      if !Clflags.principal then <span data-count="127">C</span>type.begin_def ();
-      <span data-count="276">l</span>et (pat, pv, val_env', met_env) =
-        <span data-count="276">T</span>ypecore.type_class_arg_pattern cl_num val_env met_env l spat
+  | <span data-count="278">P</span>cl_fun (l, None, spat, scl') -&gt;
+      if !Clflags.principal then <span data-count="128">C</span>type.begin_def ();
+      <span data-count="278">l</span>et (pat, pv, val_env', met_env) =
+        <span data-count="278">T</span>ypecore.type_class_arg_pattern cl_num val_env met_env l spat
       in
-      <span data-count="272">i</span>f !Clflags.principal then <span data-count="125">b</span>egin
+      <span data-count="274">i</span>f !Clflags.principal then <span data-count="126">b</span>egin
         Ctype.end_def ();
-        <span data-count="125">i</span>ter_pattern (fun {pat_type=ty} -&gt; <span data-count="156">C</span>type.generalize_structure ty) pat
+        <span data-count="126">i</span>ter_pattern (fun {pat_type=ty} -&gt; <span data-count="158">C</span>type.generalize_structure ty) pat
       end;
-      <span data-count="272">l</span>et pv =
-        <span data-count="272">L</span>ist.map
+      <span data-count="274">l</span>et pv =
+        <span data-count="274">L</span>ist.map
           begin fun (id, id', _ty) -&gt;
-            <span data-count="177">l</span>et path = <span data-count="177">P</span>ident id' in
+            <span data-count="179">l</span>et path = <span data-count="179">P</span>ident id' in
             (* do not mark the value as being used *)
-            <span data-count="177">l</span>et vd = <span data-count="177">E</span>nv.find_value path val_env' in
-            <span data-count="177">(</span>id,
+            <span data-count="179">l</span>et vd = <span data-count="179">E</span>nv.find_value path val_env' in
+            <span data-count="179">(</span>id,
              {exp_desc =
               Texp_ident(path, mknoloc (Longident.Lident (Ident.name id)), vd);
               exp_loc = Location.none; exp_extra = [];
@@ -5275,22 +5275,22 @@ and class_expr_aux cl_num val_env met_env scl =
           end
           pv
       in
-      <span data-count="272">l</span>et not_function = <span data-count="272">f</span>unction
+      <span data-count="274">l</span>et not_function = <span data-count="274">f</span>unction
           <span data-count="5">C</span>ty_arrow _ -&gt; false
         | <span data-count="0">_</span> -&gt; true
       in
-      <span data-count="272">l</span>et partial =
-        <span data-count="272">l</span>et dummy = <span data-count="272">t</span>ype_exp val_env (Ast_helper.Exp.unreachable ()) in
-        <span data-count="272">T</span>ypecore.check_partial val_env pat.pat_type pat.pat_loc
+      <span data-count="274">l</span>et partial =
+        <span data-count="274">l</span>et dummy = <span data-count="274">t</span>ype_exp val_env (Ast_helper.Exp.unreachable ()) in
+        <span data-count="274">T</span>ypecore.check_partial val_env pat.pat_type pat.pat_loc
           [{c_lhs = pat; c_guard = None; c_rhs = dummy}]
       in
-      <span data-count="272">C</span>type.raise_nongen_level ();
-      <span data-count="272">l</span>et cl = <span data-count="272">c</span>lass_expr cl_num val_env' met_env scl' in
-      <span data-count="258">C</span>type.end_def ();
-      <span data-count="258">i</span>f <span data-count="258">B</span>type.is_optional l &amp;&amp; <span data-count="5">n</span>ot_function cl.cl_type then
+      <span data-count="274">C</span>type.raise_nongen_level ();
+      <span data-count="274">l</span>et cl = <span data-count="274">c</span>lass_expr cl_num val_env' met_env scl' in
+      <span data-count="260">C</span>type.end_def ();
+      <span data-count="260">i</span>f <span data-count="260">B</span>type.is_optional l &amp;&amp; <span data-count="5">n</span>ot_function cl.cl_type then
         <span data-count="0">L</span>ocation.prerr_warning pat.pat_loc
           Warnings.Unerasable_optional_argument;
-      <span data-count="258">r</span>c {cl_desc = Tcl_fun (l, pat, pv, cl, partial);
+      <span data-count="260">r</span>c {cl_desc = Tcl_fun (l, pat, pv, cl, partial);
           cl_loc = scl.pcl_loc;
           cl_type = Cty_arrow
             (l, Ctype.instance pat.pat_type, cl.cl_type);
@@ -5451,26 +5451,26 @@ and class_expr_aux cl_num val_env met_env scl =
           cl_env = val_env;
           cl_attributes = scl.pcl_attributes;
          }
-  | <span data-count="19">P</span>cl_constraint (scl', scty) -&gt;
+  | <span data-count="29">P</span>cl_constraint (scl', scty) -&gt;
       Ctype.begin_class_def ();
-      <span data-count="19">l</span>et context = <span data-count="19">T</span>ypetexp.narrow () in
-      <span data-count="19">l</span>et cl = <span data-count="19">c</span>lass_expr cl_num val_env met_env scl' in
-      <span data-count="19">T</span>ypetexp.widen context;
-      <span data-count="19">l</span>et context = <span data-count="19">T</span>ypetexp.narrow () in
-      <span data-count="19">l</span>et clty = <span data-count="19">c</span>lass_type val_env scty in
-      <span data-count="19">T</span>ypetexp.widen context;
-      <span data-count="19">C</span>type.end_def ();
+      <span data-count="29">l</span>et context = <span data-count="29">T</span>ypetexp.narrow () in
+      <span data-count="29">l</span>et cl = <span data-count="29">c</span>lass_expr cl_num val_env met_env scl' in
+      <span data-count="29">T</span>ypetexp.widen context;
+      <span data-count="29">l</span>et context = <span data-count="29">T</span>ypetexp.narrow () in
+      <span data-count="29">l</span>et clty = <span data-count="29">c</span>lass_type val_env scty in
+      <span data-count="29">T</span>ypetexp.widen context;
+      <span data-count="29">C</span>type.end_def ();
 
-      <span data-count="19">l</span>imited_generalize (Ctype.row_variable (Ctype.self_type cl.cl_type))
+      <span data-count="29">l</span>imited_generalize (Ctype.row_variable (Ctype.self_type cl.cl_type))
           cl.cl_type;
-      <span data-count="19">l</span>imited_generalize (Ctype.row_variable (Ctype.self_type clty.cltyp_type))
+      <span data-count="29">l</span>imited_generalize (Ctype.row_variable (Ctype.self_type clty.cltyp_type))
         clty.cltyp_type;
 
-      <span data-count="19">b</span>egin match
+      <span data-count="29">b</span>egin match
         Includeclass.class_types val_env cl.cl_type clty.cltyp_type
       with
         <span data-count="6">[</span>]    -&gt; ()
-      | <span data-count="13">e</span>rror -&gt; raise(Error(cl.cl_loc, val_env, Class_match_failure error))
+      | <span data-count="23">e</span>rror -&gt; raise(Error(cl.cl_loc, val_env, Class_match_failure error))
       end;
       <span data-count="6">l</span>et (vals, meths, concrs) = <span data-count="6">e</span>xtract_constraints clty.cltyp_type in
       <span data-count="6">r</span>c {cl_desc = Tcl_constraint (cl, Some clty, vals, meths, concrs);
@@ -5498,40 +5498,40 @@ and class_expr_aux cl_num val_env met_env scl =
 (* Approximate the type of the constructor to allow recursive use *)
 (* of optional parameters                                         *)
 
-let var_option = <span data-count="1031">P</span>redef.type_option (Btype.newgenvar ())
+let var_option = <span data-count="1170">P</span>redef.type_option (Btype.newgenvar ())
 
 let rec approx_declaration cl =
   match cl.pcl_desc with
-    <span data-count="279">P</span>cl_fun (l, _, _, cl) -&gt;
+    <span data-count="281">P</span>cl_fun (l, _, _, cl) -&gt;
       let arg =
-        <span data-count="279">i</span>f Btype.is_optional l then <span data-count="5">C</span>type.instance var_option
-        else <span data-count="274">C</span>type.newvar () in
-      <span data-count="279">C</span>type.newty (Tarrow (l, arg, approx_declaration cl, Cok))
+        <span data-count="281">i</span>f Btype.is_optional l then <span data-count="5">C</span>type.instance var_option
+        else <span data-count="276">C</span>type.newvar () in
+      <span data-count="281">C</span>type.newty (Tarrow (l, arg, approx_declaration cl, Cok))
   | <span data-count="34">P</span>cl_let (_, _, cl) -&gt;
       approx_declaration cl
-  | <span data-count="19">P</span>cl_constraint (cl, _) -&gt;
+  | <span data-count="29">P</span>cl_constraint (cl, _) -&gt;
       approx_declaration cl
-  | <span data-count="485">_</span> -&gt; Ctype.newvar ()
+  | <span data-count="523">_</span> -&gt; Ctype.newvar ()
 
 let rec approx_description ct =
   match ct.pcty_desc with
-    <span data-count="15">P</span>cty_arrow (l, _, ct) -&gt;
+    <span data-count="17">P</span>cty_arrow (l, _, ct) -&gt;
       let arg =
-        <span data-count="15">i</span>f Btype.is_optional l then <span data-count="0">C</span>type.instance var_option
-        else <span data-count="15">C</span>type.newvar () in
-      <span data-count="15">C</span>type.newty (Tarrow (l, arg, approx_description ct, Cok))
-  | <span data-count="161">_</span> -&gt; Ctype.newvar ()
+        <span data-count="17">i</span>f Btype.is_optional l then <span data-count="0">C</span>type.instance var_option
+        else <span data-count="17">C</span>type.newvar () in
+      <span data-count="17">C</span>type.newty (Tarrow (l, arg, approx_description ct, Cok))
+  | <span data-count="209">_</span> -&gt; Ctype.newvar ()
 
 (*******************************)
 
 let temp_abbrev loc env id arity =
-  <span data-count="1292">l</span>et params = <span data-count="1292">r</span>ef [] in
-  <span data-count="1292">f</span>or _i = 1 to arity do
-    <span data-count="358">p</span>arams := Ctype.newvar () :: !params
+  <span data-count="1464">l</span>et params = <span data-count="1464">r</span>ef [] in
+  <span data-count="1464">f</span>or _i = 1 to arity do
+    <span data-count="374">p</span>arams := Ctype.newvar () :: !params
   done;
-  <span data-count="1292">l</span>et ty = <span data-count="1292">C</span>type.newobj (Ctype.newvar ()) in
-  <span data-count="1292">l</span>et env =
-    <span data-count="1292">E</span>nv.add_type ~check:true id
+  <span data-count="1464">l</span>et ty = <span data-count="1464">C</span>type.newobj (Ctype.newvar ()) in
+  <span data-count="1464">l</span>et env =
+    <span data-count="1464">E</span>nv.add_type ~check:true id
       {type_params = !params;
        type_arity = arity;
        type_kind = Type_abstract;
@@ -5547,41 +5547,41 @@ let temp_abbrev loc env id arity =
       }
       env
   in
-  <span data-count="1292">(</span>!params, ty, env)
+  <span data-count="1464">(</span>!params, ty, env)
 
 let initial_env define_class approx
     (res, env) (cl, id, ty_id, obj_id, cl_id) =
   (* Temporary abbreviations *)
-  <span data-count="646">l</span>et arity = <span data-count="646">L</span>ist.length cl.pci_params in
-  <span data-count="646">l</span>et (obj_params, obj_ty, env) = <span data-count="646">t</span>emp_abbrev cl.pci_loc env obj_id arity in
-  <span data-count="646">l</span>et (cl_params, cl_ty, env) = <span data-count="646">t</span>emp_abbrev cl.pci_loc env cl_id arity in
+  <span data-count="732">l</span>et arity = <span data-count="732">L</span>ist.length cl.pci_params in
+  <span data-count="732">l</span>et (obj_params, obj_ty, env) = <span data-count="732">t</span>emp_abbrev cl.pci_loc env obj_id arity in
+  <span data-count="732">l</span>et (cl_params, cl_ty, env) = <span data-count="732">t</span>emp_abbrev cl.pci_loc env cl_id arity in
 
   (* Temporary type for the class constructor *)
-  <span data-count="646">l</span>et constr_type = <span data-count="646">a</span>pprox cl.pci_expr in
-  <span data-count="646">i</span>f !Clflags.principal then <span data-count="271">C</span>type.generalize_spine constr_type;
-  <span data-count="646">l</span>et dummy_cty =
-    <span data-count="646">C</span>ty_signature
+  <span data-count="732">l</span>et constr_type = <span data-count="732">a</span>pprox cl.pci_expr in
+  <span data-count="732">i</span>f !Clflags.principal then <span data-count="314">C</span>type.generalize_spine constr_type;
+  <span data-count="732">l</span>et dummy_cty =
+    <span data-count="732">C</span>ty_signature
       { csig_self = Ctype.newvar ();
         csig_vars = Vars.empty;
         csig_concr = Concr.empty;
         csig_inher = [] }
   in
-  <span data-count="646">l</span>et dummy_class =
-    <span data-count="646">{</span>Types.cty_params = [];             (* Dummy value *)
+  <span data-count="732">l</span>et dummy_class =
+    <span data-count="732">{</span>Types.cty_params = [];             (* Dummy value *)
      cty_variance = [];
      cty_type = dummy_cty;        (* Dummy value *)
      cty_path = unbound_class;
      cty_new =
        begin match cl.pci_virt with
-       | <span data-count="64">V</span>irtual  -&gt; None
-       | <span data-count="582">C</span>oncrete -&gt; Some constr_type
+       | <span data-count="76">V</span>irtual  -&gt; None
+       | <span data-count="656">C</span>oncrete -&gt; Some constr_type
        end;
      cty_loc = Location.none;
      cty_attributes = [];
     }
   in
-  <span data-count="646">l</span>et env =
-    <span data-count="646">E</span>nv.add_cltype ty_id
+  <span data-count="732">l</span>et env =
+    <span data-count="732">E</span>nv.add_cltype ty_id
       {clty_params = [];            (* Dummy value *)
        clty_variance = [];
        clty_type = dummy_cty;       (* Dummy value *)
@@ -5591,12 +5591,12 @@ let initial_env define_class approx
       }
       (
         if define_class then
-          <span data-count="531">E</span>nv.add_class id dummy_class env
+          <span data-count="577">E</span>nv.add_class id dummy_class env
         else
-          <span data-count="115">e</span>nv
+          <span data-count="155">e</span>nv
       )
   in
-  <span data-count="646">(</span>(cl, id, ty_id,
+  <span data-count="732">(</span>(cl, id, ty_id,
     obj_id, obj_params, obj_ty,
     cl_id, cl_params, cl_ty,
     constr_type, dummy_class)::res,
@@ -5609,58 +5609,58 @@ let class_infos define_class kind
      constr_type, dummy_class)
     (res, env) =
 
-  <span data-count="642">r</span>eset_type_variables ();
-  <span data-count="642">C</span>type.begin_class_def ();
+  <span data-count="728">r</span>eset_type_variables ();
+  <span data-count="728">C</span>type.begin_class_def ();
 
   (* Introduce class parameters *)
-  <span data-count="642">l</span>et ci_params =
-    <span data-count="642">l</span>et make_param (sty, v) =
-      <span data-count="179">t</span>ry
+  <span data-count="728">l</span>et ci_params =
+    <span data-count="728">l</span>et make_param (sty, v) =
+      <span data-count="187">t</span>ry
           (transl_type_param env sty, v)
       with <span data-count="0">A</span>lready_bound -&gt;
         raise(Error(sty.ptyp_loc, env, Repeated_parameter))
     in
-      <span data-count="642">L</span>ist.map make_param cl.pci_params
+      <span data-count="728">L</span>ist.map make_param cl.pci_params
   in
-  <span data-count="642">l</span>et params = <span data-count="642">L</span>ist.map (fun (cty, _) -&gt; <span data-count="179">c</span>ty.ctyp_type) ci_params in
+  <span data-count="728">l</span>et params = <span data-count="728">L</span>ist.map (fun (cty, _) -&gt; <span data-count="187">c</span>ty.ctyp_type) ci_params in
 
   (* Allow self coercions (only for class declarations) *)
-  <span data-count="642">l</span>et coercion_locs = <span data-count="642">r</span>ef [] in
+  <span data-count="728">l</span>et coercion_locs = <span data-count="728">r</span>ef [] in
 
   (* Type the class expression *)
-  <span data-count="642">l</span>et (expr, typ) =
-    <span data-count="642">t</span>ry
+  <span data-count="728">l</span>et (expr, typ) =
+    <span data-count="728">t</span>ry
       Typecore.self_coercion :=
         (Path.Pident obj_id, coercion_locs) :: !Typecore.self_coercion;
-      <span data-count="642">l</span>et res = <span data-count="642">k</span>ind env cl.pci_expr in
-      <span data-count="579">T</span>ypecore.self_coercion := List.tl !Typecore.self_coercion;
-      <span data-count="579">r</span>es
-    with <span data-count="63">e</span>xn -&gt;
-      Typecore.self_coercion := []; <span data-count="63">r</span>aise exn
+      <span data-count="728">l</span>et res = <span data-count="728">k</span>ind env cl.pci_expr in
+      <span data-count="647">T</span>ypecore.self_coercion := List.tl !Typecore.self_coercion;
+      <span data-count="647">r</span>es
+    with <span data-count="81">e</span>xn -&gt;
+      Typecore.self_coercion := []; <span data-count="81">r</span>aise exn
   in
 
-  <span data-count="579">C</span>type.end_def ();
+  <span data-count="647">C</span>type.end_def ();
 
-  <span data-count="579">l</span>et sty = <span data-count="579">C</span>type.self_type typ in
+  <span data-count="647">l</span>et sty = <span data-count="647">C</span>type.self_type typ in
 
   (* First generalize the type of the dummy method (cf PR#6123) *)
-  <span data-count="579">l</span>et (fields, _) = <span data-count="579">C</span>type.flatten_fields (Ctype.object_fields sty) in
-  <span data-count="579">L</span>ist.iter (fun (met, _, ty) -&gt; <span data-count="1471">i</span>f met = dummy_method then <span data-count="521">C</span>type.generalize ty)
+  <span data-count="647">l</span>et (fields, _) = <span data-count="647">C</span>type.flatten_fields (Ctype.object_fields sty) in
+  <span data-count="647">L</span>ist.iter (fun (met, _, ty) -&gt; <span data-count="1567">i</span>f met = dummy_method then <span data-count="579">C</span>type.generalize ty)
     fields;
   (* Generalize the row variable *)
-  <span data-count="579">l</span>et rv = <span data-count="579">C</span>type.row_variable sty in
-  <span data-count="579">L</span>ist.iter (Ctype.limited_generalize rv) params;
-  <span data-count="579">l</span>imited_generalize rv typ;
+  <span data-count="647">l</span>et rv = <span data-count="647">C</span>type.row_variable sty in
+  <span data-count="647">L</span>ist.iter (Ctype.limited_generalize rv) params;
+  <span data-count="647">l</span>imited_generalize rv typ;
 
   (* Check the abbreviation for the object type *)
-  <span data-count="579">l</span>et (obj_params', obj_type) = <span data-count="579">C</span>type.instance_class params typ in
-  <span data-count="579">l</span>et constr = <span data-count="579">C</span>type.newconstr (Path.Pident obj_id) obj_params in
-  <span data-count="579">b</span>egin
-    let ty = <span data-count="579">C</span>type.self_type obj_type in
-    <span data-count="579">C</span>type.hide_private_methods ty;
-    <span data-count="579">i</span>f not (Ctype.close_object ty) then
+  <span data-count="647">l</span>et (obj_params', obj_type) = <span data-count="647">C</span>type.instance_class params typ in
+  <span data-count="647">l</span>et constr = <span data-count="647">C</span>type.newconstr (Path.Pident obj_id) obj_params in
+  <span data-count="647">b</span>egin
+    let ty = <span data-count="647">C</span>type.self_type obj_type in
+    <span data-count="647">C</span>type.hide_private_methods ty;
+    <span data-count="647">i</span>f not (Ctype.close_object ty) then
       <span data-count="0">r</span>aise(Error(cl.pci_loc, env, Closing_self_type ty));
-    <span data-count="579">b</span>egin try
+    <span data-count="647">b</span>egin try
       List.iter2 (Ctype.unify env) obj_params obj_params'
     with <span data-count="2">C</span>type.Unify _ -&gt;
       raise(Error(cl.pci_loc, env,
@@ -5668,7 +5668,7 @@ let class_infos define_class kind
                             Ctype.newconstr (Path.Pident obj_id)
                                             obj_params')))
     end;
-    <span data-count="577">b</span>egin try
+    <span data-count="645">b</span>egin try
       Ctype.unify env ty constr
     with <span data-count="2">C</span>type.Unify _ -&gt;
       raise(Error(cl.pci_loc, env,
@@ -5677,12 +5677,12 @@ let class_infos define_class kind
   end;
 
   (* Check the other temporary abbreviation (#-type) *)
-  <span data-count="575">b</span>egin
-    let (cl_params', cl_type) = <span data-count="575">C</span>type.instance_class params typ in
-    <span data-count="575">l</span>et ty = <span data-count="575">C</span>type.self_type cl_type in
-    <span data-count="575">C</span>type.hide_private_methods ty;
-    <span data-count="575">C</span>type.set_object_name obj_id (Ctype.row_variable ty) cl_params ty;
-    <span data-count="575">b</span>egin try
+  <span data-count="643">b</span>egin
+    let (cl_params', cl_type) = <span data-count="643">C</span>type.instance_class params typ in
+    <span data-count="643">l</span>et ty = <span data-count="643">C</span>type.self_type cl_type in
+    <span data-count="643">C</span>type.hide_private_methods ty;
+    <span data-count="643">C</span>type.set_object_name obj_id (Ctype.row_variable ty) cl_params ty;
+    <span data-count="643">b</span>egin try
       List.iter2 (Ctype.unify env) cl_params cl_params'
     with <span data-count="0">C</span>type.Unify _ -&gt;
       raise(Error(cl.pci_loc, env,
@@ -5692,7 +5692,7 @@ let class_infos define_class kind
                             Ctype.newconstr (Path.Pident cl_id)
                                             cl_params')))
     end;
-    <span data-count="575">b</span>egin try
+    <span data-count="643">b</span>egin try
       Ctype.unify env ty cl_ty
     with <span data-count="0">C</span>type.Unify _ -&gt;
       let constr = <span data-count="0">C</span>type.newconstr (Path.Pident cl_id) params in
@@ -5701,7 +5701,7 @@ let class_infos define_class kind
   end;
 
   (* Type of the class constructor *)
-  <span data-count="575">b</span>egin try
+  <span data-count="643">b</span>egin try
     Ctype.unify env
       (constructor_type constr obj_type)
       (Ctype.instance constr_type)
@@ -5711,83 +5711,83 @@ let class_infos define_class kind
   end;
 
   (* Class and class type temporary definitions *)
-  <span data-count="575">l</span>et cty_variance = <span data-count="575">L</span>ist.map (fun _ -&gt; <span data-count="173">V</span>ariance.full) params in
-  <span data-count="575">l</span>et cltydef =
-    <span data-count="575">{</span>clty_params = params; clty_type = class_body typ;
+  <span data-count="643">l</span>et cty_variance = <span data-count="643">L</span>ist.map (fun _ -&gt; <span data-count="181">V</span>ariance.full) params in
+  <span data-count="643">l</span>et cltydef =
+    <span data-count="643">{</span>clty_params = params; clty_type = class_body typ;
      clty_variance = cty_variance;
      clty_path = Path.Pident obj_id;
      clty_loc = cl.pci_loc;
      clty_attributes = cl.pci_attributes;
     }
   and clty =
-    <span data-count="575">{</span>cty_params = params; cty_type = typ;
+    <span data-count="643">{</span>cty_params = params; cty_type = typ;
      cty_variance = cty_variance;
      cty_path = Path.Pident obj_id;
      cty_new =
        begin match cl.pci_virt with
-       | <span data-count="50">V</span>irtual  -&gt; None
-       | <span data-count="525">C</span>oncrete -&gt; Some constr_type
+       | <span data-count="56">V</span>irtual  -&gt; None
+       | <span data-count="587">C</span>oncrete -&gt; Some constr_type
        end;
      cty_loc = cl.pci_loc;
      cty_attributes = cl.pci_attributes;
     }
   in
-  <span data-count="575">d</span>ummy_class.cty_type &lt;- typ;
-  <span data-count="575">l</span>et env =
-    <span data-count="575">E</span>nv.add_cltype ty_id cltydef (
-    if define_class then <span data-count="460">E</span>nv.add_class id clty env else <span data-count="115">e</span>nv)
+  <span data-count="643">d</span>ummy_class.cty_type &lt;- typ;
+  <span data-count="643">l</span>et env =
+    <span data-count="643">E</span>nv.add_cltype ty_id cltydef (
+    if define_class then <span data-count="488">E</span>nv.add_class id clty env else <span data-count="155">e</span>nv)
   in
 
-  <span data-count="575">i</span>f cl.pci_virt = Concrete then <span data-count="525">b</span>egin
-    let sign = <span data-count="525">C</span>type.signature_of_class_type typ in
-    <span data-count="525">l</span>et mets = <span data-count="525">v</span>irtual_methods sign in
-    <span data-count="525">l</span>et vals =
-      <span data-count="525">V</span>ars.fold
-        (fun name (_mut, vr, _ty) l -&gt; <span data-count="221">i</span>f vr = Virtual then <span data-count="0">n</span>ame :: l else <span data-count="221">l</span>)
+  <span data-count="643">i</span>f cl.pci_virt = Concrete then <span data-count="587">b</span>egin
+    let sign = <span data-count="587">C</span>type.signature_of_class_type typ in
+    <span data-count="587">l</span>et mets = <span data-count="587">v</span>irtual_methods sign in
+    <span data-count="587">l</span>et vals =
+      <span data-count="587">V</span>ars.fold
+        (fun name (_mut, vr, _ty) l -&gt; <span data-count="229">i</span>f vr = Virtual then <span data-count="0">n</span>ame :: l else <span data-count="229">l</span>)
         sign.csig_vars [] in
-    <span data-count="525">i</span>f <span data-count="525">m</span>ets &lt;&gt; []  || <span data-count="521">v</span>als &lt;&gt; [] then
+    <span data-count="587">i</span>f <span data-count="587">m</span>ets &lt;&gt; []  || <span data-count="583">v</span>als &lt;&gt; [] then
       <span data-count="4">r</span>aise(Error(cl.pci_loc, env, Virtual_class(define_class, false, mets,
                                                  vals)));
   end;
 
   (* Misc. *)
-  <span data-count="571">l</span>et arity = <span data-count="571">C</span>type.class_type_arity typ in
-  <span data-count="571">l</span>et pub_meths =
-    <span data-count="571">l</span>et (fields, _) =
-      <span data-count="571">C</span>type.flatten_fields (Ctype.object_fields (Ctype.expand_head env obj_ty))
+  <span data-count="639">l</span>et arity = <span data-count="639">C</span>type.class_type_arity typ in
+  <span data-count="639">l</span>et pub_meths =
+    <span data-count="639">l</span>et (fields, _) =
+      <span data-count="639">C</span>type.flatten_fields (Ctype.object_fields (Ctype.expand_head env obj_ty))
     in
-    <span data-count="571">L</span>ist.map (function <span data-count="918">(</span>lab, _, _) -&gt; lab) fields
+    <span data-count="639">L</span>ist.map (function <span data-count="952">(</span>lab, _, _) -&gt; lab) fields
   in
 
   (* Final definitions *)
-  <span data-count="571">l</span>et (params', typ') = <span data-count="571">C</span>type.instance_class params typ in
-  <span data-count="571">l</span>et cltydef =
-    <span data-count="571">{</span>clty_params = params'; clty_type = class_body typ';
+  <span data-count="639">l</span>et (params', typ') = <span data-count="639">C</span>type.instance_class params typ in
+  <span data-count="639">l</span>et cltydef =
+    <span data-count="639">{</span>clty_params = params'; clty_type = class_body typ';
      clty_variance = cty_variance;
      clty_path = Path.Pident obj_id;
      clty_loc = cl.pci_loc;
      clty_attributes = cl.pci_attributes;
     }
   and clty =
-    <span data-count="571">{</span>cty_params = params'; cty_type = typ';
+    <span data-count="639">{</span>cty_params = params'; cty_type = typ';
      cty_variance = cty_variance;
      cty_path = Path.Pident obj_id;
      cty_new =
        begin match cl.pci_virt with
-       | <span data-count="50">V</span>irtual  -&gt; None
-       | <span data-count="521">C</span>oncrete -&gt; Some (Ctype.instance constr_type)
+       | <span data-count="56">V</span>irtual  -&gt; None
+       | <span data-count="583">C</span>oncrete -&gt; Some (Ctype.instance constr_type)
        end;
      cty_loc = cl.pci_loc;
      cty_attributes = cl.pci_attributes;
     }
   in
-  <span data-count="571">l</span>et obj_abbr =
-    <span data-count="571">{</span>type_params = obj_params;
+  <span data-count="639">l</span>et obj_abbr =
+    <span data-count="639">{</span>type_params = obj_params;
      type_arity = List.length obj_params;
      type_kind = Type_abstract;
      type_private = Public;
      type_manifest = Some obj_ty;
-     type_variance = List.map (fun _ -&gt; <span data-count="173">V</span>ariance.full) obj_params;
+     type_variance = List.map (fun _ -&gt; <span data-count="181">V</span>ariance.full) obj_params;
      type_is_newtype = false;
      type_expansion_scope = Btype.lowest_level;
      type_loc = cl.pci_loc;
@@ -5796,18 +5796,18 @@ let class_infos define_class kind
      type_unboxed = unboxed_false_default_false;
     }
   in
-  <span data-count="571">l</span>et (cl_params, cl_ty) =
-    <span data-count="571">C</span>type.instance_parameterized_type params (Ctype.self_type typ)
+  <span data-count="639">l</span>et (cl_params, cl_ty) =
+    <span data-count="639">C</span>type.instance_parameterized_type params (Ctype.self_type typ)
   in
-  <span data-count="571">C</span>type.hide_private_methods cl_ty;
-  <span data-count="571">C</span>type.set_object_name obj_id (Ctype.row_variable cl_ty) cl_params cl_ty;
-  <span data-count="571">l</span>et cl_abbr =
-    <span data-count="571">{</span>type_params = cl_params;
+  <span data-count="639">C</span>type.hide_private_methods cl_ty;
+  <span data-count="639">C</span>type.set_object_name obj_id (Ctype.row_variable cl_ty) cl_params cl_ty;
+  <span data-count="639">l</span>et cl_abbr =
+    <span data-count="639">{</span>type_params = cl_params;
      type_arity = List.length cl_params;
      type_kind = Type_abstract;
      type_private = Public;
      type_manifest = Some cl_ty;
-     type_variance = List.map (fun _ -&gt; <span data-count="173">V</span>ariance.full) cl_params;
+     type_variance = List.map (fun _ -&gt; <span data-count="181">V</span>ariance.full) cl_params;
      type_is_newtype = false;
      type_expansion_scope = Btype.lowest_level;
      type_loc = cl.pci_loc;
@@ -5816,7 +5816,7 @@ let class_infos define_class kind
      type_unboxed = unboxed_false_default_false;
     }
   in
-  <span data-count="571">(</span>(cl, id, clty, ty_id, cltydef, obj_id, obj_abbr, cl_id, cl_abbr, ci_params,
+  <span data-count="639">(</span>(cl, id, clty, ty_id, cltydef, obj_id, obj_abbr, cl_id, cl_abbr, ci_params,
     arity, pub_meths, List.rev !coercion_locs, expr) :: res,
    env)
 
@@ -5824,42 +5824,42 @@ let final_decl env define_class
     (cl, id, clty, ty_id, cltydef, obj_id, obj_abbr, cl_id, cl_abbr, ci_params,
      arity, pub_meths, coe, expr) =
 
-  <span data-count="561">b</span>egin try Ctype.collapse_conj_params env clty.cty_params
+  <span data-count="629">b</span>egin try Ctype.collapse_conj_params env clty.cty_params
   with <span data-count="2">C</span>type.Unify trace -&gt;
     raise(Error(cl.pci_loc, env, Non_collapsable_conjunction (id, clty, trace)))
   end;
 
   (* make the dummy method disappear *)
-  <span data-count="559">b</span>egin
-    let self_type = <span data-count="559">C</span>type.self_type clty.cty_type in
-    <span data-count="559">l</span>et methods, _ =
-      <span data-count="559">C</span>type.flatten_fields
+  <span data-count="627">b</span>egin
+    let self_type = <span data-count="627">C</span>type.self_type clty.cty_type in
+    <span data-count="627">l</span>et methods, _ =
+      <span data-count="627">C</span>type.flatten_fields
         (Ctype.object_fields (Ctype.expand_head env self_type))
     in
-    <span data-count="559">L</span>ist.iter (fun (lab,kind,_) -&gt;
-      <span data-count="1433">i</span>f lab = dummy_method then
-        <span data-count="501">m</span>atch Btype.field_kind_repr kind with
-          <span data-count="501">F</span>var r -&gt; Btype.set_kind r Fabsent
+    <span data-count="627">L</span>ist.iter (fun (lab,kind,_) -&gt;
+      <span data-count="1529">i</span>f lab = dummy_method then
+        <span data-count="559">m</span>atch Btype.field_kind_repr kind with
+          <span data-count="559">F</span>var r -&gt; Btype.set_kind r Fabsent
         | <span data-count="0">_</span> -&gt; ()
     ) methods
   end;
 
-  <span data-count="559">L</span>ist.iter Ctype.generalize clty.cty_params;
-  <span data-count="559">g</span>eneralize_class_type true clty.cty_type;
-  <span data-count="559">O</span>ption.iter  Ctype.generalize clty.cty_new;
-  <span data-count="559">L</span>ist.iter Ctype.generalize obj_abbr.type_params;
-  <span data-count="559">O</span>ption.iter  Ctype.generalize obj_abbr.type_manifest;
-  <span data-count="559">L</span>ist.iter Ctype.generalize cl_abbr.type_params;
-  <span data-count="559">O</span>ption.iter  Ctype.generalize cl_abbr.type_manifest;
+  <span data-count="627">L</span>ist.iter Ctype.generalize clty.cty_params;
+  <span data-count="627">g</span>eneralize_class_type true clty.cty_type;
+  <span data-count="627">O</span>ption.iter  Ctype.generalize clty.cty_new;
+  <span data-count="627">L</span>ist.iter Ctype.generalize obj_abbr.type_params;
+  <span data-count="627">O</span>ption.iter  Ctype.generalize obj_abbr.type_manifest;
+  <span data-count="627">L</span>ist.iter Ctype.generalize cl_abbr.type_params;
+  <span data-count="627">O</span>ption.iter  Ctype.generalize cl_abbr.type_manifest;
 
-  <span data-count="559">i</span>f not (closed_class clty) then
+  <span data-count="627">i</span>f not (closed_class clty) then
     <span data-count="4">r</span>aise(Error(cl.pci_loc, env, Non_generalizable_class (id, clty)));
 
-  <span data-count="555">b</span>egin match
+  <span data-count="623">b</span>egin match
     Ctype.closed_class clty.cty_params
       (Ctype.signature_of_class_type clty.cty_type)
   with
-    <span data-count="549">N</span>one        -&gt; ()
+    <span data-count="617">N</span>one        -&gt; ()
   | <span data-count="6">S</span>ome reason -&gt;
       let printer =
         <span data-count="6">i</span>f define_class
@@ -5868,7 +5868,7 @@ let final_decl env define_class
       in
       <span data-count="6">r</span>aise(Error(cl.pci_loc, env, Unbound_type_var(printer, reason)))
   end;
-  <span data-count="549">{</span> id; clty; ty_id; cltydef; obj_id; obj_abbr; cl_id; cl_abbr; arity;
+  <span data-count="617">{</span> id; clty; ty_id; cltydef; obj_id; obj_abbr; cl_id; cl_abbr; arity;
     pub_meths; coe; expr;
     id_loc = cl.pci_name;
     req = { ci_loc = cl.pci_loc;
@@ -5894,9 +5894,9 @@ let class_infos define_class kind
      cl_id, cl_params, cl_ty,
      constr_type, dummy_class)
     (res, env) =
-  <span data-count="642">B</span>uiltin_attributes.warning_scope cl.pci_attributes
+  <span data-count="728">B</span>uiltin_attributes.warning_scope cl.pci_attributes
     (fun () -&gt;
-       <span data-count="642">c</span>lass_infos define_class kind
+       <span data-count="728">c</span>lass_infos define_class kind
          (cl, id, ty_id,
           obj_id, obj_params, obj_ty,
           cl_id, cl_params, cl_ty,
@@ -5905,27 +5905,27 @@ let class_infos define_class kind
     )
 
 let extract_type_decls { clty; cltydef; obj_id; obj_abbr; cl_abbr; req} decls =
-  <span data-count="549">(</span>obj_id, obj_abbr, cl_abbr, clty, cltydef, req) :: decls
+  <span data-count="617">(</span>obj_id, obj_abbr, cl_abbr, clty, cltydef, req) :: decls
 
 let merge_type_decls decl (obj_abbr, cl_abbr, clty, cltydef) =
-  <span data-count="547">{</span>decl with obj_abbr; cl_abbr; clty; cltydef}
+  <span data-count="615">{</span>decl with obj_abbr; cl_abbr; clty; cltydef}
 
 let final_env define_class env { id; clty; ty_id; cltydef; obj_id; obj_abbr;
     cl_id; cl_abbr } =
   (* Add definitions after cleaning them *)
-  <span data-count="547">E</span>nv.add_type ~check:true obj_id
+  <span data-count="615">E</span>nv.add_type ~check:true obj_id
     (Subst.type_declaration Subst.identity obj_abbr) (
   Env.add_type ~check:true cl_id
     (Subst.type_declaration Subst.identity cl_abbr) (
   Env.add_cltype ty_id (Subst.cltype_declaration Subst.identity cltydef) (
   if define_class then
-    <span data-count="434">E</span>nv.add_class id (Subst.class_declaration Subst.identity clty) env
-  else <span data-count="113">e</span>nv)))
+    <span data-count="462">E</span>nv.add_class id (Subst.class_declaration Subst.identity clty) env
+  else <span data-count="153">e</span>nv)))
 
 (* Check that #c is coercible to c if there is a self-coercion *)
 let check_coercions env { id; id_loc; clty; ty_id; cltydef; obj_id; obj_abbr;
     cl_id; cl_abbr; arity; pub_meths; coe; req } =
-  <span data-count="547">b</span>egin match coe with <span data-count="546">[</span>] -&gt; ()
+  <span data-count="615">b</span>egin match coe with <span data-count="614">[</span>] -&gt; ()
   | <span data-count="1">l</span>oc :: _ -&gt;
       let cl_ty, obj_ty =
         <span data-count="1">m</span>atch cl_abbr.type_manifest, obj_abbr.type_manifest with
@@ -5946,7 +5946,7 @@ let check_coercions env { id; id_loc; clty; ty_id; cltydef; obj_id; obj_abbr;
       <span data-count="1">i</span>f not (Ctype.opened_object cl_ty) then
         <span data-count="0">r</span>aise(Error(loc, env, Cannot_coerce_self obj_ty))
   end;
-  <span data-count="547">{</span>cls_id = id;
+  <span data-count="615">{</span>cls_id = id;
    cls_id_loc = id_loc;
    cls_decl = clty;
    cls_ty_id = ty_id;
@@ -5962,10 +5962,10 @@ let check_coercions env { id; id_loc; clty; ty_id; cltydef; obj_id; obj_abbr;
 (*******************************)
 
 let type_classes define_class approx kind env cls =
-  <span data-count="597">l</span>et scope = <span data-count="597">C</span>type.create_scope () in
-  <span data-count="597">l</span>et cls =
-    <span data-count="597">L</span>ist.map
-      (function <span data-count="646">c</span>l -&gt;
+  <span data-count="683">l</span>et scope = <span data-count="683">C</span>type.create_scope () in
+  <span data-count="683">l</span>et cls =
+    <span data-count="683">L</span>ist.map
+      (function <span data-count="732">c</span>l -&gt;
          (cl,
           Ident.create_scoped ~scope cl.pci_name.txt,
           Ident.create_scoped ~scope cl.pci_name.txt,
@@ -5973,59 +5973,59 @@ let type_classes define_class approx kind env cls =
           Ident.create_scoped ~scope ("#" ^ cl.pci_name.txt)))
       cls
   in
-  <span data-count="597">C</span>type.begin_class_def ();
-  <span data-count="597">l</span>et (res, env) =
-    <span data-count="597">L</span>ist.fold_left (initial_env define_class approx) ([], env) cls
+  <span data-count="683">C</span>type.begin_class_def ();
+  <span data-count="683">l</span>et (res, env) =
+    <span data-count="683">L</span>ist.fold_left (initial_env define_class approx) ([], env) cls
   in
-  <span data-count="597">l</span>et (res, env) =
-    <span data-count="597">L</span>ist.fold_right (class_infos define_class kind) res ([], env)
+  <span data-count="683">l</span>et (res, env) =
+    <span data-count="683">L</span>ist.fold_right (class_infos define_class kind) res ([], env)
   in
-  <span data-count="526">C</span>type.end_def ();
-  <span data-count="526">l</span>et res = <span data-count="526">L</span>ist.rev_map (final_decl env define_class) res in
-  <span data-count="514">l</span>et decls = <span data-count="514">L</span>ist.fold_right extract_type_decls res [] in
-  <span data-count="514">l</span>et decls =
-    <span data-count="514">t</span>ry Typedecl_variance.update_class_decls env decls
+  <span data-count="594">C</span>type.end_def ();
+  <span data-count="594">l</span>et res = <span data-count="594">L</span>ist.rev_map (final_decl env define_class) res in
+  <span data-count="582">l</span>et decls = <span data-count="582">L</span>ist.fold_right extract_type_decls res [] in
+  <span data-count="582">l</span>et decls =
+    <span data-count="582">t</span>ry Typedecl_variance.update_class_decls env decls
     with <span data-count="2">T</span>ypedecl_variance.Error(loc, err) -&gt;
       raise (Typedecl.Error(loc, Typedecl.Variance err))
   in
-  <span data-count="512">l</span>et res = <span data-count="512">L</span>ist.map2 merge_type_decls res decls in
-  <span data-count="512">l</span>et env = <span data-count="512">L</span>ist.fold_left (final_env define_class) env res in
-  <span data-count="512">l</span>et res = <span data-count="512">L</span>ist.map (check_coercions env) res in
-  <span data-count="512">(</span>res, env)
+  <span data-count="580">l</span>et res = <span data-count="580">L</span>ist.map2 merge_type_decls res decls in
+  <span data-count="580">l</span>et env = <span data-count="580">L</span>ist.fold_left (final_env define_class) env res in
+  <span data-count="580">l</span>et res = <span data-count="580">L</span>ist.map (check_coercions env) res in
+  <span data-count="580">(</span>res, env)
 
-let class_num = <span data-count="1031">r</span>ef 0
+let class_num = <span data-count="1170">r</span>ef 0
 let class_declaration env sexpr =
-  <span data-count="481">i</span>ncr class_num;
-  <span data-count="481">l</span>et expr = <span data-count="481">c</span>lass_expr (Int.to_string !class_num) env env sexpr in
-  <span data-count="420">(</span>expr, expr.cl_type)
+  <span data-count="519">i</span>ncr class_num;
+  <span data-count="519">l</span>et expr = <span data-count="519">c</span>lass_expr (Int.to_string !class_num) env env sexpr in
+  <span data-count="440">(</span>expr, expr.cl_type)
 
 let class_description env sexpr =
-  <span data-count="161">l</span>et expr = <span data-count="161">c</span>lass_type env sexpr in
-  <span data-count="159">(</span>expr, expr.cltyp_type)
+  <span data-count="209">l</span>et expr = <span data-count="209">c</span>lass_type env sexpr in
+  <span data-count="207">(</span>expr, expr.cltyp_type)
 
 let class_declarations env cls =
-  <span data-count="440">l</span>et info, env =
-    <span data-count="440">t</span>ype_classes true approx_declaration class_declaration env cls
+  <span data-count="478">l</span>et info, env =
+    <span data-count="478">t</span>ype_classes true approx_declaration class_declaration env cls
   in
-  <span data-count="361">l</span>et ids, exprs =
-    <span data-count="361">L</span>ist.split
+  <span data-count="381">l</span>et ids, exprs =
+    <span data-count="381">L</span>ist.split
       (List.map
-         (fun ci -&gt; <span data-count="392">c</span>i.cls_id, ci.cls_info.ci_expr)
+         (fun ci -&gt; <span data-count="412">c</span>i.cls_id, ci.cls_info.ci_expr)
          info)
   in
-  <span data-count="361">c</span>heck_recursive_class_bindings env ids exprs;
-  <span data-count="353">i</span>nfo, env
+  <span data-count="381">c</span>heck_recursive_class_bindings env ids exprs;
+  <span data-count="373">i</span>nfo, env
 
 let class_descriptions env cls =
-  <span data-count="46">t</span>ype_classes true approx_description class_description env cls
+  <span data-count="54">t</span>ype_classes true approx_description class_description env cls
 
 let class_type_declarations env cls =
-  <span data-count="111">l</span>et (decls, env) =
-    <span data-count="111">t</span>ype_classes false approx_description class_description env cls
+  <span data-count="151">l</span>et (decls, env) =
+    <span data-count="151">t</span>ype_classes false approx_description class_description env cls
   in
-  <span data-count="109">(</span>List.map
+  <span data-count="149">(</span>List.map
      (fun decl -&gt;
-        <span data-count="113">{</span>clsty_ty_id = decl.cls_ty_id;
+        <span data-count="153">{</span>clsty_ty_id = decl.cls_ty_id;
          clsty_id_loc = decl.cls_id_loc;
          clsty_ty_decl = decl.cls_ty_decl;
          clsty_obj_id = decl.cls_obj_id;
@@ -6054,7 +6054,7 @@ let rec unify_parents env ty cl =
   | <span data-count="0">T</span>cl_let (_, _, _, cl)
   | <span data-count="44">T</span>cl_constraint (cl, _, _, _, _) -&gt; unify_parents env ty cl
 and unify_parents_struct env ty st =
-  <span data-count="103">L</span>ist.iter
+  <span data-count="105">L</span>ist.iter
     (function
       | <span data-count="44">{</span>cf_desc = Tcf_inherit (_, cl, _, _, _)} -&gt;
           unify_parents env ty cl
@@ -6062,18 +6062,18 @@ and unify_parents_struct env ty st =
     st.cstr_fields
 
 let type_object env loc s =
-  <span data-count="119">i</span>ncr class_num;
-  <span data-count="119">l</span>et (desc, sign) =
-    <span data-count="119">c</span>lass_structure (Int.to_string !class_num) true env env loc s in
-  <span data-count="103">l</span>et sty = <span data-count="103">C</span>type.expand_head env sign.csig_self in
-  <span data-count="103">C</span>type.hide_private_methods sty;
-  <span data-count="103">l</span>et (fields, _) = <span data-count="103">C</span>type.flatten_fields (Ctype.object_fields sty) in
-  <span data-count="103">l</span>et meths = <span data-count="103">L</span>ist.map (fun (s,_,_) -&gt; <span data-count="110">s</span>) fields in
-  <span data-count="103">u</span>nify_parents_struct env sign.csig_self desc;
-  <span data-count="103">(</span>desc, sign, meths)
+  <span data-count="129">i</span>ncr class_num;
+  <span data-count="129">l</span>et (desc, sign) =
+    <span data-count="129">c</span>lass_structure (Int.to_string !class_num) true env env loc s in
+  <span data-count="105">l</span>et sty = <span data-count="105">C</span>type.expand_head env sign.csig_self in
+  <span data-count="105">C</span>type.hide_private_methods sty;
+  <span data-count="105">l</span>et (fields, _) = <span data-count="105">C</span>type.flatten_fields (Ctype.object_fields sty) in
+  <span data-count="105">l</span>et meths = <span data-count="105">L</span>ist.map (fun (s,_,_) -&gt; <span data-count="110">s</span>) fields in
+  <span data-count="105">u</span>nify_parents_struct env sign.csig_self desc;
+  <span data-count="105">(</span>desc, sign, meths)
 
 let () =
-  <span data-count="1031">T</span>ypecore.type_object := type_object
+  <span data-count="1170">T</span>ypecore.type_object := type_object
 
 (*******************************)
 
@@ -6093,7 +6093,7 @@ let approx_class_declarations env sdecls =
 
 open Format
 
-let report_error env ppf = <span data-count="45">f</span>unction
+let report_error env ppf = <span data-count="57">f</span>unction
   | <span data-count="0">R</span>epeated_parameter -&gt;
       fprintf ppf "A type parameter occurs several times"
   | <span data-count="0">U</span>nconsistent_constraint trace -&gt;
@@ -6101,11 +6101,11 @@ let report_error env ppf = <span data-count="45">f</span>unction
       <span data-count="0">P</span>rinttyp.report_unification_error ppf env trace
         (fun ppf -&gt; <span data-count="0">f</span>printf ppf "Type")
         (fun ppf -&gt; <span data-count="0">f</span>printf ppf "is not compatible with type")
-  | <span data-count="2">F</span>ield_type_mismatch (k, m, trace) -&gt;
+  | <span data-count="4">F</span>ield_type_mismatch (k, m, trace) -&gt;
       Printtyp.report_unification_error ppf env trace
-        (function <span data-count="2">p</span>pf -&gt;
+        (function <span data-count="4">p</span>pf -&gt;
            fprintf ppf "The %s %s@ has type" k m)
-        (function <span data-count="2">p</span>pf -&gt;
+        (function <span data-count="4">p</span>pf -&gt;
            fprintf ppf "but is expected to have type")
   | <span data-count="0">S</span>tructure_expected clty -&gt;
       fprintf ppf
@@ -6182,7 +6182,7 @@ let report_error env ppf = <span data-count="45">f</span>unction
         Printtyp.ident id
         !Oprint.out_type (Printtyp.tree_of_typexp false params)
         !Oprint.out_type (Printtyp.tree_of_typexp false cstrs)
-  | <span data-count="13">C</span>lass_match_failure error -&gt;
+  | <span data-count="23">C</span>lass_match_failure error -&gt;
       Includeclass.report_error ppf error
   | <span data-count="0">U</span>nbound_val lab -&gt;
       fprintf ppf "Unbound instance variable %s" lab
@@ -6257,23 +6257,23 @@ let report_error env ppf = <span data-count="45">f</span>unction
       Printtyp.type_scheme self
 
 let report_error env ppf err =
-  <span data-count="45">P</span>rinttyp.wrap_printing_env ~error:true
-    env (fun () -&gt; <span data-count="45">r</span>eport_error env ppf err)
+  <span data-count="57">P</span>rinttyp.wrap_printing_env ~error:true
+    env (fun () -&gt; <span data-count="57">r</span>eport_error env ppf err)
 
 let () =
-  <span data-count="1031">L</span>ocation.register_error_of_exn
+  <span data-count="1170">L</span>ocation.register_error_of_exn
     (function
-      | <span data-count="45">E</span>rror (loc, env, err) -&gt;
+      | <span data-count="57">E</span>rror (loc, env, err) -&gt;
         Some (Location.error_of_printer ~loc (report_error env) err)
       | <span data-count="0">E</span>rror_forward err -&gt;
         Some err
-      | <span data-count="1094">_</span> -&gt;
+      | <span data-count="1363">_</span> -&gt;
         None
     )
 </pre>
       </div>
     </div>
-    <div id="footer">Generated on 2019-08-08 13:34:29 by <a href="https://github.com/aantron/bisect_ppx">Bisect_ppx</a> 1.4.1</div>
+    <div id="footer">Generated on 2019-08-14 11:29:20 by <a href="https://github.com/aantron/bisect_ppx">Bisect_ppx</a> 1.4.1</div>
     <script src="../coverage.js"></script>
   </body>
 </html>

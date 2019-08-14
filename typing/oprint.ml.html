@@ -11,7 +11,7 @@
           <span class="dirname">typing/</span>oprint.ml
         </a>
       </h1>
-      <h2>82.20%</h2>
+      <h2>82.58%</h2>
     </div>
     <div id="navbar">
       <span class="unvisited" style="top:3.00%"></span>
@@ -83,8 +83,6 @@
       <span class="some-visited" style="top:69.23%"></span>
       <span class="unvisited" style="top:84.09%"></span>
       <span class="unvisited" style="top:87.48%"></span>
-      <span class="unvisited" style="top:88.14%"></span>
-      <span class="unvisited" style="top:88.40%"></span>
       <span class="unvisited" style="top:90.61%"></span>
       <span class="unvisited" style="top:90.87%"></span>
       <span class="unvisited" style="top:93.35%"></span>
@@ -771,9 +769,9 @@
 <a id="L673"></a><span > </span>
 <a id="L674"></a><span > </span>
 <a id="L675"></a><span > </span>
-<a id="L676"></a><span class="unvisited"> </span>
+<a id="L676"></a><span class="visited"> </span>
 <a id="L677"></a><span > </span>
-<a id="L678"></a><span class="unvisited"> </span>
+<a id="L678"></a><span class="visited"> </span>
 <a id="L679"></a><span > </span>
 <a id="L680"></a><span > </span>
 <a id="L681"></a><span > </span>
@@ -1657,95 +1655,95 @@ open Outcometree
 exception Ellipsis
 
 let cautious f ppf arg =
-  <span data-count="2582">t</span>ry f ppf arg with
+  <span data-count="2922">t</span>ry f ppf arg with
     <span data-count="0">E</span>llipsis -&gt; fprintf ppf "..."
 
 let print_lident ppf = function
   | <span data-count="0">"</span>::" -&gt; pp_print_string ppf "(::)"
-  | <span data-count="18712">s</span> -&gt; pp_print_string ppf s
+  | <span data-count="20797">s</span> -&gt; pp_print_string ppf s
 
 let rec print_ident ppf =
   function
-    <span data-count="16984">O</span>ide_ident s -&gt; print_lident ppf s.printed_name
-  | <span data-count="1728">O</span>ide_dot (id, s) -&gt;
-      print_ident ppf id; <span data-count="1728">p</span>p_print_char ppf '.'; <span data-count="1728">p</span>rint_lident ppf s
-  | <span data-count="169">O</span>ide_apply (id1, id2) -&gt;
+    <span data-count="18721">O</span>ide_ident s -&gt; print_lident ppf s.printed_name
+  | <span data-count="2076">O</span>ide_dot (id, s) -&gt;
+      print_ident ppf id; <span data-count="2076">p</span>p_print_char ppf '.'; <span data-count="2076">p</span>rint_lident ppf s
+  | <span data-count="171">O</span>ide_apply (id1, id2) -&gt;
       fprintf ppf "%a(%a)" print_ident id1 print_ident id2
 
-let out_ident = <span data-count="1031">r</span>ef print_ident
+let out_ident = <span data-count="1170">r</span>ef print_ident
 
 (* Check a character matches the [identchar_latin1] class from the lexer *)
 let is_ident_char c =
   match c with
-  | <span data-count="26">'</span>A'..'Z' | <span data-count="12616">'</span>a'..'z' | <span data-count="921">'</span>_' | <span data-count="0">'</span>\192'..'\214' | <span data-count="0">'</span>\216'..'\246'
-  | <span data-count="0">'</span>\248'..'\255' | <span data-count="39">'</span>\'' | <span data-count="167">'</span>0'..'9' -&gt; true
+  | <span data-count="26">'</span>A'..'Z' | <span data-count="13146">'</span>a'..'z' | <span data-count="939">'</span>_' | <span data-count="0">'</span>\192'..'\214' | <span data-count="0">'</span>\216'..'\246'
+  | <span data-count="0">'</span>\248'..'\255' | <span data-count="49">'</span>\'' | <span data-count="181">'</span>0'..'9' -&gt; true
   | <span data-count="117">_</span> -&gt; false
 
 let all_ident_chars s =
   let rec loop s len i =
-    <span data-count="16768">i</span>f i &lt; len then <span data-count="13886">b</span>egin
-      if is_ident_char s.[i] then <span data-count="13769">l</span>oop s len (i+1)
+    <span data-count="17620">i</span>f i &lt; len then <span data-count="14458">b</span>egin
+      if is_ident_char s.[i] then <span data-count="14341">l</span>oop s len (i+1)
       else <span data-count="117">f</span>alse
-    end else <span data-count="2882">b</span>egin
+    end else <span data-count="3162">b</span>egin
       true
     end
   in
-  <span data-count="2999">l</span>et len = <span data-count="2999">S</span>tring.length s in
-  <span data-count="2999">l</span>oop s len 0
+  <span data-count="3279">l</span>et len = <span data-count="3279">S</span>tring.length s in
+  <span data-count="3279">l</span>oop s len 0
 
 let parenthesized_ident name =
-  <span data-count="2999">(</span>List.mem name ["or"; "mod"; "land"; "lor"; "lxor"; "lsl"; "lsr"; "asr"])
-  || <span data-count="2999">n</span>ot (all_ident_chars name)
+  <span data-count="3279">(</span>List.mem name ["or"; "mod"; "land"; "lor"; "lxor"; "lsl"; "lsr"; "asr"])
+  || <span data-count="3279">n</span>ot (all_ident_chars name)
 
 let value_ident ppf name =
-  <span data-count="2996">i</span>f parenthesized_ident name then
+  <span data-count="3276">i</span>f parenthesized_ident name then
     <span data-count="116">f</span>printf ppf "( %s )" name
   else
-    <span data-count="2880">p</span>p_print_string ppf name
+    <span data-count="3160">p</span>p_print_string ppf name
 
 (* Values *)
 
 let valid_float_lexeme s =
-  let l = <span data-count="46">S</span>tring.length s in
-  <span data-count="46">l</span>et rec loop i =
-    <span data-count="104">i</span>f i &gt;= l then <span data-count="38">s</span> ^ "." else
-    <span data-count="66">m</span>atch s.[i] with
-    | <span data-count="58">'</span>0' .. '9' | <span data-count="0">'</span>-' -&gt; loop (i+1)
+  let l = <span data-count="78">S</span>tring.length s in
+  <span data-count="78">l</span>et rec loop i =
+    <span data-count="174">i</span>f i &gt;= l then <span data-count="70">s</span> ^ "." else
+    <span data-count="104">m</span>atch s.[i] with
+    | <span data-count="96">'</span>0' .. '9' | <span data-count="0">'</span>-' -&gt; loop (i+1)
     | <span data-count="8">_</span> -&gt; s
-  in <span data-count="46">l</span>oop 0
+  in <span data-count="78">l</span>oop 0
 
 let float_repres f =
   match classify_float f with
     <span data-count="0">F</span>P_nan -&gt; "nan"
   | <span data-count="0">F</span>P_infinite -&gt;
       if f &lt; 0.0 then <span data-count="0">"</span>neg_infinity" else <span data-count="0">"</span>infinity"
-  | <span data-count="46">_</span> -&gt;
+  | <span data-count="78">_</span> -&gt;
       let float_val =
-        <span data-count="46">l</span>et s1 = <span data-count="46">P</span>rintf.sprintf "%.12g" f in
-        <span data-count="46">i</span>f f = float_of_string s1 then <span data-count="46">s</span>1 else
+        <span data-count="78">l</span>et s1 = <span data-count="78">P</span>rintf.sprintf "%.12g" f in
+        <span data-count="78">i</span>f f = float_of_string s1 then <span data-count="78">s</span>1 else
         <span data-count="0">l</span>et s2 = <span data-count="0">P</span>rintf.sprintf "%.15g" f in
         <span data-count="0">i</span>f f = float_of_string s2 then <span data-count="0">s</span>2 else
         <span data-count="0">P</span>rintf.sprintf "%.18g" f
-      in <span data-count="46">v</span>alid_float_lexeme float_val
+      in <span data-count="78">v</span>alid_float_lexeme float_val
 
 let parenthesize_if_neg ppf fmt v isneg =
-  <span data-count="54">i</span>f isneg then <span data-count="0">p</span>p_print_char ppf '(';
-  <span data-count="54">f</span>printf ppf fmt v;
-  <span data-count="54">i</span>f isneg then <span data-count="0">p</span>p_print_char ppf ')'
+  <span data-count="80">i</span>f isneg then <span data-count="0">p</span>p_print_char ppf '(';
+  <span data-count="80">f</span>printf ppf fmt v;
+  <span data-count="80">i</span>f isneg then <span data-count="0">p</span>p_print_char ppf ')'
 
 let escape_string s =
   (* Escape only C0 control characters (bytes &lt;= 0x1F), DEL(0x7F), '\\'
      and '"' *)
-   let n = <span data-count="224">r</span>ef 0 in
-  <span data-count="224">f</span>or i = 0 to String.length s - 1 do
-    <span data-count="924">n</span> := !n +
+   let n = <span data-count="248">r</span>ef 0 in
+  <span data-count="248">f</span>or i = 0 to String.length s - 1 do
+    <span data-count="1046">n</span> := !n +
       (match String.unsafe_get s i with
        | <span data-count="16">'</span>\"' | <span data-count="0">'</span>\\' | <span data-count="0">'</span>\n' | <span data-count="0">'</span>\t' | <span data-count="0">'</span>\r' | <span data-count="0">'</span>\b' -&gt; 2
        | <span data-count="0">'</span>\x00' .. '\x1F'
        | <span data-count="0">'</span>\x7F' -&gt; 4
-       | <span data-count="908">_</span> -&gt; 1)
+       | <span data-count="1030">_</span> -&gt; 1)
   done;
-  <span data-count="224">i</span>f !n = String.length s then <span data-count="216">s</span> else <span data-count="8">b</span>egin
+  <span data-count="248">i</span>f !n = String.length s then <span data-count="240">s</span> else <span data-count="8">b</span>egin
     let s' = <span data-count="8">B</span>ytes.create !n in
     <span data-count="8">n</span> := 0;
     <span data-count="8">f</span>or i = 0 to String.length s - 1 do
@@ -1778,32 +1776,32 @@ let escape_string s =
 
 
 let print_out_string ppf s =
-  <span data-count="224">l</span>et not_escaped =
+  <span data-count="248">l</span>et not_escaped =
     (* let the user dynamically choose if strings should be escaped: *)
-    <span data-count="224">m</span>atch Sys.getenv_opt "OCAMLTOP_UTF_8" with
-    | <span data-count="224">N</span>one -&gt; true
+    <span data-count="248">m</span>atch Sys.getenv_opt "OCAMLTOP_UTF_8" with
+    | <span data-count="248">N</span>one -&gt; true
     | <span data-count="0">S</span>ome x -&gt;
         match bool_of_string_opt x with
         | <span data-count="0">N</span>one -&gt; true
         | <span data-count="0">S</span>ome f -&gt; f in
-  <span data-count="224">i</span>f not_escaped then
-    <span data-count="224">f</span>printf ppf "\"%s\"" (escape_string s)
+  <span data-count="248">i</span>f not_escaped then
+    <span data-count="248">f</span>printf ppf "\"%s\"" (escape_string s)
   else
     <span data-count="0">f</span>printf ppf "%S" s
 
 let print_out_value ppf tree =
-  <span data-count="1864">l</span>et rec print_tree_1 ppf =
-    <span data-count="3030">f</span>unction
-    | <span data-count="352">O</span>val_constr (name, [param]) -&gt;
+  <span data-count="2144">l</span>et rec print_tree_1 ppf =
+    <span data-count="3462">f</span>unction
+    | <span data-count="384">O</span>val_constr (name, [param]) -&gt;
         fprintf ppf "@[&lt;1&gt;%a@ %a@]" print_ident name print_constr_param param
     | <span data-count="236">O</span>val_constr (name, (_ :: _ as params)) -&gt;
         fprintf ppf "@[&lt;1&gt;%a@ (%a)@]" print_ident name
           (print_tree_list print_tree_1 ",") params
-    | <span data-count="10">O</span>val_variant (name, Some param) -&gt;
+    | <span data-count="14">O</span>val_variant (name, Some param) -&gt;
         fprintf ppf "@[&lt;2&gt;`%s@ %a@]" name print_constr_param param
-    | <span data-count="2432">t</span>ree -&gt; print_simple_tree ppf tree
-  and print_constr_param ppf = <span data-count="362">f</span>unction
-    | <span data-count="54">O</span>val_int i -&gt; parenthesize_if_neg ppf "%i" i (i &lt; 0)
+    | <span data-count="2828">t</span>ree -&gt; print_simple_tree ppf tree
+  and print_constr_param ppf = <span data-count="398">f</span>unction
+    | <span data-count="80">O</span>val_int i -&gt; parenthesize_if_neg ppf "%i" i (i &lt; 0)
     | <span data-count="0">O</span>val_int32 i -&gt; parenthesize_if_neg ppf "%lil" i (i &lt; 0l)
     | <span data-count="0">O</span>val_int64 i -&gt; parenthesize_if_neg ppf "%LiL" i (i &lt; 0L)
     | <span data-count="0">O</span>val_nativeint i -&gt; parenthesize_if_neg ppf "%nin" i (i &lt; 0n)
@@ -1814,179 +1812,179 @@ let print_out_value ppf tree =
       pp_print_char ppf '(';
       <span data-count="0">p</span>rint_simple_tree ppf tree;
       <span data-count="0">p</span>p_print_char ppf ')';
-    | <span data-count="308">t</span>ree -&gt; print_simple_tree ppf tree
+    | <span data-count="318">t</span>ree -&gt; print_simple_tree ppf tree
   and print_simple_tree ppf =
-    <span data-count="2740">f</span>unction
-      <span data-count="410">O</span>val_int i -&gt; fprintf ppf "%i" i
+    <span data-count="3146">f</span>unction
+      <span data-count="440">O</span>val_int i -&gt; fprintf ppf "%i" i
     | <span data-count="0">O</span>val_int32 i -&gt; fprintf ppf "%lil" i
     | <span data-count="0">O</span>val_int64 i -&gt; fprintf ppf "%LiL" i
     | <span data-count="0">O</span>val_nativeint i -&gt; fprintf ppf "%nin" i
-    | <span data-count="46">O</span>val_float f -&gt; pp_print_string ppf (float_repres f)
+    | <span data-count="78">O</span>val_float f -&gt; pp_print_string ppf (float_repres f)
     | <span data-count="10">O</span>val_char c -&gt; fprintf ppf "%C" c
-    | <span data-count="224">O</span>val_string (s, maxlen, kind) -&gt;
+    | <span data-count="248">O</span>val_string (s, maxlen, kind) -&gt;
        begin try
-         let len = <span data-count="224">S</span>tring.length s in
-         <span data-count="224">l</span>et s = <span data-count="224">i</span>f len &gt; maxlen then <span data-count="0">S</span>tring.sub s 0 maxlen else <span data-count="224">s</span> in
-         <span data-count="224">b</span>egin match kind with
+         let len = <span data-count="248">S</span>tring.length s in
+         <span data-count="248">l</span>et s = <span data-count="248">i</span>f len &gt; maxlen then <span data-count="0">S</span>tring.sub s 0 maxlen else <span data-count="248">s</span> in
+         <span data-count="248">b</span>egin match kind with
          | <span data-count="0">O</span>str_bytes -&gt; fprintf ppf "Bytes.of_string %S" s
-         | <span data-count="224">O</span>str_string -&gt; print_out_string ppf s
+         | <span data-count="248">O</span>str_string -&gt; print_out_string ppf s
          end;
-         <span data-count="224">(</span>if len &gt; maxlen then
+         <span data-count="248">(</span>if len &gt; maxlen then
             <span data-count="0">f</span>printf ppf
               "... (* string length %d; truncated *)" len
          )
           with
           <span data-count="0">I</span>nvalid_argument _ (* "String.create" *)-&gt; fprintf ppf "&lt;huge string&gt;"
         end
-    | <span data-count="80">O</span>val_list tl -&gt;
+    | <span data-count="86">O</span>val_list tl -&gt;
         fprintf ppf "@[&lt;1&gt;[%a]@]" (print_tree_list print_tree_1 ";") tl
-    | <span data-count="8">O</span>val_array tl -&gt;
+    | <span data-count="22">O</span>val_array tl -&gt;
         fprintf ppf "@[&lt;2&gt;[|%a|]@]" (print_tree_list print_tree_1 ";") tl
-    | <span data-count="355">O</span>val_constr (name, []) -&gt; print_ident ppf name
+    | <span data-count="447">O</span>val_constr (name, []) -&gt; print_ident ppf name
     | <span data-count="6">O</span>val_variant (name, None) -&gt; fprintf ppf "`%s" name
-    | <span data-count="1325">O</span>val_stuff s -&gt; pp_print_string ppf s
-    | <span data-count="84">O</span>val_record fel -&gt;
+    | <span data-count="1511">O</span>val_stuff s -&gt; pp_print_string ppf s
+    | <span data-count="96">O</span>val_record fel -&gt;
         fprintf ppf "@[&lt;1&gt;{%a}@]" (cautious (print_fields true)) fel
     | <span data-count="0">O</span>val_ellipsis -&gt; raise Ellipsis
     | <span data-count="0">O</span>val_printer f -&gt; f ppf
-    | <span data-count="92">O</span>val_tuple tree_list -&gt;
+    | <span data-count="102">O</span>val_tuple tree_list -&gt;
         fprintf ppf "@[&lt;1&gt;(%a)@]" (print_tree_list print_tree_1 ",") tree_list
     | <span data-count="100">t</span>ree -&gt; fprintf ppf "@[&lt;1&gt;(%a)@]" (cautious print_tree_1) tree
   and print_fields first ppf =
-    <span data-count="202">f</span>unction
-      <span data-count="84">[</span>] -&gt; ()
-    | <span data-count="118">(</span>name, tree) :: fields -&gt;
-        if not first then <span data-count="34">f</span>printf ppf ";@ ";
-        <span data-count="118">f</span>printf ppf "@[&lt;1&gt;%a@ =@ %a@]" print_ident name (cautious print_tree_1)
+    <span data-count="232">f</span>unction
+      <span data-count="96">[</span>] -&gt; ()
+    | <span data-count="136">(</span>name, tree) :: fields -&gt;
+        if not first then <span data-count="40">f</span>printf ppf ";@ ";
+        <span data-count="136">f</span>printf ppf "@[&lt;1&gt;%a@ =@ %a@]" print_ident name (cautious print_tree_1)
           tree;
-        <span data-count="118">p</span>rint_fields false ppf fields
+        <span data-count="136">p</span>rint_fields false ppf fields
   and print_tree_list print_item sep ppf tree_list =
-    <span data-count="416">l</span>et rec print_list first ppf =
-      <span data-count="1364">f</span>unction
-        <span data-count="416">[</span>] -&gt; ()
-      | <span data-count="948">t</span>ree :: tree_list -&gt;
-          if not first then <span data-count="568">f</span>printf ppf "%s@ " sep;
-          <span data-count="948">p</span>rint_item ppf tree;
-          <span data-count="948">p</span>rint_list false ppf tree_list
+    <span data-count="446">l</span>et rec print_list first ppf =
+      <span data-count="1528">f</span>unction
+        <span data-count="446">[</span>] -&gt; ()
+      | <span data-count="1082">t</span>ree :: tree_list -&gt;
+          if not first then <span data-count="678">f</span>printf ppf "%s@ " sep;
+          <span data-count="1082">p</span>rint_item ppf tree;
+          <span data-count="1082">p</span>rint_list false ppf tree_list
     in
-    <span data-count="416">c</span>autious (print_list true) ppf tree_list
+    <span data-count="446">c</span>autious (print_list true) ppf tree_list
   in
-  <span data-count="1864">c</span>autious print_tree_1 ppf tree
+  <span data-count="2144">c</span>autious print_tree_1 ppf tree
 
-let out_value = <span data-count="1031">r</span>ef print_out_value
+let out_value = <span data-count="1170">r</span>ef print_out_value
 
 (* Types *)
 
 let rec print_list_init pr sep ppf =
-  <span data-count="672">f</span>unction
-    <span data-count="278">[</span>] -&gt; ()
-  | <span data-count="394">a</span> :: l -&gt; sep ppf; <span data-count="394">p</span>r ppf a; <span data-count="394">p</span>rint_list_init pr sep ppf l
+  <span data-count="838">f</span>unction
+    <span data-count="354">[</span>] -&gt; ()
+  | <span data-count="484">a</span> :: l -&gt; sep ppf; <span data-count="484">p</span>r ppf a; <span data-count="484">p</span>rint_list_init pr sep ppf l
 
 let rec print_list pr sep ppf =
-  <span data-count="4051">f</span>unction
-    <span data-count="114">[</span>] -&gt; ()
-  | <span data-count="2371">[</span>a] -&gt; pr ppf a
-  | <span data-count="1566">a</span> :: l -&gt; pr ppf a; <span data-count="1566">s</span>ep ppf; <span data-count="1566">p</span>rint_list pr sep ppf l
+  <span data-count="4703">f</span>unction
+    <span data-count="144">[</span>] -&gt; ()
+  | <span data-count="2845">[</span>a] -&gt; pr ppf a
+  | <span data-count="1714">a</span> :: l -&gt; pr ppf a; <span data-count="1714">s</span>ep ppf; <span data-count="1714">p</span>rint_list pr sep ppf l
 
 let pr_present =
-  <span data-count="1031">p</span>rint_list (fun ppf s -&gt; <span data-count="30">f</span>printf ppf "`%s" s) (fun ppf -&gt; <span data-count="0">f</span>printf ppf "@ ")
+  <span data-count="1170">p</span>rint_list (fun ppf s -&gt; <span data-count="30">f</span>printf ppf "`%s" s) (fun ppf -&gt; <span data-count="0">f</span>printf ppf "@ ")
 
-let pr_var = <span data-count="1031">P</span>printast.tyvar
+let pr_var = <span data-count="1170">P</span>printast.tyvar
 
 let pr_vars =
-  <span data-count="1031">p</span>rint_list pr_var (fun ppf -&gt; <span data-count="10">f</span>printf ppf "@ ")
+  <span data-count="1170">p</span>rint_list pr_var (fun ppf -&gt; <span data-count="10">f</span>printf ppf "@ ")
 
 let rec print_out_type ppf =
   function
-  | <span data-count="249">O</span>typ_alias (ty, s) -&gt;
+  | <span data-count="292">O</span>typ_alias (ty, s) -&gt;
       fprintf ppf "@[%a@ as %a@]" print_out_type ty pr_var s
   | <span data-count="200">O</span>typ_poly (sl, ty) -&gt;
       fprintf ppf "@[&lt;hov 2&gt;%a.@ %a@]"
         pr_vars sl
         print_out_type ty
-  | <span data-count="12081">t</span>y -&gt;
+  | <span data-count="13351">t</span>y -&gt;
       print_out_type_1 ppf ty
 
 and print_out_type_1 ppf =
   function
-    <span data-count="4549">O</span>typ_arrow (lab, ty1, ty2) -&gt;
+    <span data-count="4919">O</span>typ_arrow (lab, ty1, ty2) -&gt;
       pp_open_box ppf 0;
-      <span data-count="4549">i</span>f lab &lt;&gt; "" then <span data-count="120">(</span>pp_print_string ppf lab; <span data-count="120">p</span>p_print_char ppf ':');
-      <span data-count="4549">p</span>rint_out_type_2 ppf ty1;
-      <span data-count="4549">p</span>p_print_string ppf " -&gt;";
-      <span data-count="4549">p</span>p_print_space ppf ();
-      <span data-count="4549">p</span>rint_out_type_1 ppf ty2;
-      <span data-count="4549">p</span>p_close_box ppf ()
-  | <span data-count="12081">t</span>y -&gt; print_out_type_2 ppf ty
+      <span data-count="4919">i</span>f lab &lt;&gt; "" then <span data-count="150">(</span>pp_print_string ppf lab; <span data-count="150">p</span>p_print_char ppf ':');
+      <span data-count="4919">p</span>rint_out_type_2 ppf ty1;
+      <span data-count="4919">p</span>p_print_string ppf " -&gt;";
+      <span data-count="4919">p</span>p_print_space ppf ();
+      <span data-count="4919">p</span>rint_out_type_1 ppf ty2;
+      <span data-count="4919">p</span>p_close_box ppf ()
+  | <span data-count="13351">t</span>y -&gt; print_out_type_2 ppf ty
 and print_out_type_2 ppf =
   function
-    <span data-count="641">O</span>typ_tuple tyl -&gt;
+    <span data-count="713">O</span>typ_tuple tyl -&gt;
       fprintf ppf "@[&lt;0&gt;%a@]" (print_typlist print_simple_out_type " *") tyl
-  | <span data-count="16225">t</span>y -&gt; print_simple_out_type ppf ty
+  | <span data-count="17801">t</span>y -&gt; print_simple_out_type ppf ty
 and print_simple_out_type ppf =
   function
     <span data-count="68">O</span>typ_class (ng, id, tyl) -&gt;
       fprintf ppf "@[%a%s#%a@]" print_typargs tyl (if ng then <span data-count="2">"</span>_" else <span data-count="66">"</span>")
         print_ident id
-  | <span data-count="14150">O</span>typ_constr (id, tyl) -&gt;
+  | <span data-count="15479">O</span>typ_constr (id, tyl) -&gt;
       pp_open_box ppf 0;
-      <span data-count="14150">p</span>rint_typargs ppf tyl;
-      <span data-count="14150">p</span>rint_ident ppf id;
-      <span data-count="14150">p</span>p_close_box ppf ()
-  | <span data-count="476">O</span>typ_object (fields, rest) -&gt;
+      <span data-count="15479">p</span>rint_typargs ppf tyl;
+      <span data-count="15479">p</span>rint_ident ppf id;
+      <span data-count="15479">p</span>p_close_box ppf ()
+  | <span data-count="492">O</span>typ_object (fields, rest) -&gt;
       fprintf ppf "@[&lt;2&gt;&lt; %a &gt;@]" (print_fields rest) fields
   | <span data-count="0">O</span>typ_stuff s -&gt; pp_print_string ppf s
-  | <span data-count="6542">O</span>typ_var (ng, s) -&gt; pr_var ppf (if ng then <span data-count="60">"</span>_" ^ s else <span data-count="6482">s</span>)
-  | <span data-count="612">O</span>typ_variant (non_gen, row_fields, closed, tags) -&gt;
+  | <span data-count="7036">O</span>typ_var (ng, s) -&gt; pr_var ppf (if ng then <span data-count="66">"</span>_" ^ s else <span data-count="6970">s</span>)
+  | <span data-count="850">O</span>typ_variant (non_gen, row_fields, closed, tags) -&gt;
       let print_present ppf =
-        <span data-count="612">f</span>unction
-          <span data-count="403">N</span>one | <span data-count="179">S</span>ome [] -&gt; ()
+        <span data-count="850">f</span>unction
+          <span data-count="561">N</span>one | <span data-count="259">S</span>ome [] -&gt; ()
         | <span data-count="30">S</span>ome l -&gt; fprintf ppf "@;&lt;1 -2&gt;&gt; @[&lt;hov&gt;%a@]" pr_present l
       in
-      <span data-count="612">l</span>et print_fields ppf =
-        <span data-count="612">f</span>unction
-          <span data-count="560">O</span>var_fields fields -&gt;
-            print_list print_row_field (fun ppf -&gt; <span data-count="266">f</span>printf ppf "@;&lt;1 -2&gt;| ")
+      <span data-count="850">l</span>et print_fields ppf =
+        <span data-count="850">f</span>unction
+          <span data-count="792">O</span>var_fields fields -&gt;
+            print_list print_row_field (fun ppf -&gt; <span data-count="336">f</span>printf ppf "@;&lt;1 -2&gt;| ")
               ppf fields
-        | <span data-count="52">O</span>var_typ typ -&gt;
+        | <span data-count="58">O</span>var_typ typ -&gt;
            print_simple_out_type ppf typ
       in
-      <span data-count="612">f</span>printf ppf "%s@[&lt;hov&gt;[%s@[&lt;hv&gt;@[&lt;hv&gt;%a@]%a@]@ ]@]"
-        (if non_gen then <span data-count="3">"</span>_" else <span data-count="609">"</span>")
-        (if closed then <span data-count="447">i</span>f tags = None then <span data-count="248">"</span> " else <span data-count="199">"</span>&lt; "
-         else <span data-count="165">i</span>f tags = None then <span data-count="155">"</span>&gt; " else <span data-count="10">"</span>? ")
+      <span data-count="850">f</span>printf ppf "%s@[&lt;hov&gt;[%s@[&lt;hv&gt;@[&lt;hv&gt;%a@]%a@]@ ]@]"
+        (if non_gen then <span data-count="3">"</span>_" else <span data-count="847">"</span>")
+        (if closed then <span data-count="605">i</span>f tags = None then <span data-count="334">"</span> " else <span data-count="271">"</span>&lt; "
+         else <span data-count="245">i</span>f tags = None then <span data-count="227">"</span>&gt; " else <span data-count="18">"</span>? ")
         print_fields row_fields
         print_present tags
-  | <span data-count="160">O</span>typ_alias _ | <span data-count="0">O</span>typ_poly _ | <span data-count="456">O</span>typ_arrow _ | <span data-count="123">O</span>typ_tuple _ as ty -&gt;
+  | <span data-count="192">O</span>typ_alias _ | <span data-count="0">O</span>typ_poly _ | <span data-count="470">O</span>typ_arrow _ | <span data-count="133">O</span>typ_tuple _ as ty -&gt;
       pp_open_box ppf 1;
-      <span data-count="739">p</span>p_print_char ppf '(';
-      <span data-count="739">p</span>rint_out_type ppf ty;
-      <span data-count="739">p</span>p_print_char ppf ')';
-      <span data-count="739">p</span>p_close_box ppf ()
+      <span data-count="795">p</span>p_print_char ppf '(';
+      <span data-count="795">p</span>rint_out_type ppf ty;
+      <span data-count="795">p</span>p_print_char ppf ')';
+      <span data-count="795">p</span>p_close_box ppf ()
   | <span data-count="0">O</span>typ_abstract | <span data-count="0">O</span>typ_open
   | <span data-count="0">O</span>typ_sum _ | <span data-count="0">O</span>typ_manifest (_, _) -&gt; ()
-  | <span data-count="34">O</span>typ_record lbls -&gt; print_record_decl ppf lbls
-  | <span data-count="66">O</span>typ_module (p, n, tyl) -&gt;
+  | <span data-count="44">O</span>typ_record lbls -&gt; print_record_decl ppf lbls
+  | <span data-count="80">O</span>typ_module (p, n, tyl) -&gt;
       fprintf ppf "@[&lt;1&gt;(module %a" print_ident p;
-      <span data-count="66">l</span>et first = <span data-count="66">r</span>ef true in
-      <span data-count="66">L</span>ist.iter2
+      <span data-count="80">l</span>et first = <span data-count="80">r</span>ef true in
+      <span data-count="80">L</span>ist.iter2
         (fun s t -&gt;
           <span data-count="24">l</span>et sep = <span data-count="24">i</span>f !first then <span data-count="14">(</span>first := false; <span data-count="14">"</span>with") else <span data-count="10">"</span>and" in
           <span data-count="24">f</span>printf ppf " %s type %s = %a" sep s print_out_type t
         )
         n tyl;
-      <span data-count="66">f</span>printf ppf ")@]"
+      <span data-count="80">f</span>printf ppf ")@]"
   | <span data-count="48">O</span>typ_attribute (t, attr) -&gt;
       fprintf ppf "@[&lt;1&gt;(%a [@@%s])@]" print_out_type t attr.oattr_name
 and print_record_decl ppf lbls =
-  <span data-count="278">f</span>printf ppf "{%a@;&lt;1 -2&gt;}"
-    (print_list_init print_out_label (fun ppf -&gt; <span data-count="394">f</span>printf ppf "@ ")) lbls
+  <span data-count="354">f</span>printf ppf "{%a@;&lt;1 -2&gt;}"
+    (print_list_init print_out_label (fun ppf -&gt; <span data-count="484">f</span>printf ppf "@ ")) lbls
 and print_fields rest ppf =
-  <span data-count="1050">f</span>unction
-    <span data-count="476">[</span>] -&gt;
+  <span data-count="1066">f</span>unction
+    <span data-count="492">[</span>] -&gt;
       begin match rest with
-        <span data-count="129">S</span>ome non_gen -&gt; fprintf ppf "%s.." (if non_gen then <span data-count="4">"</span>_" else <span data-count="125">"</span>")
-      | <span data-count="347">N</span>one -&gt; ()
+        <span data-count="137">S</span>ome non_gen -&gt; fprintf ppf "%s.." (if non_gen then <span data-count="4">"</span>_" else <span data-count="133">"</span>")
+      | <span data-count="355">N</span>one -&gt; ()
       end
   | <span data-count="431">[</span>s, t] -&gt;
       fprintf ppf "%s : %a" s print_out_type t;
@@ -1998,109 +1996,109 @@ and print_fields rest ppf =
   | <span data-count="143">(</span>s, t) :: l -&gt;
       fprintf ppf "%s : %a;@ %a" s print_out_type t (print_fields rest) l
 and print_row_field ppf (l, opt_amp, tyl) =
-  <span data-count="824">l</span>et pr_of ppf =
-    <span data-count="824">i</span>f opt_amp then <span data-count="2">f</span>printf ppf " of@ &amp;@ "
-    else <span data-count="822">i</span>f tyl &lt;&gt; [] then <span data-count="381">f</span>printf ppf " of@ "
-    else <span data-count="441">f</span>printf ppf ""
+  <span data-count="1124">l</span>et pr_of ppf =
+    <span data-count="1124">i</span>f opt_amp then <span data-count="4">f</span>printf ppf " of@ &amp;@ "
+    else <span data-count="1120">i</span>f tyl &lt;&gt; [] then <span data-count="489">f</span>printf ppf " of@ "
+    else <span data-count="631">f</span>printf ppf ""
   in
-  <span data-count="824">f</span>printf ppf "@[&lt;hv 2&gt;`%s%t%a@]" l pr_of (print_typlist print_out_type " &amp;")
+  <span data-count="1124">f</span>printf ppf "@[&lt;hv 2&gt;`%s%t%a@]" l pr_of (print_typlist print_out_type " &amp;")
     tyl
 and print_typlist print_elem sep ppf =
-  <span data-count="6402">f</span>unction
-    <span data-count="441">[</span>] -&gt; ()
-  | <span data-count="3245">[</span>ty] -&gt; print_elem ppf ty
-  | <span data-count="2716">t</span>y :: tyl -&gt;
+  <span data-count="7088">f</span>unction
+    <span data-count="631">[</span>] -&gt; ()
+  | <span data-count="3579">[</span>ty] -&gt; print_elem ppf ty
+  | <span data-count="2878">t</span>y :: tyl -&gt;
       print_elem ppf ty;
-      <span data-count="2716">p</span>p_print_string ppf sep;
-      <span data-count="2716">p</span>p_print_space ppf ();
-      <span data-count="2716">p</span>rint_typlist print_elem sep ppf tyl
+      <span data-count="2878">p</span>p_print_string ppf sep;
+      <span data-count="2878">p</span>p_print_space ppf ();
+      <span data-count="2878">p</span>rint_typlist print_elem sep ppf tyl
 and print_typargs ppf =
   function
-    <span data-count="9816">[</span>] -&gt; ()
-  | <span data-count="3088">[</span>ty1] -&gt; print_simple_out_type ppf ty1; <span data-count="3088">p</span>p_print_space ppf ()
-  | <span data-count="1314">t</span>yl -&gt;
+    <span data-count="10832">[</span>] -&gt; ()
+  | <span data-count="3355">[</span>ty1] -&gt; print_simple_out_type ppf ty1; <span data-count="3355">p</span>p_print_space ppf ()
+  | <span data-count="1360">t</span>yl -&gt;
       pp_open_box ppf 1;
-      <span data-count="1314">p</span>p_print_char ppf '(';
-      <span data-count="1314">p</span>rint_typlist print_out_type "," ppf tyl;
-      <span data-count="1314">p</span>p_print_char ppf ')';
-      <span data-count="1314">p</span>p_close_box ppf ();
-      <span data-count="1314">p</span>p_print_space ppf ()
+      <span data-count="1360">p</span>p_print_char ppf '(';
+      <span data-count="1360">p</span>rint_typlist print_out_type "," ppf tyl;
+      <span data-count="1360">p</span>p_print_char ppf ')';
+      <span data-count="1360">p</span>p_close_box ppf ();
+      <span data-count="1360">p</span>p_print_space ppf ()
 and print_out_label ppf (name, mut, arg) =
-  <span data-count="394">f</span>printf ppf "@[&lt;2&gt;%s%s :@ %a@];" (if mut then <span data-count="10">"</span>mutable " else <span data-count="384">"</span>") name
+  <span data-count="484">f</span>printf ppf "@[&lt;2&gt;%s%s :@ %a@];" (if mut then <span data-count="18">"</span>mutable " else <span data-count="466">"</span>") name
     print_out_type arg
 
-let out_type = <span data-count="1031">r</span>ef print_out_type
+let out_type = <span data-count="1170">r</span>ef print_out_type
 
 (* Class types *)
 
 let print_type_parameter ppf s =
-  <span data-count="1045">i</span>f s = "_" then <span data-count="424">f</span>printf ppf "_" else <span data-count="621">p</span>r_var ppf s
+  <span data-count="1199">i</span>f s = "_" then <span data-count="432">f</span>printf ppf "_" else <span data-count="767">p</span>r_var ppf s
 
 let type_parameter ppf (ty, (co, cn)) =
-  <span data-count="1035">f</span>printf ppf "%s%a"
-    (if not cn then <span data-count="38">"</span>+" else <span data-count="997">i</span>f not co then <span data-count="10">"</span>-" else <span data-count="987">"</span>")
+  <span data-count="1153">f</span>printf ppf "%s%a"
+    (if not cn then <span data-count="52">"</span>+" else <span data-count="1101">i</span>f not co then <span data-count="10">"</span>-" else <span data-count="1091">"</span>")
     print_type_parameter ty
 
 let print_out_class_params ppf =
   function
-    <span data-count="418">[</span>] -&gt; ()
-  | <span data-count="107">t</span>yl -&gt;
+    <span data-count="508">[</span>] -&gt; ()
+  | <span data-count="121">t</span>yl -&gt;
       fprintf ppf "@[&lt;1&gt;[%a]@]@ "
         (print_list type_parameter (fun ppf -&gt; <span data-count="17">f</span>printf ppf ", "))
         tyl
 
 let rec print_out_class_type ppf =
   function
-    <span data-count="81">O</span>cty_constr (id, tyl) -&gt;
+    <span data-count="109">O</span>cty_constr (id, tyl) -&gt;
       let pr_tyl ppf =
-        <span data-count="81">f</span>unction
-          <span data-count="79">[</span>] -&gt; ()
+        <span data-count="109">f</span>unction
+          <span data-count="107">[</span>] -&gt; ()
         | <span data-count="2">t</span>yl -&gt;
             fprintf ppf "@[&lt;1&gt;[%a]@]@ " (print_typlist !out_type ",") tyl
       in
-      <span data-count="81">f</span>printf ppf "@[%a%a@]" pr_tyl tyl print_ident id
-  | <span data-count="236">O</span>cty_arrow (lab, ty, cty) -&gt;
-      fprintf ppf "@[%s%a -&gt;@ %a@]" (if lab &lt;&gt; "" then <span data-count="28">l</span>ab ^ ":" else <span data-count="208">"</span>")
+      <span data-count="109">f</span>printf ppf "@[%a%a@]" pr_tyl tyl print_ident id
+  | <span data-count="244">O</span>cty_arrow (lab, ty, cty) -&gt;
+      fprintf ppf "@[%s%a -&gt;@ %a@]" (if lab &lt;&gt; "" then <span data-count="28">l</span>ab ^ ":" else <span data-count="216">"</span>")
         print_out_type_2 ty print_out_class_type cty
-  | <span data-count="472">O</span>cty_signature (self_ty, csil) -&gt;
+  | <span data-count="568">O</span>cty_signature (self_ty, csil) -&gt;
       let pr_param ppf =
-        <span data-count="472">f</span>unction
+        <span data-count="568">f</span>unction
           <span data-count="58">S</span>ome ty -&gt; fprintf ppf "@ @[(%a)@]" !out_type ty
-        | <span data-count="414">N</span>one -&gt; ()
+        | <span data-count="510">N</span>one -&gt; ()
       in
-      <span data-count="472">f</span>printf ppf "@[&lt;hv 2&gt;@[&lt;2&gt;object%a@]@ %a@;&lt;1 -2&gt;end@]" pr_param self_ty
+      <span data-count="568">f</span>printf ppf "@[&lt;hv 2&gt;@[&lt;2&gt;object%a@]@ %a@;&lt;1 -2&gt;end@]" pr_param self_ty
         (print_list print_out_class_sig_item (fun ppf -&gt; <span data-count="482">f</span>printf ppf "@ "))
         csil
 and print_out_class_sig_item ppf =
   function
-    <span data-count="60">O</span>csg_constraint (ty1, ty2) -&gt;
+    <span data-count="64">O</span>csg_constraint (ty1, ty2) -&gt;
       fprintf ppf "@[&lt;2&gt;constraint %a =@ %a@]" !out_type ty1
         !out_type ty2
-  | <span data-count="592">O</span>csg_method (name, priv, virt, ty) -&gt;
+  | <span data-count="642">O</span>csg_method (name, priv, virt, ty) -&gt;
       fprintf ppf "@[&lt;2&gt;method %s%s%s :@ %a@]"
-        (if priv then <span data-count="14">"</span>private " else <span data-count="578">"</span>") (if virt then <span data-count="26">"</span>virtual " else <span data-count="566">"</span>")
+        (if priv then <span data-count="20">"</span>private " else <span data-count="622">"</span>") (if virt then <span data-count="36">"</span>virtual " else <span data-count="606">"</span>")
         name !out_type ty
-  | <span data-count="190">O</span>csg_value (name, mut, vr, ty) -&gt;
+  | <span data-count="204">O</span>csg_value (name, mut, vr, ty) -&gt;
       fprintf ppf "@[&lt;2&gt;val %s%s%s :@ %a@]"
-        (if mut then <span data-count="52">"</span>mutable " else <span data-count="138">"</span>")
-        (if vr then <span data-count="2">"</span>virtual " else <span data-count="188">"</span>")
+        (if mut then <span data-count="54">"</span>mutable " else <span data-count="150">"</span>")
+        (if vr then <span data-count="4">"</span>virtual " else <span data-count="200">"</span>")
         name !out_type ty
 
-let out_class_type = <span data-count="1031">r</span>ef print_out_class_type
+let out_class_type = <span data-count="1170">r</span>ef print_out_class_type
 
 (* Signature *)
 
-let out_module_type = <span data-count="1031">r</span>ef (fun _ -&gt; <span data-count="0">f</span>ailwith "Oprint.out_module_type")
-let out_sig_item = <span data-count="1031">r</span>ef (fun _ -&gt; <span data-count="0">f</span>ailwith "Oprint.out_sig_item")
-let out_signature = <span data-count="1031">r</span>ef (fun _ -&gt; <span data-count="0">f</span>ailwith "Oprint.out_signature")
-let out_type_extension = <span data-count="1031">r</span>ef (fun _ -&gt; <span data-count="0">f</span>ailwith "Oprint.out_type_extension")
+let out_module_type = <span data-count="1170">r</span>ef (fun _ -&gt; <span data-count="0">f</span>ailwith "Oprint.out_module_type")
+let out_sig_item = <span data-count="1170">r</span>ef (fun _ -&gt; <span data-count="0">f</span>ailwith "Oprint.out_sig_item")
+let out_signature = <span data-count="1170">r</span>ef (fun _ -&gt; <span data-count="0">f</span>ailwith "Oprint.out_signature")
+let out_type_extension = <span data-count="1170">r</span>ef (fun _ -&gt; <span data-count="0">f</span>ailwith "Oprint.out_type_extension")
 
 let rec print_out_functor funct ppf =
-  <span data-count="524">f</span>unction
+  <span data-count="556">f</span>unction
     <span data-count="24">O</span>mty_functor (_, None, mty_res) -&gt;
       if funct then <span data-count="2">f</span>printf ppf "() %a" (print_out_functor true) mty_res
       else <span data-count="22">f</span>printf ppf "functor@ () %a" (print_out_functor true) mty_res
-  | <span data-count="260">O</span>mty_functor (name, Some mty_arg, mty_res) -&gt; begin
+  | <span data-count="276">O</span>mty_functor (name, Some mty_arg, mty_res) -&gt; begin
       match name, funct with
       | <span data-count="0">"</span>_", true -&gt;
           fprintf ppf "-&gt;@ %a -&gt;@ %a"
@@ -2111,27 +2109,27 @@ let rec print_out_functor funct ppf =
       | <span data-count="38">n</span>ame, true -&gt;
           fprintf ppf "(%s : %a) %a" name
             print_out_module_type mty_arg (print_out_functor true) mty_res
-      | <span data-count="202">n</span>ame, false -&gt;
+      | <span data-count="218">n</span>ame, false -&gt;
             fprintf ppf "functor@ (%s : %a) %a" name
               print_out_module_type mty_arg (print_out_functor true) mty_res
     end
-  | <span data-count="240">m</span> -&gt;
-      if funct then <span data-count="224">f</span>printf ppf "-&gt;@ %a" print_out_module_type m
+  | <span data-count="256">m</span> -&gt;
+      if funct then <span data-count="240">f</span>printf ppf "-&gt;@ %a" print_out_module_type m
       else <span data-count="16">p</span>rint_out_module_type ppf m
 
 and print_out_module_type ppf =
   function
     <span data-count="0">O</span>mty_abstract -&gt; ()
-  | <span data-count="240">O</span>mty_functor _ as t -&gt;
+  | <span data-count="256">O</span>mty_functor _ as t -&gt;
       fprintf ppf "@[&lt;2&gt;%a@]" (print_out_functor false) t
-  | <span data-count="212">O</span>mty_ident id -&gt; fprintf ppf "%a" print_ident id
-  | <span data-count="2019">O</span>mty_signature sg -&gt;
+  | <span data-count="232">O</span>mty_ident id -&gt; fprintf ppf "%a" print_ident id
+  | <span data-count="2233">O</span>mty_signature sg -&gt;
       fprintf ppf "@[&lt;hv 2&gt;sig@ %a@;&lt;1 -2&gt;end@]" !out_signature sg
   | <span data-count="6">O</span>mty_alias id -&gt; fprintf ppf "(module %a)" print_ident id
 and print_out_signature ppf =
   function
-    <span data-count="368">[</span>] -&gt; ()
-  | <span data-count="1660">[</span>item] -&gt; !out_sig_item ppf item
+    <span data-count="380">[</span>] -&gt; ()
+  | <span data-count="1862">[</span>item] -&gt; !out_sig_item ppf item
   | <span data-count="60">O</span>sig_typext(ext, Oext_first) :: items -&gt;
       (* Gather together the extension constructors *)
       let rec gather_extensions acc items =
@@ -2154,123 +2152,123 @@ and print_out_signature ppf =
           otyext_private = ext.oext_private }
       in
         <span data-count="60">f</span>printf ppf "%a@ %a" !out_type_extension te print_out_signature items
-  | <span data-count="1942">i</span>tem :: items -&gt;
+  | <span data-count="2096">i</span>tem :: items -&gt;
       fprintf ppf "%a@ %a" !out_sig_item item print_out_signature items
 and print_out_sig_item ppf =
   function
-    <span data-count="395">O</span>sig_class (vir_flag, name, params, clt, rs) -&gt;
+    <span data-count="437">O</span>sig_class (vir_flag, name, params, clt, rs) -&gt;
       fprintf ppf "@[&lt;2&gt;%s%s@ %a%s@ :@ %a@]"
-        (if rs = Orec_next then <span data-count="26">"</span>and" else <span data-count="369">"</span>class")
-        (if vir_flag then <span data-count="28">"</span> virtual" else <span data-count="367">"</span>") print_out_class_params params
+        (if rs = Orec_next then <span data-count="26">"</span>and" else <span data-count="411">"</span>class")
+        (if vir_flag then <span data-count="36">"</span> virtual" else <span data-count="401">"</span>") print_out_class_params params
         name !out_class_type clt
-  | <span data-count="130">O</span>sig_class_type (vir_flag, name, params, clt, rs) -&gt;
+  | <span data-count="192">O</span>sig_class_type (vir_flag, name, params, clt, rs) -&gt;
       fprintf ppf "@[&lt;2&gt;%s%s@ %a%s@ =@ %a@]"
-        (if rs = Orec_next then <span data-count="4">"</span>and" else <span data-count="126">"</span>class type")
-        (if vir_flag then <span data-count="0">"</span> virtual" else <span data-count="130">"</span>") print_out_class_params params
+        (if rs = Orec_next then <span data-count="4">"</span>and" else <span data-count="188">"</span>class type")
+        (if vir_flag then <span data-count="0">"</span> virtual" else <span data-count="192">"</span>") print_out_class_params params
         name !out_class_type clt
   | <span data-count="64">O</span>sig_typext (ext, Oext_exception) -&gt;
       fprintf ppf "@[&lt;2&gt;exception %a@]"
         print_out_constr (ext.oext_name, ext.oext_args, ext.oext_ret_type)
-  | <span data-count="60">O</span>sig_typext (ext, _es) -&gt;
+  | <span data-count="78">O</span>sig_typext (ext, _es) -&gt;
       print_out_extension_constructor ppf ext
-  | <span data-count="24">O</span>sig_modtype (name, Omty_abstract) -&gt;
+  | <span data-count="28">O</span>sig_modtype (name, Omty_abstract) -&gt;
       fprintf ppf "@[&lt;2&gt;module type %s@]" name
-  | <span data-count="366">O</span>sig_modtype (name, mty) -&gt;
+  | <span data-count="374">O</span>sig_modtype (name, mty) -&gt;
       fprintf ppf "@[&lt;2&gt;module type %s =@ %a@]" name !out_module_type mty
-  | <span data-count="164">O</span>sig_module (name, Omty_alias id, _) -&gt;
+  | <span data-count="166">O</span>sig_module (name, Omty_alias id, _) -&gt;
       fprintf ppf "@[&lt;2&gt;module %s =@ %a@]" name print_ident id
-  | <span data-count="1303">O</span>sig_module (name, mty, rs) -&gt;
+  | <span data-count="1405">O</span>sig_module (name, mty, rs) -&gt;
       fprintf ppf "@[&lt;2&gt;%s %s :@ %a@]"
-        (match rs with <span data-count="1259">O</span>rec_not -&gt; "module"
+        (match rs with <span data-count="1361">O</span>rec_not -&gt; "module"
                      | <span data-count="38">O</span>rec_first -&gt; "module rec"
                      | <span data-count="6">O</span>rec_next -&gt; "and")
         name !out_module_type mty
-  | <span data-count="2230">O</span>sig_type(td, rs) -&gt;
+  | <span data-count="2560">O</span>sig_type(td, rs) -&gt;
         print_out_type_decl
           (match rs with
-           | <span data-count="4">O</span>rec_not   -&gt; "type nonrec"
-           | <span data-count="2160">O</span>rec_first -&gt; "type"
-           | <span data-count="66">O</span>rec_next  -&gt; "and")
+           | <span data-count="6">O</span>rec_not   -&gt; "type nonrec"
+           | <span data-count="2482">O</span>rec_first -&gt; "type"
+           | <span data-count="72">O</span>rec_next  -&gt; "and")
           ppf td
-  | <span data-count="2996">O</span>sig_value vd -&gt;
-      let kwd = <span data-count="2996">i</span>f vd.oval_prims = [] then <span data-count="2842">"</span>val" else <span data-count="154">"</span>external" in
-      <span data-count="2996">l</span>et pr_prims ppf =
-        <span data-count="2996">f</span>unction
-          <span data-count="2842">[</span>] -&gt; ()
+  | <span data-count="3276">O</span>sig_value vd -&gt;
+      let kwd = <span data-count="3276">i</span>f vd.oval_prims = [] then <span data-count="3122">"</span>val" else <span data-count="154">"</span>external" in
+      <span data-count="3276">l</span>et pr_prims ppf =
+        <span data-count="3276">f</span>unction
+          <span data-count="3122">[</span>] -&gt; ()
         | <span data-count="154">s</span> :: sl -&gt;
             fprintf ppf "@ = \"%s\"" s;
             <span data-count="154">L</span>ist.iter (fun s -&gt; <span data-count="90">f</span>printf ppf "@ \"%s\"" s) sl
       in
-      <span data-count="2996">f</span>printf ppf "@[&lt;2&gt;%s %a :@ %a%a%a@]" kwd value_ident vd.oval_name
+      <span data-count="3276">f</span>printf ppf "@[&lt;2&gt;%s %a :@ %a%a%a@]" kwd value_ident vd.oval_name
         !out_type vd.oval_type pr_prims vd.oval_prims
-        (fun ppf -&gt; <span data-count="2996">L</span>ist.iter (fun a -&gt; <span data-count="12">f</span>printf ppf "@ [@@@@%s]" a.oattr_name))
+        (fun ppf -&gt; <span data-count="3276">L</span>ist.iter (fun a -&gt; <span data-count="12">f</span>printf ppf "@ [@@@@%s]" a.oattr_name))
         vd.oval_attributes
   | <span data-count="2">O</span>sig_ellipsis -&gt;
       fprintf ppf "..."
 
 and print_out_type_decl kwd ppf td =
-  <span data-count="2230">l</span>et print_constraints ppf =
-    <span data-count="2230">L</span>ist.iter
+  <span data-count="2560">l</span>et print_constraints ppf =
+    <span data-count="2560">L</span>ist.iter
       (fun (ty1, ty2) -&gt;
-         <span data-count="62">f</span>printf ppf "@ @[&lt;2&gt;constraint %a =@ %a@]" !out_type ty1
+         <span data-count="98">f</span>printf ppf "@ @[&lt;2&gt;constraint %a =@ %a@]" !out_type ty1
            !out_type ty2)
       td.otype_cstrs
   in
-  <span data-count="2230">l</span>et type_defined ppf =
-    <span data-count="2230">m</span>atch td.otype_params with
-      <span data-count="1547">[</span>] -&gt; pp_print_string ppf td.otype_name
-    | <span data-count="485">[</span>param] -&gt; fprintf ppf "@[%a@ %s@]" type_parameter param td.otype_name
-    | <span data-count="198">_</span> -&gt;
+  <span data-count="2560">l</span>et type_defined ppf =
+    <span data-count="2560">m</span>atch td.otype_params with
+      <span data-count="1795">[</span>] -&gt; pp_print_string ppf td.otype_name
+    | <span data-count="547">[</span>param] -&gt; fprintf ppf "@[%a@ %s@]" type_parameter param td.otype_name
+    | <span data-count="218">_</span> -&gt;
         fprintf ppf "@[(@[%a)@]@ %s@]"
-          (print_list type_parameter (fun ppf -&gt; <span data-count="228">f</span>printf ppf ",@ "))
+          (print_list type_parameter (fun ppf -&gt; <span data-count="250">f</span>printf ppf ",@ "))
           td.otype_params
           td.otype_name
   in
-  <span data-count="2230">l</span>et print_manifest ppf =
-    <span data-count="2230">f</span>unction
-      <span data-count="118">O</span>typ_manifest (ty, _) -&gt; fprintf ppf " =@ %a" !out_type ty
-    | <span data-count="2112">_</span> -&gt; ()
+  <span data-count="2560">l</span>et print_manifest ppf =
+    <span data-count="2560">f</span>unction
+      <span data-count="128">O</span>typ_manifest (ty, _) -&gt; fprintf ppf " =@ %a" !out_type ty
+    | <span data-count="2432">_</span> -&gt; ()
   in
-  <span data-count="2230">l</span>et print_name_params ppf =
-    <span data-count="2230">f</span>printf ppf "%s %t%a" kwd type_defined print_manifest td.otype_type
+  <span data-count="2560">l</span>et print_name_params ppf =
+    <span data-count="2560">f</span>printf ppf "%s %t%a" kwd type_defined print_manifest td.otype_type
   in
-  <span data-count="2230">l</span>et ty =
-    <span data-count="2230">m</span>atch td.otype_type with
-      <span data-count="118">O</span>typ_manifest (_, ty) -&gt; ty
-    | <span data-count="2112">_</span> -&gt; td.otype_type
+  <span data-count="2560">l</span>et ty =
+    <span data-count="2560">m</span>atch td.otype_type with
+      <span data-count="128">O</span>typ_manifest (_, ty) -&gt; ty
+    | <span data-count="2432">_</span> -&gt; td.otype_type
   in
-  <span data-count="2230">l</span>et print_private ppf = <span data-count="1850">f</span>unction
-    <span data-count="102">A</span>sttypes.Private -&gt; fprintf ppf " private"
-  | <span data-count="1748">A</span>sttypes.Public -&gt; ()
+  <span data-count="2560">l</span>et print_private ppf = <span data-count="2156">f</span>unction
+    <span data-count="124">A</span>sttypes.Private -&gt; fprintf ppf " private"
+  | <span data-count="2032">A</span>sttypes.Public -&gt; ()
   in
-  <span data-count="2230">l</span>et print_immediate ppf =
-    <span data-count="2230">i</span>f td.otype_immediate then <span data-count="22">f</span>printf ppf " [%@%@immediate]" else <span data-count="2208">(</span>)
+  <span data-count="2560">l</span>et print_immediate ppf =
+    <span data-count="2560">i</span>f td.otype_immediate then <span data-count="22">f</span>printf ppf " [%@%@immediate]" else <span data-count="2538">(</span>)
   in
-  <span data-count="2230">l</span>et print_unboxed ppf =
-    <span data-count="2230">i</span>f td.otype_unboxed then <span data-count="78">f</span>printf ppf " [%@%@unboxed]" else <span data-count="2152">(</span>)
+  <span data-count="2560">l</span>et print_unboxed ppf =
+    <span data-count="2560">i</span>f td.otype_unboxed then <span data-count="78">f</span>printf ppf " [%@%@unboxed]" else <span data-count="2482">(</span>)
   in
-  <span data-count="2230">l</span>et print_out_tkind ppf = <span data-count="2230">f</span>unction
-  | <span data-count="380">O</span>typ_abstract -&gt; ()
-  | <span data-count="244">O</span>typ_record lbls -&gt;
+  <span data-count="2560">l</span>et print_out_tkind ppf = <span data-count="2560">f</span>unction
+  | <span data-count="404">O</span>typ_abstract -&gt; ()
+  | <span data-count="310">O</span>typ_record lbls -&gt;
       fprintf ppf " =%a %a"
         print_private td.otype_private
         print_record_decl lbls
-  | <span data-count="818">O</span>typ_sum constrs -&gt;
+  | <span data-count="944">O</span>typ_sum constrs -&gt;
       let variants fmt constrs =
-        <span data-count="818">i</span>f constrs = [] then <span data-count="2">f</span>printf fmt "|" else
-        <span data-count="816">f</span>printf fmt "%a" (print_list print_out_constr
-          (fun ppf -&gt; <span data-count="533">f</span>printf ppf "@ | ")) constrs in
-      <span data-count="818">f</span>printf ppf " =%a@;&lt;1 2&gt;%a"
+        <span data-count="944">i</span>f constrs = [] then <span data-count="4">f</span>printf fmt "|" else
+        <span data-count="940">f</span>printf fmt "%a" (print_list print_out_constr
+          (fun ppf -&gt; <span data-count="571">f</span>printf ppf "@ | ")) constrs in
+      <span data-count="944">f</span>printf ppf " =%a@;&lt;1 2&gt;%a"
         print_private td.otype_private variants constrs
-  | <span data-count="136">O</span>typ_open -&gt;
+  | <span data-count="138">O</span>typ_open -&gt;
       fprintf ppf " =%a .."
         print_private td.otype_private
-  | <span data-count="652">t</span>y -&gt;
+  | <span data-count="764">t</span>y -&gt;
       fprintf ppf " =%a@;&lt;1 2&gt;%a"
         print_private td.otype_private
         !out_type ty
   in
-  <span data-count="2230">f</span>printf ppf "@[&lt;2&gt;@[&lt;hv 2&gt;%t%a@]%t%t%t@]"
+  <span data-count="2560">f</span>printf ppf "@[&lt;2&gt;@[&lt;hv 2&gt;%t%a@]%t%t%t@]"
     print_name_params
     print_out_tkind ty
     print_constraints
@@ -2278,48 +2276,48 @@ and print_out_type_decl kwd ppf td =
     print_unboxed
 
 and print_out_constr ppf (name, tyl,ret_type_opt) =
-  <span data-count="1605">l</span>et name =
-    <span data-count="1605">m</span>atch name with
+  <span data-count="1785">l</span>et name =
+    <span data-count="1785">m</span>atch name with
     | <span data-count="0">"</span>::" -&gt; "(::)"   (* #7200 *)
-    | <span data-count="1605">s</span> -&gt; s
+    | <span data-count="1785">s</span> -&gt; s
   in
-  <span data-count="1605">m</span>atch ret_type_opt with
-  | <span data-count="771">N</span>one -&gt;
+  <span data-count="1785">m</span>atch ret_type_opt with
+  | <span data-count="901">N</span>one -&gt;
       begin match tyl with
-      | <span data-count="308">[</span>] -&gt;
+      | <span data-count="360">[</span>] -&gt;
           pp_print_string ppf name
-      | <span data-count="463">_</span> -&gt;
+      | <span data-count="541">_</span> -&gt;
           fprintf ppf "@[&lt;2&gt;%s of@ %a@]" name
             (print_typlist print_simple_out_type " *") tyl
       end
-  | <span data-count="834">S</span>ome ret_type -&gt;
+  | <span data-count="884">S</span>ome ret_type -&gt;
       begin match tyl with
-      | <span data-count="392">[</span>] -&gt;
+      | <span data-count="414">[</span>] -&gt;
           fprintf ppf "@[&lt;2&gt;%s :@ %a@]" name print_simple_out_type  ret_type
-      | <span data-count="442">_</span> -&gt;
+      | <span data-count="470">_</span> -&gt;
           fprintf ppf "@[&lt;2&gt;%s :@ %a -&gt; %a@]" name
             (print_typlist print_simple_out_type " *")
             tyl print_simple_out_type ret_type
       end
 
 and print_out_extension_constructor ppf ext =
-  <span data-count="60">l</span>et print_extended_type ppf =
-      <span data-count="60">m</span>atch ext.oext_type_params with
+  <span data-count="78">l</span>et print_extended_type ppf =
+      <span data-count="78">m</span>atch ext.oext_type_params with
         <span data-count="60">[</span>] -&gt; fprintf ppf "%s" ext.oext_type_name
       | <span data-count="0">[</span>ty_param] -&gt;
         fprintf ppf "@[%a@ %s@]"
           print_type_parameter
           ty_param
           ext.oext_type_name
-      | <span data-count="0">_</span> -&gt;
+      | <span data-count="18">_</span> -&gt;
         fprintf ppf "@[(@[%a)@]@ %s@]"
-          (print_list print_type_parameter (fun ppf -&gt; <span data-count="0">f</span>printf ppf ",@ "))
+          (print_list print_type_parameter (fun ppf -&gt; <span data-count="18">f</span>printf ppf ",@ "))
           ext.oext_type_params
           ext.oext_type_name
   in
-  <span data-count="60">f</span>printf ppf "@[&lt;hv 2&gt;type %t +=%s@;&lt;1 2&gt;%a@]"
+  <span data-count="78">f</span>printf ppf "@[&lt;hv 2&gt;type %t +=%s@;&lt;1 2&gt;%a@]"
     print_extended_type
-    (if ext.oext_private = Asttypes.Private then <span data-count="8">"</span> private" else <span data-count="52">"</span>")
+    (if ext.oext_private = Asttypes.Private then <span data-count="8">"</span> private" else <span data-count="70">"</span>")
     print_out_constr (ext.oext_name, ext.oext_args, ext.oext_ret_type)
 
 and print_out_type_extension ppf te =
@@ -2342,21 +2340,21 @@ and print_out_type_extension ppf te =
     (print_list print_out_constr (fun ppf -&gt; <span data-count="30">f</span>printf ppf "@ | "))
     te.otyext_constructors
 
-let _ = <span data-count="1031">o</span>ut_module_type := print_out_module_type
-let _ = <span data-count="1031">o</span>ut_signature := print_out_signature
-let _ = <span data-count="1031">o</span>ut_sig_item := print_out_sig_item
-let _ = <span data-count="1031">o</span>ut_type_extension := print_out_type_extension
+let _ = <span data-count="1170">o</span>ut_module_type := print_out_module_type
+let _ = <span data-count="1170">o</span>ut_signature := print_out_signature
+let _ = <span data-count="1170">o</span>ut_sig_item := print_out_sig_item
+let _ = <span data-count="1170">o</span>ut_type_extension := print_out_type_extension
 
 (* Phrases *)
 
 let print_out_exception ppf exn outv =
-  <span data-count="66">m</span>atch exn with
+  <span data-count="80">m</span>atch exn with
     <span data-count="0">S</span>ys.Break -&gt; fprintf ppf "Interrupted.@."
   | <span data-count="0">O</span>ut_of_memory -&gt; fprintf ppf "Out of memory during evaluation.@."
   | <span data-count="0">S</span>tack_overflow -&gt;
       fprintf ppf "Stack overflow during evaluation (looping recursion?).@."
-  | <span data-count="66">_</span> -&gt; match Printexc.use_printers exn with
-        | <span data-count="62">N</span>one -&gt; fprintf ppf "@[Exception:@ %a.@]@." !out_value outv
+  | <span data-count="80">_</span> -&gt; match Printexc.use_printers exn with
+        | <span data-count="76">N</span>one -&gt; fprintf ppf "@[Exception:@ %a.@]@." !out_value outv
         | <span data-count="4">S</span>ome s -&gt; fprintf ppf "@[Exception:@ %s@]@." s
 
 let rec print_items ppf =
@@ -2385,28 +2383,28 @@ let rec print_items ppf =
       in
         <span data-count="42">f</span>printf ppf "@[%a@]" !out_type_extension te;
         <span data-count="42">i</span>f items &lt;&gt; [] then <span data-count="0">f</span>printf ppf "@ %a" print_items items
-  | <span data-count="3864">(</span>tree, valopt) :: items -&gt;
+  | <span data-count="4264">(</span>tree, valopt) :: items -&gt;
       begin match valopt with
-        <span data-count="1431">S</span>ome v -&gt;
+        <span data-count="1633">S</span>ome v -&gt;
           fprintf ppf "@[&lt;2&gt;%a =@ %a@]" !out_sig_item tree
             !out_value v
-      | <span data-count="2433">N</span>one -&gt; fprintf ppf "@[%a@]" !out_sig_item tree
+      | <span data-count="2631">N</span>one -&gt; fprintf ppf "@[%a@]" !out_sig_item tree
       end;
-      <span data-count="3864">i</span>f items &lt;&gt; [] then <span data-count="158">f</span>printf ppf "@ %a" print_items items
+      <span data-count="4264">i</span>f items &lt;&gt; [] then <span data-count="160">f</span>printf ppf "@ %a" print_items items
 
 let print_out_phrase ppf =
   function
-    <span data-count="371">O</span>phr_eval (outv, ty) -&gt;
+    <span data-count="435">O</span>phr_eval (outv, ty) -&gt;
       fprintf ppf "@[- : %a@ =@ %a@]@." !out_type ty !out_value outv
-  | <span data-count="128">O</span>phr_signature [] -&gt; ()
-  | <span data-count="3748">O</span>phr_signature items -&gt; fprintf ppf "@[&lt;v&gt;%a@]@." print_items items
-  | <span data-count="66">O</span>phr_exception (exn, outv) -&gt; print_out_exception ppf exn outv
+  | <span data-count="172">O</span>phr_signature [] -&gt; ()
+  | <span data-count="4146">O</span>phr_signature items -&gt; fprintf ppf "@[&lt;v&gt;%a@]@." print_items items
+  | <span data-count="80">O</span>phr_exception (exn, outv) -&gt; print_out_exception ppf exn outv
 
-let out_phrase = <span data-count="1031">r</span>ef print_out_phrase
+let out_phrase = <span data-count="1170">r</span>ef print_out_phrase
 </pre>
       </div>
     </div>
-    <div id="footer">Generated on 2019-08-08 13:34:29 by <a href="https://github.com/aantron/bisect_ppx">Bisect_ppx</a> 1.4.1</div>
+    <div id="footer">Generated on 2019-08-14 11:29:20 by <a href="https://github.com/aantron/bisect_ppx">Bisect_ppx</a> 1.4.1</div>
     <script src="../coverage.js"></script>
   </body>
 </html>

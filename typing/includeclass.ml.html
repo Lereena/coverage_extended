@@ -11,19 +11,9 @@
           <span class="dirname">typing/</span>includeclass.ml
         </a>
       </h1>
-      <h2>69.44%</h2>
+      <h2>97.22%</h2>
     </div>
     <div id="navbar">
-      <span class="unvisited" style="top:31.03%"></span>
-      <span class="unvisited" style="top:46.55%"></span>
-      <span class="unvisited" style="top:48.28%"></span>
-      <span class="unvisited" style="top:50.86%"></span>
-      <span class="unvisited" style="top:52.59%"></span>
-      <span class="unvisited" style="top:54.31%"></span>
-      <span class="unvisited" style="top:62.07%"></span>
-      <span class="unvisited" style="top:63.79%"></span>
-      <span class="unvisited" style="top:65.52%"></span>
-      <span class="unvisited" style="top:93.10%"></span>
       <span class="unvisited" style="top:96.55%"></span>
     </div>
     <div id="report">
@@ -64,7 +54,7 @@
 <a id="L33"></a><span > </span>
 <a id="L34"></a><span > </span>
 <a id="L35"></a><span class="visited"> </span>
-<a id="L36"></a><span class="unvisited"> </span>
+<a id="L36"></a><span class="visited"> </span>
 <a id="L37"></a><span > </span>
 <a id="L38"></a><span class="visited"> </span>
 <a id="L39"></a><span > </span>
@@ -82,16 +72,16 @@
 <a id="L51"></a><span > </span>
 <a id="L52"></a><span > </span>
 <a id="L53"></a><span > </span>
-<a id="L54"></a><span class="unvisited"> </span>
+<a id="L54"></a><span class="visited"> </span>
 <a id="L55"></a><span > </span>
-<a id="L56"></a><span class="unvisited"> </span>
+<a id="L56"></a><span class="visited"> </span>
 <a id="L57"></a><span > </span>
 <a id="L58"></a><span > </span>
-<a id="L59"></a><span class="unvisited"> </span>
+<a id="L59"></a><span class="visited"> </span>
 <a id="L60"></a><span > </span>
-<a id="L61"></a><span class="unvisited"> </span>
+<a id="L61"></a><span class="visited"> </span>
 <a id="L62"></a><span > </span>
-<a id="L63"></a><span class="unvisited"> </span>
+<a id="L63"></a><span class="visited"> </span>
 <a id="L64"></a><span > </span>
 <a id="L65"></a><span class="visited"> </span>
 <a id="L66"></a><span > </span>
@@ -100,11 +90,11 @@
 <a id="L69"></a><span > </span>
 <a id="L70"></a><span > </span>
 <a id="L71"></a><span > </span>
-<a id="L72"></a><span class="unvisited"> </span>
+<a id="L72"></a><span class="visited"> </span>
 <a id="L73"></a><span > </span>
-<a id="L74"></a><span class="unvisited"> </span>
+<a id="L74"></a><span class="visited"> </span>
 <a id="L75"></a><span > </span>
-<a id="L76"></a><span class="unvisited"> </span>
+<a id="L76"></a><span class="visited"> </span>
 <a id="L77"></a><span > </span>
 <a id="L78"></a><span class="visited"> </span>
 <a id="L79"></a><span > </span>
@@ -136,7 +126,7 @@
 <a id="L105"></a><span > </span>
 <a id="L106"></a><span class="visited"> </span>
 <a id="L107"></a><span > </span>
-<a id="L108"></a><span class="unvisited"> </span>
+<a id="L108"></a><span class="visited"> </span>
 <a id="L109"></a><span > </span>
 <a id="L110"></a><span > </span>
 <a id="L111"></a><span > </span>
@@ -287,24 +277,24 @@
 open Types
 
 let class_types env cty1 cty2 =
-  <span data-count="19">C</span>type.match_class_types env cty1 cty2
+  <span data-count="29">C</span>type.match_class_types env cty1 cty2
 
 let class_type_declarations ~loc env cty1 cty2 =
-  <span data-count="705">B</span>uiltin_attributes.check_alerts_inclusion
+  <span data-count="737">B</span>uiltin_attributes.check_alerts_inclusion
     ~def:cty1.clty_loc
     ~use:cty2.clty_loc
     loc
     cty1.clty_attributes cty2.clty_attributes
     (Path.last cty1.clty_path);
-  <span data-count="705">C</span>type.match_class_declarations env
+  <span data-count="737">C</span>type.match_class_declarations env
     cty1.clty_params cty1.clty_type
     cty2.clty_params cty2.clty_type
 
 let class_declarations env cty1 cty2 =
-  <span data-count="545">m</span>atch cty1.cty_new, cty2.cty_new with
-    <span data-count="0">N</span>one, Some _ -&gt;
+  <span data-count="561">m</span>atch cty1.cty_new, cty2.cty_new with
+    <span data-count="2">N</span>one, Some _ -&gt;
       [Ctype.CM_Virtual_class]
-  | <span data-count="545">_</span> -&gt;
+  | <span data-count="559">_</span> -&gt;
       Ctype.match_class_declarations env
         cty1.cty_params cty1.cty_type
         cty2.cty_params cty2.cty_type
@@ -320,29 +310,29 @@ let rec hide_params = function
 
 let include_err ppf =
   function
-  | <span data-count="0">C</span>M_Virtual_class -&gt;
+  | <span data-count="2">C</span>M_Virtual_class -&gt;
       fprintf ppf "A class cannot be changed from virtual to concrete"
-  | <span data-count="0">C</span>M_Parameter_arity_mismatch _ -&gt;
+  | <span data-count="2">C</span>M_Parameter_arity_mismatch _ -&gt;
       fprintf ppf
         "The classes do not have the same number of type parameters"
-  | <span data-count="0">C</span>M_Type_parameter_mismatch (env, trace) -&gt;
+  | <span data-count="2">C</span>M_Type_parameter_mismatch (env, trace) -&gt;
       Printtyp.report_unification_error ppf env trace
-        (function <span data-count="0">p</span>pf -&gt;
+        (function <span data-count="2">p</span>pf -&gt;
           fprintf ppf "A type parameter has type")
-        (function <span data-count="0">p</span>pf -&gt;
+        (function <span data-count="2">p</span>pf -&gt;
           fprintf ppf "but is expected to have type")
-  | <span data-count="14">C</span>M_Class_type_mismatch (env, cty1, cty2) -&gt;
+  | <span data-count="24">C</span>M_Class_type_mismatch (env, cty1, cty2) -&gt;
       Printtyp.wrap_printing_env ~error:true env (fun () -&gt;
-        <span data-count="14">f</span>printf ppf
+        <span data-count="24">f</span>printf ppf
           "@[The class type@;&lt;1 2&gt;%a@ %s@;&lt;1 2&gt;%a@]"
           Printtyp.class_type cty1
           "is not matched by the class type"
           Printtyp.class_type cty2)
-  | <span data-count="0">C</span>M_Parameter_mismatch (env, trace) -&gt;
+  | <span data-count="2">C</span>M_Parameter_mismatch (env, trace) -&gt;
       Printtyp.report_unification_error ppf env trace
-        (function <span data-count="0">p</span>pf -&gt;
+        (function <span data-count="2">p</span>pf -&gt;
           fprintf ppf "A parameter has type")
-        (function <span data-count="0">p</span>pf -&gt;
+        (function <span data-count="2">p</span>pf -&gt;
           fprintf ppf "but is expected to have type")
   | <span data-count="1">C</span>M_Val_type_mismatch (lab, env, trace) -&gt;
       Printtyp.report_unification_error ppf env trace
@@ -350,43 +340,43 @@ let include_err ppf =
           fprintf ppf "The instance variable %s@ has type" lab)
         (function <span data-count="1">p</span>pf -&gt;
           fprintf ppf "but is expected to have type")
-  | <span data-count="3">C</span>M_Meth_type_mismatch (lab, env, trace) -&gt;
+  | <span data-count="5">C</span>M_Meth_type_mismatch (lab, env, trace) -&gt;
       Printtyp.report_unification_error ppf env trace
-        (function <span data-count="3">p</span>pf -&gt;
+        (function <span data-count="5">p</span>pf -&gt;
           fprintf ppf "The method %s@ has type" lab)
-        (function <span data-count="3">p</span>pf -&gt;
+        (function <span data-count="5">p</span>pf -&gt;
           fprintf ppf "but is expected to have type")
-  | <span data-count="2">C</span>M_Non_mutable_value lab -&gt;
+  | <span data-count="4">C</span>M_Non_mutable_value lab -&gt;
       fprintf ppf
        "@[The non-mutable instance variable %s cannot become mutable@]" lab
-  | <span data-count="2">C</span>M_Non_concrete_value lab -&gt;
+  | <span data-count="4">C</span>M_Non_concrete_value lab -&gt;
       fprintf ppf
        "@[The virtual instance variable %s cannot become concrete@]" lab
-  | <span data-count="2">C</span>M_Missing_value lab -&gt;
+  | <span data-count="4">C</span>M_Missing_value lab -&gt;
       fprintf ppf "@[The first class type has no instance variable %s@]" lab
-  | <span data-count="4">C</span>M_Missing_method lab -&gt;
+  | <span data-count="8">C</span>M_Missing_method lab -&gt;
       fprintf ppf "@[The first class type has no method %s@]" lab
-  | <span data-count="4">C</span>M_Hide_public lab -&gt;
+  | <span data-count="6">C</span>M_Hide_public lab -&gt;
      fprintf ppf "@[The public method %s cannot be hidden@]" lab
-  | <span data-count="2">C</span>M_Hide_virtual (k, lab) -&gt;
+  | <span data-count="4">C</span>M_Hide_virtual (k, lab) -&gt;
       fprintf ppf "@[The virtual %s %s cannot be hidden@]" k lab
-  | <span data-count="2">C</span>M_Public_method lab -&gt;
-      fprintf ppf "@[The public method %s cannot become private@]" lab
-  | <span data-count="2">C</span>M_Virtual_method lab -&gt;
-      fprintf ppf "@[The virtual method %s cannot become concrete@]" lab
-  | <span data-count="0">C</span>M_Private_method lab -&gt;
-      fprintf ppf "@[The private method %s cannot become public@]" lab
+  | <span data-count="4">C</span>M_Public_method lab -&gt;
+      fprintf ppf "@[The public method %s cannot become private" lab
+  | CM<span data-count="4">_</span>Virtual_method lab -&gt;
+      fprintf ppf "@[The virtual method %s cannot become concrete" lab
+  | CM_P<span data-count="2">r</span>ivate_method lab -&gt;
+      fprintf ppf "The private method %s cannot become public" lab
 
 let report_error ppf = function
-  |  <span data-count="0">[</span>] -&gt; ()
-  | <span data-count="22">e</span>rr :: errs -&gt;
+  |  [] -&gt; ()
+  | err :: e<span data-count="50">r</span>rs -&gt;
       let print_errs ppf errs =
-         <span data-count="22">L</span>ist.iter (fun err -&gt; <span data-count="16">f</span>printf ppf "@ %a" include_err err) errs in
-      <span data-count="22">f</span>printf ppf "@[&lt;v&gt;%a%a@]" include_err err print_errs errs
+         List.ite<span data-count="50">r</span> (fun err -&gt; fprintf <span data-count="28">p</span>pf "@ %a" include_err err) errs in
+      fprintf <span data-count="50">p</span>pf "@[&lt;v&gt;%a%a@]" include_err err print_errs errs
 </pre>
       </div>
     </div>
-    <div id="footer">Generated on 2019-08-08 13:34:29 by <a href="https://github.com/aantron/bisect_ppx">Bisect_ppx</a> 1.4.1</div>
+    <div id="footer">Generated on 2019-08-14 11:29:20 by <a href="https://github.com/aantron/bisect_ppx">Bisect_ppx</a> 1.4.1</div>
     <script src="../coverage.js"></script>
   </body>
 </html>

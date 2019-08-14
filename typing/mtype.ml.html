@@ -1121,96 +1121,96 @@ open Types
 
 
 let rec scrape env mty =
-  <span data-count="7165">m</span>atch mty with
-    <span data-count="433">M</span>ty_ident p -&gt;
+  <span data-count="7651">m</span>atch mty with
+    <span data-count="478">M</span>ty_ident p -&gt;
       begin try
         scrape env (Env.find_modtype_expansion p env)
-      with <span data-count="47">N</span>ot_found -&gt;
+      with <span data-count="51">N</span>ot_found -&gt;
         mty
       end
-  | <span data-count="6732">_</span> -&gt; mty
+  | <span data-count="7173">_</span> -&gt; mty
 
 let freshen ~scope mty =
-  <span data-count="192">S</span>ubst.modtype (Rescope scope) Subst.identity mty
+  <span data-count="203">S</span>ubst.modtype (Rescope scope) Subst.identity mty
 
 let rec strengthen ~aliasable env mty p =
-  <span data-count="5760">m</span>atch scrape env mty with
-    <span data-count="4377">M</span>ty_signature sg -&gt;
+  <span data-count="6176">m</span>atch scrape env mty with
+    <span data-count="4728">M</span>ty_signature sg -&gt;
       Mty_signature(strengthen_sig ~aliasable env sg p)
-  | <span data-count="557">M</span>ty_functor(param, arg, res)
-    when <span data-count="1164">!</span>Clflags.applicative_functors &amp;&amp; <span data-count="582">I</span>dent.name param &lt;&gt; "*" -&gt;
+  | <span data-count="575">M</span>ty_functor(param, arg, res)
+    when <span data-count="1200">!</span>Clflags.applicative_functors &amp;&amp; <span data-count="600">I</span>dent.name param &lt;&gt; "*" -&gt;
       Mty_functor(param, arg,
         strengthen ~aliasable:false env res (Papply(p, Pident param)))
-  | <span data-count="826">m</span>ty -&gt;
+  | <span data-count="873">m</span>ty -&gt;
       mty
 
 and strengthen_sig ~aliasable env sg p =
-  <span data-count="58333">m</span>atch sg with
-    <span data-count="4377">[</span>] -&gt; []
-  | <span data-count="46700">(</span>Sig_value(_, _, _) as sigelt) :: rem -&gt;
+  <span data-count="64389">m</span>atch sg with
+    <span data-count="4728">[</span>] -&gt; []
+  | <span data-count="51631">(</span>Sig_value(_, _, _) as sigelt) :: rem -&gt;
       sigelt :: strengthen_sig ~aliasable env rem p
   | <span data-count="10">S</span>ig_type(id, {type_kind=Type_abstract}, _, _) ::
     (Sig_type(id', {type_private=Private}, _, _) :: _ as rem)
-    when <span data-count="51">I</span>dent.name id = Ident.name id' ^ "#row" -&gt;
+    when <span data-count="90">I</span>dent.name id = Ident.name id' ^ "#row" -&gt;
       strengthen_sig ~aliasable env rem p
-  | <span data-count="4694">S</span>ig_type(id, decl, rs, vis) :: rem -&gt;
+  | <span data-count="5238">S</span>ig_type(id, decl, rs, vis) :: rem -&gt;
       let newdecl =
-        <span data-count="4694">m</span>atch decl.type_manifest, decl.type_private, decl.type_kind with
-          <span data-count="2311">S</span>ome _, Public, _ -&gt; decl
-        | <span data-count="24">S</span>ome _, Private, (<span data-count="24">T</span>ype_record _ | <span data-count="0">T</span>ype_variant _) -&gt; decl
-        | <span data-count="2359">_</span> -&gt;
+        <span data-count="5238">m</span>atch decl.type_manifest, decl.type_private, decl.type_kind with
+          <span data-count="2560">S</span>ome _, Public, _ -&gt; decl
+        | <span data-count="47">S</span>ome _, Private, (<span data-count="47">T</span>ype_record _ | <span data-count="0">T</span>ype_variant _) -&gt; decl
+        | <span data-count="2631">_</span> -&gt;
             let manif =
-              <span data-count="2359">S</span>ome(Btype.newgenty(Tconstr(Pdot(p, Ident.name id),
+              <span data-count="2631">S</span>ome(Btype.newgenty(Tconstr(Pdot(p, Ident.name id),
                                           decl.type_params, ref Mnil))) in
-            <span data-count="2359">i</span>f decl.type_kind = Type_abstract then
-              <span data-count="1181">{</span> decl with type_private = Public; type_manifest = manif }
+            <span data-count="2631">i</span>f decl.type_kind = Type_abstract then
+              <span data-count="1257">{</span> decl with type_private = Public; type_manifest = manif }
             else
-              <span data-count="1178">{</span> decl with type_manifest = manif }
+              <span data-count="1374">{</span> decl with type_manifest = manif }
       in
-      <span data-count="4694">S</span>ig_type(id, newdecl, rs, vis) :: strengthen_sig ~aliasable env rem p
-  | <span data-count="409">(</span>Sig_typext _ as sigelt) :: rem -&gt;
+      <span data-count="5238">S</span>ig_type(id, newdecl, rs, vis) :: strengthen_sig ~aliasable env rem p
+  | <span data-count="449">(</span>Sig_typext _ as sigelt) :: rem -&gt;
       sigelt :: strengthen_sig ~aliasable env rem p
-  | <span data-count="1413">S</span>ig_module(id, pres, md, rs, vis) :: rem -&gt;
+  | <span data-count="1570">S</span>ig_module(id, pres, md, rs, vis) :: rem -&gt;
       let str =
-        <span data-count="1413">s</span>trengthen_decl ~aliasable env md (Pdot(p, Ident.name id))
+        <span data-count="1570">s</span>trengthen_decl ~aliasable env md (Pdot(p, Ident.name id))
       in
-      <span data-count="1413">S</span>ig_module(id, pres, str, rs, vis)
+      <span data-count="1570">S</span>ig_module(id, pres, str, rs, vis)
       :: strengthen_sig ~aliasable
         (Env.add_module_declaration ~check:false id pres md env) rem p
       (* Need to add the module in case it defines manifest module types *)
-  | <span data-count="359">S</span>ig_modtype(id, decl, vis) :: rem -&gt;
+  | <span data-count="382">S</span>ig_modtype(id, decl, vis) :: rem -&gt;
       let newdecl =
-        <span data-count="359">m</span>atch decl.mtd_type with
+        <span data-count="382">m</span>atch decl.mtd_type with
           <span data-count="4">N</span>one -&gt;
             {decl with mtd_type = Some(Mty_ident(Pdot(p,Ident.name id)))}
-        | <span data-count="355">S</span>ome _ -&gt;
+        | <span data-count="378">S</span>ome _ -&gt;
             decl
       in
-      <span data-count="359">S</span>ig_modtype(id, newdecl, vis) ::
+      <span data-count="382">S</span>ig_modtype(id, newdecl, vis) ::
       strengthen_sig ~aliasable (Env.add_modtype id decl env) rem p
       (* Need to add the module type in case it is manifest *)
-  | <span data-count="151">(</span>Sig_class _ as sigelt) :: rem -&gt;
+  | <span data-count="155">(</span>Sig_class _ as sigelt) :: rem -&gt;
       sigelt :: strengthen_sig ~aliasable env rem p
-  | <span data-count="220">(</span>Sig_class_type _ as sigelt) :: rem -&gt;
+  | <span data-count="226">(</span>Sig_class_type _ as sigelt) :: rem -&gt;
       sigelt :: strengthen_sig ~aliasable env rem p
 
 and strengthen_decl ~aliasable env md p =
-  <span data-count="1455">m</span>atch md.md_type with
-  | <span data-count="254">M</span>ty_alias _ -&gt; md
-  | <span data-count="1005">_</span> when <span data-count="1201">a</span>liasable -&gt; {md with md_type = Mty_alias p}
-  | <span data-count="196">m</span>ty -&gt; {md with md_type = strengthen ~aliasable env mty p}
+  <span data-count="1621">m</span>atch md.md_type with
+  | <span data-count="259">M</span>ty_alias _ -&gt; md
+  | <span data-count="1113">_</span> when <span data-count="1362">a</span>liasable -&gt; {md with md_type = Mty_alias p}
+  | <span data-count="249">m</span>ty -&gt; {md with md_type = strengthen ~aliasable env mty p}
 
-let () = <span data-count="1031">E</span>nv.strengthen := strengthen
+let () = <span data-count="1170">E</span>nv.strengthen := strengthen
 
 let rec make_aliases_absent pres mty =
-  <span data-count="112">m</span>atch mty with
+  <span data-count="121">m</span>atch mty with
   | <span data-count="22">M</span>ty_alias _ -&gt; Mp_absent, mty
   | <span data-count="68">M</span>ty_signature sg -&gt;
       pres, Mty_signature(make_aliases_absent_sig sg)
   | <span data-count="8">M</span>ty_functor(param, arg, res) -&gt;
       let _, res = <span data-count="8">m</span>ake_aliases_absent Mp_present res in
       <span data-count="8">p</span>res, Mty_functor(param, arg, res)
-  | <span data-count="14">m</span>ty -&gt;
+  | <span data-count="23">m</span>ty -&gt;
       pres, mty
 
 and make_aliases_absent_sig sg =
@@ -1224,8 +1224,8 @@ and make_aliases_absent_sig sg =
       sigelt :: make_aliases_absent_sig rem
 
 let scrape_for_type_of env pres mty =
-  <span data-count="63">l</span>et rec loop env path mty =
-    <span data-count="81">m</span>atch mty, path with
+  <span data-count="72">l</span>et rec loop env path mty =
+    <span data-count="90">m</span>atch mty, path with
     | <span data-count="18">M</span>ty_alias path, _ -&gt; begin
         try
           let md = <span data-count="18">E</span>nv.find_module path env in
@@ -1234,9 +1234,9 @@ let scrape_for_type_of env pres mty =
       end
     | <span data-count="16">m</span>ty, Some path -&gt;
         strengthen ~aliasable:false env mty path
-    | <span data-count="47">_</span> -&gt; mty
+    | <span data-count="56">_</span> -&gt; mty
   in
-  <span data-count="63">m</span>ake_aliases_absent pres (loop env None mty)
+  <span data-count="72">m</span>ake_aliases_absent pres (loop env None mty)
 
 (* In nondep_supertype, env is only used for the type it assigns to id.
    Hence there is no need to keep env up-to-date by adding the bindings
@@ -1245,8 +1245,8 @@ let scrape_for_type_of env pres mty =
 type variance = Co | Contra | Strict
 
 let rec nondep_mty_with_presence env va ids pres mty =
-  <span data-count="181">m</span>atch mty with
-    <span data-count="14">M</span>ty_ident p -&gt;
+  <span data-count="182">m</span>atch mty with
+    <span data-count="15">M</span>ty_ident p -&gt;
       begin match Path.find_free_opt ids p with
       | <span data-count="6">S</span>ome id -&gt;
           let expansion =
@@ -1255,7 +1255,7 @@ let rec nondep_mty_with_presence env va ids pres mty =
               raise (Ctype.Nondep_cannot_erase id)
           in
           <span data-count="2">n</span>ondep_mty_with_presence env va ids pres expansion
-      | <span data-count="8">N</span>one -&gt; pres, mty
+      | <span data-count="9">N</span>one -&gt; pres, mty
       end
   | <span data-count="25">M</span>ty_alias p -&gt;
       begin match Path.find_free_opt ids p with
@@ -1283,7 +1283,7 @@ let rec nondep_mty_with_presence env va ids pres mty =
       <span data-count="3">p</span>res, mty
 
 and nondep_mty env va ids mty =
-  <span data-count="117">s</span>nd (nondep_mty_with_presence env va ids Mp_present mty)
+  <span data-count="118">s</span>nd (nondep_mty_with_presence env va ids Mp_present mty)
 
 and nondep_sig_item env va ids = <span data-count="958">f</span>unction
   | <span data-count="1309">S</span>ig_value(id, d, vis) -&gt;
@@ -1317,33 +1317,33 @@ and nondep_sig env va ids sg =
 and nondep_modtype_decl env ids mtd =
   <span data-count="42">{</span>mtd with mtd_type = Option.map (nondep_mty env Strict ids) mtd.mtd_type}
 
-let nondep_supertype env ids = <span data-count="85">n</span>ondep_mty env Co ids
+let nondep_supertype env ids = <span data-count="86">n</span>ondep_mty env Co ids
 let nondep_sig_item env ids = <span data-count="821">n</span>ondep_sig_item env Co ids
 
 let enrich_typedecl env p id decl =
-  <span data-count="55">m</span>atch decl.type_manifest with
-    <span data-count="31">S</span>ome _ -&gt; decl
-  | <span data-count="24">N</span>one -&gt;
+  <span data-count="65">m</span>atch decl.type_manifest with
+    <span data-count="33">S</span>ome _ -&gt; decl
+  | <span data-count="32">N</span>one -&gt;
       try
-        let orig_decl = <span data-count="24">E</span>nv.find_type p env in
-        <span data-count="20">i</span>f decl.type_arity &lt;&gt; orig_decl.type_arity then
+        let orig_decl = <span data-count="32">E</span>nv.find_type p env in
+        <span data-count="24">i</span>f decl.type_arity &lt;&gt; orig_decl.type_arity then
           <span data-count="0">d</span>ecl
         else
-          <span data-count="20">l</span>et orig_ty =
-            <span data-count="20">C</span>type.reify_univars
+          <span data-count="24">l</span>et orig_ty =
+            <span data-count="24">C</span>type.reify_univars
               (Btype.newgenty(Tconstr(p, orig_decl.type_params, ref Mnil)))
           in
-          <span data-count="20">l</span>et new_ty =
-            <span data-count="20">C</span>type.reify_univars
+          <span data-count="24">l</span>et new_ty =
+            <span data-count="24">C</span>type.reify_univars
               (Btype.newgenty(Tconstr(Pident id, decl.type_params, ref Mnil)))
           in
-          <span data-count="20">l</span>et env = <span data-count="20">E</span>nv.add_type ~check:false id decl env in
-          <span data-count="20">C</span>type.mcomp env orig_ty new_ty;
-          <span data-count="16">l</span>et orig_ty =
-            <span data-count="16">B</span>type.newgenty(Tconstr(p, decl.type_params, ref Mnil))
+          <span data-count="24">l</span>et env = <span data-count="24">E</span>nv.add_type ~check:false id decl env in
+          <span data-count="24">C</span>type.mcomp env orig_ty new_ty;
+          <span data-count="18">l</span>et orig_ty =
+            <span data-count="18">B</span>type.newgenty(Tconstr(p, decl.type_params, ref Mnil))
           in
-          <span data-count="16">{</span>decl with type_manifest = Some orig_ty}
-      with <span data-count="4">N</span>ot_found | <span data-count="4">C</span>type.Unify _ -&gt;
+          <span data-count="18">{</span>decl with type_manifest = Some orig_ty}
+      with <span data-count="8">N</span>ot_found | <span data-count="6">C</span>type.Unify _ -&gt;
         (* - Not_found: type which was not present in the signature, so we don't
            have anything to do.
            - Unify: the current declaration is not compatible with the one we
@@ -1353,14 +1353,14 @@ let enrich_typedecl env p id decl =
         decl
 
 let rec enrich_modtype env p mty =
-  <span data-count="19">m</span>atch mty with
-    <span data-count="11">M</span>ty_signature sg -&gt;
+  <span data-count="21">m</span>atch mty with
+    <span data-count="13">M</span>ty_signature sg -&gt;
       Mty_signature(List.map (enrich_item env p) sg)
   | <span data-count="8">_</span> -&gt;
       mty
 
-and enrich_item env p = <span data-count="11">f</span>unction
-    <span data-count="14">S</span>ig_type(id, decl, rs, priv) -&gt;
+and enrich_item env p = <span data-count="13">f</span>unction
+    <span data-count="16">S</span>ig_type(id, decl, rs, priv) -&gt;
       Sig_type(id,
                 enrich_typedecl env (Pdot(p, Ident.name id)) id decl, rs, priv)
   | <span data-count="1">S</span>ig_module(id, pres, md, rs, priv) -&gt;
@@ -1373,16 +1373,16 @@ and enrich_item env p = <span data-count="11">f</span>unction
   | <span data-count="198">i</span>tem -&gt; item
 
 let rec type_paths env p mty =
-  <span data-count="371">m</span>atch scrape env mty with
+  <span data-count="379">m</span>atch scrape env mty with
     <span data-count="4">M</span>ty_ident _ -&gt; []
   | <span data-count="12">M</span>ty_alias _ -&gt; []
-  | <span data-count="351">M</span>ty_signature sg -&gt; type_paths_sig env p sg
+  | <span data-count="359">M</span>ty_signature sg -&gt; type_paths_sig env p sg
   | <span data-count="4">M</span>ty_functor _ -&gt; []
 
 and type_paths_sig env p sg =
-  <span data-count="1276">m</span>atch sg with
-    <span data-count="351">[</span>] -&gt; []
-  | <span data-count="254">S</span>ig_type(id, _decl, _, _) :: rem -&gt;
+  <span data-count="1296">m</span>atch sg with
+    <span data-count="359">[</span>] -&gt; []
+  | <span data-count="266">S</span>ig_type(id, _decl, _, _) :: rem -&gt;
       Pdot(p, Ident.name id) :: type_paths_sig env p rem
   | <span data-count="53">S</span>ig_module(id, pres, md, _, _) :: rem -&gt;
       type_paths env (Pdot(p, Ident.name id)) md.md_type @
@@ -1468,12 +1468,12 @@ let contains_type env mty =
 
 (* Remove module aliases from a signature *)
 
-let rec get_prefixes = <span data-count="1031">f</span>unction
+let rec get_prefixes = <span data-count="1170">f</span>unction
   | Pident _ -&gt; Path.Set.empty
   | Pdot (p, _)
   | Papply (p, _) -&gt; Path.Set.add p (get_prefixes p)
 
-let rec get_arg_paths = <span data-count="1031">f</span>unction
+let rec get_arg_paths = <span data-count="1170">f</span>unction
   | Pident _ -&gt; Path.Set.empty
   | Pdot (p, _) -&gt; get_arg_paths p
   | Papply (p1, p2) -&gt;
@@ -1535,10 +1535,10 @@ type remove_alias_args =
       scrape: Env.t -&gt; module_type -&gt; module_type }
 
 let rec remove_aliases_mty env args pres mty =
-  <span data-count="558">l</span>et args' = <span data-count="558">{</span>args with modified = false} in
-  <span data-count="558">l</span>et res =
-    <span data-count="558">m</span>atch args.scrape env mty with
-      <span data-count="479">M</span>ty_signature sg -&gt;
+  <span data-count="579">l</span>et args' = <span data-count="579">{</span>args with modified = false} in
+  <span data-count="579">l</span>et res =
+    <span data-count="579">m</span>atch args.scrape env mty with
+      <span data-count="492">M</span>ty_signature sg -&gt;
         Mp_present, Mty_signature (remove_aliases_sig env args' sg)
     | <span data-count="38">M</span>ty_alias _ -&gt;
         let mty' = <span data-count="38">E</span>nv.scrape_alias env mty in
@@ -1548,46 +1548,46 @@ let rec remove_aliases_mty env args pres mty =
           args'.modified &lt;- true;
           <span data-count="38">r</span>emove_aliases_mty env args' Mp_present mty'
         end
-    | <span data-count="41">m</span>ty -&gt;
+    | <span data-count="49">m</span>ty -&gt;
         Mp_present, mty
   in
-  <span data-count="558">i</span>f args'.modified then <span data-count="77">b</span>egin
+  <span data-count="579">i</span>f args'.modified then <span data-count="77">b</span>egin
     args.modified &lt;- true;
     <span data-count="77">r</span>es
-  end else <span data-count="481">b</span>egin
+  end else <span data-count="502">b</span>egin
     pres, mty
   end
 
 and remove_aliases_sig env args sg =
-  <span data-count="1455">m</span>atch sg with
-    <span data-count="479">[</span>] -&gt; []
-  | <span data-count="140">S</span>ig_module(id, pres, md, rs, priv) :: rem  -&gt;
+  <span data-count="1496">m</span>atch sg with
+    <span data-count="492">[</span>] -&gt; []
+  | <span data-count="147">S</span>ig_module(id, pres, md, rs, priv) :: rem  -&gt;
       let pres, mty =
-        <span data-count="140">m</span>atch md.md_type with
+        <span data-count="147">m</span>atch md.md_type with
           <span data-count="14">M</span>ty_alias p when <span data-count="52">a</span>rgs.exclude id p -&gt;
             pres, md.md_type
-        | <span data-count="126">m</span>ty -&gt;
+        | <span data-count="133">m</span>ty -&gt;
             remove_aliases_mty env args pres mty
       in
-      <span data-count="140">S</span>ig_module(id, pres, {md with md_type = mty} , rs, priv) ::
+      <span data-count="147">S</span>ig_module(id, pres, {md with md_type = mty} , rs, priv) ::
       remove_aliases_sig (Env.add_module id pres mty env) args rem
   | <span data-count="18">S</span>ig_modtype(id, mtd, priv) :: rem -&gt;
       Sig_modtype(id, mtd, priv) ::
       remove_aliases_sig (Env.add_modtype id mtd env) args rem
-  | <span data-count="818">i</span>t :: rem -&gt;
+  | <span data-count="839">i</span>t :: rem -&gt;
       it :: remove_aliases_sig env args rem
 
 let scrape_for_functor_arg env mty =
-  <span data-count="383">l</span>et exclude _id p =
+  <span data-count="397">l</span>et exclude _id p =
     <span data-count="36">t</span>ry ignore (Env.find_module p env); <span data-count="6">t</span>rue with <span data-count="30">N</span>ot_found -&gt; false
   in
-  <span data-count="383">l</span>et _, mty =
-    <span data-count="383">r</span>emove_aliases_mty env {modified=false; exclude; scrape} Mp_present mty
+  <span data-count="397">l</span>et _, mty =
+    <span data-count="397">r</span>emove_aliases_mty env {modified=false; exclude; scrape} Mp_present mty
   in
-  <span data-count="383">m</span>ty
+  <span data-count="397">m</span>ty
 
 let scrape_for_type_of ~remove_aliases env mty =
-  <span data-count="74">i</span>f remove_aliases then <span data-count="11">b</span>egin
+  <span data-count="83">i</span>f remove_aliases then <span data-count="11">b</span>egin
     let excl = <span data-count="11">c</span>ollect_arg_paths mty in
     <span data-count="11">l</span>et exclude id _p = <span data-count="16">I</span>dent.Set.mem id excl in
     <span data-count="11">l</span>et scrape _ mty = <span data-count="39">m</span>ty in
@@ -1595,30 +1595,30 @@ let scrape_for_type_of ~remove_aliases env mty =
       <span data-count="11">r</span>emove_aliases_mty env {modified=false; exclude; scrape} Mp_present mty
     in
     <span data-count="11">m</span>ty
-  end else <span data-count="63">b</span>egin
-    let _, mty = <span data-count="63">s</span>crape_for_type_of env Mp_present mty in
-    <span data-count="63">m</span>ty
+  end else <span data-count="72">b</span>egin
+    let _, mty = <span data-count="72">s</span>crape_for_type_of env Mp_present mty in
+    <span data-count="72">m</span>ty
   end
 
 (* Lower non-generalizable type variables *)
 
 let lower_nongen nglev mty =
-  <span data-count="1632">l</span>et open Btype in
+  <span data-count="1734">l</span>et open Btype in
   let it_type_expr it ty =
-    <span data-count="33555">l</span>et ty = <span data-count="33555">r</span>epr ty in
-    <span data-count="33555">m</span>atch ty with
-      <span data-count="6214">{</span>desc=Tvar _; level} -&gt;
-        if <span data-count="6214">l</span>evel &lt; generic_level &amp;&amp; <span data-count="48">l</span>evel &gt; nglev then <span data-count="11">s</span>et_level ty nglev
-    | <span data-count="27341">_</span> -&gt;
+    <span data-count="34412">l</span>et ty = <span data-count="34412">r</span>epr ty in
+    <span data-count="34412">m</span>atch ty with
+      <span data-count="6372">{</span>desc=Tvar _; level} -&gt;
+        if <span data-count="6372">l</span>evel &lt; generic_level &amp;&amp; <span data-count="48">l</span>evel &gt; nglev then <span data-count="11">s</span>et_level ty nglev
+    | <span data-count="28040">_</span> -&gt;
         type_iterators.it_type_expr it ty
   in
-  <span data-count="1632">l</span>et it = <span data-count="1632">{</span>type_iterators with it_type_expr} in
-  <span data-count="1632">i</span>t.it_module_type it mty;
-  <span data-count="1632">i</span>t.it_module_type unmark_iterators mty
+  <span data-count="1734">l</span>et it = <span data-count="1734">{</span>type_iterators with it_type_expr} in
+  <span data-count="1734">i</span>t.it_module_type it mty;
+  <span data-count="1734">i</span>t.it_module_type unmark_iterators mty
 </pre>
       </div>
     </div>
-    <div id="footer">Generated on 2019-08-08 13:34:29 by <a href="https://github.com/aantron/bisect_ppx">Bisect_ppx</a> 1.4.1</div>
+    <div id="footer">Generated on 2019-08-14 11:29:20 by <a href="https://github.com/aantron/bisect_ppx">Bisect_ppx</a> 1.4.1</div>
     <script src="../coverage.js"></script>
   </body>
 </html>

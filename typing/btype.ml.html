@@ -1649,25 +1649,25 @@ module TypeHash = Hashtbl.Make(TypeOps)
 (**** Forward declarations ****)
 
 let print_raw =
-  <span data-count="1031">r</span>ef (fun _ -&gt; <span data-count="0">a</span>ssert false : Format.formatter -&gt; type_expr -&gt; unit)
+  <span data-count="1170">r</span>ef (fun _ -&gt; <span data-count="0">a</span>ssert false : Format.formatter -&gt; type_expr -&gt; unit)
 
 (**** Type level management ****)
 
-let generic_level = <span data-count="1031">I</span>dent.highest_scope
+let generic_level = <span data-count="1170">I</span>dent.highest_scope
 
 (* Used to mark a type during a traversal. *)
-let lowest_level = <span data-count="1031">I</span>dent.lowest_scope
-let pivot_level = <span data-count="1031">2</span> * lowest_level - 1
+let lowest_level = <span data-count="1170">I</span>dent.lowest_scope
+let pivot_level = <span data-count="1170">2</span> * lowest_level - 1
     (* pivot_level - lowest_level &lt; lowest_level *)
 
 (**** Some type creators ****)
 
-let new_id = <span data-count="1031">r</span>ef (-1)
+let new_id = <span data-count="1170">r</span>ef (-1)
 
 let newty2 level desc  =
-  <span data-count="5952486">i</span>ncr new_id; <span data-count="5952486">{</span> desc; level; scope = lowest_level; id = !new_id }
+  <span data-count="6343964">i</span>ncr new_id; <span data-count="6343964">{</span> desc; level; scope = lowest_level; id = !new_id }
 let newgenty desc      = newty2 generic_level desc
-let newgenvar ?name () = <span data-count="2338041">n</span>ewgenty (Tvar name)
+let newgenvar ?name () = <span data-count="2586947">n</span>ewgenty (Tvar name)
 (*
 let newmarkedvar level =
   incr new_id; { desc = Tvar; level = pivot_level - level; id = !new_id }
@@ -1678,12 +1678,12 @@ let newmarkedgenvar () =
 
 (**** Check some types ****)
 
-let is_Tvar = <span data-count="1031">f</span>unction {desc=Tvar _} -&gt; true | _ -&gt; false
-let is_Tunivar = <span data-count="1031">f</span>unction {desc=Tunivar _} -&gt; true | _ -&gt; false
-let is_Tconstr = <span data-count="1031">f</span>unction {desc=Tconstr _} -&gt; true | _ -&gt; false
+let is_Tvar = <span data-count="1170">f</span>unction {desc=Tvar _} -&gt; true | _ -&gt; false
+let is_Tunivar = <span data-count="1170">f</span>unction {desc=Tunivar _} -&gt; true | _ -&gt; false
+let is_Tconstr = <span data-count="1170">f</span>unction {desc=Tconstr _} -&gt; true | _ -&gt; false
 
-let dummy_method = <span data-count="1031">"</span>*dummy method*"
-let default_mty = <span data-count="1031">f</span>unction
+let dummy_method = <span data-count="1170">"</span>*dummy method*"
+let default_mty = <span data-count="1170">f</span>unction
     Some mty -&gt; mty
   | None -&gt; Mty_signature []
 
@@ -1707,157 +1707,157 @@ type changes =
   | Unchanged
   | Invalid
 
-let trail = <span data-count="1031">W</span>eak.create 1
+let trail = <span data-count="1170">W</span>eak.create 1
 
 let log_change ch =
-  match Weak.get trail 0 with <span data-count="88">N</span>one -&gt; ()
-  | <span data-count="1577640">S</span>ome r -&gt;
-      let r' = <span data-count="1577640">r</span>ef Unchanged in
-      <span data-count="1577640">r</span> := Change (ch, r');
-      <span data-count="1577640">W</span>eak.set trail 0 (Some r')
+  match Weak.get trail 0 with <span data-count="85">N</span>one -&gt; ()
+  | <span data-count="1656564">S</span>ome r -&gt;
+      let r' = <span data-count="1656564">r</span>ef Unchanged in
+      <span data-count="1656564">r</span> := Change (ch, r');
+      <span data-count="1656564">W</span>eak.set trail 0 (Some r')
 
 (**** Representative of a type ****)
 
 let rec field_kind_repr =
-  <span data-count="1031">f</span>unction
+  <span data-count="1170">f</span>unction
     Fvar {contents = Some kind} -&gt; field_kind_repr kind
   | kind                        -&gt; kind
 
 let rec repr_link compress t d =
- <span data-count="2351442">f</span>unction
-   <span data-count="106495">{</span>desc = Tlink t' as d'} -&gt;
+ <span data-count="2487547">f</span>unction
+   <span data-count="123269">{</span>desc = Tlink t' as d'} -&gt;
      repr_link true t d' t'
- | <span data-count="63">{</span>desc = Tfield (_, k, _, t') as d'} when <span data-count="66841">f</span>ield_kind_repr k = Fabsent -&gt;
+ | <span data-count="75">{</span>desc = Tfield (_, k, _, t') as d'} when <span data-count="69381">f</span>ield_kind_repr k = Fabsent -&gt;
      repr_link true t d' t'
- | <span data-count="2244884">t</span>' -&gt;
-     if compress then <span data-count="48670">b</span>egin
-       log_change (Ccompress (t, t.desc, d)); <span data-count="48670">t</span>.desc &lt;- d
+ | <span data-count="2364203">t</span>' -&gt;
+     if compress then <span data-count="52656">b</span>egin
+       log_change (Ccompress (t, t.desc, d)); <span data-count="52656">t</span>.desc &lt;- d
      end;
-     <span data-count="2244884">t</span>'
+     <span data-count="2364203">t</span>'
 
 let repr t =
   match t.desc with
-   <span data-count="2225882">T</span>link t' as d -&gt;
+   <span data-count="2343545">T</span>link t' as d -&gt;
      repr_link false t d t'
- | <span data-count="19002">T</span>field (_, k, _, t') as d when <span data-count="254688">f</span>ield_kind_repr k = Fabsent -&gt;
+ | <span data-count="20658">T</span>field (_, k, _, t') as d when <span data-count="258122">f</span>ield_kind_repr k = Fabsent -&gt;
      repr_link false t d t'
- | <span data-count="27941713">_</span> -&gt; t
+ | <span data-count="29346504">_</span> -&gt; t
 
-let rec commu_repr = <span data-count="1031">f</span>unction
+let rec commu_repr = <span data-count="1170">f</span>unction
     Clink r when !r &lt;&gt; Cunknown -&gt; commu_repr !r
   | c -&gt; c
 
 let rec row_field_repr_aux tl = function
-    <span data-count="18085">R</span>either(_, tl', _, {contents = Some fi}) -&gt;
+    <span data-count="20990">R</span>either(_, tl', _, {contents = Some fi}) -&gt;
       row_field_repr_aux (tl@tl') fi
-  | <span data-count="46179">R</span>either(c, tl', m, r) -&gt;
+  | <span data-count="54289">R</span>either(c, tl', m, r) -&gt;
       Reither(c, tl@tl', m, r)
-  | <span data-count="2401">R</span>present (Some _) when <span data-count="48189">t</span>l &lt;&gt; [] -&gt;
+  | <span data-count="2458">R</span>present (Some _) when <span data-count="51500">t</span>l &lt;&gt; [] -&gt;
       Rpresent (Some (List.hd tl))
-  | <span data-count="71631">f</span>i -&gt; fi
+  | <span data-count="80560">f</span>i -&gt; fi
 
 let row_field_repr fi = row_field_repr_aux [] fi
 
 let rec rev_concat l ll =
-  <span data-count="17085">m</span>atch ll with
-    <span data-count="7268">[</span>] -&gt; l
-  | <span data-count="9817">l</span>'::ll -&gt; rev_concat (l'@l) ll
+  <span data-count="20257">m</span>atch ll with
+    <span data-count="8762">[</span>] -&gt; l
+  | <span data-count="11495">l</span>'::ll -&gt; rev_concat (l'@l) ll
 
 let rec row_repr_aux ll row =
-  <span data-count="73043">m</span>atch (repr row.row_more).desc with
-  | <span data-count="17278">T</span>variant row' -&gt;
-      let f = <span data-count="17278">r</span>ow.row_fields in
-      <span data-count="17278">r</span>ow_repr_aux (if f = [] then <span data-count="7461">l</span>l else <span data-count="9817">f</span>::ll) row'
-  | <span data-count="55765">_</span> -&gt;
-      if ll = [] then <span data-count="48497">r</span>ow else
-      <span data-count="7268">{</span>row with row_fields = rev_concat row.row_fields ll}
+  <span data-count="87596">m</span>atch (repr row.row_more).desc with
+  | <span data-count="19544">T</span>variant row' -&gt;
+      let f = <span data-count="19544">r</span>ow.row_fields in
+      <span data-count="19544">r</span>ow_repr_aux (if f = [] then <span data-count="8049">l</span>l else <span data-count="11495">f</span>::ll) row'
+  | <span data-count="68052">_</span> -&gt;
+      if ll = [] then <span data-count="59290">r</span>ow else
+      <span data-count="8762">{</span>row with row_fields = rev_concat row.row_fields ll}
 
 let row_repr row = row_repr_aux [] row
 
 let rec row_field tag row =
-  <span data-count="3057">l</span>et rec find = <span data-count="3057">f</span>unction
-    | <span data-count="4833">(</span>tag',f) :: fields -&gt;
-        if tag = tag' then <span data-count="2175">r</span>ow_field_repr f else <span data-count="2658">f</span>ind fields
-    | <span data-count="882">[</span>] -&gt;
+  <span data-count="3293">l</span>et rec find = <span data-count="3293">f</span>unction
+    | <span data-count="5111">(</span>tag',f) :: fields -&gt;
+        if tag = tag' then <span data-count="2373">r</span>ow_field_repr f else <span data-count="2738">f</span>ind fields
+    | <span data-count="920">[</span>] -&gt;
         match repr row.row_more with
-        | <span data-count="882">{</span>desc=Tvariant row'} -&gt; row_field tag row'
+        | <span data-count="920">{</span>desc=Tvariant row'} -&gt; row_field tag row'
         | <span data-count="0">_</span> -&gt; Rabsent
-  in <span data-count="3057">f</span>ind row.row_fields
+  in <span data-count="3293">f</span>ind row.row_fields
 
 let rec row_more row =
   match repr row.row_more with
-  | <span data-count="15524">{</span>desc=Tvariant row'} -&gt; row_more row'
-  | <span data-count="44604">t</span>y -&gt; ty
+  | <span data-count="17502">{</span>desc=Tvariant row'} -&gt; row_more row'
+  | <span data-count="54602">t</span>y -&gt; ty
 
 let row_fixed row =
-  let row = <span data-count="11891">r</span>ow_repr row in
-  <span data-count="23782">r</span>ow.row_fixed ||
-  <span data-count="10962">m</span>atch (repr row.row_more).desc with
-    <span data-count="7416">T</span>var _ | <span data-count="3546">T</span>nil -&gt; false
+  let row = <span data-count="14179">r</span>ow_repr row in
+  <span data-count="28358">r</span>ow.row_fixed ||
+  <span data-count="13144">m</span>atch (repr row.row_more).desc with
+    <span data-count="9234">T</span>var _ | <span data-count="3910">T</span>nil -&gt; false
   | <span data-count="0">T</span>univar _ | <span data-count="0">T</span>constr _ -&gt; true
   | _ -&gt; assert false
 
 let static_row row =
-  let row = <span data-count="10199">r</span>ow_repr row in
-  <span data-count="20398">r</span>ow.row_closed &amp;&amp;
-  <span data-count="7803">L</span>ist.for_all
-    (fun (_,f) -&gt; <span data-count="12182">m</span>atch row_field_repr f with <span data-count="3236">R</span>either _ -&gt; false | <span data-count="8946">_</span> -&gt; true)
+  let row = <span data-count="12863">r</span>ow_repr row in
+  <span data-count="25726">r</span>ow.row_closed &amp;&amp;
+  <span data-count="9692">L</span>ist.for_all
+    (fun (_,f) -&gt; <span data-count="14317">m</span>atch row_field_repr f with <span data-count="4163">R</span>either _ -&gt; false | <span data-count="10154">_</span> -&gt; true)
     row.row_fields
 
 let hash_variant s =
-  let accu = <span data-count="5770">r</span>ef 0 in
-  <span data-count="5770">f</span>or i = 0 to String.length s - 1 do
-    <span data-count="39321">a</span>ccu := 223 * !accu + Char.code s.[i]
+  let accu = <span data-count="6141">r</span>ef 0 in
+  <span data-count="6141">f</span>or i = 0 to String.length s - 1 do
+    <span data-count="40368">a</span>ccu := 223 * !accu + Char.code s.[i]
   done;
   (* reduce to 31 bits *)
-  <span data-count="5770">a</span>ccu := !accu land (1 lsl 31 - 1);
+  <span data-count="6141">a</span>ccu := !accu land (1 lsl 31 - 1);
   (* make it signed for 64 bits architectures *)
-  <span data-count="5770">i</span>f !accu &gt; 0x3FFFFFFF then <span data-count="1723">!</span>accu - (1 lsl 31) else <span data-count="4047">!</span>accu
+  <span data-count="6141">i</span>f !accu &gt; 0x3FFFFFFF then <span data-count="1753">!</span>accu - (1 lsl 31) else <span data-count="4388">!</span>accu
 
 let proxy ty =
-  let ty0 = <span data-count="92532">r</span>epr ty in
-  <span data-count="92532">m</span>atch ty0.desc with
-  | <span data-count="1268">T</span>variant row when <span data-count="2287">n</span>ot (static_row row) -&gt;
+  let ty0 = <span data-count="101578">r</span>epr ty in
+  <span data-count="101578">m</span>atch ty0.desc with
+  | <span data-count="1900">T</span>variant row when <span data-count="3246">n</span>ot (static_row row) -&gt;
       row_more row
-  | <span data-count="4217">T</span>object (ty, _) -&gt;
+  | <span data-count="4631">T</span>object (ty, _) -&gt;
       let rec proxy_obj ty =
-        <span data-count="11712">m</span>atch ty.desc with
-          <span data-count="7151">T</span>field (_, _, _, ty) | <span data-count="344">T</span>link ty -&gt; proxy_obj ty
-        | <span data-count="2776">T</span>var _ | <span data-count="70">T</span>univar _ | <span data-count="30">T</span>constr _ -&gt; ty
-        | <span data-count="1341">T</span>nil -&gt; ty0
+        <span data-count="12536">m</span>atch ty.desc with
+          <span data-count="7523">T</span>field (_, _, _, ty) | <span data-count="382">T</span>link ty -&gt; proxy_obj ty
+        | <span data-count="3166">T</span>var _ | <span data-count="70">T</span>univar _ | <span data-count="30">T</span>constr _ -&gt; ty
+        | <span data-count="1365">T</span>nil -&gt; ty0
         | _ -&gt; assert false
-      in <span data-count="4217">p</span>roxy_obj ty
-  | <span data-count="87047">_</span> -&gt; ty0
+      in <span data-count="4631">p</span>roxy_obj ty
+  | <span data-count="95047">_</span> -&gt; ty0
 
 (**** Utilities for fixed row private types ****)
 
 let row_of_type t =
   match (repr t).desc with
-    <span data-count="15491">T</span>object(t,_) -&gt;
+    <span data-count="15987">T</span>object(t,_) -&gt;
       let rec get_row t =
-        <span data-count="46888">l</span>et t = <span data-count="46888">r</span>epr t in
-        <span data-count="46888">m</span>atch t.desc with
-          <span data-count="31397">T</span>field(_,_,_,t) -&gt; get_row t
-        | <span data-count="15491">_</span> -&gt; t
-      in <span data-count="15491">g</span>et_row t
-  | <span data-count="6591">T</span>variant row -&gt;
+        <span data-count="47622">l</span>et t = <span data-count="47622">r</span>epr t in
+        <span data-count="47622">m</span>atch t.desc with
+          <span data-count="31635">T</span>field(_,_,_,t) -&gt; get_row t
+        | <span data-count="15987">_</span> -&gt; t
+      in <span data-count="15987">g</span>et_row t
+  | <span data-count="8307">T</span>variant row -&gt;
       row_more row
-  | <span data-count="2376919">_</span> -&gt;
+  | <span data-count="2626514">_</span> -&gt;
       t
 
 let has_constr_row t =
-  <span data-count="813">n</span>ot (is_Tconstr t) &amp;&amp; <span data-count="497">i</span>s_Tconstr (row_of_type t)
+  <span data-count="831">n</span>ot (is_Tconstr t) &amp;&amp; <span data-count="515">i</span>s_Tconstr (row_of_type t)
 
 let is_row_name s =
-  let l = <span data-count="8451">S</span>tring.length s in
-  <span data-count="8451">i</span>f l &lt; 4 then <span data-count="6922">f</span>alse else <span data-count="1529">S</span>tring.sub s (l-4) 4 = "#row"
+  let l = <span data-count="9387">S</span>tring.length s in
+  <span data-count="9387">i</span>f l &lt; 4 then <span data-count="7667">f</span>alse else <span data-count="1720">S</span>tring.sub s (l-4) 4 = "#row"
 
 let is_constr_row ~allow_ident t =
-  <span data-count="912404">m</span>atch t.desc with
-    <span data-count="355">T</span>constr (Path.Pident id, _, _) when <span data-count="540">a</span>llow_ident -&gt;
+  <span data-count="1001009">m</span>atch t.desc with
+    <span data-count="421">T</span>constr (Path.Pident id, _, _) when <span data-count="618">a</span>llow_ident -&gt;
       is_row_name (Ident.name id)
-  | <span data-count="65">T</span>constr (Path.Pdot (_, s), _, _) -&gt; is_row_name s
-  | <span data-count="911984">_</span> -&gt; false
+  | <span data-count="69">T</span>constr (Path.Pdot (_, s), _, _) -&gt; is_row_name s
+  | <span data-count="1000519">_</span> -&gt; false
 
 
                   (**********************************)
@@ -1865,65 +1865,65 @@ let is_constr_row ~allow_ident t =
                   (**********************************)
 
 let rec fold_row f init row =
-  <span data-count="39968">l</span>et result =
-    <span data-count="39968">L</span>ist.fold_left
+  <span data-count="47550">l</span>et result =
+    <span data-count="47550">L</span>ist.fold_left
       (fun init (_, fi) -&gt;
-         <span data-count="54042">m</span>atch row_field_repr fi with
-         | <span data-count="19299">R</span>present(Some ty) -&gt; f init ty
-         | <span data-count="23686">R</span>either(_, tl, _, _) -&gt; List.fold_left f init tl
-         | <span data-count="11057">_</span> -&gt; init)
+         <span data-count="60822">m</span>atch row_field_repr fi with
+         | <span data-count="20658">R</span>present(Some ty) -&gt; f init ty
+         | <span data-count="26583">R</span>either(_, tl, _, _) -&gt; List.fold_left f init tl
+         | <span data-count="13581">_</span> -&gt; init)
       init
       row.row_fields
   in
-  <span data-count="39931">m</span>atch (repr row.row_more).desc with
-    <span data-count="10548">T</span>variant row -&gt; fold_row f result row
-  | <span data-count="17927">T</span>var _ | <span data-count="1263">T</span>univar _ | <span data-count="0">T</span>subst _ | <span data-count="1880">T</span>constr _ | <span data-count="8313">T</span>nil -&gt;
+  <span data-count="47504">m</span>atch (repr row.row_more).desc with
+    <span data-count="11987">T</span>variant row -&gt; fold_row f result row
+  | <span data-count="22526">T</span>var _ | <span data-count="1367">T</span>univar _ | <span data-count="0">T</span>subst _ | <span data-count="1965">T</span>constr _ | <span data-count="9659">T</span>nil -&gt;
     begin match
-      Option.map (fun (_,l) -&gt; <span data-count="5928">L</span>ist.fold_left f result l) row.row_name
+      Option.map (fun (_,l) -&gt; <span data-count="6016">L</span>ist.fold_left f result l) row.row_name
     with
-    | <span data-count="23455">N</span>one -&gt; result
-    | <span data-count="5928">S</span>ome result -&gt; result
+    | <span data-count="29501">N</span>one -&gt; result
+    | <span data-count="6016">S</span>ome result -&gt; result
     end
   | _ -&gt; assert false
 
 let iter_row f row =
-  <span data-count="2988">f</span>old_row (fun () v -&gt; <span data-count="2310">f</span> v) () row
+  <span data-count="3601">f</span>old_row (fun () v -&gt; <span data-count="2670">f</span> v) () row
 
 let fold_type_expr f init ty =
-  <span data-count="7169469">m</span>atch ty.desc with
-    <span data-count="1485882">T</span>var _              -&gt; init
-  | <span data-count="576546">T</span>arrow (_, ty1, ty2, _) -&gt;
-    let result = <span data-count="576546">f</span> init ty1 in
-    <span data-count="575741">f</span> result ty2
-  | <span data-count="128966">T</span>tuple l            -&gt; List.fold_left f init l
-  | <span data-count="4692853">T</span>constr (_, l, _)   -&gt; List.fold_left f init l
-  | <span data-count="16574">T</span>object(ty, {contents = Some (_, p)})
+  <span data-count="7455981">m</span>atch ty.desc with
+    <span data-count="1553839">T</span>var _              -&gt; init
+  | <span data-count="611984">T</span>arrow (_, ty1, ty2, _) -&gt;
+    let result = <span data-count="611984">f</span> init ty1 in
+    <span data-count="611161">f</span> result ty2
+  | <span data-count="140388">T</span>tuple l            -&gt; List.fold_left f init l
+  | <span data-count="4852554">T</span>constr (_, l, _)   -&gt; List.fold_left f init l
+  | <span data-count="16722">T</span>object(ty, {contents = Some (_, p)})
     -&gt;
-    let result = <span data-count="16574">f</span> init ty in
-    <span data-count="16549">L</span>ist.fold_left f result p
-  | <span data-count="23959">T</span>object (ty, _)     -&gt; f init ty
-  | <span data-count="26432">T</span>variant row        -&gt;
-    let result = <span data-count="26432">f</span>old_row f init row in
-    <span data-count="26395">f</span> result (row_more row)
-  | <span data-count="85541">T</span>field (_, _, ty1, ty2) -&gt;
-    let result = <span data-count="85541">f</span> init ty1 in
-    <span data-count="85484">f</span> result ty2
-  | <span data-count="22997">T</span>nil                -&gt; init
+    let result = <span data-count="16722">f</span> init ty in
+    <span data-count="16697">L</span>ist.fold_left f result p
+  | <span data-count="25508">T</span>object (ty, _)     -&gt; f init ty
+  | <span data-count="31962">T</span>variant row        -&gt;
+    let result = <span data-count="31962">f</span>old_row f init row in
+    <span data-count="31916">f</span> result (row_more row)
+  | <span data-count="86675">T</span>field (_, _, ty1, ty2) -&gt;
+    let result = <span data-count="86675">f</span> init ty1 in
+    <span data-count="86618">f</span> result ty2
+  | <span data-count="24430">T</span>nil                -&gt; init
   | <span data-count="2">T</span>link ty            -&gt; f init ty
   | <span data-count="42">T</span>subst ty           -&gt; f init ty
-  | <span data-count="17408">T</span>univar _           -&gt; init
-  | <span data-count="89878">T</span>poly (ty, tyl)     -&gt;
-    let result = <span data-count="89878">f</span> init ty in
-    <span data-count="89844">L</span>ist.fold_left f result tyl
-  | <span data-count="2389">T</span>package (_, _, l)  -&gt; List.fold_left f init l
+  | <span data-count="17626">T</span>univar _           -&gt; init
+  | <span data-count="91759">T</span>poly (ty, tyl)     -&gt;
+    let result = <span data-count="91759">f</span> init ty in
+    <span data-count="91725">L</span>ist.fold_left f result tyl
+  | <span data-count="2490">T</span>package (_, _, l)  -&gt; List.fold_left f init l
 
 let iter_type_expr f ty =
-  <span data-count="7169231">f</span>old_type_expr (fun () v -&gt; <span data-count="3981888">f</span> v) () ty
+  <span data-count="7455710">f</span>old_type_expr (fun () v -&gt; <span data-count="4161067">f</span> v) () ty
 
 let rec iter_abbrev f = function
-    <span data-count="44792">M</span>nil                   -&gt; ()
-  | <span data-count="951">M</span>cons(_, _, ty, ty', rem) -&gt; f ty; <span data-count="951">f</span> ty'; <span data-count="951">i</span>ter_abbrev f rem
-  | <span data-count="364">M</span>link rem              -&gt; iter_abbrev f !rem
+    <span data-count="48336">M</span>nil                   -&gt; ()
+  | <span data-count="1035">M</span>cons(_, _, ty, ty', rem) -&gt; f ty; <span data-count="1035">f</span> ty'; <span data-count="1035">i</span>ter_abbrev f rem
+  | <span data-count="372">M</span>link rem              -&gt; iter_abbrev f !rem
 
 type type_iterators =
   { it_signature: type_iterators -&gt; signature -&gt; unit;
@@ -1943,98 +1943,98 @@ type type_iterators =
     it_path: Path.t -&gt; unit; }
 
 let iter_type_expr_cstr_args f = function
-  | <span data-count="10065">C</span>str_tuple tl -&gt; List.iter f tl
-  | <span data-count="79">C</span>str_record lbls -&gt; List.iter (fun d -&gt; <span data-count="79">f</span> d.ld_type) lbls
+  | <span data-count="12540">C</span>str_tuple tl -&gt; List.iter f tl
+  | <span data-count="109">C</span>str_record lbls -&gt; List.iter (fun d -&gt; <span data-count="109">f</span> d.ld_type) lbls
 
 let map_type_expr_cstr_args f = function
-  | <span data-count="2800">C</span>str_tuple tl -&gt; Cstr_tuple (List.map f tl)
-  | <span data-count="21">C</span>str_record lbls -&gt;
-      Cstr_record (List.map (fun d -&gt; <span data-count="21">{</span>d with ld_type=f d.ld_type}) lbls)
+  | <span data-count="3565">C</span>str_tuple tl -&gt; Cstr_tuple (List.map f tl)
+  | <span data-count="31">C</span>str_record lbls -&gt;
+      Cstr_record (List.map (fun d -&gt; <span data-count="31">{</span>d with ld_type=f d.ld_type}) lbls)
 
 let iter_type_expr_kind f = function
-  | <span data-count="8326">T</span>ype_abstract -&gt; ()
-  | <span data-count="3901">T</span>ype_variant cstrs -&gt;
+  | <span data-count="9047">T</span>ype_abstract -&gt; ()
+  | <span data-count="4417">T</span>ype_variant cstrs -&gt;
       List.iter
         (fun cd -&gt;
-           <span data-count="8989">i</span>ter_type_expr_cstr_args f cd.cd_args;
-           <span data-count="8987">O</span>ption.iter f cd.cd_res
+           <span data-count="11440">i</span>ter_type_expr_cstr_args f cd.cd_args;
+           <span data-count="11438">O</span>ption.iter f cd.cd_res
         )
         cstrs
-  | <span data-count="1231">T</span>ype_record(lbls, _) -&gt;
-      List.iter (fun d -&gt; <span data-count="2023">f</span> d.ld_type) lbls
-  | <span data-count="457">T</span>ype_open -&gt;
+  | <span data-count="1598">T</span>ype_record(lbls, _) -&gt;
+      List.iter (fun d -&gt; <span data-count="2487">f</span> d.ld_type) lbls
+  | <span data-count="463">T</span>ype_open -&gt;
       ()
 
 
 let type_iterators =
-  <span data-count="1031">l</span>et it_signature it =
-    <span data-count="5245">L</span>ist.iter (it.it_signature_item it)
-  and it_signature_item it = <span data-count="5454">f</span>unction
-      <span data-count="23216">S</span>ig_value (_, vd, _)          -&gt; it.it_value_description it vd
-    | <span data-count="4454">S</span>ig_type (_, td, _, _)        -&gt; it.it_type_declaration it td
-    | <span data-count="248">S</span>ig_typext (_, td, _, _)      -&gt; it.it_extension_constructor it td
-    | <span data-count="1312">S</span>ig_module (_, _, md, _, _)   -&gt; it.it_module_declaration it md
-    | <span data-count="193">S</span>ig_modtype (_, mtd, _)       -&gt; it.it_modtype_declaration it mtd
-    | <span data-count="135">S</span>ig_class (_, cd, _, _)       -&gt; it.it_class_declaration it cd
-    | <span data-count="194">S</span>ig_class_type (_, ctd, _, _) -&gt; it.it_class_type_declaration it ctd
+  <span data-count="1170">l</span>et it_signature it =
+    <span data-count="5629">L</span>ist.iter (it.it_signature_item it)
+  and it_signature_item it = <span data-count="5838">f</span>unction
+      <span data-count="23342">S</span>ig_value (_, vd, _)          -&gt; it.it_value_description it vd
+    | <span data-count="4977">S</span>ig_type (_, td, _, _)        -&gt; it.it_type_declaration it td
+    | <span data-count="252">S</span>ig_typext (_, td, _, _)      -&gt; it.it_extension_constructor it td
+    | <span data-count="1480">S</span>ig_module (_, _, md, _, _)   -&gt; it.it_module_declaration it md
+    | <span data-count="197">S</span>ig_modtype (_, mtd, _)       -&gt; it.it_modtype_declaration it mtd
+    | <span data-count="143">S</span>ig_class (_, cd, _, _)       -&gt; it.it_class_declaration it cd
+    | <span data-count="206">S</span>ig_class_type (_, ctd, _, _) -&gt; it.it_class_type_declaration it ctd
   and it_value_description it vd =
-    <span data-count="23216">i</span>t.it_type_expr it vd.val_type
+    <span data-count="23342">i</span>t.it_type_expr it vd.val_type
   and it_type_declaration it td =
-    <span data-count="10726">L</span>ist.iter (it.it_type_expr it) td.type_params;
-    <span data-count="10718">O</span>ption.iter (it.it_type_expr it) td.type_manifest;
-    <span data-count="10687">i</span>t.it_type_kind it td.type_kind
+    <span data-count="11966">L</span>ist.iter (it.it_type_expr it) td.type_params;
+    <span data-count="11952">O</span>ption.iter (it.it_type_expr it) td.type_manifest;
+    <span data-count="11921">i</span>t.it_type_kind it td.type_kind
   and it_extension_constructor it td =
-    <span data-count="248">i</span>t.it_path td.ext_type_path;
-    <span data-count="248">L</span>ist.iter (it.it_type_expr it) td.ext_type_params;
-    <span data-count="248">i</span>ter_type_expr_cstr_args (it.it_type_expr it) td.ext_args;
-    <span data-count="248">O</span>ption.iter (it.it_type_expr it) td.ext_ret_type
+    <span data-count="252">i</span>t.it_path td.ext_type_path;
+    <span data-count="252">L</span>ist.iter (it.it_type_expr it) td.ext_type_params;
+    <span data-count="252">i</span>ter_type_expr_cstr_args (it.it_type_expr it) td.ext_args;
+    <span data-count="252">O</span>ption.iter (it.it_type_expr it) td.ext_ret_type
   and it_module_declaration it md =
-    <span data-count="1312">i</span>t.it_module_type it md.md_type
+    <span data-count="1480">i</span>t.it_module_type it md.md_type
   and it_modtype_declaration it mtd =
-    <span data-count="193">O</span>ption.iter (it.it_module_type it) mtd.mtd_type
+    <span data-count="197">O</span>ption.iter (it.it_module_type it) mtd.mtd_type
   and it_class_declaration it cd =
-    <span data-count="135">L</span>ist.iter (it.it_type_expr it) cd.cty_params;
-    <span data-count="135">i</span>t.it_class_type it cd.cty_type;
-    <span data-count="135">O</span>ption.iter (it.it_type_expr it) cd.cty_new;
-    <span data-count="135">i</span>t.it_path cd.cty_path
+    <span data-count="143">L</span>ist.iter (it.it_type_expr it) cd.cty_params;
+    <span data-count="143">i</span>t.it_class_type it cd.cty_type;
+    <span data-count="143">O</span>ption.iter (it.it_type_expr it) cd.cty_new;
+    <span data-count="143">i</span>t.it_path cd.cty_path
   and it_class_type_declaration it ctd =
-    <span data-count="194">L</span>ist.iter (it.it_type_expr it) ctd.clty_params;
-    <span data-count="194">i</span>t.it_class_type it ctd.clty_type;
-    <span data-count="194">i</span>t.it_path ctd.clty_path
-  and it_module_type it = <span data-count="7071">f</span>unction
-      <span data-count="545">M</span>ty_ident p
-    | <span data-count="561">M</span>ty_alias p -&gt; it.it_path p
-    | <span data-count="5237">M</span>ty_signature sg -&gt; it.it_signature it sg
-    | <span data-count="660">M</span>ty_functor (_, mto, mt) -&gt;
+    <span data-count="206">L</span>ist.iter (it.it_type_expr it) ctd.clty_params;
+    <span data-count="206">i</span>t.it_class_type it ctd.clty_type;
+    <span data-count="206">i</span>t.it_path ctd.clty_path
+  and it_module_type it = <span data-count="7527">f</span>unction
+      <span data-count="569">M</span>ty_ident p
+    | <span data-count="585">M</span>ty_alias p -&gt; it.it_path p
+    | <span data-count="5621">M</span>ty_signature sg -&gt; it.it_signature it sg
+    | <span data-count="684">M</span>ty_functor (_, mto, mt) -&gt;
         Option.iter (it.it_module_type it) mto;
-        <span data-count="660">i</span>t.it_module_type it mt
-  and it_class_type it = <span data-count="412">f</span>unction
-      <span data-count="20">C</span>ty_constr (p, tyl, cty) -&gt;
+        <span data-count="684">i</span>t.it_module_type it mt
+  and it_class_type it = <span data-count="440">f</span>unction
+      <span data-count="28">C</span>ty_constr (p, tyl, cty) -&gt;
         it.it_path p;
-        <span data-count="20">L</span>ist.iter (it.it_type_expr it) tyl;
-        <span data-count="20">i</span>t.it_class_type it cty
-    | <span data-count="329">C</span>ty_signature cs -&gt;
+        <span data-count="28">L</span>ist.iter (it.it_type_expr it) tyl;
+        <span data-count="28">i</span>t.it_class_type it cty
+    | <span data-count="349">C</span>ty_signature cs -&gt;
         it.it_type_expr it cs.csig_self;
-        <span data-count="329">V</span>ars.iter (fun _ (_,_,ty) -&gt; <span data-count="56">i</span>t.it_type_expr it ty) cs.csig_vars;
-        <span data-count="329">L</span>ist.iter
-          (fun (p, tl) -&gt; <span data-count="20">i</span>t.it_path p; <span data-count="20">L</span>ist.iter (it.it_type_expr it) tl)
+        <span data-count="349">V</span>ars.iter (fun _ (_,_,ty) -&gt; <span data-count="56">i</span>t.it_type_expr it ty) cs.csig_vars;
+        <span data-count="349">L</span>ist.iter
+          (fun (p, tl) -&gt; <span data-count="24">i</span>t.it_path p; <span data-count="24">L</span>ist.iter (it.it_type_expr it) tl)
           cs.csig_inher
     | <span data-count="63">C</span>ty_arrow  (_, ty, cty) -&gt;
         it.it_type_expr it ty;
         <span data-count="63">i</span>t.it_class_type it cty
   and it_type_kind it kind =
-    <span data-count="10687">i</span>ter_type_expr_kind (it.it_type_expr it) kind
+    <span data-count="11921">i</span>ter_type_expr_kind (it.it_type_expr it) kind
   and it_do_type_expr it ty =
-    <span data-count="27507">i</span>ter_type_expr (it.it_type_expr it) ty;
-    <span data-count="27507">m</span>atch ty.desc with
-      <span data-count="15725">T</span>constr (p, _, _)
-    | <span data-count="104">T</span>object (_, {contents=Some (p, _)})
+    <span data-count="28130">i</span>ter_type_expr (it.it_type_expr it) ty;
+    <span data-count="28130">m</span>atch ty.desc with
+      <span data-count="16086">T</span>constr (p, _, _)
+    | <span data-count="110">T</span>object (_, {contents=Some (p, _)})
     | <span data-count="15">T</span>package (p, _, _) -&gt;
         it.it_path p
-    | <span data-count="159">T</span>variant row -&gt;
+    | <span data-count="247">T</span>variant row -&gt;
         Option.iter (fun (p,_) -&gt; <span data-count="5">i</span>t.it_path p) (row_repr row).row_name
-    | <span data-count="11504">_</span> -&gt; ()
-  and it_path _p = <span data-count="17040">(</span>)
+    | <span data-count="11672">_</span> -&gt; ()
+  and it_path _p = <span data-count="17491">(</span>)
   in
   { it_path; it_type_expr = it_do_type_expr; it_do_type_expr;
     it_type_kind; it_class_type; it_module_type;
@@ -2043,61 +2043,61 @@ let type_iterators =
     it_type_declaration; it_value_description; it_signature_item; }
 
 let copy_row f fixed row keep more =
-  <span data-count="13283">l</span>et fields = <span data-count="13283">L</span>ist.map
-      (fun (l, fi) -&gt; <span data-count="27541">l</span>,
+  <span data-count="16144">l</span>et fields = <span data-count="16144">L</span>ist.map
+      (fun (l, fi) -&gt; <span data-count="31480">l</span>,
         match row_field_repr fi with
-        | <span data-count="13481">R</span>present(Some ty) -&gt; Rpresent(Some(f ty))
-        | <span data-count="8529">R</span>either(c, tl, m, e) -&gt;
-            let e = <span data-count="8529">i</span>f keep then <span data-count="1776">e</span> else <span data-count="6753">r</span>ef None in
-            <span data-count="8529">l</span>et m = <span data-count="8529">i</span>f row.row_fixed then <span data-count="2540">f</span>ixed else <span data-count="5989">m</span> in
-            <span data-count="8529">l</span>et tl = <span data-count="8529">L</span>ist.map f tl in
-            <span data-count="8529">R</span>either(c, tl, m, e)
-        | <span data-count="5531">_</span> -&gt; fi)
+        | <span data-count="14077">R</span>present(Some ty) -&gt; Rpresent(Some(f ty))
+        | <span data-count="10522">R</span>either(c, tl, m, e) -&gt;
+            let e = <span data-count="10522">i</span>f keep then <span data-count="2203">e</span> else <span data-count="8319">r</span>ef None in
+            <span data-count="10522">l</span>et m = <span data-count="10522">i</span>f row.row_fixed then <span data-count="2611">f</span>ixed else <span data-count="7911">m</span> in
+            <span data-count="10522">l</span>et tl = <span data-count="10522">L</span>ist.map f tl in
+            <span data-count="10522">R</span>either(c, tl, m, e)
+        | <span data-count="6881">_</span> -&gt; fi)
       row.row_fields in
-  <span data-count="13279">l</span>et name =
-    <span data-count="13279">m</span>atch row.row_name with <span data-count="11136">N</span>one -&gt; None
-    | <span data-count="2143">S</span>ome (path, tl) -&gt; Some (path, List.map f tl) in
-  <span data-count="13279">{</span> row_fields = fields; row_more = more;
-    row_bound = (); row_fixed = <span data-count="13279">r</span>ow.row_fixed &amp;&amp; <span data-count="1899">f</span>ixed;
+  <span data-count="16140">l</span>et name =
+    <span data-count="16140">m</span>atch row.row_name with <span data-count="13853">N</span>one -&gt; None
+    | <span data-count="2287">S</span>ome (path, tl) -&gt; Some (path, List.map f tl) in
+  <span data-count="16140">{</span> row_fields = fields; row_more = more;
+    row_bound = (); row_fixed = <span data-count="16140">r</span>ow.row_fixed &amp;&amp; <span data-count="2023">f</span>ixed;
     row_closed = row.row_closed; row_name = name; }
 
-let rec copy_kind = <span data-count="1031">f</span>unction
+let rec copy_kind = <span data-count="1170">f</span>unction
     Fvar{contents = Some k} -&gt; copy_kind k
   | Fvar _   -&gt; Fvar (ref None)
   | Fpresent -&gt; Fpresent
   | Fabsent  -&gt; assert false
 
 let copy_commu c =
-  if commu_repr c = Cok then <span data-count="913620">C</span>ok else <span data-count="7991">C</span>link (ref Cunknown)
+  if commu_repr c = Cok then <span data-count="1002487">C</span>ok else <span data-count="8257">C</span>link (ref Cunknown)
 
 (* Since univars may be used as row variables, we need to do some
    encoding during substitution *)
 let rec norm_univar ty =
   match ty.desc with
-    <span data-count="7087">T</span>univar _ | <span data-count="24">T</span>subst _ -&gt; ty
+    <span data-count="7099">T</span>univar _ | <span data-count="24">T</span>subst _ -&gt; ty
   | <span data-count="0">T</span>link ty           -&gt; norm_univar ty
   | <span data-count="24">T</span>tuple (ty :: _)   -&gt; norm_univar ty
   | _                  -&gt; assert false
 
-let rec copy_type_desc ?(keep_names=false) f = <span data-count="1507498">f</span>unction
-    <span data-count="372741">T</span>var _ as ty        -&gt; if keep_names then <span data-count="252">t</span>y else <span data-count="372489">T</span>var None
-  | <span data-count="921611">T</span>arrow (p, ty1, ty2, c)-&gt; Tarrow (p, f ty1, f ty2, copy_commu c)
-  | <span data-count="67428">T</span>tuple l            -&gt; Ttuple (List.map f l)
-  | <span data-count="2050">T</span>constr (p, l, _)   -&gt; Tconstr (p, List.map f l, ref Mnil)
+let rec copy_type_desc ?(keep_names=false) f = <span data-count="1613553">f</span>unction
+    <span data-count="381294">T</span>var _ as ty        -&gt; if keep_names then <span data-count="285">t</span>y else <span data-count="381009">T</span>var None
+  | <span data-count="1010744">T</span>arrow (p, ty1, ty2, c)-&gt; Tarrow (p, f ty1, f ty2, copy_commu c)
+  | <span data-count="73080">T</span>tuple l            -&gt; Ttuple (List.map f l)
+  | <span data-count="2102">T</span>constr (p, l, _)   -&gt; Tconstr (p, List.map f l, ref Mnil)
   | <span data-count="2593">T</span>object(ty, {contents = Some (p, tl)})
                         -&gt; Tobject (f ty, ref (Some(p, List.map f tl)))
-  | <span data-count="11334">T</span>object (ty, _)     -&gt; Tobject (f ty, ref None)
+  | <span data-count="11849">T</span>object (ty, _)     -&gt; Tobject (f ty, ref None)
   | Tvariant _          -&gt; assert false (* too ambiguous *)
-  | <span data-count="57267">T</span>field (p, k, ty1, ty2) -&gt; (* the kind is kept shared *)
+  | <span data-count="57967">T</span>field (p, k, ty1, ty2) -&gt; (* the kind is kept shared *)
       Tfield (p, field_kind_repr k, f ty1, f ty2)
-  | <span data-count="15382">T</span>nil                -&gt; Tnil
+  | <span data-count="16353">T</span>nil                -&gt; Tnil
   | <span data-count="0">T</span>link ty            -&gt; copy_type_desc f ty.desc
   | Tsubst _            -&gt; assert false
-  | <span data-count="2907">T</span>univar _ as ty     -&gt; ty (* always keep the name *)
-  | <span data-count="53359">T</span>poly (ty, tyl)     -&gt;
-      let tyl = <span data-count="53359">L</span>ist.map (fun x -&gt; <span data-count="7111">n</span>orm_univar (f x)) tyl in
-      <span data-count="53359">T</span>poly (f ty, tyl)
-  | <span data-count="826">T</span>package (p, n, l)  -&gt; Tpackage (p, n, List.map f l)
+  | <span data-count="2919">T</span>univar _ as ty     -&gt; ty (* always keep the name *)
+  | <span data-count="53806">T</span>poly (ty, tyl)     -&gt;
+      let tyl = <span data-count="53806">L</span>ist.map (fun x -&gt; <span data-count="7123">n</span>orm_univar (f x)) tyl in
+      <span data-count="53806">T</span>poly (f ty, tyl)
+  | <span data-count="846">T</span>package (p, n, l)  -&gt; Tpackage (p, n, List.map f l)
 
 (* Utilities for copying *)
 
@@ -2122,40 +2122,40 @@ end = struct
   }
 
   let save_desc copy_scope ty desc =
-    <span data-count="5060542">c</span>opy_scope.saved_desc &lt;- (ty, desc) :: copy_scope.saved_desc
+    <span data-count="5398022">c</span>opy_scope.saved_desc &lt;- (ty, desc) :: copy_scope.saved_desc
 
   let dup_kind copy_scope r =
-    <span data-count="2404">a</span>ssert (Option.is_none !r);
-    <span data-count="2404">i</span>f not (List.memq r copy_scope.new_kinds) then <span data-count="2344">b</span>egin
+    <span data-count="2672">a</span>ssert (Option.is_none !r);
+    <span data-count="2672">i</span>f not (List.memq r copy_scope.new_kinds) then <span data-count="2612">b</span>egin
       copy_scope.saved_kinds &lt;- r :: copy_scope.saved_kinds;
-      <span data-count="2344">l</span>et r' = <span data-count="2344">r</span>ef None in
-      <span data-count="2344">c</span>opy_scope.new_kinds &lt;- r' :: copy_scope.new_kinds;
-      <span data-count="2344">r</span> := Some (Fvar r')
+      <span data-count="2612">l</span>et r' = <span data-count="2612">r</span>ef None in
+      <span data-count="2612">c</span>opy_scope.new_kinds &lt;- r' :: copy_scope.new_kinds;
+      <span data-count="2612">r</span> := Some (Fvar r')
     end
 
   (* Restore type descriptions. *)
   let cleanup { saved_desc; saved_kinds; _ } =
-    List.iter (fun (ty, desc) -&gt; <span data-count="5060524">t</span>y.desc &lt;- desc) saved_desc;
-    <span data-count="1958383">L</span>ist.iter (fun r -&gt; <span data-count="2344">r</span> := None) saved_kinds
+    List.iter (fun (ty, desc) -&gt; <span data-count="5398004">t</span>y.desc &lt;- desc) saved_desc;
+    <span data-count="2088427">L</span>ist.iter (fun r -&gt; <span data-count="2612">r</span> := None) saved_kinds
 
   let with_scope f =
-    let scope = <span data-count="1958383">{</span> saved_desc = []; saved_kinds = []; new_kinds = [] } in
-    <span data-count="1958383">l</span>et res = <span data-count="1958383">f</span> scope in
-    <span data-count="1958383">c</span>leanup scope;
-    <span data-count="1958383">r</span>es
+    let scope = <span data-count="2088427">{</span> saved_desc = []; saved_kinds = []; new_kinds = [] } in
+    <span data-count="2088427">l</span>et res = <span data-count="2088427">f</span> scope in
+    <span data-count="2088427">c</span>leanup scope;
+    <span data-count="2088427">r</span>es
 end
 
 (* Mark a type. *)
 let rec mark_type ty =
-  let ty = <span data-count="5127">r</span>epr ty in
-  <span data-count="5127">i</span>f ty.level &gt;= lowest_level then <span data-count="3411">b</span>egin
+  let ty = <span data-count="5580">r</span>epr ty in
+  <span data-count="5580">i</span>f ty.level &gt;= lowest_level then <span data-count="3737">b</span>egin
     ty.level &lt;- pivot_level - ty.level;
-    <span data-count="3411">i</span>ter_type_expr mark_type ty
+    <span data-count="3737">i</span>ter_type_expr mark_type ty
   end
 
 let mark_type_node ty =
-  let ty = <span data-count="57019">r</span>epr ty in
-  <span data-count="57019">i</span>f ty.level &gt;= lowest_level then <span data-count="57007">b</span>egin
+  let ty = <span data-count="61091">r</span>epr ty in
+  <span data-count="61091">i</span>f ty.level &gt;= lowest_level then <span data-count="61079">b</span>egin
     ty.level &lt;- pivot_level - ty.level;
   end
 
@@ -2163,11 +2163,11 @@ let mark_type_params ty =
   iter_type_expr mark_type ty
 
 let type_iterators =
-  <span data-count="1031">l</span>et it_type_expr it ty =
-    <span data-count="28509">l</span>et ty = <span data-count="28509">r</span>epr ty in
-    <span data-count="28509">i</span>f ty.level &gt;= lowest_level then <span data-count="27507">b</span>egin
+  <span data-count="1170">l</span>et it_type_expr it ty =
+    <span data-count="29208">l</span>et ty = <span data-count="29208">r</span>epr ty in
+    <span data-count="29208">i</span>f ty.level &gt;= lowest_level then <span data-count="28130">b</span>egin
       mark_type_node ty;
-      <span data-count="27507">i</span>t.it_do_type_expr it ty;
+      <span data-count="28130">i</span>t.it_do_type_expr it ty;
     end
   in
   {type_iterators with it_type_expr}
@@ -2175,14 +2175,14 @@ let type_iterators =
 
 (* Remove marks from a type. *)
 let rec unmark_type ty =
-  let ty = <span data-count="2556283">r</span>epr ty in
-  <span data-count="2556283">i</span>f ty.level &lt; lowest_level then <span data-count="2420955">b</span>egin
+  let ty = <span data-count="2659954">r</span>epr ty in
+  <span data-count="2659954">i</span>f ty.level &lt; lowest_level then <span data-count="2519738">b</span>egin
     ty.level &lt;- pivot_level - ty.level;
-    <span data-count="2420955">i</span>ter_type_expr unmark_type ty
+    <span data-count="2519738">i</span>ter_type_expr unmark_type ty
   end
 
 let unmark_iterators =
-  <span data-count="1031">l</span>et it_type_expr _it ty = <span data-count="12854">u</span>nmark_type ty in
+  <span data-count="1170">l</span>et it_type_expr _it ty = <span data-count="13718">u</span>nmark_type ty in
   {type_iterators with it_type_expr}
 
 let unmark_type_decl decl =
@@ -2190,12 +2190,12 @@ let unmark_type_decl decl =
 
 let unmark_extension_constructor ext =
   List.iter unmark_type ext.ext_type_params;
-  <span data-count="311">i</span>ter_type_expr_cstr_args unmark_type ext.ext_args;
-  <span data-count="311">O</span>ption.iter unmark_type ext.ext_ret_type
+  <span data-count="329">i</span>ter_type_expr_cstr_args unmark_type ext.ext_args;
+  <span data-count="329">O</span>ption.iter unmark_type ext.ext_ret_type
 
 let unmark_class_signature sign =
   unmark_type sign.csig_self;
-  <span data-count="555">V</span>ars.iter (fun _l (_m, _v, t) -&gt; <span data-count="231">u</span>nmark_type t) sign.csig_vars
+  <span data-count="623">V</span>ars.iter (fun _l (_m, _v, t) -&gt; <span data-count="239">u</span>nmark_type t) sign.csig_vars
 
 let unmark_class_type cty =
   unmark_iterators.it_class_type unmark_iterators cty
@@ -2208,16 +2208,16 @@ let unmark_class_type cty =
 (* Search whether the expansion has been memorized. *)
 
 let lte_public p1 p2 =  (* Private &lt;= Public *)
-  <span data-count="358089">m</span>atch p1, p2 with
-  | <span data-count="46232">P</span>rivate, _ | <span data-count="310427">_</span>, Public -&gt; true
-  | <span data-count="1430">P</span>ublic, Private -&gt; false
+  <span data-count="373942">m</span>atch p1, p2 with
+  | <span data-count="51558">P</span>rivate, _ | <span data-count="320926">_</span>, Public -&gt; true
+  | <span data-count="1458">P</span>ublic, Private -&gt; false
 
-let rec find_expans priv p1 = <span data-count="2451865">f</span>unction
-    <span data-count="1894308">M</span>nil -&gt; None
-  | <span data-count="116618">M</span>cons (priv', p2, _ty0, ty, _)
-    when <span data-count="716178">l</span>te_public priv priv' &amp;&amp; <span data-count="356659">P</span>ath.same p1 p2 -&gt; Some ty
-  | <span data-count="241471">M</span>cons (_, _, _, _, rem)   -&gt; find_expans priv p1 rem
-  | <span data-count="199468">M</span>link {contents = rem} -&gt; find_expans priv p1 rem
+let rec find_expans priv p1 = <span data-count="2517669">f</span>unction
+    <span data-count="1942537">M</span>nil -&gt; None
+  | <span data-count="121011">M</span>cons (priv', p2, _ty0, ty, _)
+    when <span data-count="747884">l</span>te_public priv priv' &amp;&amp; <span data-count="372484">P</span>ath.same p1 p2 -&gt; Some ty
+  | <span data-count="252931">M</span>cons (_, _, _, _, rem)   -&gt; find_expans priv p1 rem
+  | <span data-count="201190">M</span>link {contents = rem} -&gt; find_expans priv p1 rem
 
 (* debug: check for cycles in abbreviation. only works with -principal
 let rec check_expans visited ty =
@@ -2232,25 +2232,25 @@ let rec check_expans visited ty =
   | _ -&gt; ()
 *)
 
-let memo = <span data-count="1031">r</span>ef []
+let memo = <span data-count="1170">r</span>ef []
         (* Contains the list of saved abbreviation expansions. *)
 
 let cleanup_abbrev () =
         (* Remove all memorized abbreviation expansions. *)
-  List.iter (fun abbr -&gt; <span data-count="97698">a</span>bbr := Mnil) !memo;
-  <span data-count="691605">m</span>emo := []
+  List.iter (fun abbr -&gt; <span data-count="101729">a</span>bbr := Mnil) !memo;
+  <span data-count="699314">m</span>emo := []
 
 let memorize_abbrev mem priv path v v' =
         (* Memorize the expansion of an abbreviation. *)
-  <span data-count="97933">m</span>em := Mcons (priv, path, v, v', !mem);
+  <span data-count="102006">m</span>em := Mcons (priv, path, v, v', !mem);
   (* check_expans [] v; *)
-  <span data-count="97933">m</span>emo := mem :: !memo
+  <span data-count="102006">m</span>emo := mem :: !memo
 
 let rec forget_abbrev_rec mem path =
-  <span data-count="36">m</span>atch mem with
+  <span data-count="49">m</span>atch mem with
     <span data-count="0">M</span>nil -&gt;
       mem
-  | <span data-count="36">M</span>cons (_, path', _, _, rem) when <span data-count="36">P</span>ath.same path path' -&gt;
+  | <span data-count="49">M</span>cons (_, path', _, _, rem) when <span data-count="49">P</span>ath.same path path' -&gt;
       rem
   | <span data-count="0">M</span>cons (priv, path', v, v', rem) -&gt;
       Mcons (priv, path', v, v', forget_abbrev_rec rem path)
@@ -2259,7 +2259,7 @@ let rec forget_abbrev_rec mem path =
       <span data-count="0">r</span>aise Exit
 
 let forget_abbrev mem path =
-  <span data-count="36">t</span>ry mem := forget_abbrev_rec !mem path with <span data-count="0">E</span>xit -&gt; ()
+  <span data-count="49">t</span>ry mem := forget_abbrev_rec !mem path with <span data-count="0">E</span>xit -&gt; ()
 
 (* debug: check for invalid abbreviations
 let rec check_abbrev_rec = function
@@ -2277,32 +2277,32 @@ let check_memorized_abbrevs () =
                   (*  Utilities for labels          *)
                   (**********************************)
 
-let is_optional = <span data-count="1031">f</span>unction Optional _ -&gt; true | _ -&gt; false
+let is_optional = <span data-count="1170">f</span>unction Optional _ -&gt; true | _ -&gt; false
 
-let label_name = <span data-count="1031">f</span>unction
+let label_name = <span data-count="1170">f</span>unction
     Nolabel -&gt; ""
   | Labelled s
   | Optional s -&gt; s
 
-let prefixed_label_name = <span data-count="1031">f</span>unction
+let prefixed_label_name = <span data-count="1170">f</span>unction
     Nolabel -&gt; ""
   | Labelled s -&gt; "~" ^ s
   | Optional s -&gt; "?" ^ s
 
-let rec extract_label_aux hd l = <span data-count="54327">f</span>unction
-    <span data-count="326">[</span>] -&gt; raise Not_found
-  | <span data-count="54001">(</span>l',t as p) :: ls -&gt;
-      if label_name l' = l then <span data-count="53773">(</span>l', t, List.rev hd, ls)
-      else <span data-count="228">e</span>xtract_label_aux (p::hd) l ls
+let rec extract_label_aux hd l = <span data-count="59377">f</span>unction
+    <span data-count="522">[</span>] -&gt; raise Not_found
+  | <span data-count="58855">(</span>l',t as p) :: ls -&gt;
+      if label_name l' = l then <span data-count="58509">(</span>l', t, List.rev hd, ls)
+      else <span data-count="346">e</span>xtract_label_aux (p::hd) l ls
 
-let extract_label l ls = <span data-count="54099">e</span>xtract_label_aux [] l ls
+let extract_label l ls = <span data-count="59031">e</span>xtract_label_aux [] l ls
 
 
                   (**********************************)
                   (*  Utilities for backtracking    *)
                   (**********************************)
 
-let undo_change = <span data-count="1031">f</span>unction
+let undo_change = <span data-count="1170">f</span>unction
     Ctype  (ty, desc) -&gt; ty.desc &lt;- desc
   | Ccompress  (ty, desc, _) -&gt; ty.desc &lt;- desc
   | Clevel (ty, level) -&gt; ty.level &lt;- level
@@ -2315,105 +2315,105 @@ let undo_change = <span data-count="1031">f</span>unction
   | Ctypeset (r, v) -&gt; r := v
 
 type snapshot = changes ref * int
-let last_snapshot = <span data-count="1031">r</span>ef 0
+let last_snapshot = <span data-count="1170">r</span>ef 0
 
 let log_type ty =
-  if ty.id &lt;= !last_snapshot then <span data-count="779449">l</span>og_change (Ctype (ty, ty.desc))
+  if ty.id &lt;= !last_snapshot then <span data-count="819296">l</span>og_change (Ctype (ty, ty.desc))
 let link_type ty ty' =
-  <span data-count="1252697">l</span>og_type ty;
-  <span data-count="1252697">l</span>et desc = <span data-count="1252697">t</span>y.desc in
-  <span data-count="1252697">t</span>y.desc &lt;- Tlink ty';
+  <span data-count="1302578">l</span>og_type ty;
+  <span data-count="1302578">l</span>et desc = <span data-count="1302578">t</span>y.desc in
+  <span data-count="1302578">t</span>y.desc &lt;- Tlink ty';
   (* Name is a user-supplied name for this unification variable (obtained
    * through a type annotation for instance). *)
-  <span data-count="1252697">m</span>atch desc, ty'.desc with
-    <span data-count="371602">T</span>var name, Tvar name' -&gt;
+  <span data-count="1302578">m</span>atch desc, ty'.desc with
+    <span data-count="379255">T</span>var name, Tvar name' -&gt;
       begin match name, name' with
-      | <span data-count="3246">S</span>ome _, None -&gt;  log_type ty'; <span data-count="3246">t</span>y'.desc &lt;- Tvar name
-      | <span data-count="10633">N</span>one, Some _ -&gt;  ()
-      | <span data-count="1919">S</span>ome _, Some _ -&gt;
+      | <span data-count="3554">S</span>ome _, None -&gt;  log_type ty'; <span data-count="3554">t</span>y'.desc &lt;- Tvar name
+      | <span data-count="11869">N</span>one, Some _ -&gt;  ()
+      | <span data-count="2051">S</span>ome _, Some _ -&gt;
           if ty.level &lt; ty'.level then <span data-count="24">(</span>log_type ty'; <span data-count="24">t</span>y'.desc &lt;- Tvar name)
-      | <span data-count="355804">N</span>one, None   -&gt;  ()
+      | <span data-count="361781">N</span>one, None   -&gt;  ()
       end
-  | <span data-count="881095">_</span> -&gt; ()
+  | <span data-count="923323">_</span> -&gt; ()
   (* ; assert (check_memorized_abbrevs ()) *)
   (*  ; check_expans [] ty' *)
 let set_level ty level =
-  <span data-count="718526">i</span>f level &lt;&gt; ty.level then <span data-count="718526">b</span>egin
-    if ty.id &lt;= !last_snapshot then <span data-count="644598">l</span>og_change (Clevel (ty, ty.level));
-    <span data-count="718526">t</span>y.level &lt;- level
+  <span data-count="757001">i</span>f level &lt;&gt; ty.level then <span data-count="757001">b</span>egin
+    if ty.id &lt;= !last_snapshot then <span data-count="678188">l</span>og_change (Clevel (ty, ty.level));
+    <span data-count="757001">t</span>y.level &lt;- level
   end
 let set_scope ty scope =
-  <span data-count="4461319">i</span>f scope &lt;&gt; ty.scope then <span data-count="139843">b</span>egin
-    if ty.id &lt;= !last_snapshot then <span data-count="91942">l</span>og_change (Cscope (ty, ty.scope));
-    <span data-count="139843">t</span>y.scope &lt;- scope
+  <span data-count="4582976">i</span>f scope &lt;&gt; ty.scope then <span data-count="140195">b</span>egin
+    if ty.id &lt;= !last_snapshot then <span data-count="92143">l</span>og_change (Cscope (ty, ty.scope));
+    <span data-count="140195">t</span>y.scope &lt;- scope
   end
 let set_univar rty ty =
   <span data-count="1242">l</span>og_change (Cuniv (rty, !rty)); <span data-count="1242">r</span>ty := Some ty
 let set_name nm v =
-  <span data-count="3765">l</span>og_change (Cname (nm, !nm)); <span data-count="3765">n</span>m := v
+  <span data-count="4109">l</span>og_change (Cname (nm, !nm)); <span data-count="4109">n</span>m := v
 let set_row_field e v =
-  <span data-count="2695">l</span>og_change (Crow (e, !e)); <span data-count="2695">e</span> := Some v
+  <span data-count="3336">l</span>og_change (Crow (e, !e)); <span data-count="3336">e</span> := Some v
 let set_kind rk k =
-  <span data-count="2237">l</span>og_change (Ckind (rk, !rk)); <span data-count="2237">r</span>k := Some k
+  <span data-count="2495">l</span>og_change (Ckind (rk, !rk)); <span data-count="2495">r</span>k := Some k
 let set_commu rc c =
-  <span data-count="3130">l</span>og_change (Ccommu (rc, !rc)); <span data-count="3130">r</span>c := c
+  <span data-count="3184">l</span>og_change (Ccommu (rc, !rc)); <span data-count="3184">r</span>c := c
 let set_typeset rs s =
   <span data-count="0">l</span>og_change (Ctypeset (rs, !rs)); <span data-count="0">r</span>s := s
 
 let snapshot () =
-  let old = <span data-count="1904879">!</span>last_snapshot in
-  <span data-count="1904879">l</span>ast_snapshot := !new_id;
-  <span data-count="1904879">m</span>atch Weak.get trail 0 with <span data-count="1903675">S</span>ome r -&gt; (r, old)
-  | <span data-count="1204">N</span>one -&gt;
-      let r = <span data-count="1204">r</span>ef Unchanged in
-      <span data-count="1204">W</span>eak.set trail 0 (Some r);
-      <span data-count="1204">(</span>r, old)
+  let old = <span data-count="2024255">!</span>last_snapshot in
+  <span data-count="2024255">l</span>ast_snapshot := !new_id;
+  <span data-count="2024255">m</span>atch Weak.get trail 0 with <span data-count="2022879">S</span>ome r -&gt; (r, old)
+  | <span data-count="1376">N</span>one -&gt;
+      let r = <span data-count="1376">r</span>ef Unchanged in
+      <span data-count="1376">W</span>eak.set trail 0 (Some r);
+      <span data-count="1376">(</span>r, old)
 
 let rec rev_log accu = function
-    <span data-count="42577">U</span>nchanged -&gt; accu
+    <span data-count="43548">U</span>nchanged -&gt; accu
   | Invalid -&gt; assert false
-  | <span data-count="683891">C</span>hange (ch, next) -&gt;
-      let d = <span data-count="683891">!</span>next in
-      <span data-count="683891">n</span>ext := Invalid;
-      <span data-count="683891">r</span>ev_log (ch::accu) d
+  | <span data-count="693897">C</span>hange (ch, next) -&gt;
+      let d = <span data-count="693897">!</span>next in
+      <span data-count="693897">n</span>ext := Invalid;
+      <span data-count="693897">r</span>ev_log (ch::accu) d
 
 let backtrack (changes, old) =
   match !changes with
-    <span data-count="266495">U</span>nchanged -&gt; last_snapshot := old
+    <span data-count="277927">U</span>nchanged -&gt; last_snapshot := old
   | <span data-count="0">I</span>nvalid -&gt; failwith "Btype.backtrack"
-  | <span data-count="42577">C</span>hange _ as change -&gt;
+  | <span data-count="43548">C</span>hange _ as change -&gt;
       cleanup_abbrev ();
-      <span data-count="42577">l</span>et backlog = <span data-count="42577">r</span>ev_log [] change in
-      <span data-count="42577">L</span>ist.iter undo_change backlog;
-      <span data-count="42577">c</span>hanges := Unchanged;
-      <span data-count="42577">l</span>ast_snapshot := old;
-      <span data-count="42577">W</span>eak.set trail 0 (Some changes)
+      <span data-count="43548">l</span>et backlog = <span data-count="43548">r</span>ev_log [] change in
+      <span data-count="43548">L</span>ist.iter undo_change backlog;
+      <span data-count="43548">c</span>hanges := Unchanged;
+      <span data-count="43548">l</span>ast_snapshot := old;
+      <span data-count="43548">W</span>eak.set trail 0 (Some changes)
 
 let rec rev_compress_log log r =
-  <span data-count="122141">m</span>atch !r with
-    <span data-count="33517">U</span>nchanged | <span data-count="0">I</span>nvalid -&gt;
+  <span data-count="122717">m</span>atch !r with
+    <span data-count="33653">U</span>nchanged | <span data-count="0">I</span>nvalid -&gt;
       log
-  | <span data-count="26">C</span>hange (Ccompress _, next) -&gt;
+  | <span data-count="30">C</span>hange (Ccompress _, next) -&gt;
       rev_compress_log (r::log) next
-  | <span data-count="88598">C</span>hange (_, next) -&gt;
+  | <span data-count="89034">C</span>hange (_, next) -&gt;
       rev_compress_log log next
 
 let undo_compress (changes, _old) =
   match !changes with
     <span data-count="159">U</span>nchanged
   | <span data-count="0">I</span>nvalid -&gt; ()
-  | <span data-count="33517">C</span>hange _ -&gt;
-      let log = <span data-count="33517">r</span>ev_compress_log [] changes in
-      <span data-count="33517">L</span>ist.iter
-        (fun r -&gt; <span data-count="26">m</span>atch !r with
-          <span data-count="26">C</span>hange (Ccompress (ty, desc, d), next) when <span data-count="26">t</span>y.desc == d -&gt;
-            ty.desc &lt;- desc; <span data-count="26">r</span> := !next
+  | <span data-count="33653">C</span>hange _ -&gt;
+      let log = <span data-count="33653">r</span>ev_compress_log [] changes in
+      <span data-count="33653">L</span>ist.iter
+        (fun r -&gt; <span data-count="30">m</span>atch !r with
+          <span data-count="30">C</span>hange (Ccompress (ty, desc, d), next) when <span data-count="30">t</span>y.desc == d -&gt;
+            ty.desc &lt;- desc; <span data-count="30">r</span> := !next
         | <span data-count="0">_</span> -&gt; ())
         log
 </pre>
       </div>
     </div>
-    <div id="footer">Generated on 2019-08-08 13:34:29 by <a href="https://github.com/aantron/bisect_ppx">Bisect_ppx</a> 1.4.1</div>
+    <div id="footer">Generated on 2019-08-14 11:29:20 by <a href="https://github.com/aantron/bisect_ppx">Bisect_ppx</a> 1.4.1</div>
     <script src="../coverage.js"></script>
   </body>
 </html>

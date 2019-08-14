@@ -1472,7 +1472,7 @@ let pat sub {pat_extra; pat_desc; pat_env; _} =
   | <span data-count="0">T</span>pat_exception p -&gt; sub.pat sub p
 
 let expr sub {exp_extra; exp_desc; exp_env; _} =
-  <span data-count="148">l</span>et extra = <span data-count="148">f</span>unction
+  <span data-count="154">l</span>et extra = <span data-count="154">f</span>unction
     | <span data-count="0">T</span>exp_constraint cty -&gt; sub.typ sub cty
     | <span data-count="0">T</span>exp_coerce (cty1, cty2) -&gt;
         Option.iter (sub.typ sub) cty1;
@@ -1480,18 +1480,18 @@ let expr sub {exp_extra; exp_desc; exp_env; _} =
     | <span data-count="0">T</span>exp_newtype _ -&gt; ()
     | <span data-count="0">T</span>exp_poly cto -&gt; Option.iter (sub.typ sub) cto
   in
-  <span data-count="148">L</span>ist.iter (fun (e, _, _) -&gt; <span data-count="0">e</span>xtra e) exp_extra;
-  <span data-count="148">s</span>ub.env sub exp_env;
-  <span data-count="148">m</span>atch exp_desc with
+  <span data-count="154">L</span>ist.iter (fun (e, _, _) -&gt; <span data-count="0">e</span>xtra e) exp_extra;
+  <span data-count="154">s</span>ub.env sub exp_env;
+  <span data-count="154">m</span>atch exp_desc with
   | <span data-count="0">T</span>exp_ident _  -&gt; ()
-  | <span data-count="35">T</span>exp_constant _ -&gt; ()
+  | <span data-count="38">T</span>exp_constant _ -&gt; ()
   | <span data-count="0">T</span>exp_let (rec_flag, list, exp) -&gt;
       sub.value_bindings sub (rec_flag, list);
       <span data-count="0">s</span>ub.expr sub exp
   | <span data-count="0">T</span>exp_function {cases; _} -&gt; sub.cases sub cases
-  | <span data-count="100">T</span>exp_apply (exp, list) -&gt;
+  | <span data-count="103">T</span>exp_apply (exp, list) -&gt;
       sub.expr sub exp;
-      <span data-count="100">L</span>ist.iter (fun (_, o) -&gt; <span data-count="178">O</span>ption.iter (sub.expr sub) o) list
+      <span data-count="103">L</span>ist.iter (fun (_, o) -&gt; <span data-count="184">O</span>ption.iter (sub.expr sub) o) list
   | <span data-count="0">T</span>exp_match (exp, cases, _) -&gt;
       sub.expr sub exp;
       <span data-count="0">s</span>ub.cases sub cases
@@ -1754,10 +1754,10 @@ let value_binding sub {vb_pat; vb_expr; _} =
   <span data-count="0">s</span>ub.pat sub vb_pat;
   <span data-count="0">s</span>ub.expr sub vb_expr
 
-let env _sub _ = <span data-count="153">(</span>)
+let env _sub _ = <span data-count="159">(</span>)
 
 let default_iterator =
-  <span data-count="1031">{</span>
+  <span data-count="1170">{</span>
     binding_op;
     case;
     cases;
@@ -1804,7 +1804,7 @@ let default_iterator =
 </pre>
       </div>
     </div>
-    <div id="footer">Generated on 2019-08-08 13:34:29 by <a href="https://github.com/aantron/bisect_ppx">Bisect_ppx</a> 1.4.1</div>
+    <div id="footer">Generated on 2019-08-14 11:29:20 by <a href="https://github.com/aantron/bisect_ppx">Bisect_ppx</a> 1.4.1</div>
     <script src="../coverage.js"></script>
   </body>
 </html>

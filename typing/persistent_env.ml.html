@@ -822,7 +822,7 @@ open Cmi_format
 
 module Consistbl = Consistbl.Make (Misc.Stdlib.String)
 
-let add_delayed_check_forward = <span data-count="1031">r</span>ef (fun _ -&gt; <span data-count="0">a</span>ssert false)
+let add_delayed_check_forward = <span data-count="1170">r</span>ef (fun _ -&gt; <span data-count="0">a</span>ssert false)
 
 type error =
   | Illegal_renaming of modname * modname * filepath
@@ -838,10 +838,10 @@ module Persistent_signature = struct
     { filename : string;
       cmi : Cmi_format.cmi_infos }
 
-  let load = <span data-count="1031">r</span>ef (fun ~unit_name -&gt;
-      <span data-count="2544">m</span>atch Load_path.find_uncap (unit_name ^ ".cmi") with
-      | <span data-count="2520">f</span>ilename -&gt; Some { filename; cmi = read_cmi filename }
-      | <span data-count="24">e</span>xception Not_found -&gt; None)
+  let load = <span data-count="1170">r</span>ef (fun ~unit_name -&gt;
+      <span data-count="2978">m</span>atch Load_path.find_uncap (unit_name ^ ".cmi") with
+      | <span data-count="2952">f</span>ilename -&gt; Some { filename; cmi = read_cmi filename }
+      | <span data-count="26">e</span>xception Not_found -&gt; None)
 end
 
 type can_load_cmis =
@@ -886,13 +886,13 @@ let clear penv =
     imported_opaque_units;
     crc_units;
     can_load_cmis;
-  } = <span data-count="1711">p</span>env in
-  <span data-count="1711">H</span>ashtbl.clear persistent_structures;
-  <span data-count="1711">i</span>mported_units := String.Set.empty;
-  <span data-count="1711">i</span>mported_opaque_units := String.Set.empty;
-  <span data-count="1711">C</span>onsistbl.clear crc_units;
-  <span data-count="1711">c</span>an_load_cmis := Can_load_cmis;
-  <span data-count="1711">(</span>)
+  } = <span data-count="1942">p</span>env in
+  <span data-count="1942">H</span>ashtbl.clear persistent_structures;
+  <span data-count="1942">i</span>mported_units := String.Set.empty;
+  <span data-count="1942">i</span>mported_opaque_units := String.Set.empty;
+  <span data-count="1942">C</span>onsistbl.clear crc_units;
+  <span data-count="1942">c</span>an_load_cmis := Can_load_cmis;
+  <span data-count="1942">(</span>)
 
 let clear_missing {persistent_structures; _} =
   let missing_entries =
@@ -903,29 +903,29 @@ let clear_missing {persistent_structures; _} =
   <span data-count="0">L</span>ist.iter (Hashtbl.remove persistent_structures) missing_entries
 
 let add_import {imported_units; _} s =
-  <span data-count="79380">i</span>mported_units := String.Set.add s !imported_units
+  <span data-count="97082">i</span>mported_units := String.Set.add s !imported_units
 
 let add_imported_opaque {imported_opaque_units; _} s =
   <span data-count="0">i</span>mported_opaque_units := String.Set.add s !imported_opaque_units
 
 let find_in_cache {persistent_structures; _} s =
-  <span data-count="1038">m</span>atch Hashtbl.find persistent_structures s with
-  | <span data-count="1021">e</span>xception Not_found -&gt; None
+  <span data-count="1282">m</span>atch Hashtbl.find persistent_structures s with
+  | <span data-count="1261">e</span>xception Not_found -&gt; None
   | <span data-count="0">M</span>issing -&gt; None
-  | <span data-count="17">F</span>ound (_ps, pm) -&gt; Some pm
+  | <span data-count="21">F</span>ound (_ps, pm) -&gt; Some pm
 
 let import_crcs penv ~source crcs =
-  <span data-count="2930">l</span>et {crc_units; _} = <span data-count="2930">p</span>env in
-  <span data-count="2930">l</span>et import_crc (name, crco) =
-    <span data-count="129577">m</span>atch crco with
-    | <span data-count="53311">N</span>one -&gt; ()
-    | <span data-count="76266">S</span>ome crc -&gt;
+  <span data-count="3451">l</span>et {crc_units; _} = <span data-count="3451">p</span>env in
+  <span data-count="3451">l</span>et import_crc (name, crco) =
+    <span data-count="153762">m</span>atch crco with
+    | <span data-count="60293">N</span>one -&gt; ()
+    | <span data-count="93469">S</span>ome crc -&gt;
         add_import penv name;
-        <span data-count="76266">C</span>onsistbl.check crc_units name crc source
-  in <span data-count="2930">L</span>ist.iter import_crc crcs
+        <span data-count="93469">C</span>onsistbl.check crc_units name crc source
+  in <span data-count="3451">L</span>ist.iter import_crc crcs
 
 let check_consistency penv ps =
-  <span data-count="2571">t</span>ry import_crcs penv ~source:ps.ps_filename ps.ps_crcs
+  <span data-count="3018">t</span>ry import_crcs penv ~source:ps.ps_filename ps.ps_crcs
   with <span data-count="0">C</span>onsistbl.Inconsistency(name, source, auth) -&gt;
     error (Inconsistent_import(name, auth, source))
 
@@ -935,14 +935,14 @@ let set_can_load_cmis penv setting =
   <span data-count="0">p</span>env.can_load_cmis := setting
 
 let without_cmis penv f x =
-  <span data-count="2310">l</span>et log = <span data-count="2310">E</span>nvLazy.log () in
-  <span data-count="2310">l</span>et res =
-    <span data-count="2310">M</span>isc.(protect_refs
+  <span data-count="2863">l</span>et log = <span data-count="2863">E</span>nvLazy.log () in
+  <span data-count="2863">l</span>et res =
+    <span data-count="2863">M</span>isc.(protect_refs
             [R (penv.can_load_cmis, Cannot_load_cmis log)]
-            (fun () -&gt; <span data-count="2310">f</span> x))
+            (fun () -&gt; <span data-count="2863">f</span> x))
   in
-  <span data-count="2310">E</span>nvLazy.backtrack log;
-  <span data-count="2310">r</span>es
+  <span data-count="2863">E</span>nvLazy.backtrack log;
+  <span data-count="2863">r</span>es
 
 let fold {persistent_structures; _} f x =
   <span data-count="0">H</span>ashtbl.fold (fun modname pso x -&gt; <span data-count="0">m</span>atch pso with
@@ -953,32 +953,32 @@ let fold {persistent_structures; _} f x =
 (* Reading persistent structures from .cmi files *)
 
 let save_pers_struct penv crc ps pm =
-  <span data-count="516">l</span>et {persistent_structures; crc_units; _} = <span data-count="516">p</span>env in
-  <span data-count="516">l</span>et modname = <span data-count="516">p</span>s.ps_name in
-  <span data-count="516">H</span>ashtbl.add persistent_structures modname (Found (ps, pm));
-  <span data-count="516">L</span>ist.iter
+  <span data-count="563">l</span>et {persistent_structures; crc_units; _} = <span data-count="563">p</span>env in
+  <span data-count="563">l</span>et modname = <span data-count="563">p</span>s.ps_name in
+  <span data-count="563">H</span>ashtbl.add persistent_structures modname (Found (ps, pm));
+  <span data-count="563">L</span>ist.iter
     (function
         | <span data-count="1">R</span>ectypes -&gt; ()
-        | <span data-count="516">A</span>lerts _ -&gt; ()
+        | <span data-count="563">A</span>lerts _ -&gt; ()
         | <span data-count="1">U</span>nsafe_string -&gt; ()
         | <span data-count="0">O</span>paque -&gt; add_imported_opaque penv modname)
     ps.ps_flags;
-  <span data-count="516">C</span>onsistbl.set crc_units modname crc ps.ps_filename;
-  <span data-count="516">a</span>dd_import penv modname
+  <span data-count="563">C</span>onsistbl.set crc_units modname crc ps.ps_filename;
+  <span data-count="563">a</span>dd_import penv modname
 
 let acknowledge_pers_struct penv check modname pers_sig pm =
-  <span data-count="2573">l</span>et { Persistent_signature.filename; cmi } = <span data-count="2573">p</span>ers_sig in
-  <span data-count="2573">l</span>et name = <span data-count="2573">c</span>mi.cmi_name in
-  <span data-count="2573">l</span>et crcs = <span data-count="2573">c</span>mi.cmi_crcs in
-  <span data-count="2573">l</span>et flags = <span data-count="2573">c</span>mi.cmi_flags in
-  <span data-count="2573">l</span>et ps = <span data-count="2573">{</span> ps_name = name;
+  <span data-count="3020">l</span>et { Persistent_signature.filename; cmi } = <span data-count="3020">p</span>ers_sig in
+  <span data-count="3020">l</span>et name = <span data-count="3020">c</span>mi.cmi_name in
+  <span data-count="3020">l</span>et crcs = <span data-count="3020">c</span>mi.cmi_crcs in
+  <span data-count="3020">l</span>et flags = <span data-count="3020">c</span>mi.cmi_flags in
+  <span data-count="3020">l</span>et ps = <span data-count="3020">{</span> ps_name = name;
              ps_crcs = crcs;
              ps_filename = filename;
              ps_flags = flags;
            } in
-  <span data-count="2573">i</span>f ps.ps_name &lt;&gt; modname then
+  <span data-count="3020">i</span>f ps.ps_name &lt;&gt; modname then
     <span data-count="0">e</span>rror (Illegal_renaming(modname, ps.ps_name, filename));
-  <span data-count="2573">L</span>ist.iter
+  <span data-count="3020">L</span>ist.iter
     (function
         | <span data-count="0">R</span>ectypes -&gt;
             if not !Clflags.recursive_types then
@@ -986,43 +986,43 @@ let acknowledge_pers_struct penv check modname pers_sig pm =
         | <span data-count="0">U</span>nsafe_string -&gt;
             if Config.safe_string then
               <span data-count="0">e</span>rror (Depend_on_unsafe_string_unit(ps.ps_name));
-        | <span data-count="2573">A</span>lerts _ -&gt; ()
+        | <span data-count="3020">A</span>lerts _ -&gt; ()
         | <span data-count="0">O</span>paque -&gt; add_imported_opaque penv modname)
     ps.ps_flags;
-  <span data-count="2573">i</span>f check then <span data-count="2571">c</span>heck_consistency penv ps;
-  <span data-count="2573">l</span>et {persistent_structures; _} = <span data-count="2573">p</span>env in
-  <span data-count="2573">H</span>ashtbl.add persistent_structures modname (Found (ps, pm));
-  <span data-count="2573">p</span>s
+  <span data-count="3020">i</span>f check then <span data-count="3018">c</span>heck_consistency penv ps;
+  <span data-count="3020">l</span>et {persistent_structures; _} = <span data-count="3020">p</span>env in
+  <span data-count="3020">H</span>ashtbl.add persistent_structures modname (Found (ps, pm));
+  <span data-count="3020">p</span>s
 
 let read_pers_struct penv val_of_pers_sig check modname filename =
-  <span data-count="53">a</span>dd_import penv modname;
-  <span data-count="53">l</span>et cmi = <span data-count="53">r</span>ead_cmi filename in
-  <span data-count="53">l</span>et pers_sig = <span data-count="53">{</span> Persistent_signature.filename; cmi } in
-  <span data-count="53">l</span>et pm = <span data-count="53">v</span>al_of_pers_sig pers_sig in
-  <span data-count="53">l</span>et ps = <span data-count="53">a</span>cknowledge_pers_struct penv check modname pers_sig pm in
-  <span data-count="53">(</span>ps, pm)
+  <span data-count="68">a</span>dd_import penv modname;
+  <span data-count="68">l</span>et cmi = <span data-count="68">r</span>ead_cmi filename in
+  <span data-count="68">l</span>et pers_sig = <span data-count="68">{</span> Persistent_signature.filename; cmi } in
+  <span data-count="68">l</span>et pm = <span data-count="68">v</span>al_of_pers_sig pers_sig in
+  <span data-count="68">l</span>et ps = <span data-count="68">a</span>cknowledge_pers_struct penv check modname pers_sig pm in
+  <span data-count="68">(</span>ps, pm)
 
 let find_pers_struct penv val_of_pers_sig check name =
-  <span data-count="272295">l</span>et {persistent_structures; _} = <span data-count="272295">p</span>env in
-  <span data-count="272295">i</span>f name = "*predef*" then <span data-count="0">r</span>aise Not_found;
-  <span data-count="272295">m</span>atch Hashtbl.find persistent_structures name with
-  | <span data-count="269544">F</span>ound (ps, pm) -&gt; (ps, pm)
-  | <span data-count="206">M</span>issing -&gt; raise Not_found
-  | <span data-count="2545">e</span>xception Not_found -&gt;
+  <span data-count="302175">l</span>et {persistent_structures; _} = <span data-count="302175">p</span>env in
+  <span data-count="302175">i</span>f name = "*predef*" then <span data-count="0">r</span>aise Not_found;
+  <span data-count="302175">m</span>atch Hashtbl.find persistent_structures name with
+  | <span data-count="298988">F</span>ound (ps, pm) -&gt; (ps, pm)
+  | <span data-count="208">M</span>issing -&gt; raise Not_found
+  | <span data-count="2979">e</span>xception Not_found -&gt;
     match can_load_cmis penv with
     | <span data-count="0">C</span>annot_load_cmis _ -&gt; raise Not_found
-    | <span data-count="2545">C</span>an_load_cmis -&gt;
+    | <span data-count="2979">C</span>an_load_cmis -&gt;
         let psig =
-          <span data-count="2545">m</span>atch !Persistent_signature.load ~unit_name:name with
-          | <span data-count="2520">S</span>ome psig -&gt; psig
-          | <span data-count="24">N</span>one -&gt;
+          <span data-count="2979">m</span>atch !Persistent_signature.load ~unit_name:name with
+          | <span data-count="2952">S</span>ome psig -&gt; psig
+          | <span data-count="26">N</span>one -&gt;
             Hashtbl.add persistent_structures name Missing;
-            <span data-count="24">r</span>aise Not_found
+            <span data-count="26">r</span>aise Not_found
         in
-        <span data-count="2520">a</span>dd_import penv name;
-        <span data-count="2520">l</span>et pm = <span data-count="2520">v</span>al_of_pers_sig psig in
-        <span data-count="2520">l</span>et ps = <span data-count="2520">a</span>cknowledge_pers_struct penv check name psig pm in
-        <span data-count="2520">(</span>ps, pm)
+        <span data-count="2952">a</span>dd_import penv name;
+        <span data-count="2952">l</span>et pm = <span data-count="2952">v</span>al_of_pers_sig psig in
+        <span data-count="2952">l</span>et ps = <span data-count="2952">a</span>cknowledge_pers_struct penv check name psig pm in
+        <span data-count="2952">(</span>ps, pm)
 
 (* Emits a warning if there is no valid cmi for name *)
 let check_pers_struct penv f ~loc name =
@@ -1057,34 +1057,34 @@ let check_pers_struct penv f ~loc name =
         <span data-count="0">L</span>ocation.prerr_warning loc warn
 
 let read penv f modname filename =
-  <span data-count="53">s</span>nd (read_pers_struct penv f true modname filename)
+  <span data-count="68">s</span>nd (read_pers_struct penv f true modname filename)
 
 let find penv f name =
-  <span data-count="272283">s</span>nd (find_pers_struct penv f true name)
+  <span data-count="302161">s</span>nd (find_pers_struct penv f true name)
 
 let check penv f ~loc name =
-  <span data-count="25">l</span>et {persistent_structures; _} = <span data-count="25">p</span>env in
-  <span data-count="25">i</span>f not (Hashtbl.mem persistent_structures name) then <span data-count="25">b</span>egin
+  <span data-count="30">l</span>et {persistent_structures; _} = <span data-count="30">p</span>env in
+  <span data-count="30">i</span>f not (Hashtbl.mem persistent_structures name) then <span data-count="30">b</span>egin
     (* PR#6843: record the weak dependency ([add_import]) regardless of
        whether the check succeeds, to help make builds more
        deterministic. *)
     add_import penv name;
-    <span data-count="25">i</span>f (Warnings.is_active (Warnings.No_cmi_file("", None))) then
+    <span data-count="30">i</span>f (Warnings.is_active (Warnings.No_cmi_file("", None))) then
       <span data-count="5">!</span>add_delayed_check_forward
         (fun () -&gt; <span data-count="5">c</span>heck_pers_struct penv f ~loc name)
   end
 
 let crc_of_unit penv f name =
-  <span data-count="7">l</span>et (ps, _pm) = <span data-count="7">f</span>ind_pers_struct penv f true name in
-  <span data-count="7">l</span>et crco =
-    <span data-count="7">t</span>ry
+  <span data-count="9">l</span>et (ps, _pm) = <span data-count="9">f</span>ind_pers_struct penv f true name in
+  <span data-count="9">l</span>et crco =
+    <span data-count="9">t</span>ry
       List.assoc name ps.ps_crcs
     with Not_found -&gt;
       assert false
   in
-    <span data-count="7">m</span>atch crco with
+    <span data-count="9">m</span>atch crco with
       None -&gt; assert false
-    | <span data-count="7">S</span>ome crc -&gt; crc
+    | <span data-count="9">S</span>ome crc -&gt; crc
 
 let imports {imported_units; crc_units; _} =
   Consistbl.extract (String.Set.elements !imported_units) crc_units
@@ -1099,16 +1099,16 @@ let is_imported_opaque {imported_opaque_units; _} s =
   <span data-count="0">S</span>tring.Set.mem s !imported_opaque_units
 
 let make_cmi penv modname sign alerts =
-  <span data-count="516">l</span>et flags =
-    <span data-count="516">L</span>ist.concat [
-      if !Clflags.recursive_types then <span data-count="1">[</span>Cmi_format.Rectypes] else <span data-count="515">[</span>];
-      if !Clflags.opaque then <span data-count="0">[</span>Cmi_format.Opaque] else <span data-count="516">[</span>];
-      (if !Clflags.unsafe_string then <span data-count="1">[</span>Cmi_format.Unsafe_string] else <span data-count="515">[</span>]);
+  <span data-count="563">l</span>et flags =
+    <span data-count="563">L</span>ist.concat [
+      if !Clflags.recursive_types then <span data-count="1">[</span>Cmi_format.Rectypes] else <span data-count="562">[</span>];
+      if !Clflags.opaque then <span data-count="0">[</span>Cmi_format.Opaque] else <span data-count="563">[</span>];
+      (if !Clflags.unsafe_string then <span data-count="1">[</span>Cmi_format.Unsafe_string] else <span data-count="562">[</span>]);
       [Alerts alerts];
     ]
   in
-  <span data-count="516">l</span>et crcs = <span data-count="516">i</span>mports penv in
-  <span data-count="516">{</span>
+  <span data-count="563">l</span>et crcs = <span data-count="563">i</span>mports penv in
+  <span data-count="563">{</span>
     cmi_name = modname;
     cmi_sign = sign;
     cmi_crcs = crcs;
@@ -1116,27 +1116,27 @@ let make_cmi penv modname sign alerts =
   }
 
 let save_cmi penv psig pm =
-  <span data-count="516">l</span>et { Persistent_signature.filename; cmi } = <span data-count="516">p</span>sig in
-  <span data-count="516">M</span>isc.try_finally (fun () -&gt;
-      <span data-count="516">l</span>et {
+  <span data-count="563">l</span>et { Persistent_signature.filename; cmi } = <span data-count="563">p</span>sig in
+  <span data-count="563">M</span>isc.try_finally (fun () -&gt;
+      <span data-count="563">l</span>et {
         cmi_name = modname;
         cmi_sign = _;
         cmi_crcs = imports;
         cmi_flags = flags;
-      } = <span data-count="516">c</span>mi in
-      <span data-count="516">l</span>et crc =
-        <span data-count="516">o</span>utput_to_file_via_temporary (* see MPR#7472, MPR#4991 *)
+      } = <span data-count="563">c</span>mi in
+      <span data-count="563">l</span>et crc =
+        <span data-count="563">o</span>utput_to_file_via_temporary (* see MPR#7472, MPR#4991 *)
           ~mode: [Open_binary] filename
-          (fun temp_filename oc -&gt; <span data-count="516">o</span>utput_cmi temp_filename oc cmi) in
+          (fun temp_filename oc -&gt; <span data-count="563">o</span>utput_cmi temp_filename oc cmi) in
       (* Enter signature in persistent table so that imports()
          will also return its crc *)
-      <span data-count="516">l</span>et ps =
-        <span data-count="516">{</span> ps_name = modname;
+      <span data-count="563">l</span>et ps =
+        <span data-count="563">{</span> ps_name = modname;
           ps_crcs = (cmi.cmi_name, Some crc) :: imports;
           ps_filename = filename;
           ps_flags = flags;
         } in
-      <span data-count="516">s</span>ave_pers_struct penv crc ps pm
+      <span data-count="563">s</span>ave_pers_struct penv crc ps pm
     )
     ~exceptionally:(fun () -&gt; <span data-count="0">r</span>emove_file filename)
 
@@ -1162,7 +1162,7 @@ let report_error ppf =
                                   safe-string mode (-force-safe-string)"
 
 let () =
-  <span data-count="1031">L</span>ocation.register_error_of_exn
+  <span data-count="1170">L</span>ocation.register_error_of_exn
     (function
       | <span data-count="0">E</span>rror err -&gt;
           Some (Location.error_of_printer_file report_error err)
@@ -1171,7 +1171,7 @@ let () =
 </pre>
       </div>
     </div>
-    <div id="footer">Generated on 2019-08-08 13:34:29 by <a href="https://github.com/aantron/bisect_ppx">Bisect_ppx</a> 1.4.1</div>
+    <div id="footer">Generated on 2019-08-14 11:29:20 by <a href="https://github.com/aantron/bisect_ppx">Bisect_ppx</a> 1.4.1</div>
     <script src="../coverage.js"></script>
   </body>
 </html>

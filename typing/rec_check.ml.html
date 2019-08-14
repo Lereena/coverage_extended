@@ -2716,13 +2716,13 @@ let is_ref : Types.value_description -&gt; bool = function
         Types.Val_prim { Primitive.prim_name = "%makemutable";
                           prim_arity = 1 } } -&gt;
         true
-  | <span data-count="1897">_</span> -&gt; false
+  | <span data-count="2015">_</span> -&gt; false
 
 (* See the note on abstracted arguments in the documentation for
     Typedtree.Texp_apply *)
 let is_abstracted_arg : arg_label * expression option -&gt; bool = function
   | <span data-count="7">(</span>_, None) -&gt; true
-  | <span data-count="10805">(</span>_, Some _) -&gt; false
+  | <span data-count="11223">(</span>_, Some _) -&gt; false
 
 let classify_expression : Typedtree.expression -&gt; sd =
   (* We need to keep track of the size of expressions
@@ -2745,18 +2745,18 @@ let classify_expression : Typedtree.expression -&gt; sd =
     The first definition can be allowed (`y` has a statically-known
     size) but the second one is unsound (`y` has no statically-known size).
   *)
-  let rec classify_expression env e = <span data-count="1209">m</span>atch e.exp_desc with
+  let rec classify_expression env e = <span data-count="1281">m</span>atch e.exp_desc with
     (* binding and variable cases *)
-    | <span data-count="26">T</span>exp_let (rec_flag, vb, e) -&gt;
-        let env = <span data-count="26">c</span>lassify_value_bindings rec_flag env vb in
-        <span data-count="26">c</span>lassify_expression env e
-    | <span data-count="26">T</span>exp_ident (path, _, _) -&gt;
+    | <span data-count="32">T</span>exp_let (rec_flag, vb, e) -&gt;
+        let env = <span data-count="32">c</span>lassify_value_bindings rec_flag env vb in
+        <span data-count="32">c</span>lassify_expression env e
+    | <span data-count="32">T</span>exp_ident (path, _, _) -&gt;
         classify_path env path
 
     (* non-binding cases *)
     | <span data-count="0">T</span>exp_open (_, e)
     | <span data-count="18">T</span>exp_letmodule (_, _, _, _, e)
-    | <span data-count="20">T</span>exp_sequence (_, e)
+    | <span data-count="23">T</span>exp_sequence (_, e)
     | <span data-count="0">T</span>exp_letexception (_, e) -&gt;
         classify_expression env e
 
@@ -2781,18 +2781,18 @@ let classify_expression : Typedtree.expression -&gt; sd =
         Dynamic
 
     | <span data-count="6">T</span>exp_for _
-    | <span data-count="15">T</span>exp_constant _
+    | <span data-count="19">T</span>exp_constant _
     | <span data-count="0">T</span>exp_new _
     | <span data-count="0">T</span>exp_instvar _
     | <span data-count="3">T</span>exp_tuple _
-    | <span data-count="17">T</span>exp_array _
+    | <span data-count="19">T</span>exp_array _
     | <span data-count="7">T</span>exp_variant _
     | <span data-count="0">T</span>exp_setfield _
     | <span data-count="6">T</span>exp_while _
     | <span data-count="0">T</span>exp_setinstvar _
     | <span data-count="2">T</span>exp_pack _
     | <span data-count="6">T</span>exp_object _
-    | <span data-count="901">T</span>exp_function _
+    | <span data-count="952">T</span>exp_function _
     | <span data-count="11">T</span>exp_lazy _
     | <span data-count="0">T</span>exp_unreachable
     | <span data-count="0">T</span>exp_extension_constructor _ -&gt;
@@ -2819,23 +2819,23 @@ let classify_expression : Typedtree.expression -&gt; sd =
             let rec x = y and y = fun () -&gt; topdef ()
             in x
     *)
-    <span data-count="26">i</span>gnore rec_flag;
-    <span data-count="26">l</span>et old_env = <span data-count="26">e</span>nv in
-    <span data-count="26">l</span>et add_value_binding env vb =
-      <span data-count="31">m</span>atch vb.vb_pat.pat_desc with
-      | <span data-count="29">T</span>pat_var (id, _loc) -&gt;
-          let size = <span data-count="29">c</span>lassify_expression old_env vb.vb_expr in
-          <span data-count="29">I</span>dent.add id size env
+    <span data-count="32">i</span>gnore rec_flag;
+    <span data-count="32">l</span>et old_env = <span data-count="32">e</span>nv in
+    <span data-count="32">l</span>et add_value_binding env vb =
+      <span data-count="41">m</span>atch vb.vb_pat.pat_desc with
+      | <span data-count="39">T</span>pat_var (id, _loc) -&gt;
+          let size = <span data-count="39">c</span>lassify_expression old_env vb.vb_expr in
+          <span data-count="39">I</span>dent.add id size env
       | <span data-count="2">_</span> -&gt;
           (* Note: we don't try to compute any size for complex patterns *)
           env
     in
-    <span data-count="26">L</span>ist.fold_left add_value_binding env bindings
-  and classify_path env = <span data-count="26">f</span>unction
-    | <span data-count="24">P</span>ath.Pident x -&gt;
+    <span data-count="32">L</span>ist.fold_left add_value_binding env bindings
+  and classify_path env = <span data-count="32">f</span>unction
+    | <span data-count="30">P</span>ath.Pident x -&gt;
         begin
           try Ident.find_same x env
-          with <span data-count="15">N</span>ot_found -&gt;
+          with <span data-count="17">N</span>ot_found -&gt;
             (* an identifier will be missing from the map if either:
                 - it is a non-local identifier
                   (bound outside the letrec-binding we are analyzing)
@@ -2857,7 +2857,7 @@ let classify_expression : Typedtree.expression -&gt; sd =
             classify_expression could be extend to compute module
             shapes more precisely *)
         Dynamic
-  in <span data-count="1031">c</span>lassify_expression Ident.empty
+  in <span data-count="1170">c</span>lassify_expression Ident.empty
 
 
 (** {1 Usage of recursive variables} *)
@@ -2912,7 +2912,7 @@ module Mode = struct
 
      Ignore &lt; Delay &lt; Guard &lt; Return &lt; Dereference
   *)
-  let rank = <span data-count="1031">f</span>unction
+  let rank = <span data-count="1170">f</span>unction
     | Ignore -&gt; 0
     | Delay -&gt; 1
     | Guard -&gt; 2
@@ -2925,7 +2925,7 @@ module Mode = struct
      In judgments we write (m + m') for (join m m').
   *)
   let join m m' =
-    <span data-count="40606">i</span>f rank m &gt;= rank m' then <span data-count="37041">m</span> else <span data-count="3565">m</span>'
+    <span data-count="42546">i</span>f rank m &gt;= rank m' then <span data-count="38834">m</span> else <span data-count="3712">m</span>'
 
   (* If x is used with the mode m in e[x], and e[x] is used with mode
      m' in e'[e[x]], then x is used with mode m'[m] (our notation for
@@ -2935,14 +2935,14 @@ module Mode = struct
 
      Composition is associative and [Ignore] is a zero/annihilator for
      it: (compose Ignore m) and (compose m Ignore) are both Ignore. *)
-  let compose m' m = <span data-count="23758">m</span>atch m', m with
+  let compose m' m = <span data-count="25014">m</span>atch m', m with
     | <span data-count="0">I</span>gnore, _ | <span data-count="0">_</span>, Ignore -&gt; Ignore
-    | <span data-count="200">D</span>ereference, _ -&gt; Dereference
-    | <span data-count="21966">D</span>elay, _ -&gt; Delay
+    | <span data-count="204">D</span>ereference, _ -&gt; Dereference
+    | <span data-count="23069">D</span>elay, _ -&gt; Delay
     | <span data-count="0">G</span>uard, Return -&gt; Guard
-    | <span data-count="338">G</span>uard, ((<span data-count="101">D</span>ereference | <span data-count="122">G</span>uard | <span data-count="115">D</span>elay) as m) -&gt; m
-    | <span data-count="27">R</span>eturn, Return -&gt; Return
-    | <span data-count="1227">R</span>eturn, ((<span data-count="111">D</span>ereference | <span data-count="203">G</span>uard | <span data-count="913">D</span>elay) as m) -&gt; m
+    | <span data-count="427">G</span>uard, ((<span data-count="106">D</span>ereference | <span data-count="122">G</span>uard | <span data-count="199">D</span>elay) as m) -&gt; m
+    | <span data-count="31">R</span>eturn, Return -&gt; Return
+    | <span data-count="1283">R</span>eturn, ((<span data-count="111">D</span>ereference | <span data-count="212">G</span>uard | <span data-count="960">D</span>elay) as m) -&gt; m
 end
 
 type mode = Mode.t = Ignore | Delay | Guard | Return | Dereference
@@ -2994,46 +2994,46 @@ end = struct
   (** A "t" maps each rec-bound variable to an access status *)
   type t = Mode.t M.t
 
-  let equal = <span data-count="1031">M</span>.equal Mode.equal
+  let equal = <span data-count="1170">M</span>.equal Mode.equal
 
   let find (id: Ident.t) (tbl: t) =
-    <span data-count="184438">t</span>ry M.find id tbl with <span data-count="168991">N</span>ot_found -&gt; Ignore
+    <span data-count="186262">t</span>ry M.find id tbl with <span data-count="170210">N</span>ot_found -&gt; Ignore
 
-  let empty = <span data-count="1031">M</span>.empty
+  let empty = <span data-count="1170">M</span>.empty
 
   let join (x: t) (y: t) =
-    <span data-count="45439">M</span>.fold
+    <span data-count="47608">M</span>.fold
       (fun (id: Ident.t) (v: Mode.t) (tbl: t) -&gt;
-         <span data-count="31289">l</span>et v' = <span data-count="31289">f</span>ind id tbl in
-         <span data-count="31289">M</span>.add id (Mode.join v v') tbl)
+         <span data-count="32723">l</span>et v' = <span data-count="32723">f</span>ind id tbl in
+         <span data-count="32723">M</span>.add id (Mode.join v v') tbl)
       x y
 
   let join_list li = List.fold_left join empty li
 
   let compose m env =
-    <span data-count="71">M</span>.map (Mode.compose m) env
+    <span data-count="104">M</span>.map (Mode.compose m) env
 
-  let single id mode = <span data-count="15572">M</span>.add id mode empty
+  let single id mode = <span data-count="16151">M</span>.add id mode empty
 
   let unguarded env li =
-    <span data-count="1494">L</span>ist.filter (fun id -&gt; <span data-count="74710">M</span>ode.rank (find id env) &gt; Mode.rank Guard) li
+    <span data-count="1567">L</span>ist.filter (fun id -&gt; <span data-count="74829">M</span>ode.rank (find id env) &gt; Mode.rank Guard) li
 
   let dependent env li =
-    <span data-count="1104">L</span>ist.filter (fun id -&gt; <span data-count="74252">M</span>ode.rank (find id env) &gt; Mode.rank Ignore) li
+    <span data-count="1157">L</span>ist.filter (fun id -&gt; <span data-count="74351">M</span>ode.rank (find id env) &gt; Mode.rank Ignore) li
 
-  let remove = <span data-count="1031">M</span>.remove
+  let remove = <span data-count="1170">M</span>.remove
 
   let take id env = <span data-count="22">(</span>find id env, remove id env)
 
   let remove_list l env =
-    <span data-count="4936">L</span>ist.fold_left (fun env id -&gt; <span data-count="5057">M</span>.remove id env) env l
+    <span data-count="5204">L</span>ist.fold_left (fun env id -&gt; <span data-count="5251">M</span>.remove id env) env l
 end
 
 let remove_pat pat env =
-  <span data-count="4933">E</span>nv.remove_list (pat_bound_idents pat) env
+  <span data-count="5198">E</span>nv.remove_list (pat_bound_idents pat) env
 
 let remove_patlist pats env =
-  <span data-count="800">L</span>ist.fold_right remove_pat pats env
+  <span data-count="832">L</span>ist.fold_right remove_pat pats env
 
 (* Usage mode judgments.
 
@@ -3078,15 +3078,15 @@ type term_judg = Mode.t -&gt; Env.t
 type bind_judg = Mode.t -&gt; Env.t -&gt; Env.t
 
 let option : 'a. ('a -&gt; term_judg) -&gt; 'a option -&gt; term_judg =
-  <span data-count="1031">f</span>un f o m -&gt; <span data-count="14625">m</span>atch o with
-    | <span data-count="3190">N</span>one -&gt; Env.empty
-    | <span data-count="11435">S</span>ome v -&gt; f v m
+  <span data-count="1170">f</span>un f o m -&gt; <span data-count="15267">m</span>atch o with
+    | <span data-count="3404">N</span>one -&gt; Env.empty
+    | <span data-count="11863">S</span>ome v -&gt; f v m
 let list : 'a. ('a -&gt; term_judg) -&gt; 'a list -&gt; term_judg =
-  <span data-count="1031">f</span>un f li m -&gt;
-    <span data-count="10891">L</span>ist.fold_left (fun env item -&gt; <span data-count="16892">E</span>nv.join env (f item m)) Env.empty li
+  <span data-count="1170">f</span>un f li m -&gt;
+    <span data-count="11395">L</span>ist.fold_left (fun env item -&gt; <span data-count="17549">E</span>nv.join env (f item m)) Env.empty li
 let array : 'a. ('a -&gt; term_judg) -&gt; 'a array -&gt; term_judg =
-  <span data-count="1031">f</span>un f ar m -&gt;
-    <span data-count="34">A</span>rray.fold_left (fun env item -&gt; <span data-count="76">E</span>nv.join env (f item m)) Env.empty ar
+  <span data-count="1170">f</span>un f ar m -&gt;
+    <span data-count="38">A</span>rray.fold_left (fun env item -&gt; <span data-count="89">E</span>nv.join env (f item m)) Env.empty ar
 
 let single : Ident.t -&gt; term_judg = Env.single
 let remove_id : Ident.t -&gt; term_judg -&gt; term_judg =
@@ -3095,22 +3095,22 @@ let remove_ids : Ident.t list -&gt; term_judg -&gt; term_judg =
   fun ids f m -&gt; <span data-count="0">E</span>nv.remove_list ids (f m)
 
 let join : term_judg list -&gt; term_judg =
-  fun li m -&gt; <span data-count="12703">E</span>nv.join_list (List.map (fun f -&gt; <span data-count="26074">f</span> m) li)
+  fun li m -&gt; <span data-count="13350">E</span>nv.join_list (List.map (fun f -&gt; <span data-count="27387">f</span> m) li)
 
-let empty = <span data-count="1031">f</span>un _ -&gt; Env.empty
+let empty = <span data-count="1170">f</span>un _ -&gt; Env.empty
 
 (* A judgment [judg] takes a mode from the context as input, and
    returns an environment. The judgment [judg &lt;&lt; m], given a mode [m']
    from the context, evaluates [judg] in the composed mode [m'[m]]. *)
 let (&lt;&lt;) : term_judg -&gt; Mode.t -&gt; term_judg =
-  fun f inner_mode -&gt; <span data-count="19598">f</span>un outer_mode -&gt; <span data-count="19598">f</span> (Mode.compose outer_mode inner_mode)
+  fun f inner_mode -&gt; <span data-count="20545">f</span>un outer_mode -&gt; <span data-count="20545">f</span> (Mode.compose outer_mode inner_mode)
 
 (* A binding judgment [binder] expects a mode and an inner environment,
    and returns an outer environment. [binder &gt;&gt; judg] computes
    the inner environment as the environment returned by [judg]
    in the ambient mode. *)
 let (&gt;&gt;) : bind_judg -&gt; term_judg -&gt; term_judg =
-  fun binder term mode -&gt; <span data-count="754">b</span>inder mode (term mode)
+  fun binder term mode -&gt; <span data-count="780">b</span>inder mode (term mode)
 
 (* Expression judgment:
      G |- e : m
@@ -3118,10 +3118,10 @@ let (&gt;&gt;) : bind_judg -&gt; term_judg -&gt; term_judg =
    in the Prolog mode notation, this is (+G |- -e : -m).
 *)
 let rec expression : Typedtree.expression -&gt; term_judg =
-  fun exp -&gt; <span data-count="29772">m</span>atch exp.exp_desc with
-    | <span data-count="15488">T</span>exp_ident (pth, _, _) -&gt;
+  fun exp -&gt; <span data-count="31012">m</span>atch exp.exp_desc with
+    | <span data-count="16061">T</span>exp_ident (pth, _, _) -&gt;
       path pth
-    | <span data-count="733">T</span>exp_let (rec_flag, bindings, body) -&gt;
+    | <span data-count="756">T</span>exp_let (rec_flag, bindings, body) -&gt;
       (*
          G  |- &lt;bindings&gt; : m -| G'
          G' |- body : m
@@ -3131,7 +3131,7 @@ let rec expression : Typedtree.expression -&gt; term_judg =
       value_bindings rec_flag bindings &gt;&gt; expression body
     | <span data-count="18">T</span>exp_letmodule (x, _, _, mexp, e) -&gt;
       module_binding (x, mexp) &gt;&gt; expression e
-    | <span data-count="380">T</span>exp_match (e, cases, _) -&gt;
+    | <span data-count="393">T</span>exp_match (e, cases, _) -&gt;
       (*
          (Gi; mi |- pi -&gt; ei : m)^i
          G |- e : sum(mi)^i
@@ -3139,10 +3139,10 @@ let rec expression : Typedtree.expression -&gt; term_judg =
          G + sum(Gi)^i |- match e with (pi -&gt; ei)^i : m
        *)
       (fun mode -&gt;
-        <span data-count="380">l</span>et pat_envs, pat_modes =
-          <span data-count="380">L</span>ist.split (List.map (fun c -&gt; <span data-count="1080">c</span>ase c mode) cases) in
-        <span data-count="380">l</span>et env_e = <span data-count="380">e</span>xpression e (List.fold_left Mode.join Ignore pat_modes) in
-        <span data-count="380">E</span>nv.join_list (env_e :: pat_envs))
+        <span data-count="393">l</span>et pat_envs, pat_modes =
+          <span data-count="393">L</span>ist.split (List.map (fun c -&gt; <span data-count="1168">c</span>ase c mode) cases) in
+        <span data-count="393">l</span>et env_e = <span data-count="393">e</span>xpression e (List.fold_left Mode.join Ignore pat_modes) in
+        <span data-count="393">E</span>nv.join_list (env_e :: pat_envs))
     | <span data-count="12">T</span>exp_for (_, _, low, high, _, body) -&gt;
       (*
         G1 |- low: m[Dereference]
@@ -3156,7 +3156,7 @@ let rec expression : Typedtree.expression -&gt; term_judg =
         expression high &lt;&lt; Dereference;
         expression body &lt;&lt; Guard;
       ]
-    | <span data-count="1310">T</span>exp_constant _ -&gt;
+    | <span data-count="1386">T</span>exp_constant _ -&gt;
       empty
     | <span data-count="25">T</span>exp_new (pth, _, _) -&gt;
       (*
@@ -3168,28 +3168,28 @@ let rec expression : Typedtree.expression -&gt; term_judg =
     | <span data-count="0">T</span>exp_instvar (self_path, pth, _inst_var) -&gt;
         join [path self_path &lt;&lt; Dereference; path pth]
     | <span data-count="104">T</span>exp_apply ({exp_desc = Texp_ident (_, _, vd)}, [_, Some arg])
-      when <span data-count="1988">i</span>s_ref vd -&gt;
+      when <span data-count="2106">i</span>s_ref vd -&gt;
       (*
         G |- e: m[Guard]
         ------------------
         G |- ref e: m
       *)
       expression arg &lt;&lt; Guard
-    | <span data-count="5817">T</span>exp_apply (e, args)  -&gt;
-        let arg (_, eo) = <span data-count="10798">o</span>ption expression eo in
-        <span data-count="5817">l</span>et app_mode = <span data-count="5817">i</span>f List.exists is_abstracted_arg args
+    | <span data-count="6072">T</span>exp_apply (e, args)  -&gt;
+        let arg (_, eo) = <span data-count="11216">o</span>ption expression eo in
+        <span data-count="6072">l</span>et app_mode = <span data-count="6072">i</span>f List.exists is_abstracted_arg args
           then (* see the comment on Texp_apply in typedtree.mli;
                   the non-abstracted arguments are bound to local
                   variables, which corresponds to a Guard mode. *)
             <span data-count="4">G</span>uard
-          else <span data-count="5813">D</span>ereference
+          else <span data-count="6068">D</span>ereference
         in
-        <span data-count="5817">j</span>oin [expression e; list arg args] &lt;&lt; app_mode
-    | <span data-count="232">T</span>exp_tuple exprs -&gt;
+        <span data-count="6072">j</span>oin [expression e; list arg args] &lt;&lt; app_mode
+    | <span data-count="240">T</span>exp_tuple exprs -&gt;
       list expression exprs &lt;&lt; Guard
-    | <span data-count="23">T</span>exp_array exprs -&gt;
-      let array_mode = <span data-count="23">m</span>atch Typeopt.array_kind exp with
-        | <span data-count="9">L</span>ambda.Pfloatarray -&gt;
+    | <span data-count="27">T</span>exp_array exprs -&gt;
+      let array_mode = <span data-count="27">m</span>atch Typeopt.array_kind exp with
+        | <span data-count="13">L</span>ambda.Pfloatarray -&gt;
             (* (flat) float arrays unbox their elements *)
             Dereference
         | <span data-count="4">L</span>ambda.Pgenarray -&gt;
@@ -3200,21 +3200,21 @@ let rec expression : Typedtree.expression -&gt; term_judg =
             (* non-generic, non-float arrays act as constructors *)
             Guard
       in
-      <span data-count="23">l</span>ist expression exprs &lt;&lt; array_mode
-    | <span data-count="2350">T</span>exp_construct (_, desc, exprs) -&gt;
+      <span data-count="27">l</span>ist expression exprs &lt;&lt; array_mode
+    | <span data-count="2481">T</span>exp_construct (_, desc, exprs) -&gt;
       let access_constructor =
-        <span data-count="2350">m</span>atch desc.cstr_tag with
-        | <span data-count="50">C</span>str_extension (pth, _) -&gt;
+        <span data-count="2481">m</span>atch desc.cstr_tag with
+        | <span data-count="53">C</span>str_extension (pth, _) -&gt;
           path pth &lt;&lt; Dereference
-        | <span data-count="2300">_</span> -&gt; empty
+        | <span data-count="2428">_</span> -&gt; empty
       in
-      <span data-count="2350">l</span>et m' = <span data-count="2350">m</span>atch desc.cstr_tag with
+      <span data-count="2481">l</span>et m' = <span data-count="2481">m</span>atch desc.cstr_tag with
         | <span data-count="8">C</span>str_unboxed -&gt;
           Return
-        | <span data-count="935">C</span>str_constant _ | <span data-count="1357">C</span>str_block _ | <span data-count="50">C</span>str_extension _ -&gt;
+        | <span data-count="1021">C</span>str_constant _ | <span data-count="1399">C</span>str_block _ | <span data-count="53">C</span>str_extension _ -&gt;
           Guard
       in
-      <span data-count="2350">j</span>oin [
+      <span data-count="2481">j</span>oin [
         access_constructor;
         list expression exprs &lt;&lt; m'
       ]
@@ -3225,23 +3225,23 @@ let rec expression : Typedtree.expression -&gt; term_judg =
         G |- `A e: m         [] |- `A: m
       *)
       option expression eo &lt;&lt; Guard
-    | <span data-count="34">T</span>exp_record { fields = es; extended_expression = eo;
+    | <span data-count="38">T</span>exp_record { fields = es; extended_expression = eo;
                     representation = rep } -&gt;
-        let field_mode = <span data-count="34">m</span>atch rep with
+        let field_mode = <span data-count="38">m</span>atch rep with
           | <span data-count="2">R</span>ecord_float -&gt; Dereference
           | <span data-count="4">R</span>ecord_unboxed _ -&gt; Return
-          | <span data-count="28">R</span>ecord_regular | <span data-count="0">R</span>ecord_inlined _
+          | <span data-count="32">R</span>ecord_regular | <span data-count="0">R</span>ecord_inlined _
           | <span data-count="0">R</span>ecord_extension _ -&gt; Guard
         in
-        <span data-count="34">l</span>et field (_label, field_def) = <span data-count="76">m</span>atch field_def with
+        <span data-count="38">l</span>et field (_label, field_def) = <span data-count="89">m</span>atch field_def with
             <span data-count="9">K</span>ept _ -&gt; empty
-          | <span data-count="67">O</span>verridden (_, e) -&gt; expression e
+          | <span data-count="80">O</span>verridden (_, e) -&gt; expression e
         in
-        <span data-count="34">j</span>oin [
+        <span data-count="38">j</span>oin [
           array field es &lt;&lt; field_mode;
           option expression eo &lt;&lt; Dereference
         ]
-    | <span data-count="656">T</span>exp_ifthenelse (cond, ifso, ifnot) -&gt;
+    | <span data-count="675">T</span>exp_ifthenelse (cond, ifso, ifnot) -&gt;
       (*
         Gc |- c: m[Dereference]
         G1 |- e1: m
@@ -3272,7 +3272,7 @@ let rec expression : Typedtree.expression -&gt; term_judg =
         expression e1 &lt;&lt; Dereference;
         expression e2 &lt;&lt; Dereference;
       ]
-    | <span data-count="624">T</span>exp_sequence (e1, e2) -&gt;
+    | <span data-count="658">T</span>exp_sequence (e1, e2) -&gt;
       (*
         G1 |- e1: m[Guard]
         G2 |- e2: m
@@ -3285,7 +3285,7 @@ let rec expression : Typedtree.expression -&gt; term_judg =
         expression e1 &lt;&lt; Guard;
         expression e2;
       ]
-    | <span data-count="48">T</span>exp_while (cond, body) -&gt;
+    | <span data-count="49">T</span>exp_while (cond, body) -&gt;
       (*
         G1 |- cond: m[Dereference]
         G2 |- body: m[Guard]
@@ -3306,7 +3306,7 @@ let rec expression : Typedtree.expression -&gt; term_judg =
         expression e1 &lt;&lt; Dereference;
         option expression eo &lt;&lt; Dereference;
       ]
-    | <span data-count="84">T</span>exp_field (e, _, _) -&gt;
+    | <span data-count="90">T</span>exp_field (e, _, _) -&gt;
       (*
         G |- e: m[Dereference]
         -----------------------
@@ -3347,7 +3347,7 @@ let rec expression : Typedtree.expression -&gt; term_judg =
       modexp mexp
     | <span data-count="8">T</span>exp_object (clsstrct, _) -&gt;
       class_structure clsstrct
-    | <span data-count="26">T</span>exp_try (e, cases) -&gt;
+    | <span data-count="28">T</span>exp_try (e, cases) -&gt;
       (*
         G |- e: m      (Gi; _ |- pi -&gt; ei : m)^i
         --------------------------------------------
@@ -3357,8 +3357,8 @@ let rec expression : Typedtree.expression -&gt; term_judg =
         the value of e, so their mode does not influence the
         mode of e.
       *)
-      let case_env c m = <span data-count="27">f</span>st (case c m) in
-      <span data-count="26">j</span>oin [
+      let case_env c m = <span data-count="29">f</span>st (case c m) in
+      <span data-count="28">j</span>oin [
         expression e;
         list case_env cases;
       ]
@@ -3378,7 +3378,7 @@ let rec expression : Typedtree.expression -&gt; term_judg =
         path pth &lt;&lt; Dereference;
         list field fields &lt;&lt; Dereference;
       ]
-    | <span data-count="1678">T</span>exp_function { cases } -&gt;
+    | <span data-count="1764">T</span>exp_function { cases } -&gt;
       (*
          (Gi; _ |- pi -&gt; ei : m[Delay])^i
          --------------------------------------
@@ -3388,8 +3388,8 @@ let rec expression : Typedtree.expression -&gt; term_judg =
          is bound locally, so the pattern modes do not influence
          the final environment.
       *)
-      let case_env c m = <span data-count="1996">f</span>st (case c m) in
-      <span data-count="1678">l</span>ist case_env cases &lt;&lt; Delay
+      let case_env c m = <span data-count="2107">f</span>st (case c m) in
+      <span data-count="1764">l</span>ist case_env cases &lt;&lt; Delay
     | <span data-count="22">T</span>exp_lazy e -&gt;
       (*
         G |- e: m[Delay]
@@ -3411,7 +3411,7 @@ let rec expression : Typedtree.expression -&gt; term_judg =
           list binding_op (let_ :: ands) &lt;&lt; Dereference;
           case_env body &lt;&lt; Delay
         ]
-    | <span data-count="6">T</span>exp_unreachable -&gt;
+    | <span data-count="8">T</span>exp_unreachable -&gt;
       (*
         ----------
         [] |- .: m
@@ -3419,7 +3419,7 @@ let rec expression : Typedtree.expression -&gt; term_judg =
       empty
     | <span data-count="0">T</span>exp_extension_constructor (_lid, pth) -&gt;
       path pth &lt;&lt; Dereference
-    | <span data-count="3">T</span>exp_open (od, e) -&gt;
+    | <span data-count="6">T</span>exp_open (od, e) -&gt;
       open_declaration od &gt;&gt; expression e
 
 and binding_op : Typedtree.binding_op -&gt; term_judg =
@@ -3452,8 +3452,8 @@ and class_field_kind : Typedtree.class_field_kind -&gt; term_judg =
       expression e &lt;&lt; Dereference
 
 and modexp : Typedtree.module_expr -&gt; term_judg =
-  fun mexp -&gt; <span data-count="33">m</span>atch mexp.mod_desc with
-    | <span data-count="5">T</span>mod_ident (pth, _) -&gt;
+  fun mexp -&gt; <span data-count="36">m</span>atch mexp.mod_desc with
+    | <span data-count="8">T</span>mod_ident (pth, _) -&gt;
       path pth
     | <span data-count="18">T</span>mod_structure s -&gt;
       structure s
@@ -3503,10 +3503,10 @@ and path : Path.t -&gt; term_judg =
     ------------------------ (as for term application)
     G1 + G2 |- A(B): m
   *)
-  fun pth -&gt; <span data-count="20046">m</span>atch pth with
-    | <span data-count="15572">P</span>ath.Pident x -&gt;
+  fun pth -&gt; <span data-count="20815">m</span>atch pth with
+    | <span data-count="16151">P</span>ath.Pident x -&gt;
         single x
-    | <span data-count="4474">P</span>ath.Pdot (t, _) -&gt;
+    | <span data-count="4664">P</span>ath.Pdot (t, _) -&gt;
         path t &lt;&lt; Dereference
     | <span data-count="0">P</span>ath.Papply (f, p) -&gt;
         join [
@@ -3600,9 +3600,9 @@ and module_binding : (Ident.t * Typedtree.module_expr) -&gt; bind_judg =
 
 and open_declaration : Typedtree.open_declaration -&gt; bind_judg =
   fun { open_expr = mexp; open_bound_items = sg; _ } m env -&gt;
-      <span data-count="3">l</span>et judg_E = <span data-count="3">m</span>odexp mexp in
-      <span data-count="3">l</span>et bound_ids = <span data-count="3">L</span>ist.map Types.signature_item_id sg in
-      <span data-count="3">E</span>nv.join (judg_E m) (Env.remove_list bound_ids env)
+      <span data-count="6">l</span>et judg_E = <span data-count="6">m</span>odexp mexp in
+      <span data-count="6">l</span>et bound_ids = <span data-count="6">L</span>ist.map Types.signature_item_id sg in
+      <span data-count="6">E</span>nv.join (judg_E m) (Env.remove_list bound_ids env)
 
 and recursive_module_bindings
   : (Ident.t * Typedtree.module_expr) list -&gt; bind_judg =
@@ -3646,21 +3646,21 @@ and extension_constructor : Typedtree.extension_constructor -&gt; term_judg =
 (* G |- let (rec?) (pi = ei)^i : m -| G' *)
 and value_bindings : rec_flag -&gt; Typedtree.value_binding list -&gt; bind_judg =
   fun rec_flag bindings mode bound_env -&gt;
-    <span data-count="775">l</span>et all_bound_pats = <span data-count="775">L</span>ist.map (fun vb -&gt; <span data-count="908">v</span>b.vb_pat) bindings in
-    <span data-count="775">l</span>et outer_env = <span data-count="775">r</span>emove_patlist all_bound_pats bound_env in
-    <span data-count="775">l</span>et bindings_env =
-      <span data-count="775">m</span>atch rec_flag with
-      | <span data-count="757">N</span>onrecursive -&gt;
+    <span data-count="798">l</span>et all_bound_pats = <span data-count="798">L</span>ist.map (fun vb -&gt; <span data-count="936">v</span>b.vb_pat) bindings in
+    <span data-count="798">l</span>et outer_env = <span data-count="798">r</span>emove_patlist all_bound_pats bound_env in
+    <span data-count="798">l</span>et bindings_env =
+      <span data-count="798">m</span>atch rec_flag with
+      | <span data-count="775">N</span>onrecursive -&gt;
         (*
            (Gi, pi:_ |- ei : m[mbody_i])^i   (pi : mbody_i -| D)^i
            ------------------------------------------------------------
            Sum(Gi) + (D - (pi)^i) |- let (pi=ei)^i : m -| D
         *)
           let binding_env {vb_pat; vb_expr; _} m =
-            <span data-count="883">l</span>et m' = <span data-count="883">M</span>ode.compose m (pattern vb_pat bound_env) in
-            <span data-count="883">r</span>emove_pat vb_pat (expression vb_expr m') in
-          <span data-count="757">l</span>ist binding_env bindings mode
-      | <span data-count="18">R</span>ecursive -&gt;
+            <span data-count="902">l</span>et m' = <span data-count="902">M</span>ode.compose m (pattern vb_pat bound_env) in
+            <span data-count="902">r</span>emove_pat vb_pat (expression vb_expr m') in
+          <span data-count="775">l</span>ist binding_env bindings mode
+      | <span data-count="23">R</span>ecursive -&gt;
         (*
            (Gi, (xj : mdef_ij)^j |- ei : m[mbody_i])^i   (xi : mbody_i -| D)^i
            G'i = Gi + mdef_ij[G'j]
@@ -3702,32 +3702,32 @@ and value_bindings : rec_flag -&gt; Typedtree.value_binding list -&gt; bind_judg
           (* [binding_env] takes a binding (x_i = e_i)
              and computes (Gi, (mdef_ij)^j). *)
           let binding_env {vb_pat = x_i; vb_expr = e_i; _} =
-            <span data-count="25">l</span>et mbody_i = <span data-count="25">p</span>attern x_i bound_env in
+            <span data-count="34">l</span>et mbody_i = <span data-count="34">p</span>attern x_i bound_env in
             (* Gi, (x_j:mdef_ij)^j  *)
-            <span data-count="25">l</span>et rhs_env_i = <span data-count="25">e</span>xpression e_i (Mode.compose mode mbody_i) in
+            <span data-count="34">l</span>et rhs_env_i = <span data-count="34">e</span>xpression e_i (Mode.compose mode mbody_i) in
             (* (mdef_ij)^j (for a fixed i) *)
-            <span data-count="25">l</span>et mutual_modes =
-              <span data-count="25">l</span>et mdef_ij {vb_pat = x_j; _} = <span data-count="39">p</span>attern x_j rhs_env_i in
-              <span data-count="25">L</span>ist.map mdef_ij bindings in
+            <span data-count="34">l</span>et mutual_modes =
+              <span data-count="34">l</span>et mdef_ij {vb_pat = x_j; _} = <span data-count="56">p</span>attern x_j rhs_env_i in
+              <span data-count="34">L</span>ist.map mdef_ij bindings in
             (* Gi *)
-            <span data-count="25">l</span>et env_i = <span data-count="25">r</span>emove_patlist all_bound_pats rhs_env_i in
+            <span data-count="34">l</span>et env_i = <span data-count="34">r</span>emove_patlist all_bound_pats rhs_env_i in
             (* (Gi, (mdef_ij)^j) *)
-            <span data-count="25">(</span>env_i, mutual_modes) in
-          <span data-count="18">l</span>et env, mdef =
-            <span data-count="18">L</span>ist.split (List.map binding_env bindings) in
-          <span data-count="18">l</span>et rec transitive_closure env =
-            <span data-count="26">l</span>et transitive_deps env_i mdef_i =
+            <span data-count="34">(</span>env_i, mutual_modes) in
+          <span data-count="23">l</span>et env, mdef =
+            <span data-count="23">L</span>ist.split (List.map binding_env bindings) in
+          <span data-count="23">l</span>et rec transitive_closure env =
+            <span data-count="35">l</span>et transitive_deps env_i mdef_i =
               (* Gi, (mdef_ij)^j =&gt; Gi + Sum_j mdef_ij[Gj] *)
-              <span data-count="41">E</span>nv.join env_i
+              <span data-count="58">E</span>nv.join env_i
                 (Env.join_list (List.map2 Env.compose mdef_i env)) in
-            <span data-count="26">l</span>et env' = <span data-count="26">L</span>ist.map2 transitive_deps env mdef in
-            <span data-count="26">i</span>f List.for_all2 Env.equal env env'
-            then <span data-count="18">e</span>nv'
-            else <span data-count="8">t</span>ransitive_closure env'
+            <span data-count="35">l</span>et env' = <span data-count="35">L</span>ist.map2 transitive_deps env mdef in
+            <span data-count="35">i</span>f List.for_all2 Env.equal env env'
+            then <span data-count="23">e</span>nv'
+            else <span data-count="12">t</span>ransitive_closure env'
           in
-          <span data-count="18">l</span>et env'_i = <span data-count="18">t</span>ransitive_closure env in
-          <span data-count="18">E</span>nv.join_list env'_i
-    in <span data-count="775">E</span>nv.join bindings_env outer_env
+          <span data-count="23">l</span>et env'_i = <span data-count="23">t</span>ransitive_closure env in
+          <span data-count="23">E</span>nv.join_list env'_i
+    in <span data-count="798">E</span>nv.join bindings_env outer_env
 
 (* G; m' |- (p -&gt; e) : m
    with outputs G, m' and input m
@@ -3743,13 +3743,13 @@ and case : Typedtree.case -&gt; mode -&gt; Env.t * mode =
        ----------------------------------------
        G - p; m[mp] |- (p (when g)? -&gt; e) : m
     *)
-    <span data-count="3103">l</span>et judg = <span data-count="3103">j</span>oin [
+    <span data-count="3304">l</span>et judg = <span data-count="3304">j</span>oin [
         option expression c_guard &lt;&lt; Dereference;
         expression c_rhs;
       ] in
-    <span data-count="3103">(</span>fun m -&gt;
-       <span data-count="3103">l</span>et env = <span data-count="3103">j</span>udg m in
-       <span data-count="3103">(</span>remove_pat c_lhs env), Mode.compose m (pattern c_lhs env))
+    <span data-count="3304">(</span>fun m -&gt;
+       <span data-count="3304">l</span>et env = <span data-count="3304">j</span>udg m in
+       <span data-count="3304">(</span>remove_pat c_lhs env), Mode.compose m (pattern c_lhs env))
 
 (* p : m -| G
    with output m and input G
@@ -3764,26 +3764,26 @@ and pattern : pattern -&gt; Env.t -&gt; mode = fun pat env -&gt;
     --------------------------------------------
     p : (mp + me) -| G
   *)
-  <span data-count="4050">l</span>et m_pat = <span data-count="4050">i</span>f is_destructuring_pattern pat
-              then <span data-count="1599">D</span>ereference
-              else <span data-count="2451">G</span>uard
+  <span data-count="4296">l</span>et m_pat = <span data-count="4296">i</span>f is_destructuring_pattern pat
+              then <span data-count="1725">D</span>ereference
+              else <span data-count="2571">G</span>uard
   in
-  <span data-count="4050">l</span>et m_env =
-    <span data-count="4050">p</span>at_bound_idents pat
-    |&gt; <span data-count="4050">L</span>ist.map (fun id -&gt; <span data-count="4165">E</span>nv.find id env)
-    |&gt; <span data-count="4050">L</span>ist.fold_left Mode.join Ignore
+  <span data-count="4296">l</span>et m_env =
+    <span data-count="4296">p</span>at_bound_idents pat
+    |&gt; <span data-count="4296">L</span>ist.map (fun id -&gt; <span data-count="4337">E</span>nv.find id env)
+    |&gt; <span data-count="4296">L</span>ist.fold_left Mode.join Ignore
   in
-  <span data-count="4050">M</span>ode.join m_pat m_env
+  <span data-count="4296">M</span>ode.join m_pat m_env
 
 and is_destructuring_pattern : Typedtree.pattern -&gt; bool =
-  fun pat -&gt; <span data-count="4115">m</span>atch pat.pat_desc with
-    | <span data-count="98">T</span>pat_any -&gt; false
-    | <span data-count="2347">T</span>pat_var (_, _) -&gt; false
-    | <span data-count="48">T</span>pat_alias (pat, _, _) -&gt; is_destructuring_pattern pat
-    | <span data-count="166">T</span>pat_constant _ -&gt; true
-    | <span data-count="398">T</span>pat_tuple _ -&gt; true
-    | <span data-count="992">T</span>pat_construct (_, _, _) -&gt; true
-    | <span data-count="41">T</span>pat_variant _ -&gt; true
+  fun pat -&gt; <span data-count="4364">m</span>atch pat.pat_desc with
+    | <span data-count="102">T</span>pat_any -&gt; false
+    | <span data-count="2463">T</span>pat_var (_, _) -&gt; false
+    | <span data-count="51">T</span>pat_alias (pat, _, _) -&gt; is_destructuring_pattern pat
+    | <span data-count="239">T</span>pat_constant _ -&gt; true
+    | <span data-count="407">T</span>pat_tuple _ -&gt; true
+    | <span data-count="1032">T</span>pat_construct (_, _, _) -&gt; true
+    | <span data-count="45">T</span>pat_variant _ -&gt; true
     | <span data-count="2">T</span>pat_record (_, _) -&gt; true
     | <span data-count="0">T</span>pat_array _ -&gt; true
     | <span data-count="17">T</span>pat_or (l,r,_) -&gt;
@@ -3792,15 +3792,15 @@ and is_destructuring_pattern : Typedtree.pattern -&gt; bool =
     | <span data-count="6">T</span>pat_exception _ -&gt; false
 
 let is_valid_recursive_expression idlist expr =
-  <span data-count="1104">l</span>et ty = <span data-count="1104">e</span>xpression expr Return in
-  <span data-count="1104">m</span>atch Env.unguarded ty idlist, Env.dependent ty idlist,
+  <span data-count="1157">l</span>et ty = <span data-count="1157">e</span>xpression expr Return in
+  <span data-count="1157">m</span>atch Env.unguarded ty idlist, Env.dependent ty idlist,
         classify_expression expr with
-  | <span data-count="86">_</span> :: _, _, _ (* The expression inspects rec-bound variables *)
+  | <span data-count="90">_</span> :: _, _, _ (* The expression inspects rec-bound variables *)
   | <span data-count="8">[</span>], _ :: _, Dynamic -&gt; (* The expression depends on rec-bound variables
                               and its size is unknown *)
       false
-  | <span data-count="1006">[</span>], _, Static (* The expression has known size *)
-  | <span data-count="4">[</span>], [], Dynamic -&gt; (* The expression has unknown size,
+  | <span data-count="1053">[</span>], _, Static (* The expression has known size *)
+  | <span data-count="6">[</span>], [], Dynamic -&gt; (* The expression has unknown size,
                           but does not depend on rec-bound variables *)
       true
 
@@ -3815,21 +3815,21 @@ let is_valid_recursive_expression idlist expr =
    is allowed.
 *)
 let is_valid_class_expr idlist ce =
-  <span data-count="390">l</span>et rec class_expr : mode -&gt; Typedtree.class_expr -&gt; Env.t =
-    fun mode ce -&gt; <span data-count="425">m</span>atch ce.cl_desc with
-      | <span data-count="5">T</span>cl_ident (_, _, _) -&gt;
+  <span data-count="410">l</span>et rec class_expr : mode -&gt; Typedtree.class_expr -&gt; Env.t =
+    fun mode ce -&gt; <span data-count="449">m</span>atch ce.cl_desc with
+      | <span data-count="9">T</span>cl_ident (_, _, _) -&gt;
         (*
           ----------
           [] |- a: m
         *)
         Env.empty
-      | <span data-count="186">T</span>cl_structure _ -&gt;
+      | <span data-count="200">T</span>cl_structure _ -&gt;
         (*
           -----------------------
           [] |- struct ... end: m
         *)
         Env.empty
-      | <span data-count="195">T</span>cl_fun (_, _, _, _, _) -&gt; Env.empty
+      | <span data-count="197">T</span>cl_fun (_, _, _, _, _) -&gt; Env.empty
         (*
           ---------------------------
           [] |- fun x1 ... xn -&gt; C: m
@@ -3837,18 +3837,18 @@ let is_valid_class_expr idlist ce =
       | <span data-count="4">T</span>cl_apply (_, _) -&gt; Env.empty
       | <span data-count="22">T</span>cl_let (rec_flag, bindings, _, ce) -&gt;
         value_bindings rec_flag bindings mode (class_expr mode ce)
-      | <span data-count="11">T</span>cl_constraint (ce, _, _, _, _) -&gt;
+      | <span data-count="15">T</span>cl_constraint (ce, _, _, _, _) -&gt;
         class_expr mode ce
       | <span data-count="2">T</span>cl_open (_, ce) -&gt;
         class_expr mode ce
   in
-  <span data-count="390">m</span>atch Env.unguarded (class_expr Return ce) idlist with
-  | <span data-count="382">[</span>] -&gt; true
+  <span data-count="410">m</span>atch Env.unguarded (class_expr Return ce) idlist with
+  | <span data-count="402">[</span>] -&gt; true
   | <span data-count="8">_</span> :: _ -&gt; false
 </pre>
       </div>
     </div>
-    <div id="footer">Generated on 2019-08-08 13:34:29 by <a href="https://github.com/aantron/bisect_ppx">Bisect_ppx</a> 1.4.1</div>
+    <div id="footer">Generated on 2019-08-14 11:29:20 by <a href="https://github.com/aantron/bisect_ppx">Bisect_ppx</a> 1.4.1</div>
     <script src="../coverage.js"></script>
   </body>
 </html>
